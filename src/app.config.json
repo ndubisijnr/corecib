@@ -1,0 +1,7 @@
+{
+    "title": "BizGem",
+    "description": "Digital Bank",
+    "qgBaseUrl": "https://sandbox.bizgem.io",
+    "primaryColor": "#6d0606",
+    "imageUpload": "https://m2nz1o078e.execute-api.us-east-1.amazonaws.com/prod/"
+}
