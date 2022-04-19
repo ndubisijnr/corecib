@@ -1,23 +1,23 @@
 class EnrollmentResponse{
   enrollmentResponse(){
     return {
-      responseCode: "",
-      responseMessage: "",
+      responseCode: null,
+      responseMessage: null,
       data: []
     }
   }
   enrollmentDataResponse(){
         return{
-          customerCountry: "",
-          customerBusinessName: "",
+          customerCountry: null,
+          customerBusinessName: null,
           customerCountryCode: "+234",
-          customerEmail: "",
-          customerFirstName: "",
-          customerLastName: "",
-          customerPhone: "",
+          customerEmail: null,
+          customerFirstName: null,
+          customerLastName: null,
+          customerPhone: null,
           source: "web",
-          responseCode: "",
-          responseMessage:""
+          responseCode: null,
+          responseMessage:null
         }
   }
 }

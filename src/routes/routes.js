@@ -1,37 +1,37 @@
-import DashboardLayout from '@/views/Layout/DashboardLayout.vue';
+import DashboardLayout from '@/views/layout/DashboardLayout.vue';
 import AuthLayout from '@/views/Pages/AuthLayout.vue';
 // GeneralViews
 import NotFound from '@/views/GeneralViews/NotFoundPage.vue';
 
 //User Management
 const User = () =>
-  import ( /* webpackChunkName: "dashboard" */ '@/views/UserManagement/User');
+  import ( /* webpackChunkName: "dashboard" */ '@/views/user/User');
 
 const Transactions = () =>
-  import ('@/views/UserManagement/Transactions');
+  import ('@/views/user/Transactions');
 
 const VirtualAccount = () =>
-  import ('@/views/UserManagement/VirtualAccount');
+  import ('@/views/user/VirtualAccount');
 
 const WalletTransaction = () => {
-    import ('@/views/UserManagement/WalletTransactions');
+    import ('@/views/user/WalletTransactions');
 
 }
 
 const Wallet = () =>
-  import ('@/views/UserManagement/Wallet');
+  import ('@/views/user/Wallet');
 
 //Dispute
 const Disputes = () => 
-    import ('@/views/UserManagement/Dispute');
+    import ('@/views/user/Dispute');
 
 //Api Logs
 const ApiLogs = () => 
-    import ('@/views/UserManagement/ApiLogs');
+    import ('@/views/user/ApiLogs');
 
 //New Business
 const NewBusiness = () => 
-    import ( /* webpackChunkName: "dashboard" */ '@/views/UserPages/NewBusiness');
+    import ( /* webpackChunkName: "dashboard" */ '@/views/auth/NewBusiness');
 
 // Dashboard pages
 const AlternativeDashboard = () =>
@@ -44,15 +44,15 @@ const Compliance = () =>
 
 //Auth
 const Login = () =>
-    import ( /* webpackChunkName: "pages" */ '@/views/UserPages/Login.vue');
+    import ( /* webpackChunkName: "pages" */ '@/views/auth/Login.vue');
 const SignUp = () =>
-    import ( /* webpackChunkName: "pages" */ '@/views/UserPages/SignUp.vue');
+    import ( /* webpackChunkName: "pages" */ '@/views/auth/SignUp.vue');
 const ForgotPassword = () =>
-    import ( /* webpackChunkName: "pages" */ '@/views/UserPages/ForgotPassword.vue');
+    import ( /* webpackChunkName: "pages" */ '@/views/auth/ForgotPassword.vue');
 
-//Settings
+//settings
 const Settings = () =>
-    import ( /* webpackChunkName: "pages" */ '@/views/Settings/Settings.vue');
+    import ( /* webpackChunkName: "pages" */ '@/views/settings/settings.vue');
 
 
 let id;
@@ -70,7 +70,7 @@ const routes = [{
     },
 
   {
-    path: '/UserManagement/user',
+    path: '/user/user',
     name: 'User',
     component: User
   },

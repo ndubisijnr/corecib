@@ -1,13 +1,10 @@
-//import { mapState, mapActions } from 'vuex';
 import AuthService from "../../service/AuthService";
-// import swal from 'sweetalert2'
 import router from "../../routes/router";
 import EnrollmentRequest from "@/model/request/enrollmentRequest";
 import EnrollmentResponse from "@/model/reponse/enrollmentResponse";
 import OrganizationService from "../../service/OrganizationService";
 import ApikeyService from "../../service/ApikeyService";
 import Swal from "sweetalert2";
-import { Icon } from "element-ui";
 
 export const state = {
   token: null,

@@ -1,6 +1,5 @@
 import DisputeService from "../../service/DisputeService";
 
-
 export const state = {
   token: null,
   loading: false,
@@ -12,11 +11,8 @@ export const state = {
 
 export const getters = {
   UserToken: state => {
-    // console.log("getter getTok")
     return localStorage.getItem('token')
   },
-
-
 }
 
 export const mutations = {
