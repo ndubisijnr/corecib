@@ -29,7 +29,7 @@
                 class="form-control"
                 name="email"
                 placeholder="businessname@gmail.com"
-                v-model="model.username"
+                v-model="model.AuthenticationRequest.login.email"
                 required
               />
               <label for="floatingInput">Email address</label>
@@ -40,7 +40,7 @@
                 class="form-control"
                 name="password"
                 placeholder="XXXXX"
-                v-model="model.password"
+                v-model="model.AuthenticationRequest.login.password"
                 id="pwd"
                 required
               />
@@ -90,7 +90,7 @@
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
-import AuthService from "../../service/AuthService";
+import AuthenticationRequest from "../../model/request/AuthRequest";
 
 export default {
   components: {
@@ -98,12 +98,8 @@ export default {
   },
   data() {
     return {
-      model: {
-        username: "",
-        password: "",
-        // bankCode:'',
-        rememberMe: false,
-      },
+      model: AuthenticationRequest.login,
+      // model: {rememberMe: false},
       notifications: {
         topCenter: false,
       },

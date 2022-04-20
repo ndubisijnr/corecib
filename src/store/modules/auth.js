@@ -1,7 +1,6 @@
 import AuthService from "../../service/AuthService";
 import router from "../../routes/router";
-import EnrollmentRequest from "@/model/request/enrollmentRequest";
-import EnrollmentResponse from "@/model/reponse/enrollmentResponse";
+import AuthenticationRequest from "../../model/request/AuthRequest";
 import OrganizationService from "../../service/OrganizationService";
 import ApikeyService from "../../service/ApikeyService";
 import Swal from "sweetalert2";
@@ -13,7 +12,7 @@ export const state = {
   apiKey: {},
   otp: "",
   enrollForm: "first",
-  response: new EnrollmentResponse().enrollmentDataResponse(),
+  response: {},
   userInfo: {},
   organisation: {},
   errors: null,
@@ -110,7 +109,7 @@ export const actions = {
     }
   },
 
-  completeEnrollment: ({ commit, dispatch, rootState, state }, payload) => {
+  completeEnrollment: ({ commit, dispatch, rootState, state }, payload = new AuthenticationRequest.completeEnrollment) => {
     commit("updateAuthLoading", true)
     commit("updateResponse", {});
     commit("updateError", null);
@@ -165,7 +164,7 @@ export const actions = {
     });
 
   },
-  initialEnrollment: ({ commit, dispatch, rootState, state }, payload = new EnrollmentRequest().enrollmentRequest()) => {
+  initialEnrollment: ({ commit, dispatch, rootState, state }, payload = new AuthenticationRequest.initiateEnrollment) => {
     commit("updateAuthLoading", true)
     commit("updateResponse", {});
     commit("updateError", null);
@@ -189,7 +188,7 @@ export const actions = {
         // return Promise.reject(error)
       });
   },
-  logon: ({ commit, dispatch, rootState }, payload) => {
+  logon: ({ commit, dispatch, rootState }, payload = new AuthenticationRequest.login) => {
     commit("updateAuthLoading", true)
     commit("updateError", null);
     commit("updateSuccess", null);
@@ -206,16 +205,14 @@ export const actions = {
           commit("updateUserInfo", responseData);
           router.push({ name: "GetStarted" })
 
-          let paylaod2 = {
-            apikeyOrganisationId: responseData.customerId
-          }
-          commit("updateSuccess", responseData.responseMessage);
-          return ApikeyService.callReadApiKey(paylaod2).then(response2 => {
-            commit("updateApiKey", response2.data.data)
-            commit("updateAuthLoading", false);
-          }).then(() => {
-          })
-
+          // let paylaod2 = {
+          //   apikeyOrganisationId: responseData.customerId
+          // }
+          // commit("updateSuccess", responseData.responseMessage);
+          // return ApikeyService.callReadApiKey(paylaod2).then(response2 => {
+          //   commit("updateApiKey", response2.data.data)
+          //   commit("updateAuthLoading", false);
+          // })
         } 
         else {
           commit("updateAuthLoading", false);

@@ -5,16 +5,16 @@ function resolveSrc(_path) {
 }
 // vue.config.js
 module.exports = {
+  chainWebpack: config => {
+    config.plugin("copy").tap(([pathConfigs]) => {
+      pathConfigs.unshift({
+        from: "config",
+        to: "config"
+      });
+      return [pathConfigs]})
+  },
   lintOnSave: true,
   configureWebpack: {
-    chainWebpack: config => {
-      config.plugin("copy").tap(([pathConfigs]) => {
-        pathConfigs.unshift({
-          from: "config",
-          to: "config"
-        });
-        return [pathConfigs]})
-    },
     // Set up all the aliases we use in our app.
     resolve: {
       alias: {

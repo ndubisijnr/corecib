@@ -1,4 +1,5 @@
 import VirtualAccountService from "../../service/VirtualAccountService"
+import VirtualAccountRequest from "../.../model/VirtualAccountRequest"
 
 export const state = {
   loading: false,
@@ -28,7 +29,7 @@ export const mutations = {
 
 export const actions = {
 
-  readVirtualAcc: ({ commit, state, dispatch, rootState }, payload) => {
+  readVirtualAcc: ({ commit, state, dispatch, rootState }, payload = new VirtualAccountRequest.readVirtualAccountRequest) => {
     commit("updateLoading", true)
     commit("updateSuccess", "")
     commit("updateError", "")

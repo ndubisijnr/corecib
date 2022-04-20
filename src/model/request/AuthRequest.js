@@ -1,4 +1,4 @@
-class EnrollmentRequest {
+class AuthenticationRequest {
     static initiateEnrollment = {
         customerCountry: null,
         customerBusinessName: null,
@@ -60,3 +60,5 @@ class EnrollmentRequest {
     }
 
 }
+
+export default AuthenticationRequest

@@ -1,12 +1,12 @@
 import ApikeyService from "../../service/ApikeyService";
+import ApiKeyRequest from "../../model/request/ApiKeyRequest"
+import ApiKeyReponse from "../../model/reponse/ApiKeyResponse";
+import Swal from "sweetalert2";
+
 
 export const state = {
-  token: null,
   loading:false,
-  success:"",
-  error: "",
-  readApikey: {},
-  response:{}
+  apiKey: ApiKeyReponse.readByOrganisationId
 }
 
 export const getters = {
@@ -19,62 +19,44 @@ export const getters = {
 }
 
 export const mutations = {
-
-  updateToken: (state, payload) => {
-    state.token = payload
-  },
   updateLoading: (state, payload) => {
     state.token = payload
   },
-  updateReadApikey: (state, payload) => {
-    state.readApikey = payload
-  },
-  updateSuccess: (state, payload) => {
-    state.success= payload
-  },
-  updateError: (state, payload) => {
-    state.errors = payload
-  },
-  updateResponse: (state, payload) => {
-    state.response = payload
-  },
+  updateApikey: (state, payload) => {
+    state.apiKey = payload
+  }
 
 }
 
 export const actions = {
 
-  readApiKey:({commit, dispatch, rootState}, payload) =>{
-    commit("updateLoading", true)
-    commit("updateSuccess", "")
-    commit("updateError", "")
-    commit("updateReadApikey", {})
-
-    return ApikeyService.callReadApiKey(payload).then(response => {
+  updateApikey:({commit, dispatch, state}, payload = ApiKeyRequest.readApiKey) =>{
+    if(state.apiKey.responseCode != "00") commit("updateLoading", true)
+    return ApikeyService.callReadApiKeyOrgansation(payload).then(response => {
       let responseData = response.data
       commit("updateLoading",false)
-      commit("updateResponse", responseData)
       if(responseData.responseCode === "00"){
-        commit("updateResponse", responseData.responseMessage)
-        commit("updateReadApikey", responseData.data)
-        console.log(state.readApikey)
-      }
-      else if(responseData.responseCode === "0P"){
-        commit("updateLoading",false)
-        commit("updateError", responseData.responseMessage)
-        console.log(responseData.responseMessage)
-      }
-      else{
-        commit("updateLoading", false)
-        commit("updateError", responseData.responseMessage)
-        console.log(responseData.responseMessage)
+        commit("updateReadApikey", responseData)
       }
     })
       .catch(error => {
-        commit("updateError", error)
         console.log(error)
       })
+  },
 
-},
+  create:({commit, dispatch, state}, payload = ApiKeyRequest.generateApiKey) =>{
+    commit("updateLoading", true)
+    return ApikeyService.callGenerateApiKey(payload).then(response => {
+      let responseData = response.data
+      commit("updateLoading",false)
+      if(responseData.responseCode === "00"){
+        Swal.fire({icon:'success'})
+      }
+    })
+      .catch(error => {
+        console.log(error)
+      })
+  },
 
 }
 
