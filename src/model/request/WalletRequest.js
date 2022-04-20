@@ -1,7 +1,7 @@
 
 class WalletRequest {
 
-    static WalletCreate={
+    static walletCreate={
         bvn: null,
         email: null,
         firstName: null,
@@ -13,27 +13,27 @@ class WalletRequest {
         maximumBalance: null
     }
 
-    static BalanceEnquiry={
+    static balanceEnquiry={
         accountNumber: null
     }
 
-    static RetrieveWallet={
+    static retrieveWallet={
         accountNumber: null
     }
 
-    static ReadWallet={
+    static readWallet={
         startDate: null,
         endDate: null,
         searchItem: null,
         page: null
     }
 
-    static ReadWalletTransaction={
+    static readWalletTransaction={
         accountNumber: null,
         page: null
     }
 
-    static ReadAllWalletTransaction={
+    static readAllWalletTransaction={
         startDate: null,
         endDate: null,
         searchItem: null,

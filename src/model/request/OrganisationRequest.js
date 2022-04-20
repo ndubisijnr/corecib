@@ -1,7 +1,7 @@
 
 class OrganisationRequest{
 
-    static UpdateOrganisation={
+    static updateOrganisation={
         organisationId: null,
         organisationAddress: null,
         organisationName: null,
@@ -26,7 +26,7 @@ class OrganisationRequest{
         organisationTin: null
     }
 
-    static TransactionEnquiry={
+    static transactionEnquiry={
         bankCode: null,
         source: null,
         customerId: null,
@@ -35,16 +35,16 @@ class OrganisationRequest{
         queryType: null
     }
 
-    static BalanceEnquiry={
+    static balanceEnquiry={
         accountBankCode: null,
         accountNumber: null
     }
 
-    static ReadOrganisationById={
+    static readOrganisationById={
         organisationId: null
     }
 
-    static ReadUsersByOrganisationId={
+    static readUsersByOrganisationId={
         organisationId: null
     }
 

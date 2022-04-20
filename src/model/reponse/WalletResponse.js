@@ -1,13 +1,13 @@
 class WalletResponse {
 
-    static WalletCreate={
+    static walletCreate={
         customerId: null,
         accountNumber: null,
         responseCode: null,
         responseMessage: null
     }
 
-    static BalanceEnquiry={
+    static balanceEnquiry={
         responseCode: null,
         responseMessage: null,
         data:[]
@@ -25,7 +25,7 @@ class WalletResponse {
         accountNumber:null,
     }
 
-    static RetrieveWallet={
+    static retrieveWallet={
         accountId: null,
         accountCustomerId: null,
         accountNumber: null,
@@ -38,7 +38,7 @@ class WalletResponse {
         responseMessage: null
     }
 
-    static ReadWallet={
+    static readWallet={
         accountId:null,
         accountCustomerId:null,
         accountNumber:null,
@@ -54,7 +54,7 @@ class WalletResponse {
         responseMessage: null
     }
 
-    static ReadWalletTransaction={
+    static readWalletTransaction={
         amount:null,
         counterPartyService:null,
         transactionDate:null,
@@ -76,7 +76,7 @@ class WalletResponse {
         responseMessage: null
     }
 
-    static ReadAllWalletTransaction={
+    static readAllWalletTransaction={
         amount:null,
         counterPartyService:null,
         transactionDate:null,

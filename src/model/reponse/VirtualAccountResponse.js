@@ -1,6 +1,6 @@
 class VirtualAccountResponse {
 
-    static CreateVirtualAccount={
+    static createVirtualAccount={
         accountNumber: null,
         accountName: null,
         accountParent: null,
@@ -9,14 +9,14 @@ class VirtualAccountResponse {
         responseMessage: null
     }
 
-    static RetrieveVirtualAccount={
+    static retrieveVirtualAccount={
         accountId: null,
         accountCurrency: null,
         responseCode: null,
         responseMessage: null
     }
 
-    static ReadVirtualAccount={
+    static readVirtualAccount={
         responseCode: null,
         responseMessage: null,
         data:[]
@@ -37,7 +37,7 @@ class VirtualAccountResponse {
         responseMessage: null
     }
 
-    static ReadVirtualAccountTransactionList={
+    static readVirtualAccountTransactionList={
         responseCode: null,
         responseMessage: null,
         data:[]
@@ -56,7 +56,7 @@ class VirtualAccountResponse {
         responseMessage: null
     }
 
-    static GetChennelCodes={
+    static getChennelCodes={
         responseCode: null,
         responseMessage: null,
         data:[]

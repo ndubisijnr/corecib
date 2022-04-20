@@ -1,12 +1,12 @@
 
 class OrganisationResponse{
 
-    static UpdateOrganisation={
+    static updateOrganisation={
         responseCode: null,
         responseMessage: null
     }
 
-    static TransactionEnquiry={
+    static transactionEnquiry={
         responseCode: null,
         responseMessage: null,
         data:[]
@@ -28,12 +28,12 @@ class OrganisationResponse{
         responseMessage: null
     }
 
-    static BalanceEnquiry={
+    static balanceEnquiry={
         responseCode: null,
         responseMessage: null
     }
 
-    static ReadOrganisationById={
+    static readOrganisationById={
         organisationId:null,
         organisationCustomerId:null,
         organisationAccountNumber:null,
@@ -74,7 +74,7 @@ class OrganisationResponse{
         responseMessage: null
     }
 
-    static ReadUsersByOrganisationId={
+    static readUsersByOrganisationId={
         organisationId:null,
         organisationCustomerId:null,
         organisationAccountNumber:null,

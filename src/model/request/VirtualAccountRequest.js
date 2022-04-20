@@ -1,7 +1,7 @@
 
 class VirtualAccountRequest {
 
-    static CreateVirtualAccount={
+    static createVirtualAccount={
         firstName: null,
         lastName: null,
         address: null,
@@ -13,19 +13,19 @@ class VirtualAccountRequest {
         dob: null
     }
 
-    static RetrieveVirtualAccount={
+    static retrieveVirtualAccount={
         accountNumber: null,
         channelBankCode: null
     }
 
-    static ReadVirtualAccount={
+    static readVirtualAccount={
         startDate: null,
         endDate: null,
         searchItem: null,
         page: null
     }
 
-    static ReadVirtualAccountTransactionList={
+    static readVirtualAccountTransactionList={
         address: null,
         bvn: null,
         dob: null,
@@ -36,7 +36,7 @@ class VirtualAccountRequest {
         phone: null
     }
 
-    static GetChennelCodes={
+    static getChennelCodes={
         requestType: null
     }
 
