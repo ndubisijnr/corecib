@@ -23,35 +23,13 @@ export const apiClient2 = axios.create({
         //"Access-Control-Allow-Origin": "*",
     }
 });
-// https://cors-anywhere.herokuapp.com
-
-// export const apiClient3 = axios.create({
-//     baseURL: imageUpload,
-//     withCredentials: false,
-//     headers: {
-//         //Accept: "application/json",
-//         "Content-Type": "application/json",
-//         //"Access-Control-Allow-Origin": "*",
-//     }
-// });
 
 
 
 apiClient.interceptors.request.use(config => {
-    // console.log("Axios Interceptor Config ==>", config);
-    // const token = store.getters.getToken;
-    // const tok = store.getters.getUserToken; //["auth/getUserToken"];
     const token2 = localStorage.getItem("token")
-    //console.log(token);
-    console.log("////////////////////");
-    // console.log(token);
-    // console.log(tok)
-        // console.log("INTERCEPTOR TOKEN", token)
-        // console.log("INTERCEPTOR  TOK ==>", tok)
-    // config.headers.Authorization = (token == null) ? token : token2;
     config.headers.Authorization = token2;
     config.headers.mid = localStorage.getItem("orginazation");
-
     return config
 })
 
