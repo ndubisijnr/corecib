@@ -1,19 +1,54 @@
-import { apiClient } from "./BaseService";
+import apiClient from "./BaseService";
+import apiClient1 from "./BaseService";
+
 
 export default {
-    callReadAllTransactions(payload){
-      return apiClient.post('wallet/read-all-transaction', payload)
+
+    callWalletCreateApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        payload.orgId = localStorage.orgID;
+        if (localStorage._countryId != null)
+            payload.countryId = localStorage._countryId;
+        return apiClient1.appClient.post("/wallet/create", payload);
     },
-    callBalanceEnquiry(payload){
-      return apiClient.post('wallet/balance-enquiry', payload)
+
+    callBalanceEnquiryApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        payload.orgId = localStorage.orgID;
+        if (localStorage._countryId != null)
+            payload.countryId = localStorage._countryId;
+        return apiClient1.appClient.post("/wallet/balance-enquiry", payload);
     },
-    callReadWallet(payload){
-      return apiClient.post('wallet/read', payload)
+
+    callRetrieveWalletApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        payload.orgId = localStorage.orgID;
+        if (localStorage._countryId != null)
+            payload.countryId = localStorage._countryId;
+        return apiClient1.appClient.post("/wallet/retrieve", payload);
     },
-    callWalletRetrieve(payload){
-      return apiClient.post('wallet/retrieve', payload)
+
+    callReadWalletApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        payload.orgId = localStorage.orgID;
+        if (localStorage._countryId != null)
+            payload.countryId = localStorage._countryId;
+        return apiClient1.appClient.post("/wallet/read", payload);
     },
-    callReadWalletTrans(payload){
-      return apiClient.post('wallet/read-wallet-transaction', payload)
+
+    callReadWalletTransactionApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        payload.orgId = localStorage.orgID;
+        if (localStorage._countryId != null)
+            payload.countryId = localStorage._countryId;
+        return apiClient.appClient.post("/wallet/read-wallet-transaction", payload);
     },
-  }
+
+    callReadAllWalletTransactionApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        payload.orgId = localStorage.orgID;
+        if (localStorage._countryId != null)
+            payload.countryId = localStorage._countryId;
+        return apiClient.appClient.post("/wallet/read-all-transaction", payload);
+    },
+};
