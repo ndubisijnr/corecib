@@ -1,4 +1,5 @@
 class EnrollmentResponse{
+
   enrollmentResponse(){
     return {
       responseCode: null,
@@ -6,8 +7,9 @@ class EnrollmentResponse{
       data: []
     }
   }
+
   enrollmentDataResponse(){
-        return{
+    return{
           customerCountry: null,
           customerBusinessName: null,
           customerCountryCode: "+234",
@@ -20,6 +22,7 @@ class EnrollmentResponse{
           responseMessage:null
         }
   }
+
 }
 
 export default EnrollmentResponse

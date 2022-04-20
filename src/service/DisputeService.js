@@ -14,33 +14,39 @@ const apiClient = axios.create({
     }
 });
 
-const apiClient2 = axios.create({
-    baseURL: qgBaseUrl,
-    withCredentials: false,
-    headers: {
-        //Accept: "application/json",
-        "Content-Type": "application/json",
-        //"Access-Control-Allow-Origin": "*",
-    }
-});
 
 export default {
-    callCreateDisputeApi(payload){
-      return apiClient.post('/dispute/create', payload)
-  
-    },
-    callReadDisputeApi(payload){
-      return apiClient.post('/dispute/read', payload)
 
+    callCreateDisputeApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        payload.orgId = localStorage.orgID;
+        if (localStorage._countryId != null)
+            payload.countryId = localStorage._countryId;
+        return apiClient.appClient.post("/dispute/create",payload);
     },
-    callReadSingleDisputeApi(payload){
-      return apiClient.post('/dispute/read-by-id', payload)
 
+    callReadDisputeApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        payload.orgId = localStorage.orgID;
+        if (localStorage._countryId != null)
+            payload.countryId = localStorage._countryId;
+        return apiClient.appClient.post("/dispute/read",payload);
     },
-    callUpdateDisputeApi(payload){
-      return apiClient.post('/dispute/update', payload)
-  
-    }
 
-  }
-  
+    callReadSingleDisputeApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        payload.orgId = localStorage.orgID;
+        if (localStorage._countryId != null)
+            payload.countryId = localStorage._countryId;
+        return apiClient.appClient.post("/dispute/read-by-id",payload);
+    },
+
+    callUpdateDisputeApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        payload.orgId = localStorage.orgID;
+        if (localStorage._countryId != null)
+            payload.countryId = localStorage._countryId;
+        return apiClient.appClient.post("/dispute/update",payload);
+    },
+
+};
