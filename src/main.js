@@ -1,27 +1,9 @@
-/*!
-
-=========================================================
-* Vue Argon Dashboard PRO - v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-
-* Coded by www.creative-tim.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import Vue from 'vue';
 import DashboardPlugin from './plugins/dashboard-plugin';
 import store from './store/store';
 import BootstrapVue from "bootstrap-vue";
-//import Notifications from 'vue-notification';
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
-
 import { Select, Option, DatePicker, Tabs, TabPane } from 'element-ui'
 import { Datetime } from 'vue-datetime'
 import 'vue-datetime/dist/vue-datetime.css'
@@ -31,11 +13,8 @@ import vueAwesomeCountdown from 'vue-awesome-countdown'
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import VueCountryCode from "vue-country-code";
-
-
-
-
 import App from './App.vue';
+import './filters'
 
 // router setup
 import router from './routes/router';
@@ -54,6 +33,16 @@ Vue.use(Option);
 Vue.use(DatePicker);
 Vue.use(Tabs);
 Vue.use(TabPane);
+
+const moment = require('moment')
+require('moment/locale/en-gb')
+Vue.use(require('vue-moment'), { moment })
+Vue.prototype.moment = moment
+Vue.filter('formatDate', function(value) {
+    if (value) {
+        return moment(String(value)).format('DD-MMM-YYYY')
+    }
+});
 
 /* eslint-disable no-new */
 new Vue({

@@ -4,9 +4,9 @@ import WalletResponse from "../../model/reponse/WalletResponse"
 
 export const state = {
   loading: false,
-  allwallettransactions: WalletResponse.readAllWalletTransaction,
-  balance_enquiry: WalletResponse.balanceEnquiry,
-  allwallet: WalletResponse.readWallet,
+  walletTransactions: WalletResponse.readAllWalletTransaction,
+  balanceEnquiry: WalletResponse.balanceEnquiry,
+  wallets: WalletResponse.readWallet,
   retrievewallet: WalletResponse.retrieveWallet,
   wallettransactions: WalletResponse.readWalletTransaction
 }
@@ -26,20 +26,20 @@ export const mutations = {
     state.wallettransactions = payload
   },
   updateAllWaletTransaction: (state, payload) => {
-    state.allwallettransactions = payload
+    state.walletTransactions = payload
   },
   updateBalanceEnquiry: (state, payload) => {
-    state.balance_enquiry = payload
+    state.balanceEnquiry = payload
   },
   updateWallet: (state, payload) => {
-    state.allwallet = payload
+    state.allWallet = payload
   }
 }
 
 export const actions = {
 
   updateAllWaletTransaction: ({ commit, state }, payload = WalletRequest.readAllWalletTransaction) => {
-    if (state.allwallettransactions.data.length > 1) commit("updateLoading", false)
+    if (state.walletTransactions.data.length > 1) commit("updateLoading", false)
     return WalletService.callReadAllTransactions(payload).then(response => {
       let responseData = response.data
       if (responseData.responseCode === "00") {
@@ -52,7 +52,7 @@ export const actions = {
   },
 
   updateBalanceEnquiry: ({ commit, state }, payload = WalletRequest.balanceEnquiry) => {
-    if (state.balance_enquiry.responsecode != "00") commit("updateLoading", true)
+    if (state.balanceEnquiry.responsecode != "00") commit("updateLoading", true)
     return WalletService.callBalanceEnquiry(payload).then(response => {
       let responseData = response.data
       if (responseData.responseCode === "00") {
@@ -65,7 +65,7 @@ export const actions = {
   },
 
   updateWallet: ({ commit, state }, payload = WalletRequest.readWallet) => {
-    if (state.allwallet.data.length < 1) commit("updateLoading", true)
+    if (state.allWallet.data.length < 1) commit("updateLoading", true)
     return WalletService.callReadWallet(payload).then(response => {
       let responseData = response.data
       if (responseData.responseCode === "00") {
@@ -79,7 +79,7 @@ export const actions = {
 
 
   updateWalletTransactions: ({ commit, state }, payload = WalletRequest.readAllWalletTransaction) => {
-    if (state.allwallet.length < 1) commit("updateLoading", true)
+    if (state.wallets.length < 1) commit("updateLoading", true)
     return WalletService.callReadWalletTrans(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
