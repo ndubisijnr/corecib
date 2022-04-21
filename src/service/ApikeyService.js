@@ -3,9 +3,9 @@ import { apiClient } from "./BaseService";
 
 export default {
   callReadApiKeyOrgansation(payload){
-    return apiClient.post('api-key/read-by-organisation-id', payload)
+    return apiClient.appClient.post('api-key/read-by-organisation-id', payload)
   },
   callGenerateApiKey(payload){
-    return apiClient.post('api-key/create', payload)
+    return apiClient.appClient.post('api-key/create', payload)
   }
 }

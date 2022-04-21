@@ -26,19 +26,6 @@ class WalletResponse {
     }
 
     static retrieveWallet={
-        accountId: null,
-        accountCustomerId: null,
-        accountNumber: null,
-        accountName: null,
-        accountCurrency: null,
-        accountBalance: null,
-        accountStatus: null,
-        accountLedgerBalance: null,
-        responseCode: null,
-        responseMessage: null
-    }
-
-    static readWallet={
         accountId:null,
         accountCustomerId:null,
         accountNumber:null,
@@ -54,29 +41,7 @@ class WalletResponse {
         responseMessage: null
     }
 
-    static readWalletTransaction={
-        amount:null,
-        counterPartyService:null,
-        transactionDate:null,
-        eventDate:null,
-        counterPartyBankCode:null,
-        contractReference:null,
-        paymentReference:null,
-        counterPartyAccountName:null,
-        drCr:null,
-        counterPartyBank:null,
-        counterPartyChannel:null,
-        accountName:null,
-        accountNumber:null,
-        counterPartyAccountNumber:null,
-        transactionType:null,
-        id:null,
-        narration:null,
-        responseCode: null,
-        responseMessage: null
-    }
-
-    static readAllWalletTransaction={
+    static walletTransaction={
         amount:null,
         counterPartyService:null,
         transactionDate:null,

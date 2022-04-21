@@ -54,12 +54,3 @@ export const actions = {
   },
 
 }
-
-
-export default {
-  state,
-  actions,
-  mutations,
-  getters
-};
-

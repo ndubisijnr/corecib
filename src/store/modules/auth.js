@@ -4,364 +4,159 @@ import AuthenticationRequest from "../../model/request/AuthRequest";
 import OrganizationService from "../../service/OrganizationService";
 import ApikeyService from "../../service/ApikeyService";
 import Swal from "sweetalert2";
+import AuthenticationResponse from "../../model/reponse/AuthenticationResponse";
 
 export const state = {
   token: null,
-  resendOpt: false,
   loading: false,
-  apiKey: {},
-  otp: "",
-  enrollForm: "first",
-  response: {},
-  userInfo: {},
-  organisation: {},
-  errors: null,
-  success: null,
-  userOrganisations: [],
-  nan: "old",
-  switchmode: false
-
+  userInfo: AuthenticationResponse.login,
+  screen: "register",
+  passwordResetScreen: "email",
+  stage: "dev"
 }
 export const getters = {
-  getResponse: state => {
-    // console.log("getter getTok")
-    return state.response
-  },
-  getUserInfo: state => {
-    // console.log("getter getTok")
-    return state.userInfo
-  },
-  getTok: state => {
-    // console.log("getter getTok")
-    return state.token
-  },
-  getApi: state => {
-    // console.log("getter getTok")
-    return state.readApikey
-  },
-  getUserToken: state => {
-    // console.log("getter getTok")
-    return localStorage.getItem('token')
-  },
-  organizationId: state => {
-    return state.userInfo
-  }
+  getUserInfo: state => { return state.userInfo },
+  getToken: state => { return state.token },
+  getUserToken: state => { return localStorage.getItem('token') },
+  getOrganizationId: state => { return localStorage.getItem('organizationId') }
 }
 export const mutations = {
-  updateResponse: (state, payload) => {
-    state.response = payload
-  },
-  updateNan: (state, payload) => {
-    state.nan = payload
-  },
-  updateApiKey: (state, paylaod) => {
-    state.apiKey = paylaod
-  },
-  updateSwitchmode: (state, payload) => {
-    state.switchmode = payload
-  },
-  updateOtp: (state, payload) => {
-    state.otp = payload
-  },
-  updateUserOrganisations: (state, payload) => {
-    state.userOrganisations = payload
-  },
-  updateAuthLoading: (state, payload) => {
-    state.loading = payload
-  },
-
-  updateResendOtp: (state, payload) => {
-    state.payload = payload
-  },
-
-  updateOrganisation: (state, payload) => {
-    state.organisation = payload
-  },
-  updateAuthToken: (state, payload) => {
-    // console.log("mutation updateAuthToken ==>>", payload)
-    state.token = payload
-  },
-  updateEnrollForm: (state, payload) => {
-    // console.log("mutation updateAuthToken ==>>", payload)
-    state.enrollForm = payload
-  },
-  updateUserInfo: (state, payload) => {
-    console.log("Userree");
-    state.userInfo = payload;
-  },
-  updateError: (state, payload) => {
-    state.errors = payload
-  },
-  updateSuccess: (state, payload) => {
-    state.success = payload
-  },
-
+  updateStage: (state, payload) => { state.stage = payload },
+  updateLoading: (state, payload) => { state.loading = payload },
+  updateToken: (state, payload) => { state.token = payload },
+  updateUserInfo: (state, payload) => { state.userInfo = payload; },
+  updateScreen: (state, payload) => { state.screen = payload; },
+  updatePasswordResetScreen: (state, payload) => { state.passwordResetScreen = payload; },
 }
 export const actions = {
-
-  switchMode: ({ commit }, paylaod) => {
-    if (paylaod == false) {
-      commit("updateSwitchmode", true)
-      console.log('true')
-    } else {
-      commit("updateSwitchmode", false)
-      console.log('false')
-    }
-  },
-
-  completeEnrollment: ({ commit, dispatch, rootState, state }, payload = new AuthenticationRequest.completeEnrollment) => {
-    commit("updateAuthLoading", true)
-    commit("updateResponse", {});
-    commit("updateError", null);
-
-    return AuthService.callCompleteEnrollmentApi(payload).then(response => {
-      let responseData = response.data;
-      if (responseData.responseCode === "00") {
-        commit("updateAuthLoading", false)
-        commit("updateResponse", payload)
-        commit("updateSuccess", responseData.responseMessage)
-        Swal.fire({
-          title:responseData.responseMessage,
-          icon:'success',
-        }).then(() => {
-          router.push({name:"Dashboard layout"})
-         
-        })
-      }
-      else {
-        commit("updateAuthLoading", false)
-        commit("updateError", responseData.responseMessage)
-      }
-    }).catch((error) => {
-      commit("updateAuthLoading", false);
-      commit("updateError", error);
-      // throw error;
-      // return Promise.reject(error)
-    });
-  },
-
-
-  resendOtp: ({ commit, dispatch, rootState, state }, payload) => {
-    commit("updateSuccess", null);
-    commit("updateError", null);
-    commit("updateAuthLoading", true)
-    return AuthService.callResendOtpApi(payload).then(response => {
-      let responseData = response.data
-      if (responseData.responseCode === "00") {
-        commit("updateAuthLoading", false)
-        commit("updateSuccess", responseData.responseMessage)
-        commit("updateEnrollForm", "second")
-      }
-      else {
-        commit("updateError", responseData.responseMessage)
-        commit("updateAuthLoading", false)
-      }
-    }).catch((error) => {
-      commit("updateAuthLoading", false);
-      commit("updateError", error);
-      // throw error;
-      // return Promise.reject(error)
-    });
-
-  },
-  initialEnrollment: ({ commit, dispatch, rootState, state }, payload = new AuthenticationRequest.initiateEnrollment) => {
-    commit("updateAuthLoading", true)
-    commit("updateResponse", {});
-    commit("updateError", null);
+  initialEnrollment: ({ commit }, payload = AuthenticationRequest.initiateEnrollment) => {
+    commit("updateLoading", true)
     return AuthService.callInitiateEnrollmentApi(payload).then(response => {
       let responseData = response.data;
+      commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        commit("updateAuthLoading", false)
-        commit("updateEnrollForm", 'second')
-        commit("updateResponse", payload)
-        commit("updateSuccess", responseData.responseMessage)
+        commit("updateScreen", 'otp')
       } else {
-        commit("updateAuthLoading", false)
-        commit("updateError", responseData.responseMessage)
+        Swal.fire({ text:responseData.responseMessage, icon:'error',}).then(()=>{})
       }
-
-    })
-      .catch((error) => {
-        commit("updateAuthLoading", false);
-        commit("updateError", error);
-        // throw error;
-        // return Promise.reject(error)
-      });
+    }).catch((error) => {
+      commit("updateLoading", false);
+      console.log(error)
+    });
   },
-  logon: ({ commit, dispatch, rootState }, payload = new AuthenticationRequest.login) => {
-    commit("updateAuthLoading", true)
-    commit("updateError", null);
-    commit("updateSuccess", null);
-    // console.log(payload.username);
+
+  completeEnrollment: ({ commit }, payload = AuthenticationRequest.completeEnrollment) => {
+    commit("updateLoading", true)
+    return AuthService.callCompleteEnrollmentApi(payload).then(response => {
+      let responseData = response.data;
+      commit("updateLoading", false)
+      if (responseData.responseCode === "00") {
+        Swal.fire({ text:responseData.responseMessage, icon:'success',})
+            .then(() => {  router.push({name:"Dashboard layout"}) })
+      } else {
+        Swal.fire({ text:responseData.responseMessage, icon:'error',}).then(()=>{})
+      }
+    }).catch((error) => {
+      commit("updateLoading", false);
+      console.log(error)
+    });
+  },
+
+  logon: ({ commit }, payload = AuthenticationRequest.login) => {
+    commit("updateLoading", true)
     return AuthService.callLogonApi(payload)
       .then(response => {
+        commit("updateLoading", false)
         let responseData = response.data;
         if (responseData.responseCode === "00") {
           localStorage.token = responseData.token;
-          localStorage.orginazation = responseData.organisations[0].organisationId
-          localStorage.username = responseData.customerFirstName;
-          commit("updateUserOrganisations", responseData.organisations);
-          commit("updateAuthToken", responseData.token);
+          commit("updateToken", responseData.token);
+          if (!localStorage.orginazationId) localStorage.orginazationId = responseData.organisations[0].organisationId
+          else{
+            if (responseData.organisations.filter(it => it.orginazationId === localStorage.orginazationId).length < 1)
+              localStorage.orginazationId = responseData.organisations[0].organisationId
+          }
           commit("updateUserInfo", responseData);
-          router.push({ name: "GetStarted" })
-
-          // let paylaod2 = {
-          //   apikeyOrganisationId: responseData.customerId
-          // }
-          // commit("updateSuccess", responseData.responseMessage);
-          // return ApikeyService.callReadApiKey(paylaod2).then(response2 => {
-          //   commit("updateApiKey", response2.data.data)
-          //   commit("updateAuthLoading", false);
-          // })
-        } 
-        else {
-          commit("updateAuthLoading", false);
-          commit("updateError", responseData.responseMessage);
-          console.log(responseData.responseMessage);
-          //swal('Error!', responseData.responseMessage, 'error').then();
-        }
-
-      })
-      .catch((error) => {
-        commit("updateAuthLoading", false);
-        commit("updateError", error);
+          router.push({name: "GetStarted"}).then(()=>{})
+         }
+        else Swal.fire({ text:responseData.responseMessage, icon:'error',}).then(()=>{})
+      }).catch((error) => {
+        commit("updateLoading", false);
         console.log(error)
       });
   },
 
-  revalidateUser: ({ commit, dispatch, rootState }, payload) => {
-    return AuthService.callRevalidateApi(payload).then(response => {
-      let responseData = response.data
-      if (responseData.responseCode === "00") {
-        commit("updateAuthLoading",)
-        commit("updateUserInfo", responseData)
-      }
-    }).catch(error => {
-      commit("updateError", error)
-    })
-  },
-  logOut: ({ commit, dispatch, rootState }, payload) => {
-    commit("updateAuthLoading", true)
-    //commit("updateResponse", {});
-    commit("updateError", null);
-    commit("updateSuccess", null);
-    console.log(payload);
-    //console.log(payload.username);
-    return AuthService.callLogOutApi(payload)
-      .then(response => {
-        let responseData = response.data;
-        commit("updateResponse", responseData);
-        if (responseData.responseCode === "00") {
-          localStorage.token = '';
-          localStorage.username = '';
-          commit("updateAuthToken", '');
-          commit("updateUserInfo", {});
-          // eslint-disable-next-line no-undef
-          //store.dispatch("bankList", { request: "banklist" }, { root: true })
-          /*   // eslint-disable-next-line no-unused-vars
-             .then(res => {*/
-          //dispatch("bankList", { request: "banklist" }, { root: false });
-          commit("updateAuthLoading", false);
-          console.log(responseData.responseMessage);
-          //commit("updateAuthLoading", false);
-          commit("updateSuccess", responseData.responseMessage);
-          //router.push('alternative');
-          router.push({ name: "Login" });
-
-        } else {
-          commit("updateAuthLoading", false);
-          commit("updateError", responseData.responseMessage);
-          console.log(responseData.responseMessage);
-          //swal('Error!', responseData.responseMessage, 'error').then();
-        }
-
-      })
-      .catch((error) => {
-        commit("updateAuthLoading", false);
-        commit("updateError", error);
-        // throw error;
-        // return Promise.reject(error)
-      });
-  },
-
-  initiatePasswordRest: ({ commit, dispatch, rootState }, payload) => {
-    commit("updateAuthLoading", true)
-    commit("updateError", null);
-    commit("updateSuccess", null);
-    return AuthService.callInitiatePasswordResetApi(payload).then(response => {
-      let responseData = response.data;
-      if (responseData.responseCode === "00") {
-        commit("updateAuthLoading", false)
-        commit("updateSuccess", responseData.responseMessage)
-        commit("updateEnrollForm", 'second')
-      }
-      else {
-        commit("updateAuthLoading", false)
-        commit("updateError", responseData.responseMessage)
-      }
-    })
-      .catch((error) => {
-        commit("updateAuthLoading", false);
-        commit("updateError", error);
-        // throw error;
-        // return Promise.reject(error)
-      });
-  },
-  completePasswordRest: ({ commit, dispatch, rootState }, payload) => {
-    commit("updateAuthLoading", true)
-    commit("updateError", null);
-    commit("updateSuccess", null);
-    return AuthService.callCompletePasswordResetApi(payload).then(response => {
-      let responseData = response.data;
-      if (responseData.responseCode === "00") {
-        commit("updateAuthLoading", false)
-        commit("updateSuccess", responseData.responseMessage)
-        setTimeout(() => {
-          router.push({ name: "Login" })
-        }, 2000)
-      }
-      else {
-        commit("updateAuthLoading", false)
-        commit("updateError", responseData.responseMessage)
-      }
-    })
-      .catch((error) => {
-        commit("updateAuthLoading", false);
-        commit("updateError", error);
-        // throw error;
-        // return Promise.reject(error)
-      });
-  },
-
-  switchOrganisation: ({ commit, dispatch, rootState }, paylaod) => {
-    commit("updateAuthLoading", true);
-    commit("updateError", null);
-    commit("updateSuccess", null);
-    return OrganizationService.callReadOrganisationByIdApi(paylaod).then(response => {
-      let responseData = response.data
-      if (responseData.responseCode == "00") {
-        commit("updateAuthLoading", false);
-        commit("updateNan", "new");
-        commit("updateOrganisation", responseData)
-        commit("updateSuccess", responseData.responseMessage);
-      }
-      else {
-        commit("updateAuthLoading", false);
-        commit("updateError", responseData.responseMessage);
-        console.log(state.errors)
-      }
+  resendOtp: ({ commit, dispatch, rootState, state }, payload) => {
+    commit("updateLoading", true)
+    return AuthService.callResendOtpApi(payload).then(response => {
+      commit("updateLoading", false)
     }).catch((error) => {
-      commit("updateAuthLoading", false);
-      commit("updateError", error);
-      // throw error;
-      // return Promise.reject(error)
+      commit("updateLoading", false);
+      console.log(error)
     });
   },
-}
 
-export default {
-  state,
-  actions,
-  mutations,
-  getters
-};
+  revalidateUser: ({ commit, dispatch, rootState }, payload) => {
+    commit("updateLoading", true)
+    return AuthService.callRevalidateApi(payload).then(response => {
+      let responseData = response.data
+      commit("updateLoading", false)
+      if (responseData.responseCode === "00") commit("updateUserInfo", responseData)
+    }).catch(error => { commit("updateLoading", false); console.log(error)  })
+  },
+
+  logOut: ({ commit, dispatch, rootState }, payload) => {
+    commit("updateLoading", true)
+    return AuthService.callLogOutApi(payload)
+      .then(() => {
+        commit("updateLoading", false)
+        localStorage.token = null;
+        commit("updateAuthToken", null);
+        commit("updateUserInfo", null);
+        commit("updateLoading", false);
+        router.push({ name: "Login" }).then(()=>{})
+      })
+      .catch((error) => {
+        commit("updateLoading", false);
+        console.log(error)
+      });
+  },
+
+  initiatePasswordReset: ({ commit, dispatch, rootState }, payload) => {
+    commit("updateLoading", true)
+    return AuthService.callInitiatePasswordResetApi(payload).then(response => {
+      let responseData = response.data;
+      commit("updateLoading", false)
+      if (responseData.responseCode === "00") {
+        commit("updateSuccess", responseData.responseMessage)
+        commit("passwordResetScreen", 'otp')
+      }
+      else Swal.fire({ text:responseData.responseMessage, icon:'error',}).then(()=>{})
+    }).catch((error) => {
+      commit("updateLoading", false);
+      console.log(error);
+    });
+  },
+
+  completePasswordReset: ({ commit, dispatch, rootState }, payload) => {
+    commit("updateLoading", true)
+    return AuthService.callCompletePasswordResetApi(payload).then(response => {
+      let responseData = response.data;
+      commit("updateLoading", false)
+      if (responseData.responseCode === "00") {
+        router.push({ name: "Login" }).then(()=>{})
+      }
+      else {
+        Swal.fire({ text:responseData.responseMessage, icon:'error',}).then(()=>{})
+      }
+    }).catch((error) => {
+      commit("updateLoading", false);
+      console.log(error)
+    });
+  },
+
+  switchOrganisation: ({ commit }, paylaod) => {
+    localStorage.organisationId = paylaod.organisationId
+    location.reload()
+  },
+}

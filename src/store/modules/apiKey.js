@@ -9,15 +9,6 @@ export const state = {
   apiKey: ApiKeyReponse.readByOrganisationId
 }
 
-export const getters = {
-  UserToken: state => {
-    // console.log("getter getTok")
-    return localStorage.getItem('token')
-  },
-
-
-}
-
 export const mutations = {
   updateLoading: (state, payload) => {
     state.token = payload
@@ -50,7 +41,9 @@ export const actions = {
       let responseData = response.data
       commit("updateLoading",false)
       if(responseData.responseCode === "00"){
-        Swal.fire({icon:'success'})
+        Swal.fire({ text:responseData.responseMessage, icon:'success'}).then(()=>{})
+      }else{
+        Swal.fire({ text:responseData.responseMessage, icon:'error'}).then(()=>{})
       }
     })
       .catch(error => {
@@ -59,12 +52,3 @@ export const actions = {
   },
 
 }
-
-
-export default {
-  state,
-  actions,
-  mutations,
-  getters
-};
-
