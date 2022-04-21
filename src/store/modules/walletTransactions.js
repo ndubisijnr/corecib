@@ -1,16 +1,14 @@
-import router from "../../routes/router"
 import WalletService from "../../service/WalletService"
+import WalletRequest from "../../model/request/WalletRequest"
+import WalletResponse from "../../model/reponse/WalletResponse"
 
 export const state = {
   loading: false,
-  success: "",
-  errors: "",
-  alltransactions: {},
-  balance_enq: {},
-  allwallet: {},
-  walletretrieve: {},
-  retrieveloading: false,
-  wallettrans:{}
+  allwallettransactions: WalletResponse.readAllWalletTransaction,
+  balance_enquiry: WalletResponse.balanceEnquiry,
+  allwallet: WalletResponse.readWallet,
+  retrievewallet: WalletResponse.retrieveWallet,
+  wallettransactions: WalletResponse.readWalletTransaction
 }
 
 export const getters = {}
@@ -20,26 +18,18 @@ export const mutations = {
   updateLoading: (state, payload) => {
     state.loading = payload
   },
-  updateRetrieveLoading: (state, payload) => {
-    state.retrieveloading = payload
+
+  updateRetrieveWallet: (state, payload) => {
+    state.retrievewallet = payload
   },
-  updateWalletretrieve: (state, payload) => {
-    state.walletretrieve = payload
+  updateWalletTransactions: (state, payload) => {
+    state.wallettransactions = payload
   },
-  updateWalletTrans: (state, payload) => {
-    state.wallettrans = payload
+  updateAllWaletTransaction: (state, payload) => {
+    state.allwallettransactions = payload
   },
-  updateAllTransaction: (state, payload) => {
-    state.alltransactions = payload
-  },
-  updateBalanceEnq: (state, payload) => {
-    state.balance_enq = payload
-  },
-  updateSuccess: (state, payload) => {
-    state.success = payload
-  },
-  updateError: (state, payload) => {
-    state.errors = payload
+  updateBalanceEnquiry: (state, payload) => {
+    state.balance_enquiry = payload
   },
   updateWallet: (state, payload) => {
     state.allwallet = payload
@@ -48,216 +38,73 @@ export const mutations = {
 
 export const actions = {
 
-  readAllTrans: ({ commit, state, dispatch, rootState }, payload) => {
-    if (state.alltransactions.length > 1) {
+  updateAllWaletTransaction: ({ commit, state }, payload = WalletRequest.readAllWalletTransaction) => {
+    if (state.allwallettransactions.data.length > 1) commit("updateLoading", false)
+    return WalletService.callReadAllTransactions(payload).then(response => {
+      let responseData = response.data
+      if (responseData.responseCode === "00") {
+        commit("updateAllTransaction", responseData.data)
+      }
+    }).catch(error => {
+      console.log(error)
+    })
+
+  },
+
+  updateBalanceEnquiry: ({ commit, state }, payload = WalletRequest.balanceEnquiry) => {
+    if (state.balance_enquiry.responsecode != "00") commit("updateLoading", true)
+    return WalletService.callBalanceEnquiry(payload).then(response => {
+      let responseData = response.data
+      if (responseData.responseCode === "00") {
+        commit("updateBalanceEnq", responseData)
+      }
+    }).catch(error => {
+      console.log(error)
+    })
+
+  },
+
+  updateWallet: ({ commit, state }, payload = WalletRequest.readWallet) => {
+    if (state.allwallet.data.length < 1) commit("updateLoading", true)
+    return WalletService.callReadWallet(payload).then(response => {
+      let responseData = response.data
+      if (responseData.responseCode === "00") {
+        commit("updateWallet", responseData.data)
+        commit("updateSuccess", responseData.responseMessage)
+      }
+    }).catch(error => {
+      commit("updateError", error)
+    })
+  },
+
+
+  updateWalletTransactions: ({ commit, state }, payload = WalletRequest.readAllWalletTransaction) => {
+    if (state.allwallet.length < 1) commit("updateLoading", true)
+    return WalletService.callReadWalletTrans(payload).then(response => {
+      let responseData = response.data
       commit("updateLoading", false)
-      commit("updateSuccess", "")
-      commit("updateError", "")
-      commit("updateAllTransaction", state.alltransactions)
-      return WalletService.callReadAllTransactions(payload).then(response => {
-        let responseData = response.data
-        if (responseData.responseCode === "00") {
-          commit("updateAllTransaction", responseData.data)
-          commit("updateSuccess", responseData.responseMessage)
-        }
-        else {
-          commit("updateError", responseData.responseMessage)
-        }
-      })
-    } else {
-      commit("updateLoading", true)
-      commit("updateSuccess", "")
-      commit("updateError", "")
-      commit("updateAllTransaction", {})
-      return WalletService.callReadAllTransactions(payload).then(response => {
-        let responseData = response.data
-        commit("updateLoading", false)
-        if (responseData.responseCode === "00") {
-          commit("updateAllTransaction", responseData.data)
-          commit("updateSuccess", responseData.responseMessage)
-        }
-        else {
-          commit("updateLoading", false)
-          commit("updateError", responseData.responseMessage)
-        }
-      })
-        .catch(error => {
-          commit("updateError", error)
-        })
-    }
+      if (responseData.responseCode === "00") {
+        commit("updateWalletTrans", responseData.data)
+      }
 
+    }).catch(error => {
+      commit("updateError", error)
+    })
   },
-  readBalanceEnq: ({ commit, state, dispatch, rootState }, payload) => {
-    if (state.balance_enq.length == 1) {
+
+  updateRetrieveWallet: ({ commit, state }, payload = WalletRequest.retrieveWallet) => {
+    if (state.walletretrieve.length < 1) commit("updateRetrieveLoading", true)
+    return WalletService.callWalletRetrieve(payload).then(response => {
+      let responseData = response.data
       commit("updateRetrieveLoading", false)
-      commit("updateSuccess", "")
-      commit("updateError", "")
-      commit("updateBalanceEnq", state.balance_enq)
-      return WalletService.callBalanceEnquiry(payload).then(response => {
-        let responseData = response.data
-        if (responseData.responseCode === "00") {
-          commit("updateBalanceEnq", responseData)
-          commit("updateSuccess", responseData.responseMessage)
-        }
-        else {
-          commit("updateError", responseData.responseMessage)
-        }
-      })
-    } else {
-      commit("updateRetrieveLoading", true)
-      commit("updateSuccess", "")
-      commit("updateError", "")
-      commit("updateBalanceEnq", {})
-      return WalletService.callBalanceEnquiry(payload).then(response => {
-        let responseData = response.data
-        commit("updateRetrieveLoading", false)
-        if (responseData.responseCode === "00") {
-          commit("updateBalanceEnq", responseData)
-          commit("updateSuccess", responseData.responseMessage)
-        }
-        else {
-          commit("updateRetrieveLoading", false)
-          commit("updateError", responseData.responseMessage)
-        }
-      })
-        .catch(error => {
-          commit("updateError", error)
-        })
-
-    }
-  },
-  readWallet: ({ commit, state, dispatch, rootState }, payload) => {
-    if (state.allwallet.length > 1) {
-      commit("updateLoading", false)
-      commit("updateSuccess", "")
-      commit("updateError", "")
-      commit("updateWallet", state.allwallet)
-      return WalletService.callReadWallet(payload).then(response => {
-        let responseData = response.data
-        commit("updateLoading", false)
-        if (responseData.responseCode === "00") {
-          commit("updateWallet", responseData.data)
-          commit("updateSuccess", responseData.responseMessage)
-        }
-        else {
-          commit("updateLoading", false)
-          commit("updateError", responseData.responseMessage)
-        }
-      })
-    } else {
-      commit("updateLoading", true)
-      commit("updateSuccess", "")
-      commit("updateError", "")
-      commit("updateWallet", {})
-      return WalletService.callReadWallet(payload).then(response => {
-        let responseData = response.data
-        commit("updateLoading", false)
-        if (responseData.responseCode === "00") {
-          commit("updateWallet", responseData.data)
-          commit("updateSuccess", responseData.responseMessage)
-        }
-        else {
-          commit("updateLoading", false)
-          commit("updateError", responseData.responseMessage)
-        }
-      })
-        .catch(error => {
-          commit("updateError", error)
-        })
-    }
-  },
-  readWalletTrans: ({ commit, state, dispatch, rootState }, payload) => {
-    if (state.allwallet.length > 1) {
-      commit("updateRetrieveLoading", false)
-      commit("updateSuccess", "")
-      commit("updateError", "")
-      commit("updateWalletTrans", state.wallettrans)
-      return WalletService.callReadWalletTrans(payload).then(response => {
-        let responseData = response.data
-        commit("updateRetrieveLoading", false)
-        if (responseData.responseCode === "00") {
-          commit("updateWalletTrans", responseData.data)
-          commit("updateSuccess", responseData.responseMessage)
-        }
-        else {
-          commit("updateRetrieveLoading", false)
-          commit("updateError", responseData.responseMessage)
-        }
-      })
-    } else {
-      commit("updateRetrieveLoading", true)
-      commit("updateSuccess", "")
-      commit("updateError", "")
-      commit("updateWalletTrans", {})
-      return WalletService.callReadWallet(payload).then(response => {
-        let responseData = response.data
-        commit("updateRetrieveLoading", false)
-        if (responseData.responseCode === "00") {
-          commit("updateWalletTrans", responseData.data)
-          commit("updateSuccess", responseData.responseMessage)
-
-        }
-        else {
-          commit("updateRetrieveLoading", false)
-          commit("updateError", responseData.responseMessage)
-        }
-      })
-        .catch(error => {
-          commit("updateError", error)
-        })
-    }
-
-
-  },
-  retrieveWallet: ({ commit, state, dispatch, rootState }, payload) => {
-    if (state.walletretrieve.length == 1) {
-      commit("updateRetrieveLoading", false)
-      commit("updateSuccess", "")
-      commit("updateError", "")
-      commit("updateWalletretrieve", state.walletretrieve)
-      return WalletService.callWalletRetrieve(payload).then(response => {
-        let responseData = response.data
-        commit("updateRetrieveLoading", false)
-        if (responseData.responseCode === "00") {
-          commit("updateWalletretrieve", responseData)
-          commit("updateSuccess", responseData.responseMessage)
-        }
-        else {
-          commit("updateRetrieveLoading", false)
-          commit("updateError", responseData.responseMessage)
-        }
-      })
-    } else {
-      commit("updateRetrieveLoading", true)
-      commit("updateSuccess", "")
-      commit("updateError", "")
-      commit("updateWalletretrieve", {})
-      return WalletService.callWalletRetrieve(payload).then(response => {
-        let responseData = response.data
-        commit("updateRetrieveLoading", false)
-        if (responseData.responseCode === "00") {
-          commit("updateWalletretrieve", responseData)
-          commit("updateSuccess", responseData.responseMessage)
-        }
-        else {
-          commit("updateRetrieveLoading", false)
-          commit("updateError", responseData.responseMessage)
-        }
-      })
-        .catch(error => {
-          commit("updateError", error)
-        })
-    }
-
+      if (responseData.responseCode === "00") {
+        commit("updateWalletretrieve", responseData)
+      }
+    }).catch(error => {
+      console.log(error)
+    })
 
   },
 }
 
-
-export default {
-  state,
-  actions,
-  mutations,
-  getters
-};
 

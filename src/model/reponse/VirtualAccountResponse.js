@@ -1,10 +1,6 @@
 class VirtualAccountResponse {
-<<<<<<< HEAD
-    static create = {
-=======
 
     static createVirtualAccount={
->>>>>>> 48a5eb300c222a9c5828340f0f2891e7c784b1d1
         accountNumber: null,
         accountName: null,
         accountParent: null,
@@ -13,24 +9,7 @@ class VirtualAccountResponse {
         responseMessage: null
     }
 
-<<<<<<< HEAD
-    static retrieve = {
-=======
     static retrieveVirtualAccount={
-        accountId: null,
-        accountCurrency: null,
-        responseCode: null,
-        responseMessage: null
-    }
-
-    static readVirtualAccount={
-        responseCode: null,
-        responseMessage: null,
-        data:[]
-    }
-
-    static data={
->>>>>>> 48a5eb300c222a9c5828340f0f2891e7c784b1d1
         accountId: null,
         accountNumber: null,
         accountName: null,
@@ -40,27 +19,12 @@ class VirtualAccountResponse {
         channelBankName: null,
         accountCreatedDate: null,
         accountParent: null,
-<<<<<<< HEAD
-        responseCode: null,
-        responseMessage: null
-
-    }
-}
-
-export default VirtualAccountResponse
-=======
         accountExtraData: null,
         responseCode: null,
         responseMessage: null
     }
 
-    static readVirtualAccountTransactionList={
-        responseCode: null,
-        responseMessage: null,
-        data:[]
-    }
-
-    static data={
+    static virtualAccountTransactionData={
         address: null,
         bvn: null,
         dob: null,
@@ -73,13 +37,7 @@ export default VirtualAccountResponse
         responseMessage: null
     }
 
-    static getChennelCodes={
-        responseCode: null,
-        responseMessage: null,
-        data:[]
-    }
-
-    static data={
+    static chennelCodedata={
         bankCode: null,
         bankName: null,
     }
@@ -87,4 +45,3 @@ export default VirtualAccountResponse
 }
 
 export default VirtualAccountResponse
->>>>>>> 48a5eb300c222a9c5828340f0f2891e7c784b1d1

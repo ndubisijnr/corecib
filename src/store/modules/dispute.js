@@ -1,85 +1,53 @@
 import DisputeService from "../../service/DisputeService";
+import DisputeRequest from "../../model/request/DisputeRequest";
+import DisputeResponse from "../../model/reponse/DisputeResponse";
 
 export const state = {
-  token: null,
   loading: false,
-  log_loading:false,
-  success: "",
-  error: "",
-  readispute: {},
-}
-
-export const getters = {
-  UserToken: state => {
-    return localStorage.getItem('token')
-  },
+  disputes: DisputeResponse.disputeRead
 }
 
 export const mutations = {
 
-  updateToken: (state, payload) => {
-    state.token = payload
-  },
   updateLoading: (state, payload) => {
     state.loading = payload
   },
-  updateLogLoading: (state, payload) => {
-    state.log_loading = payload
-  },
-  updateReaddispute: (state, payload) => {
+  updateDsputes: (state, payload) => {
     state.readispute = payload
-  },
-  updateSuccess: (state, payload) => {
-    state.success = payload
-  },
-  updateError: (state, payload) => {
-    state.errors = payload
-  },
+  }
 }
 
 export const actions = {
 
-  readDispute: ({ commit, state, dispatch, rootState }, payload) => {
-    commit("updateLoading", true)
-    commit("updateSuccess", "")
-    commit("updateError", "")
-    commit("updateReaddispute", {})
+  updateDsputes: ({ commit, state}, payload = DisputeRequest.disputeRead) => {
+    if(state.disputes.data.length < 1) commit("updateLoading", true)
     return DisputeService.callReadDisputeApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
         commit("updateReaddispute", responseData.data)
       }
-      else {
-        commit("updateLoading", false)
-        commit("updateError", responseData.responseMessage)
-      }
-    })
-      .catch(error => {
-        commit("updateError", error)
+    }).catch(error => {
+        console.log(error);
       })
 
   },
 
-  createDispute: ({ commit, state, dispatch, rootState }, payload) => {
-    commit("updateLogLoading", true)
-    commit("updateSuccess", "")
-    commit("updateError", "")
+  createDispute: ({ commit }, payload = DisputeRequest.disputeCreate) => {
+    commit("updateLoading", true)
     return DisputeService.callCreateDisputeApi(payload).then(response => {
       let responseData = response.data
       commit("updateLogLoading", false)
       if (responseData.responseCode === "00") {
         commit("updateSuccess", responseData.responseMessage)
-        console.log(responseData.responseMessage)
+        Swal.fire({title:responseData.responseMessage,icon:'success'})
       }
       else {
-        commit("updateLogLoading", false)
-        commit("updateError", responseData.responseMessage)
-        console.log(responseData.responseMessage)
+        Swal.fire({title:responseData.responseMessage,icon:'error'})
       }
     })
       .catch(error => {
-        commit("updateError", error)
+        commit("updateLogLoading", false)
         console.log(error)
       })
 

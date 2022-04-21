@@ -1,11 +1,10 @@
 import VirtualAccountService from "../../service/VirtualAccountService"
 import VirtualAccountRequest from "../.../model/VirtualAccountRequest"
+import VirtualAccountResponse from "../../model/reponse/VirtualAccountResponse"
 
 export const state = {
   loading: false,
-  success: "",
-  errors: "",
-  virtualaccount:{}
+  virtualaccount: VirtualAccountResponse.retrieveVirtualAccount
 }
 
 export const getters = {}
@@ -18,46 +17,25 @@ export const mutations = {
   updateVirtualAccount: (state, payload) => {
     state.virtualaccount = payload
   },
- 
-  updateSuccess: (state, payload) => {
-    state.success = payload
-  },
-  updateError: (state, payload) => {
-    state.errors = payload
-  },
+
 }
 
 export const actions = {
 
-  readVirtualAcc: ({ commit, state, dispatch, rootState }, payload = new VirtualAccountRequest.readVirtualAccountRequest) => {
-    commit("updateLoading", true)
-    commit("updateSuccess", "")
-    commit("updateError", "")
-    commit("updateVirtualAccount", {})
+  updateVirtualAccount: ({ commit, state }, payload = VirtualAccountRequest.readVirtualAccountRequest) => {
+    if (state.virtualaccount.data.length < 1) commit("updateLoading", true)
     return VirtualAccountService.callVirtualAccountRead(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
         commit("updateVirtualAccount", responseData.data)
-        commit("updateSuccess", responseData.responseMessage)
-      }
-      else {
-        commit("updateLoading", false)
-        commit("updateError", responseData.responseMessage)
       }
     })
       .catch(error => {
-        commit("updateError", error)
+        console.log(error)
       })
 
   },
-  }
+}
 
-
-export default {
-  state,
-  actions,
-  mutations,
-  getters
-};
 
