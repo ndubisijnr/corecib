@@ -29,10 +29,10 @@
                 class="form-control"
                 name="email"
                 placeholder="businessname@gmail.com"
-                v-model="model.AuthenticationRequest.login.email"
+                v-model="model.email"
                 required
               />
-              <label for="floatingInput">Email address</label>
+              <label >Email address</label>
             </div>
             <div class="form-floating">
               <input
@@ -40,11 +40,11 @@
                 class="form-control"
                 name="password"
                 placeholder="XXXXX"
-                v-model="model.AuthenticationRequest.login.password"
+                v-model="model.password"
                 id="pwd"
                 required
               />
-              <label for="floatingInput">Password</label>
+              <label >Password</label>
               <i
                 class="fas fa-eye"
                 style="
@@ -91,6 +91,7 @@
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import AuthenticationRequest from "../../model/request/AuthRequest";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 export default {
   components: {
@@ -129,11 +130,7 @@ export default {
       this.$router.push({ name: "ForgotPassword" });
     },
     onSubmit() {
-      const userInfo = {
-        username: this.model.username,
-        password: this.model.password,
-      };
-      this.$store.dispatch("logon", userInfo, { root: false });
+      StoreUtils.dispatch(StoreUtils.actions.auth.logon, this.model)
     },
   },
   computed: {

@@ -6,12 +6,7 @@ import NProgress from "nprogress";
 
 import store from "../store/store";
 import authRoutes from './routes/auth-routes'
-import loanRoutes from './routes/loan-routes'
-import proprietorRoutes from './routes/proprietor-routes'
-import transactionRoutes from './routes/transaction-routes'
-import userRoutes from './routes/user-routes'
-import reportRoutes from './routes/report-routes'
-import accountRuleRoutes from './routes/account-rule-routes'
+import StoreUtils from "../util/baseUtils/StoreUtils";
 
 
 Vue.use(VueRouter);
@@ -30,7 +25,7 @@ VueRouter.prototype.absUrl = function(url, newTab = true) {
 
 const baseRoutes = [];
 
-const routes = baseRoutes.concat(accountRuleRoutes,reportRoutes,userRoutes,transactionRoutes,loanRoutes,proprietorRoutes,authRoutes);
+const routes = baseRoutes.concat(authRoutes);
 
 const router = new VueRouter({
     routes,
@@ -67,17 +62,16 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
     // console.log("Token: ",store.getters["getToken"])
     // If auth is required and the user is logged in...
     // console.log("user info: "+JSON.stringify(store.getters["auth/getUser"]))
-    if (store.getters["auth/getUser"].responseCode === '00') {
+    if (store.getters[StoreUtils.getters.auth.getUserInfo].responseCode === '00') {
         // Validate the local user token...
         // console.log("found user info: "+store.getters["auth/getUser"])
         // return next()
         if (!localStorage.tk) return next({ name: "Logon", query: { redirectFrom: routeTo.fullPath } });
         return next()
 
-    }else if (store.getters["getToken"] != null){
-        if (!localStorage.tk) return next({ name: "Logon", query: { redirectFrom: routeTo.fullPath } });
+    }else if (store.getters[StoreUtils.getters.auth.getToken] != null){
+        if (!localStorage.token) return next({ name: "Logon", query: { redirectFrom: routeTo.fullPath } });
         return next({name:"Preloader"})
-        // console.log("Token found: ",store.getters["getToken"])
     }
 
     // If auth is required and the user is NOT currently logged in,
@@ -86,7 +80,6 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
 
     // eslint-disable-next-line no-unused-vars
     function redirectToLogin() {
-        // Pass the original route to the login component
         next({ name: "Logon", query: { redirectFrom: routeTo.fullPath } });
     }
 });

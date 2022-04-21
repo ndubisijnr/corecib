@@ -1,24 +1,19 @@
-import ReportEngine from "@/views/report/ReportEngine";
-import ReportEngineSingle from "@/views/report/ReportEngineSingle";
-import listOfPeriodicReports from "../../views/report/ListOfPeriodicReports";
+import Dispute from '../../views/dispute/Dispute'
+
 
 export default [
     {
-        path: '/report-engine',
-        name: 'ReportEngine',
-        meta: {layout: 'on-boarding',authRequired:true},
-        component: ReportEngine,
+        path: 'api/logs',
+        component: ApiLogs,
+        name: 'ApiLogs',
+        meta: {layout: 'dashboard',authRequired:true},
     },
+
+
     {
-        path: '/report-engine-single',
-        name: 'ReportEngineSingle',
-        meta: {layout: 'on-boarding',authRequired:true},
-        component: ReportEngineSingle,
-    },
-    {
-        path: '/periodic-report',
-        name: 'PeriodicReports',
-        meta: {layout: 'on-boarding',authRequired:true},
-        component: listOfPeriodicReports,
+        path: '/dispute',
+        component: Dispute,
+        name: 'Dispute',
+        meta: {layout: 'dashboard',authRequired:true},
     },
 ];
