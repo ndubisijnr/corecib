@@ -9,12 +9,6 @@ import PersonalProfile from "../../views/user/PersonalProfile";
 
 export default [
     {
-        path: '/dashboard',
-        name: 'MainDashboard',
-        meta: {layout: 'auth',authRequired:true},
-        component: MainDashboard,
-    },
-    {
         path: '/',
         name: 'Logon',
         meta: {layout: 'auth',authRequired:false},
