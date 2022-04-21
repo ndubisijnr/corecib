@@ -1,10 +1,10 @@
 import AuthService from "../../service/AuthService";
 import router from "../../router";
 import AuthenticationRequest from "../../model/request/AuthRequest";
-import OrganizationService from "../../service/OrganizationService";
-import ApikeyService from "../../service/ApikeyService";
 import Swal from "sweetalert2";
 import AuthenticationResponse from "../../model/reponse/AuthenticationResponse";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
+import ApiKeyRequest from "../../model/request/ApiKeyRequest";
 
 export const state = {
   token: null,
@@ -52,7 +52,7 @@ export const actions = {
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
         Swal.fire({ text:responseData.responseMessage, icon:'success',})
-            .then(() => {  router.push({name:"Dashboard layout"}) })
+            .then(() => {  router.push({name:"GetStarted"}) })
       } else {
         Swal.fire({ text:responseData.responseMessage, icon:'error',}).then(()=>{})
       }
@@ -62,7 +62,7 @@ export const actions = {
     });
   },
 
-  logon: ({ commit }, payload = AuthenticationRequest.login) => {
+  logon: ({ commit, dispatch, rootState }, payload = AuthenticationRequest.login) => {
     commit("updateLoading", true)
     return AuthService.callLogonApi(payload)
       .then(response => {
@@ -77,7 +77,10 @@ export const actions = {
               localStorage.orginazationId = responseData.organisations[0].organisationId
           }
           commit("updateUserInfo", responseData);
-          router.push({name: "GetStarted"}).then(()=>{})
+          router.push({name: "GetStarted"}).then(()=>{
+            ApiKeyRequest.readApiKey.apikeyOrganisationId = localStorage.orginazationId
+            dispatch(StoreUtils.actions.apiKey.updateApikey, ApiKeyRequest.readApiKey,{rootState})
+          })
          }
         else Swal.fire({ text:responseData.responseMessage, icon:'error',}).then(()=>{})
       }).catch((error) => {
@@ -97,7 +100,7 @@ export const actions = {
   },
 
   revalidateUser: ({ commit, dispatch, rootState }, payload) => {
-    commit("updateLoading", true)
+    // commit("updateLoading", true)
     return AuthService.callRevalidateApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)

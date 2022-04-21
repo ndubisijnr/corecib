@@ -2,49 +2,98 @@
 <template>
   <div>
     <form
-        v-if="passwordResetScreen === 'email'"
-        class="container form-group form-login"
-        role="form"
-        @submit.prevent="initiatePassword"
+      v-if="passwordResetScreen === 'email'"
+      class="container form-group form-login"
+      role="form"
+      @submit.prevent="initiatePassword"
     >
       <div class="text-center"><h4 class="mt-3">Password Reset</h4></div>
       <div>
-        <base-input label="Email" class="mb-2" name="Email" type="email" :rules="{ required: true }" placeholder="Email"
-                    v-model="initiateModel.customerEmail">
+        <base-input
+          label="Email"
+          class="mb-2"
+          name="Email"
+          type="email"
+          :rules="{ required: true }"
+          placeholder="Email"
+          v-model="initiateModel.customerEmail"
+        >
         </base-input>
         <div class="text-center">
-          <button id="submitBtn" class="btn-login" native-type="submit" :class="{ disabled: loading }">Password
-            Reset<span :class="{ 'spinner-border': loading }"></span></button>
+          <button
+            id="submitBtn"
+            class="btn-login"
+            native-type="submit"
+            :class="{ disabled: loading }"
+          >
+            Password Reset<span :class="{ 'spinner-border': loading }"></span>
+          </button>
         </div>
       </div>
     </form>
 
     <form
-        v-if="passwordResetScreen === 'otp'"
-        class="container form-group form-login"
-        role="form"
-        @submit.prevent="completePassword"
+      v-if="passwordResetScreen === 'otp'"
+      class="container form-group form-login"
+      role="form"
+      @submit.prevent="completePassword"
     >
       <div class="completeEnrollment">
         <div style="" class="mb-1 text-center m-3">
           <h4>Enter OTP</h4>
-          <vue-fake-input required :length="6" :fontSize="40" inputColor="#ffc107" fontColor="#ffc107"
-                          :allowPaste="false" v-model="completeModel.customerOtp"/>
-          <br/><br/>
-          <b><span v-if="timerCount > 0"> {{ timerCount }} secs left </span></b>
-          <h6 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="" id="otp"> Resend OTP </h6>
+          <vue-fake-input
+            required
+            :length="6"
+            :fontSize="40"
+            inputColor="#ffc107"
+            fontColor="#ffc107"
+            :allowPaste="false"
+            v-model="completeModel.customerOtp"
+          />
+          <br /><br />
+          <b
+            ><span v-if="timerCount > 0"> {{ timerCount }} secs left </span></b
+          >
+          <h6
+            style="cursor: pointer"
+            @click="resendOtp()"
+            v-if="timerCount === 0"
+            class=""
+            id="otp"
+          >
+            Resend OTP
+          </h6>
         </div>
-        <base-input label="New Password" class="mb-2" name="Password" :rules="{ required: true }" type="password"
-                    placeholder="Password" v-model="completeModel.customerPassword" required>
+        <base-input
+          label="New Password"
+          class="mb-2"
+          name="Password"
+          :rules="{ required: true }"
+          type="password"
+          placeholder="Password"
+          v-model="completeModel.customerPassword"
+          required
+        >
         </base-input>
-        <base-input label="Confirm New Password" class="mb-2" name="Confirm Password" :rules="{ required: true }"
-                    type="password" placeholder="Confirm Password" v-model="completeModel.customerPasswordConfirmation"
-                    required>
+        <base-input
+          label="Confirm New Password"
+          class="mb-2"
+          name="Confirm Password"
+          :rules="{ required: true }"
+          type="password"
+          placeholder="Confirm Password"
+          v-model="completeModel.customerPasswordConfirmation"
+          required
+        >
         </base-input>
         <div class="text-center">
           <div class="text-center">
-            <button class="btn-login" native-type="submit" :class="{ disabled: loading }"> Password Reset<span
-                :class="{ 'spinner-border': loading }"></span>
+            <button
+              class="btn-login"
+              native-type="submit"
+              :class="{ disabled: loading }"
+            >
+              Password Reset<span :class="{ 'spinner-border': loading }"></span>
             </button>
           </div>
         </div>
@@ -53,7 +102,11 @@
     <div class="mt-2">
       <div class="text-center">
         <div class="alter-links">
-          <span> Remember your password?<a @click="login()" class="join-now-text"> Login</a></span>
+          <span>
+            Remember your password?<a @click="login()" class="join-now-text">
+              Login</a
+            ></span
+          >
         </div>
       </div>
     </div>
@@ -61,7 +114,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex";
 import VueFakeInput from "vue-fake-input";
 import AuthenticationRequest from "../../model/request/AuthRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
@@ -69,7 +122,7 @@ import StoreUtils from "../../util/baseUtils/StoreUtils";
 export default {
   name: "ForgotPasswordForm",
   components: {
-    VueFakeInput
+    VueFakeInput,
   },
   data() {
     return {
@@ -81,32 +134,46 @@ export default {
         topCenter: false,
       },
       showDismissibleAlert: false,
-    }
+    };
   },
   computed: {
     ...mapState({
-      token: state => state.auth.token,
-      loading: state => state.auth.loading,
-      userInfo: state => state.auth.userInfo,
-      screen: state => stateauth.auth.screen,
-      passwordResetScreen: state => state.auth.passwordResetScreen,
-      stage: state => state.stage,
-    })
+      token: (state) => state.auth.token,
+      loading: (state) => state.auth.loading,
+      userInfo: (state) => state.auth.userInfo,
+      screen: (state) => stateauth.auth.screen,
+      passwordResetScreen: (state) => state.auth.passwordResetScreen,
+      stage: (state) => state.stage,
+    }),
   },
   methods: {
+    login() {
+      this.$router.push({ name: "Logon" });
+    },
     initiatePassword() {
-      StoreUtils.dispatch(StoreUtils.actions.auth.initiatePasswordReset, this.initiateModel)
+      StoreUtils.dispatch(
+        StoreUtils.actions.auth.initiatePasswordReset,
+        this.initiateModel
+      );
     },
     completePassword() {
-      this.completeModel.customerEmail = this.initiateModel.customerEmail
-      StoreUtils.dispatch(StoreUtils.actions.auth.completePasswordReset, this.completeModel)
+      this.completeModel.customerEmail = this.initiateModel.customerEmail;
+      StoreUtils.dispatch(
+        StoreUtils.actions.auth.completePasswordReset,
+        this.completeModel
+      );
     },
     resendOtp() {
-      this.resendOtpModel.customerEmail = this.initiateModel.customerEmail
-      StoreUtils.dispatch(StoreUtils.actions.auth.resendOtp, this.resendOtpModel)
+      this.resendOtpModel.customerEmail = this.initiateModel.customerEmail;
+      StoreUtils.dispatch(
+        StoreUtils.actions.auth.resendOtp,
+        this.resendOtpModel
+      );
     },
     startTimer(duration) {
-      let timer = duration, minutes, seconds;
+      let timer = duration,
+        minutes,
+        seconds;
       setInterval(function () {
         minutes = parseInt((timer / 60).toString(), 10);
         seconds = parseInt((timer % 60).toString(), 10);
@@ -127,15 +194,18 @@ export default {
             this.timerCount--;
           }, 1000);
         }
-      }
-    }
+      },
+    },
   },
   mounted() {
-    StoreUtils.commit(StoreUtils.mutations.auth.updatePasswordResetScreen, "email")
+    StoreUtils.commit(
+      StoreUtils.mutations.auth.updatePasswordResetScreen,
+      "email"
+    );
     this.startTimer();
     this.timerCount = 30;
-  }
-}
+  },
+};
 </script>
 
 <style lang="css" scoped>
@@ -219,7 +289,8 @@ img {
   display: flex;
   justify-content: center;
   height: 100vh;
-  /*background-color: rgba(2, 32, 61, 0.99);*/
+  align-items: center;
+  /* background-color: rgba(2, 32, 61, 0.99); */
   background-color: whitesmoke;
 
   /*background-color: var(--sidebar-bg-color);*/

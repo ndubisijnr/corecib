@@ -7,7 +7,7 @@ class AuthenticationRequest {
         customerFirstName: null,
         customerLastName: null,
         customerPhone: null,
-        source: null
+        source: "WEB"
 
     }
     static completeEnrollment = {

@@ -6,6 +6,7 @@ import NProgress from "nprogress";
 
 import store from "../store/store";
 import authRoutes from './routes/auth-routes'
+import dashRoutes from './routes/dashboard-routes'
 import StoreUtils from "../util/baseUtils/StoreUtils";
 
 
@@ -25,7 +26,7 @@ VueRouter.prototype.absUrl = function(url, newTab = true) {
 
 const baseRoutes = [];
 
-const routes = baseRoutes.concat(authRoutes);
+const routes = baseRoutes.concat(dashRoutes,authRoutes);
 
 const router = new VueRouter({
     routes,
@@ -45,7 +46,6 @@ const router = new VueRouter({
         }
     }
 });
-console.log(routes)
 // Before each route evaluates...
 router.beforeEach(async (routeTo, routeFrom, next) => {
     // Check if auth is required on this route
@@ -61,12 +61,12 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
     if (!authRequired) return next();
     // console.log("Token: ",store.getters["getToken"])
     // If auth is required and the user is logged in...
-    // console.log("user info: "+JSON.stringify(store.getters["auth/getUser"]))
+    console.log("user getter info: "+store.getters[StoreUtils.getters.auth.getUserInfo].responseCode)
     if (store.getters[StoreUtils.getters.auth.getUserInfo].responseCode === '00') {
         // Validate the local user token...
         // console.log("found user info: "+store.getters["auth/getUser"])
         // return next()
-        if (!localStorage.tk) return next({ name: "Logon", query: { redirectFrom: routeTo.fullPath } });
+        // if (!localStorage.tk) return next({ name: "Logon", query: { redirectFrom: routeTo.fullPath } });
         return next()
 
     }else if (store.getters[StoreUtils.getters.auth.getToken] != null){

@@ -52,9 +52,7 @@ export default {
       this.$router.push({ name: "SignUp" });
     },
     forgotPassword() {},
-    login() {
-      this.$router.push({ name: "Login" });
-    },
+   
     oninitiatePassword() {
       const user = {
         customerEmail: this.model.customerEmail,

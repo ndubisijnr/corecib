@@ -115,7 +115,7 @@ export default {
   computed: {
     ...mapState({
       user: state => state.auth.userInfo,
-      organisation: state => state.auth.organisation
+      organisation: state => state.apiKey.apiKey
     }),
     ...mapActions(['logOut']),
     ...mapGetters([""]),

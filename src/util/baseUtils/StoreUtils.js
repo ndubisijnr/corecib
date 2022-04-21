@@ -8,6 +8,7 @@ class StoreUtils {
     },
     auth: {
       initialEnrollment: "auth/initialEnrollment",
+      completeEnrollment: "auth/completeEnrollment",
       logon: "auth/logon",
       resendOtp: "auth/resendOtp",
       revalidateUser: "auth/revalidateUser",
