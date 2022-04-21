@@ -4,240 +4,40 @@
     <!-- Page content -->
     <div class="auth-wrap">
       <div class="login">
-        <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
-          <div class="text-center">
-            <img
-              src="@/assets/bizgemio.svg"
-              alt=""
-              class="mg-fluid"
-              width="80px"
-              style="margin-bottom: -35px"
-            />
-          </div>
-          <form
-            class="container form-group form-login"
-            role="form"
-            @submit.prevent="handleSubmit(onSubmit)"
-          >
-            <div class="text-center">
-              <img src="" alt="" class="img-fluid" />
-              <h4 class="mt-1">Sign in to continue to BizGem</h4>
-            </div>
-            <div class="form-floating mb-3">
-               <input
-                type="email"
-                class="form-control"
-                name="email"
-                placeholder="businessname@gmail.com"
-                v-model="model.email"
-                required
-              />
-              <label >Email address</label>
-            </div>
-            <div class="form-floating">
-              <input
-                type="password"
-                class="form-control"
-                name="password"
-                placeholder="XXXXX"
-                v-model="model.password"
-                id="pwd"
-                required
-              />
-              <label >Password</label>
-              <i
-                class="fas fa-eye"
-                style="
-                  position: absolute;
-                  right: 30px;
-                  top: 25px;
-                  cursor: pointer;
-                "
-                id="eye"
-                @click="hide$show()"
-              ></i>
-            </div>
-            <div class="mt-3 mb-3 text-center">
-              <span id="error" class="text-danger"></span>
-            </div>
-            <div class="text-center">
-              <button
-                id="submitBtn"
-                class="btn-login"
-                native-type="submit"
-                :disabled="loading"
-              >
-                Login <span :class="{ 'spinner-border': loading }"></span>
-              </button>
-            </div>
-          </form>
-        </validation-observer>
+        <login-form/>
         <div class="mt-4">
           <h4 class="forgot-password" @click="forgotPassword()">
             Forgot Password
           </h4>
         </div>
-        <span class="text-dark"
-          >New To BizGem?
-          <span class="join-now-text" @click="signUp()"
-            >Create Account</span
-          ></span
-        >
-        <div class="text-center text-dark"><p>© 2020 BizGem.</p></div>
+        <span class="text-dark">New To BizGem?<span class="join-now-text" @click="signUp()" >Create Account</span></span>
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
-import AuthenticationRequest from "../../model/request/AuthRequest";
-import StoreUtils from "../../util/baseUtils/StoreUtils";
+import LoginForm from "../../components/form/LoginForm";
 
 export default {
   components: {
-    //BaseHeader
+    LoginForm
   },
   data() {
     return {
-      model: AuthenticationRequest.login,
-      // model: {rememberMe: false},
-      notifications: {
-        topCenter: false,
-      },
-      //disableBtn:false,
-      //spinner:false,
-      showDismissibleAlert: false,
-    };
+
+    }
   },
   methods: {
     signUp() {
       this.$router.push({ name: "SignUp" });
     },
-    hide$show() {
-      let b = document.getElementById("pwd");
-      let eye = document.getElementById("eye");
-      if (b.type === "password") {
-        b.type = "text";
-        eye.classList.remove("fa-eye");
-        eye.classList.add("fa-eye-slash");
-      } else {
-        b.type = "password";
-        eye.classList.add("fa-eye");
-        eye.classList.remove("fa-eye-slash");
-      }
-    },
     forgotPassword() {
       this.$router.push({ name: "ForgotPassword" });
     },
-    onSubmit() {
-      StoreUtils.dispatch(StoreUtils.actions.auth.logon, this.model)
-    },
   },
-  computed: {
-    ...mapState({
-      errors: (state) => state.auth.errors,
-      loading: (state) => state.auth.loading,
-      success: (state) => state.auth.success,
-    }),
-    ...mapActions(["logon"]),
-    ...mapGetters([""]),
-  },
-  watch: {
-    errors(newValue) {
-      // Do whatever makes sense now
-      if (newValue !== null) {
-        this.$toast.error(newValue);
-        //this.showDismissibleAlert=true;
-      }
-    },
-    success(newValue) {
-      // Do whatever makes sense now
-      if (newValue !== null) {
-        this.$toast.success(` Login ${newValue}ful`);
-        //this.showDismissibleAlert=true;
-      }
-    },
-  },
-  mounted(){
-    if(localStorage.getItem("token") !== null){
-          return AuthService.callRevalidateApi(localStorage.getItem("token")).then(response => {
-            let responseData = response.data
-            if(responseData.responseMessage == "00"){
-              router.push({name:"GetStarted"})
-            }
-            else{
-              console.log("reload")
-            }
-
-          })
-
-        }
-
-      console.log("mounted")
-  }
 };
 </script>
 <style lang="css" scoped>
-/*body {*/
-/*    margin: 0;*/
-/*    font-family: Open Sans, sans-serif;*/
-/*    font-size: 1rem;*/
-/*    font-weight: 400;*/
-/*    line-height: 1.5;*/
-/*    color: #525f7f;*/
-/*    text-align: left;*/
-/*    background-color: #525f7f !important;*/
-/*}*/
-/*a:hover {*/
-/*    text-decoration: underline;*/
-/*    cursor: pointer;*/
-/* }*/
-
-/*.alter-links a {*/
-/*    width: 100%;*/
-/*    display: block;*/
-/*    text-align: center;*/
-/*    margin-bottom: 5px;*/
-/*    color: #2f2f2a;*/
-/*    font-size: 11px;*/
-/*}*/
-/*@keyframes spinner-border {*/
-/*  to { transform: rotate(360deg); }*/
-/*}*/
-
-/*.spinner-border {*/
-/*    display: inline-block;*/
-/*    width: 1rem;*/
-/*    height: 1rem;*/
-/*    vertical-align: text-bottom;*/
-/*    border: .25em solid currentColor;*/
-/*    border-right-color: transparent;*/
-/*    border-radius: 50%;*/
-/*    -webkit-animation: spinner-border .75s linear infinite;*/
-/*    animation: spinner-border .75s linear infinite;*/
-/*}*/
-/*.text-primary {*/
-/*    color: #212529!important;*/
-/*}*/
-
-/*.img-fluid, .img-thumbnail {*/
-/*    max-width: 100%;*/
-/*    height: auto;*/
-/*}*/
-/*img, svg {*/
-/*    vertical-align: middle;*/
-/*}*/
-/*img {*/
-/*    border-style: none;*/
-/*}*/
-/*p {*/
-/*    margin-top: 0;*/
-/*    margin-bottom: 1rem;*/
-/*    font-size: .8rem !important;*/
-/*}*/
-/*.bg-soft-primary {*/
-/*    background-color: rgba(124, 124, 128, 0.25) !important;!* rgba(85,110,230,.25)!important;*!*/
-/*}*/
 .forgot-password {
   color: black;
   cursor: pointer;

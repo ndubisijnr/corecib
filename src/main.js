@@ -17,7 +17,7 @@ import App from './App.vue';
 import './filters'
 
 // router setup
-import router from './routes/router';
+import router from './router'
 // plugin setup
 Vue.use(Toast)
 Vue.use(VueCountryCode);

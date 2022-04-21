@@ -1,9 +1,8 @@
-import { Doughnut, mixins } from 'vue-chartjs';
-import globalOptionsMixin from "@/components/Charts/globalOptionsMixin";
-
+import { Line, mixins } from 'vue-chartjs';
+import globalOptionsMixin from "@/components/charts/globalOptionsMixin";
 export default {
-  name: 'doughnut-chart',
-  extends: Doughnut,
+  name: 'line-chart',
+  extends: Line,
   mixins: [mixins.reactiveProp, globalOptionsMixin],
   props: {
     extraOptions: {

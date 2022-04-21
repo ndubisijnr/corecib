@@ -410,7 +410,7 @@ $nav-pills-link-hover-color: darken(theme-color("primary"), 5%) !default;
 $nav-pills-link-active-color: color-yiq(theme-color("primary")) !default;
 $nav-pills-link-active-bg: theme-color("primary") !default;
 $nav-pills-box-shadow: $btn-box-shadow !default;
-// Navbar
+// navbar
 $navbar-padding-y: 1rem !default;
 $navbar-padding-x: 1rem !default;
 $navbar-nav-link-padding-x: 1rem !default;
@@ -451,7 +451,7 @@ $navbar-breadcrumb-padding-y: $nav-link-padding-y !default;
 $navbar-breadcrumb-padding-x: 0 !default;
 $navbar-light-bg: $white !default;
 $navbar-light-border-color: $border-color !default;
-// Navbar search
+// navbar search
 $navbar-search-width: 250px !default;
 $navbar-search-focus-width: 380px !default;
 $navbar-search-bg: transparent !default;
@@ -549,7 +549,7 @@ $pagination-active-box-shadow: $btn-hover-box-shadow !default;
 $pagination-disabled-color: $gray-600 !default;
 $pagination-disabled-bg: $white !default;
 $pagination-disabled-border-color: $gray-300 !default;
-// Cards
+// cards
 $card-spacer-y: 1.25rem !default;
 $card-spacer-x: 1.5rem !default;
 $card-border-width: $border-width !default;
@@ -639,7 +639,7 @@ $noui-origin-border-radius: 2px !default;
 // Need more for your project? Check out the PRO version
 // URL:
 //
-// Breadcrumb
+// breadcrumb
 $breadcrumb-padding-y: .5rem !default;
 $breadcrumb-padding-x: 1rem !default;
 $breadcrumb-item-padding: .5rem !default;
@@ -654,7 +654,7 @@ $breadcrumb-dark-color: $gray-100 !default;
 $breadcrumb-dark-hover-color: $white !default;
 $breadcrumb-dark-active-color: $gray-300 !default;
 $breadcrumb-dark-divider-color: $gray-500 !default;
-// Timeline
+// timeline
 $timeline-axis-width: 2px !default;
 $timeline-axis-color: $border-color !default;
 $timeline-step-bg: $white !default;

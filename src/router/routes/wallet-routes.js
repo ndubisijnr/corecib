@@ -8,8 +8,6 @@ export default [
         name: 'Wallet',
         meta: {layout: 'dashboard',authRequired:true},
     },
-
-
     {
         path: "/all-transactions",
         component: WalletTransaction,

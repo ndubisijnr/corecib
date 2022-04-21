@@ -13,12 +13,12 @@ export default {
     type: {
       type: String,
       default: '',
-      description: 'Breadcrumb background type'
+      description: 'breadcrumb background type'
     },
     listClasses: {
       type: [String, Object],
       default: '',
-      description: 'Breadcrumb list classes'
+      description: 'breadcrumb list classes'
     }
   }
 };

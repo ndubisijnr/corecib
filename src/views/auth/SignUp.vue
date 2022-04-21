@@ -106,7 +106,6 @@
               </vue-country-code>
 
               <base-input
-                :label="Phonenumber"
                 type="tel"
                 class="phone"
                 name="phone number"
@@ -117,24 +116,6 @@
               >
               </base-input>
             </div>
-            <!-- <div class="form-group mb-2">
-                     <label for="username" class="form-control-label"
-                      >Are you a software developer?</label
-                    >
-                    <b-form-radio-group
-                      v-model="model.type"
-                      :options="[
-                        { item: 'Yes, I am ', name: 'Yes, I am ' },
-                        { item: 'No, I am not', name: 'No, I am not' },
-                      ]"
-                      class="mb-2"
-                      value-field="item"
-                      text-field="name"
-                      name="radio-inline"
-                      disabled-field="notEnabled"
-                    >
-                    </b-form-radio-group>
-                  </div>-->
             <div class="text-center">
               <button
                 id="submitBtn"
@@ -145,19 +126,6 @@
                 Sign Up <span :class="{ 'spinner-border': loading }"></span>
               </button>
             </div>
-            <!--                  <div class="text-center">-->
-            <!--                    <base-button-->
-            <!--                      icon-->
-            <!--                      type="primary"-->
-            <!--                      native-type="submit"-->
-            <!--                      :class="{ disabled: loading }"-->
-            <!--                      class="my-4 mb-2"-->
-
-            <!--                    >-->
-            <!--                      <span class="btn-inner&#45;&#45;text">Sign Up</span>-->
-            <!--                      <span :class="{ 'spinner-border': loading }"></span>-->
-            <!--                    </base-button>-->
-            <!--                  </div>-->
             <div class="mt-2">
               <div class="text-center">
                 <p>
@@ -205,17 +173,6 @@
                 Resend OTP
               </h6>
             </div>
-            <!--                    <base-input-->
-            <!--                      label="OTP"-->
-            <!--                      class="mb-2"-->
-            <!--                      name="otp"-->
-            <!--                      :rules="{ required: true }"-->
-            <!--                      type="text"-->
-            <!--                      placeholder="OTP"-->
-            <!--                      v-model="otpValue"-->
-            <!--                      required-->
-            <!--                    >-->
-            <!--                    </base-input>-->
               <div class="form-floating mt-2 mb-3">
               <input
                 type="password"
@@ -226,7 +183,7 @@
                 id="pwd"
                 required
               />
-              <label for="floatingInput">Password</label>
+              <label>Password</label>
               <i
                 class="fas fa-eye"
                 style="
@@ -239,17 +196,6 @@
                 @click="hide$show()"
               ></i>
             </div>
-            <!-- <base-input
-              label="Password"
-              class="mb-2 mt-3"
-              name="Password"
-              :rules="{ required: true }"
-              type="password"
-              placeholder="Password"
-              v-model="password"
-              required
-            >
-            </base-input> -->
             <div class="form-floating mb-3">
               <input
                 type="password"
@@ -260,7 +206,7 @@
                 id="pwd1"
                 required
               />
-              <label for="floatingInput">Comfirm Password</label>
+              <label>Comfirm Password</label>
               <i
                 class="fas fa-eye"
                 style="
@@ -273,17 +219,6 @@
                 @click="hide$show1()"
               ></i>
             </div>
-            <!-- <base-input
-              label="Confirm Password"
-              class="mb-2"
-              name="Confirm Password"
-              :rules="{ required: true }"
-              type="password"
-              placeholder="Confirm Password"
-              v-model="comFirmPassword"
-              required
-            >
-            </base-input> -->
             <div class="text-center">
               <span id="passmisMatched" class="text-danger text-center"></span>
               <div class="text-center">
@@ -296,16 +231,6 @@
                   <span :class="{ 'spinner-border': loading }"></span>
                 </button>
               </div>
-              <!--                      <base-button-->
-              <!--                        icon-->
-              <!--                        type="primary"-->
-              <!--                        native-type="submit"-->
-              <!--                        :class="{ disabled: loading }"-->
-              <!--                        class="my-4 mb-2"-->
-              <!--                      >-->
-              <!--                        <span class="btn-inner&#45;&#45;text">Proceed</span>-->
-              <!--                        <span :class="{ 'spinner-border': loading }"></span>-->
-              <!--                      </base-button>-->
             </div>
             <div class="wrapper mt-3 mb-2 text-center m-t-sm text-sm">
               By clicking the “Proceed” button, you agree to BizGem’s
@@ -315,24 +240,12 @@
         </validation-observer>
       </div>
     </div>
-
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </div>-->
-    <!--    <div class="enterOtp text-center">-->
-    <!--      <div>-->
-    <!--        <h3 class="m-3 text-white">An OTP Was Sent To {{getEmail.customerEmail}}</h3>-->
-
-    <!--        <button @click="collectOtp()" class="btn btn-primary mt-3">Proceed</button>-->
-    <!--      </div>-->
-    <!--    </div>-->
   </div>
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
-import country from "@/components/country";
-import EnrollmentRequest from "@/model/request/enrollmentRequest";
-import BaseInput from "../../components/Inputs/BaseInput.vue";
+import BaseInput from "../../components/inputs/BaseInput.vue";
+import AuthenticationRequest from "../../model/request/AuthRequest";
 // import VueFakeInput from 'vue-fake-input';
 
 // import { VueTelInput } from "vue-tel-input";
@@ -348,7 +261,7 @@ export default {
       option_country: [],
       countryCtrl: false,
       otpValue: "",
-      model: new EnrollmentRequest().enrollmentRequest(),
+      model: AuthenticationRequest.initiateEnrollment,
       password: "",
       comFirmPassword: "",
 

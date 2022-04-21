@@ -1,4 +1,4 @@
-import Logon from '../../views/auth/Logon'
+import Logon from '../../views/auth/Login'
 import SignUp from '../../views/auth/SignUp'
 import ForgotPassword from '../../views/auth/ForgotPassword'
 
@@ -13,13 +13,13 @@ export default [
     {
         path: '/signup',
         name: 'SignUp',
-        meta: {layout: 'loader',authRequired:false},
+        meta: {layout: 'auth',authRequired:false},
         component: SignUp
     },
     {
         path: '/password-reset',
         name: 'ForgotPassword',
-        meta: {layout: 'loader',authRequired:false},
+        meta: {layout: 'auth',authRequired:false},
         component: ForgotPassword
     },
 ];

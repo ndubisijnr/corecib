@@ -1,6 +1,7 @@
 import DisputeService from "../../service/DisputeService";
 import DisputeRequest from "../../model/request/DisputeRequest";
 import DisputeResponse from "../../model/reponse/DisputeResponse";
+import Swal from "sweetalert2";
 
 export const state = {
   loading: false,
@@ -25,7 +26,7 @@ export const actions = {
       let responseData = response.data
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        commit("updateReaddispute", responseData.data)
+        commit("updateDisputes", responseData)
       }
     }).catch(error => {
         console.log(error);
@@ -40,10 +41,10 @@ export const actions = {
       commit("updateLogLoading", false)
       if (responseData.responseCode === "00") {
         commit("updateSuccess", responseData.responseMessage)
-        Swal.fire({title:responseData.responseMessage,icon:'success'})
+        Swal.fire({title: responseData.responseMessage, icon: 'success'}).then(()=>{})
       }
       else {
-        Swal.fire({title:responseData.responseMessage,icon:'error'})
+        Swal.fire({title:responseData.responseMessage,icon:'error'}).then(()=>{})
       }
     })
       .catch(error => {

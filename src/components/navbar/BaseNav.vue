@@ -56,7 +56,7 @@ export default {
       type: [String, Object, Array],
       default: '',
       description:
-        'Navbar menu (items) classes. Can be used to align menu items to the right/left'
+        'navbar menu (items) classes. Can be used to align menu items to the right/left'
     },
     containerClasses: {
       type: [String, Object, Array],
@@ -81,7 +81,7 @@ export default {
           'vue'
         ].includes(value);
       },
-      description: 'Navbar color type'
+      description: 'navbar color type'
     }
   },
   model: {

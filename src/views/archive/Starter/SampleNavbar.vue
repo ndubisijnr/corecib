@@ -21,7 +21,7 @@
         <span aria-hidden="true">×</span>
       </button>
     </form>
-    <!-- Navbar links -->
+    <!-- navbar links -->
     <ul class="navbar-nav align-items-center ml-md-auto">
       <li class="nav-item d-xl-none">
         <!-- Sidenav toggler -->

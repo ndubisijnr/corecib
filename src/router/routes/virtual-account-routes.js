@@ -8,5 +8,4 @@ export default [
         name: 'VirtualAccount',
         meta: {layout: 'dashboard',authRequired:true},
     },
-
 ];

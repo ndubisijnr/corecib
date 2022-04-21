@@ -212,7 +212,7 @@
   </div>
 </template>
 <script>
-  import RouteBreadcrumb from '@/components/Breadcrumb/RouteBreadcrumb';
+  import RouteBreadcrumb from '@/components/breadcrumb/RouteBreadcrumb';
   import BaseHeader from '@/components/BaseHeader';
 
   export default {

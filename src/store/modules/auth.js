@@ -1,5 +1,5 @@
 import AuthService from "../../service/AuthService";
-import router from "../../routes/router";
+import router from "../../router";
 import AuthenticationRequest from "../../model/request/AuthRequest";
 import OrganizationService from "../../service/OrganizationService";
 import ApikeyService from "../../service/ApikeyService";
@@ -101,7 +101,10 @@ export const actions = {
     return AuthService.callRevalidateApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
-      if (responseData.responseCode === "00") commit("updateUserInfo", responseData)
+      if (responseData.responseCode === "00") {
+        if (this.$route.meta.layout === 'auth') router.push({name:"GetStarted"}).then(()=>{})
+        commit("updateUserInfo", responseData)
+      }
     }).catch(error => { commit("updateLoading", false); console.log(error)  })
   },
 
@@ -122,14 +125,13 @@ export const actions = {
       });
   },
 
-  initiatePasswordReset: ({ commit, dispatch, rootState }, payload) => {
+  initiatePasswordReset: ({ commit }, payload) => {
     commit("updateLoading", true)
     return AuthService.callInitiatePasswordResetApi(payload).then(response => {
       let responseData = response.data;
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        commit("updateSuccess", responseData.responseMessage)
-        commit("passwordResetScreen", 'otp')
+        commit("updatePasswordResetScreen", 'otp')
       }
       else Swal.fire({ text:responseData.responseMessage, icon:'error',}).then(()=>{})
     }).catch((error) => {
@@ -144,7 +146,7 @@ export const actions = {
       let responseData = response.data;
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        router.push({ name: "Login" }).then(()=>{})
+        router.push({ name: "Logon" }).then(()=>{})
       }
       else {
         Swal.fire({ text:responseData.responseMessage, icon:'error',}).then(()=>{})

@@ -11,7 +11,7 @@
         box-shadow: $navbar-vertical-box-shadow;
     }
 
-    // Navbar light
+    // navbar light
 
     &.navbar-light {
         background-color: $navbar-light-bg;
@@ -19,7 +19,7 @@
     }
 
 
-    // Navbar dark
+    // navbar dark
 
     &.navbar-dark {
         background-color: $navbar-dark-bg;
@@ -27,7 +27,7 @@
     }
 
 
-    // Navbar brand
+    // navbar brand
 
     .navbar-brand {
         margin-right: 0;
@@ -40,7 +40,7 @@
     }
 
 
-    // Navbar collapse
+    // navbar collapse
 
     @include media-breakpoint-up(md) {
         .navbar-collapse {
@@ -56,14 +56,14 @@
     }
 
 
-    // Navbar navigaton
+    // navbar navigaton
 
     .navbar-nav {
         margin-left: -$navbar-padding-x;
         margin-right: -$navbar-padding-x;
 
 
-        // Navbar link
+        // navbar link
 
         .nav-link {
             padding-left: $navbar-padding-x;
@@ -105,7 +105,7 @@
     }
 
 
-    // Navbar navigation
+    // navbar navigation
 
     .navbar-nav .nav-link {
         display: flex;
@@ -147,7 +147,7 @@
     }
 
 
-    // Navbar heading
+    // navbar heading
     .navbar-heading {
         padding-top: $nav-link-padding-y;
         padding-bottom: $nav-link-padding-y;
@@ -206,7 +206,7 @@
                     }
 
 
-                    // Navbar collapse
+                    // navbar collapse
                     .navbar-collapse {
                         flex: 1;
                         display: flex;
@@ -223,7 +223,7 @@
                     }
 
 
-                    // Navbar navigation
+                    // navbar navigation
 
                     .navbar-nav {
                         flex-direction: column;

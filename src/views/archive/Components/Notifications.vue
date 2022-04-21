@@ -188,7 +188,7 @@
   import swal from 'sweetalert2';
   import 'sweetalert2/dist/sweetalert2.css';
   import { Modal, BaseAlert } from '@/components';
-  import RouteBreadcrumb from '@/components/Breadcrumb/RouteBreadcrumb';
+  import RouteBreadcrumb from '@/components/breadcrumb/RouteBreadcrumb';
   import BaseHeader from '@/components/BaseHeader';
   export default {
     components: {

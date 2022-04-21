@@ -16,7 +16,7 @@ export default {
     animationDuration: {
       type: Number,
       default: 250,
-      description: 'Collapse animation duration'
+      description: 'collapse animation duration'
     },
     multipleActive: {
       type: Boolean,

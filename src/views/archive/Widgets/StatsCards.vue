@@ -58,7 +58,7 @@
   </div>
 </template>
 <script>
-  import StatsCard from '@/components/Cards/StatsCard'
+  import StatsCard from '@/components/cards/StatsCard'
 
   export default {
     components: {

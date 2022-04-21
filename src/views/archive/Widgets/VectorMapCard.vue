@@ -86,7 +86,7 @@
     </div>
 </template>
 <script>
-  import WorldMap from '@/components/WorldMap/WorldMap.vue';
+  import WorldMap from '@/components/worldMap/worldMap.vue';
   export default {
     name: 'map-card',
     components: {

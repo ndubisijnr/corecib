@@ -8,12 +8,13 @@
 <script>
 import DashboardLayout from "./views/layout/DashboardLayout";
 import AuthLayout from "./views/layout/AuthLayout";
+import StoreUtils from "./util/baseUtils/StoreUtils";
 const default_layout = "default";
 export default {
   components: {AuthLayout, DashboardLayout},
   mounted() {
     const userToken = localStorage.getItem('token')
-    this.$store.dispatch('revalidateUser',userToken, {root:false})
+    StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
   },
   computed:{
     layout() {

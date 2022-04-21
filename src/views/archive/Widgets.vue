@@ -138,7 +138,7 @@
           <!--* Card init *-->
           <calendar-widget></calendar-widget>
 
-          <!-- Timeline card -->
+          <!-- timeline card -->
           <timeline-card></timeline-card>
 
           <!-- Progress track -->
@@ -164,8 +164,8 @@
   </div>
 </template>
 <script>
-  import StatsCard from '@/components/Cards/StatsCard'
-  import RouteBreadCrumb from '@/components/Breadcrumb/RouteBreadcrumb'
+  import StatsCard from '@/components/cards/StatsCard'
+  import RouteBreadCrumb from '@/components/breadcrumb/RouteBreadcrumb'
   import CalendarWidget from './Widgets/CalendarWidget'
   import TimelineCard from './Widgets/TimelineCard'
   import MembersCard from "@/views/Widgets/MembersCard";

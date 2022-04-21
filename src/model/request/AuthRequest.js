@@ -27,12 +27,12 @@ class AuthenticationRequest {
     }
     static initiatePasswordReset = {
         customerEmail: null,
-        source: null
+        source: "WEB"
 
     }
     static resendOtp = {
         customerEmail: null,
-        source: null
+        source: "WEB"
 
     }
     static completePasswordReset = {

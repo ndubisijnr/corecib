@@ -37,7 +37,7 @@ export default {
     title: {
       type: String,
       default: '',
-      description: 'Collapse item title'
+      description: 'collapse item title'
     },
     id: String
   },

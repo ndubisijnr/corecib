@@ -11,137 +11,7 @@
             width="80px"
           />
         </div>
-        <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
-          <form
-            class="container form-group form-login"
-            v-if="checkForm === 'first'"
-            role="form"
-            @submit.prevent="handleSubmit(oninitiatePassword)"
-          >
-            <div class="text-center">
-              <h4 class="mt-3">Password Reset</h4>
-            </div>
-            <div>
-              <base-input
-                label="Email"
-                class="mb-2"
-                name="Email"
-                type="email"
-                :rules="{ required: true }"
-                placeholder="Email"
-                v-model="model.customerEmail"
-              >
-              </base-input>
-              <div class="text-center">
-                <button
-                  id="submitBtn"
-                  class="btn-login"
-                  native-type="submit"
-                  :class="{ disabled: loading }"
-                >
-                  Password Reset
-                  <span :class="{ 'spinner-border': loading }"></span>
-                </button>
-              </div>
-            </div>
-          </form>
-
-          <form
-            class="container form-group form-login"
-            role="form"
-            @submit.prevent="handleSubmit(oncompletePassword())"
-            v-if="checkForm === 'second'"
-          >
-            <div class="completeEnrollment">
-              <div style="" class="mb-1 text-center m-3">
-                <h4>Enter OTP</h4>
-                <vue-fake-input
-                  :length="6"
-                  :fontSize="40"
-                  inputColor="#ffc107"
-                  fontColor="#ffc107"
-                  :allowPaste="false"
-                  v-model="model.customerOtp"
-                  required
-                /><br /><br />
-                <b
-                  ><span v-if="timerCount > 0">
-                    {{ timerCount }} secs left
-                  </span></b
-                >
-                <h6
-                  style="cursor: pointer"
-                  @click="resendOtp()"
-                  v-if="timerCount == 0"
-                  class=""
-                  id="otp"
-                >
-                  Resend OTP
-                </h6>
-              </div>
-
-              <base-input
-                label="New Password"
-                class="mb-2"
-                name="Password"
-                :rules="{ required: true }"
-                type="password"
-                placeholder="Password"
-                v-model="model.customerPassword"
-                required
-              >
-              </base-input>
-              <base-input
-                label="Confirm New Password"
-                class="mb-2"
-                name="Confirm Password"
-                :rules="{ required: true }"
-                type="password"
-                placeholder="Confirm Password"
-                v-model="model.customerPasswordConfirmation"
-                required
-              >
-              </base-input>
-              <div class="text-center">
-                <div class="text-center">
-                  <button
-                    class="btn-login"
-                    native-type="submit"
-                    :class="{ disabled: loading }"
-                  >
-                    Password Reset
-                    <span :class="{ 'spinner-border': loading }"></span>
-                  </button>
-                </div>
-                <!--                      <base-button-->
-                <!--                        icon-->
-                <!--                        type="primary"-->
-                <!--                        native-type="submit"-->
-                <!--                        :class="{ disabled: loading }"-->
-                <!--                        class="my-2"-->
-                <!--                      >-->
-                <!--                        <span class="btn-inner&#45;&#45;text">Password Reset</span>-->
-                <!--                        <span :class="{ 'spinner-border': loading }"></span>-->
-                <!--                      </base-button>-->
-              </div>
-            </div>
-          </form>
-
-          <div class="mt-2">
-            <div class="text-center">
-              <div class="alter-links">
-                <span>
-                  Remember your password?<a
-                    @click="login()"
-                    class="join-now-text"
-                  >
-                    Login</a
-                  >
-                </span>
-              </div>
-            </div>
-          </div>
-        </validation-observer>
+        <forgot-password-form/>
       </div>
       
     </div>
@@ -149,14 +19,13 @@
   <!--    </div>-->
   <!--  </div>-->
 </template>
-                      <script>
+<script>
 import { mapState, mapActions, mapGetters } from "vuex";
-import VueFakeInput from "vue-fake-input";
+import ForgotPasswordForm from "../../components/form/ForgotPasswordForm";
 
 export default {
   components: {
-    //BaseHeader
-    VueFakeInput,
+    ForgotPasswordForm
   },
   data() {
     return {
@@ -231,9 +100,7 @@ export default {
   },
   computed: {
     ...mapState({
-      errors: (state) => state.auth.errors,
       loading: (state) => state.auth.loading,
-      success: (state) => state.auth.success,
       checkForm: (state) => state.auth.enrollForm,
     }),
     ...mapActions(["logon"]),

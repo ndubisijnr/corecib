@@ -199,7 +199,7 @@
   </div>
 </template>
 <script>
-// Charts
+// charts
 // Components
 import BaseHeader from "@/components/BaseHeader";
 

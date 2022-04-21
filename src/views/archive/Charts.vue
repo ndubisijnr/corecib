@@ -187,16 +187,16 @@
   </div>
 </template>
 <script>
-  import DoughnutChart from '@/components/Charts/DoughnutChart';
-  import LineChart from '@/components/Charts/LineChart';
-  import BarChart from '@/components/Charts/BarChart';
-  import PieChart from '@/components/Charts/PieChart';
-  import * as chartConfigs from '@/components/Charts/config';
+  import DoughnutChart from '@/components/charts/DoughnutChart';
+  import LineChart from '@/components/charts/LineChart';
+  import BarChart from '@/components/charts/BarChart';
+  import PieChart from '@/components/charts/PieChart';
+  import * as chartConfigs from '@/components/charts/config';
 
-  import RouteBreadCrumb from '@/components/Breadcrumb/RouteBreadcrumb';
+  import RouteBreadCrumb from '@/components/breadcrumb/RouteBreadcrumb';
   import BaseHeader from '@/components/BaseHeader';
-  import StatsCard from '@/components/Cards/StatsCard';
-  import { Charts } from "@/components/Charts/config";
+  import StatsCard from '@/components/cards/StatsCard';
+  import { Charts } from "@/components/charts/config";
 
   function randomScalingFactor() {
     return Math.round(Math.random() * 100);

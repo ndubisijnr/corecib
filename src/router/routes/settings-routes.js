@@ -7,7 +7,4 @@ export default [
         name: 'Setting',
         meta: {layout: 'dashboard',Settings:true},
     },
-
-
-  
 ];

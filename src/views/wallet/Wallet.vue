@@ -179,7 +179,7 @@
   </div>
 </template>
 <script>
-// Charts
+// charts
 // Components
 import BaseHeader from "@/components/BaseHeader";
 
@@ -189,7 +189,7 @@ import BaseHeader from "@/components/BaseHeader";
 
 import { mapState, mapActions, mapGetters } from "vuex";
 import { Datetime } from "vue-datetime";
-import router from '../../routes/router';
+import router from '../../router/router';
 
 export default {
   name: "Wallet",

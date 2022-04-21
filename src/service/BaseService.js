@@ -1,9 +1,10 @@
 import axios from "axios";
-import { qgBaseUrl } from "../app.config";
+import {qgBaseUrl} from "../app.config";
 import Swal from 'sweetalert2'
-import router from "../routes/router";
+import router from "../router";
+import StoreUtils from "../util/baseUtils/StoreUtils";
 
-export const apiClient = axios.create({
+export const appClient = axios.create({
     baseURL: qgBaseUrl,
     withCredentials: false,
     headers: {
@@ -13,26 +14,15 @@ export const apiClient = axios.create({
     }
 });
 
-export const apiClient2 = axios.create({
-    baseURL: qgBaseUrl,
-    withCredentials: false,
-    headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        //"Access-Control-Allow-Origin": "*",
-    }
-});
-
-
-
-apiClient.interceptors.request.use(config => {
-    const token2 = localStorage.getItem("token")
-    config.headers.Authorization = token2;
-    config.headers.mid = localStorage.getItem("orginazation");
+appClient.interceptors.request.use(config => {
+    config.headers.Authorization = StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken)
+        ? StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken)
+        : StoreUtils.rootGetters(StoreUtils.getters.auth.getToken);
+    config.headers.mid = localStorage.organisationId;
     return config
 })
 
-apiClient.interceptors.response.use(response => {
+appClient.interceptors.response.use(response => {
     if (response != null) {
       if (response.data != null) {
         if (response.data.responseCode === '115') {
@@ -64,7 +54,10 @@ apiClient.interceptors.response.use(response => {
         }
       }
     }
-  
     return response
-  });
+});
+
+export const apiClient = {
+    appClient: appClient
+}
   

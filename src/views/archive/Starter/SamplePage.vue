@@ -74,8 +74,8 @@
   </div>
 </template>
 <script>
-  import RouteBreadCrumb from '@/components/Breadcrumb/RouteBreadcrumb';
-  import StatsCard from '@/components/Cards/StatsCard';
+  import RouteBreadCrumb from '@/components/breadcrumb/RouteBreadcrumb';
+  import StatsCard from '@/components/cards/StatsCard';
 
   export default {
     name: 'starter-page',
