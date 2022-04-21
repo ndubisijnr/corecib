@@ -3,23 +3,36 @@ import { qgBaseUrl } from "../app.config";
 import Swal from 'sweetalert2'
 import router from "../routes/router";
 
-const appClient = axios.create({
+export const apiClient = axios.create({
     baseURL: qgBaseUrl,
     withCredentials: false,
     headers: {
          Accept: "application/json",
+        // "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
     }
 });
 
-appClient.interceptors.request.use(config => {
+export const apiClient2 = axios.create({
+    baseURL: qgBaseUrl,
+    withCredentials: false,
+    headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        //"Access-Control-Allow-Origin": "*",
+    }
+});
+
+
+
+apiClient.interceptors.request.use(config => {
     const token2 = localStorage.getItem("token")
     config.headers.Authorization = token2;
     config.headers.mid = localStorage.getItem("orginazation");
     return config
 })
 
-appClient.interceptors.response.use(response => {
+apiClient.interceptors.response.use(response => {
     if (response != null) {
       if (response.data != null) {
         if (response.data.responseCode === '115') {
@@ -54,8 +67,4 @@ appClient.interceptors.response.use(response => {
   
     return response
   });
-
-export const apiClient = {
-    appClient: appClient
-}
-
+  
