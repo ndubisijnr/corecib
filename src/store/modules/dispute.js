@@ -12,14 +12,14 @@ export const mutations = {
   updateLoading: (state, payload) => {
     state.loading = payload
   },
-  updateDsputes: (state, payload) => {
+  updateDisputes: (state, payload) => {
     state.readispute = payload
   }
 }
 
 export const actions = {
 
-  updateDsputes: ({ commit, state}, payload = DisputeRequest.disputeRead) => {
+  updateDisputes: ({ commit, state}, payload = DisputeRequest.disputeRead) => {
     if(state.disputes.data.length < 1) commit("updateLoading", true)
     return DisputeService.callReadDisputeApi(payload).then(response => {
       let responseData = response.data

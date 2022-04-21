@@ -16,6 +16,20 @@ class StoreUtils {
       completePasswordReset: "auth/completePasswordReset",
       switchOrganisation: "auth/switchOrganisation"
     },
+    dispute: {
+      updateDisputes: "dispute/updateDisputes",
+      createDispute: "dispute/createDispute",
+    },
+    virtualAccount: {
+      updateVirtualAccount: "virtualAccount/updateVirtualAccount",
+    },
+    walletTransactions: {
+      updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions",
+      updateBalanceEnquiry: "walletTransactions/updateBalanceEnquiry",
+      updateWallets: "walletTransactions/updateWallets",
+      updateWalletTransactions: "walletTransactions/updateWalletTransactions",
+      updateWallet: "walletTransactions/updateWallet",
+    },
   };
 
   static mutations = {
@@ -23,9 +37,38 @@ class StoreUtils {
       updateLoading: "apiKey/updateLoading",
       updateApikey: "apiKey/updateApikey"
     },
+    auth: {
+      updateLoading: "auth/updateLoading",
+      updateStage: "auth/updateStage",
+      updateToken: "auth/updateToken",
+      updateUserInfo: "auth/updateUserInfo",
+      updateScreen: "auth/updateScreen",
+      updatePasswordResetScreen: "auth/updatePasswordResetScreen"
+    },
+    dispute: {
+      updateLoading: "dispute/updateLoading",
+      updateDisputes: "dispute/updateDisputes"
+    },
+    virtualAccount: {
+      updateLoading: "virtualAccount/updateLoading",
+      updateVirtualAccount: "virtualAccount/updateVirtualAccount",
+    },
+    walletTransactions: {
+      updateLoading: "walletTransactions/updateLoading",
+      updateBalanceEnquiry: "walletTransactions/updateBalanceEnquiry",
+      updateWallets: "walletTransactions/updateWallets",
+      updateWalletTransactions: "walletTransactions/updateWalletTransactions",
+      updateWallet: "walletTransactions/updateWallet",
+      updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions"
+    },
   };
   static getters = {
-
+    auth: {
+      getUserInfo: "auth/getUserInfo",
+      getToken: "auth/getToken",
+      getUserToken: "auth/getUserToken",
+      getOrganizationId: "auth/getOrganizationId",
+    },
   };
 
   static dispatch(actionToDispatch, payload) {

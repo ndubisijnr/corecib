@@ -15,7 +15,7 @@ export const mutations = {
     state.loading = payload
   },
   updateVirtualAccount: (state, payload) => {
-    state.virtualaccount = payload
+    state.virtualAccount = payload
   },
 
 }
@@ -23,17 +23,17 @@ export const mutations = {
 export const actions = {
 
   updateVirtualAccount: ({ commit, state }, payload = VirtualAccountRequest.readVirtualAccountRequest) => {
-    if (state.virtualaccount.data.length < 1) commit("updateLoading", true)
-    return VirtualAccountService.callReadVirtualAccountApi(payload).then(response => {
+    if (state.virtualAccount.data.length < 1) commit("updateLoading", true)
+    return VirtualAccountService.callVirtualAccountRead(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
         commit("updateVirtualAccount", responseData.data)
       }
-    }).catch(error => {
-      commit("updateLoading", true)
-      console.log(error)
     })
+      .catch(error => {
+        console.log(error)
+      })
 
   },
 }
