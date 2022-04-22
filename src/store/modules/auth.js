@@ -3,8 +3,6 @@ import router from "../../router";
 import AuthenticationRequest from "../../model/request/AuthRequest";
 import Swal from "sweetalert2";
 import AuthenticationResponse from "../../model/reponse/AuthenticationResponse";
-import StoreUtils from "../../util/baseUtils/StoreUtils";
-import ApiKeyRequest from "../../model/request/ApiKeyRequest";
 
 export const state = {
   token: null,
@@ -77,10 +75,7 @@ export const actions = {
               localStorage.orginazationId = responseData.organisations[0].organisationId
           }
           commit("updateUserInfo", responseData);
-          router.push({name: "GetStarted"}).then(()=>{
-            ApiKeyRequest.readApiKey.apikeyOrganisationId = localStorage.orginazationId
-            dispatch(StoreUtils.actions.apiKey.updateApikey, ApiKeyRequest.readApiKey,{rootState})
-          })
+          router.push({name: "GetStarted"}).then(()=>{})
          }
         else Swal.fire({ text:responseData.responseMessage, icon:'error',}).then(()=>{})
       }).catch((error) => {
