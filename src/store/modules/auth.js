@@ -17,8 +17,19 @@ export const state = {
 export const getters = {
   getUserInfo: state => { return state.userInfo },
   getToken: state => { return state.token },
-  getUserToken: state => { return localStorage.getItem('token') },
-  getOrganizationId: state => { return localStorage.getItem('organizationId') }
+  getUserToken: state => { return localStorage.token },
+  getOrganizationId: state => { return localStorage.organisationId },
+  getCurrentOrganization: state => {
+    console.log(state.userInfo.organisations)
+    console.log(localStorage.organisationId)
+    if (state.userInfo.organisations == null) return {}
+    return state.userInfo.organisations.filter(it => it.organisationId.toString() === localStorage.organisationId).length < 1
+        ? {}
+        : state.userInfo.organisations.filter(it => it.organisationId.toString() === localStorage.organisationId)[0]
+  },
+  getStage: (state, getters) => {
+    return getters.getCurrentOrganization.organisationStage
+  }
 }
 export const mutations = {
   updateStage: (state, payload) => { state.stage = payload },
@@ -71,14 +82,14 @@ export const actions = {
         if (responseData.responseCode === "00") {
           localStorage.token = responseData.token;
           commit("updateToken", responseData.token);
-          if (!localStorage.orginazationId) localStorage.orginazationId = responseData.organisations[0].organisationId
+          if (!localStorage.organisationId) localStorage.organisationId = responseData.organisations[0].organisationId
           else{
-            if (responseData.organisations.filter(it => it.orginazationId === localStorage.orginazationId).length < 1)
-              localStorage.orginazationId = responseData.organisations[0].organisationId
+            if (responseData.organisations.filter(it => it.organisationId === localStorage.organisationId).length < 1)
+              localStorage.organisationId = responseData.organisations[0].organisationId
           }
           commit("updateUserInfo", responseData);
           router.push({name: "GetStarted"}).then(()=>{
-            ApiKeyRequest.readApiKey.apikeyOrganisationId = localStorage.orginazationId
+            ApiKeyRequest.readApiKey.apikeyOrganisationId = localStorage.organisationId
             dispatch(StoreUtils.actions.apiKey.updateApikey, ApiKeyRequest.readApiKey,{rootState})
           })
          }

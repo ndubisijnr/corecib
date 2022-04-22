@@ -6,17 +6,17 @@ export default
         {
             name:'API Logs',
             icon:'ni ni-support-16 text-primary',
-            path:'/logs'
+            path:'/reports/logs'
         },
         {
             name:'Dispute',
             icon:'ni ni-support-16 text-primary',
-            path:'/dispute'
+            path:'/reports/dispute'
         },
         {
             name:'Transactions',
             icon:'ni ni-support-16 text-primary',
-            path:'/transactions'
+            path:'/reports/transactions'
         }
     ]
 };

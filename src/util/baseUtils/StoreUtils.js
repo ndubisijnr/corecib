@@ -63,12 +63,15 @@ class StoreUtils {
       updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions"
     },
   };
+
   static getters = {
     auth: {
       getUserInfo: "auth/getUserInfo",
       getToken: "auth/getToken",
       getUserToken: "auth/getUserToken",
       getOrganizationId: "auth/getOrganizationId",
+      getCurrentOrganization: "auth/getCurrentOrganization",
+      getStage: "auth/getStage",
     },
   };
 

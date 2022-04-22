@@ -6,12 +6,12 @@ export default
         {
             name:'Get Started',
             icon:'ni ni-support-16 text-primary',
-            path:'/get-started'
+            path:'/dashboard/get-started'
         },
         {
             name:'Dashboard',
             icon:'ni ni-support-16 text-primary',
-            path:'/dashboard'
+            path:'/dashboard/dashboard'
         }
     ]
 };

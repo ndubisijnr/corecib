@@ -30,8 +30,7 @@ export const actions = {
         commit("updateApikey", responseData)
         console.log(state.apiKey)
       }
-    })
-      .catch(error => {
+    }).catch(error => {
         console.log(error)
       })
   },
@@ -46,8 +45,7 @@ export const actions = {
       }else{
         Swal.fire({ text:responseData.responseMessage, icon:'error'}).then(()=>{})
       }
-    })
-      .catch(error => {
+    }).catch(error => {
         console.log(error)
       })
   },
