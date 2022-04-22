@@ -6,17 +6,17 @@ export default
         {
             name:'VirtualAccount',
             icon:'ni ni-support-16 text-primary',
-            path:'/account'
+            path:'/user/account'
         },
         {
             name:'Wallet',
             icon:'ni ni-support-16 text-primary',
-            path:'/wallet'
+            path:'/user/wallet'
         },
         {
             name:'Transactions',
             icon:'ni ni-support-16 text-primary',
-            path:'/transactions'
+            path:'/user/transactions'
         }
     ]
 };

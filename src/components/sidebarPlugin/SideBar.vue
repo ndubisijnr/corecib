@@ -4,21 +4,23 @@
        @mouseleave="$sidebar.onMouseLeave()" style="background-color: rgba(1,34,63,0.96);">
     <div class="scrollbar-inner" ref="sidebarScrollArea">
       <div class="sidenav-header">
-          <div class="add-business" @click="toogleD()">
-            <div class="">
-              <span class="arrow ni ni-bold-down text-primary" id="arrow"></span>
-              <div class="d-flex">
+        <div class="add-business" @click="toggleBusinessDropDown()">
+          <div class="">
+            <span class="arrow ni ni-bold-down text-primary" id="arrow"></span>
+            <div class="d-flex">
               <span :class="{'spinner-border': loading}"></span>
-                <h4 class="link-drop" v-if="nan == 'old'"> {{userOrganisation[0].organisationName}}</h4>
-                <h4 class="link-drop" v-if="nan == 'new'"> {{organisation.organisationName}}</h4>
-              </div>
+              <h4 class="link-drop">{{ currentOrganisation.organisationName }}</h4>
             </div>
           </div>
+        </div>
         <div id="k">
           <hr style="margin:5px;border: 1px solid;color: #91a0af">
-            <h4 v-for="(org, index) in organisationList" :key="index" class="link-drop" @click="getId(org)"> {{org.organisationName}}</h4>
-               <base-button size="md" outline @click="addbiz()" style="color:white; border:solid white;"> Add a Bussiness</base-button>
-          <!-- <button class="btn btn-primary w-100 mt-2" >Add a Bussiness</button> -->
+          <h4 v-for="(organisation, index) in organisationList" :key="index" class="link-drop" @click="getId(organisation)">
+            {{ organisation.organisationName }}
+          </h4>
+          <base-button size="md" outline @click="addBusiness()" style="color:white; border:solid white;"> Add a Business
+          </base-button>
+          <!-- <button class="btn btn-primary w-100 mt-2" >Add a Business</button> -->
         </div>
       </div>
       <slot></slot>
@@ -26,14 +28,14 @@
         <ul class="navbar-nav one">
           <slot name="links">
             <sidebar-item
-              v-for="(link, index) in sidebarLinks"
-              :key="link.name + index"
-              :link="link"
+                v-for="(link, index) in sidebarLinks"
+                :key="link.name + index"
+                :link="link"
             >
               <sidebar-item
-                v-for="(subLink, index) in link.children"
-                :key="subLink.name + index"
-                :link="subLink"
+                  v-for="(subLink, index) in link.children"
+                  :key="subLink.name + index"
+                  :link="subLink"
               >
               </sidebar-item>
             </sidebar-item>
@@ -48,14 +50,15 @@
 
 
 import {mapState} from "vuex";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 export default {
   name: 'sidebar',
-    data(){
-      return {
-        organisationList: []
-        }
-    },
+  data() {
+    return {
+
+    }
+  },
   props: {
     title: {
       type: String,
@@ -76,13 +79,13 @@ export default {
       type: Array,
       default: () => [],
       description:
-        "List of sidebar links as an array if you don't want to use components for these."
+          "List of sidebar links as an array if you don't want to use components for these."
     },
     autoClose: {
       type: Boolean,
       default: true,
       description:
-        'Whether sidebar should autoclose on mobile when clicking an item'
+          'Whether sidebar should autoclose on mobile when clicking an item'
     }
   },
   provide() {
@@ -97,16 +100,16 @@ export default {
       }
     },
 
-    addbiz(){
-      this.$router.push({name:"NewBusiness"})
+    addBusiness() {
+      this.$router.push({name: "NewBusiness"})
     },
 
-    getId(payload){
+    getId(payload) {
       console.log(JSON.stringify(payload.organisationId));
-      this.$store.dispatch('switchOrganisation', payload, {root:false})
+      this.$store.dispatch('switchOrganisation', payload, {root: false})
     },
 
-    toogleD(){
+    toggleBusinessDropDown() {
       let x = document.getElementById("k");
       let y = document.getElementById("arrow")
       if (x.style.display === "none") {
@@ -120,16 +123,20 @@ export default {
       }
     }
   },
-  computed:{
+  computed: {
     ...mapState({
-      userOrganisation: state => state.auth.userOrganisations,
-      organisation: state => state.auth.organisation,
-      user: state => state.auth.userInfo,
-      loading: state => state.auth.loading,
-      nan: state => state.auth.nan
-
+      userInfo: state => state.auth.userInfo,
+      loading: state => state.auth.loading
     }),
-
+    stage(){
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
+    },
+    currentOrganisation(){
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
+    },
+    organisationList(){
+      return this.userInfo.organisations.filter(it => it.organisationId !== this.currentOrganisation.organisationId)
+    }
 
   },
   mounted() {
@@ -137,40 +144,17 @@ export default {
     this.minimizeSidebar()
     document.getElementById("k").style.display = 'none'
 
-    if(Object.keys(this.userOrganisation).length !== 0){
-        let data = [];
-        data = this.userOrganisation
-        this.organisationList = data;
-      }
-      else{
-      this.organisationList = []
-
-    }
-
   },
   beforeDestroy() {
     if (this.$sidebar.showSidebar) {
       this.$sidebar.showSidebar = false;
     }
   },
-  watch: {
-    userOrganisation(newValue, oldValue) {
-      console.log("Response Query " + JSON.stringify(this.userOrganisation));
-      if (Object.keys(this.userOrganisation).length !== 0) {
-        let data = [];
-        data = this.userOrganisation.data;
-        this.organisationList = data
-
-      } else {
-        this.organisationList = []
-      }
-    }
-  }
 };
 </script>
 
 <style scoped>
-.add-business{
+.add-business {
   z-index: 9999999;
   /*display: flex;*/
   /*flex-direction: column;*/
@@ -189,7 +173,7 @@ export default {
 
 }
 
-#k{
+#k {
   text-align: justify;
   z-index: 1;
   position: absolute;
@@ -203,7 +187,7 @@ export default {
   padding: 12px;
 }
 
-.arrow{
+.arrow {
   position: absolute;
   right: 20px;
   font-size: 12px;
@@ -215,6 +199,7 @@ export default {
   transform: rotate(-90deg);
   transition: ease 0.4s;
 }
+
 .spinner-border {
   display: inline-block;
   width: 1rem;
@@ -228,14 +213,17 @@ export default {
 }
 
 @keyframes spinner-border {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .rotate-90 {
   transform: rotate(90deg);
   transition: ease 0.4s;
 }
-.link-drop{
+
+.link-drop {
   padding-left: 19px;
   margin-bottom: 5px;
   cursor: pointer;
@@ -244,7 +232,7 @@ export default {
   text-align: left;
 }
 
-.link-drop:hover{
+.link-drop:hover {
   color: #736f6f;
 }
 </style>

@@ -300,23 +300,14 @@ export default {
       this.initiateModel.customerCountryCode = dialCode;
     },
 
-    resendOtp() {
+    async resendOtp() {
       this.resendOtpModel.customerEmail = this.initiateModel.customerEmail;
-      this.$store
-        .dispatch(StoreUtils.actions.auth.resendOtp, this.resendOtpModel, {
-          root: false,
-        })
-        .then(() => {
-          console.log("Timer...");
-          this.timerCount = 30;
-        });
+      await StoreUtils.dispatch(StoreUtils.actions.auth.resendOtp, this.resendOtpModel)
+      console.log("Timer...");
+      this.timerCount = 30;
     },
     onInitiateEnrollment() {
-      this.$store.dispatch(
-        StoreUtils.actions.auth.initialEnrollment,
-        this.initiateModel,
-        { root: false }
-      );
+      StoreUtils.dispatch( StoreUtils.actions.auth.initialEnrollment, this.initiateModel);
     },
     startTimer(duration) {
       let timer = duration,
@@ -339,16 +330,10 @@ export default {
         this.completeModel.customerConfirmPassword
       ) {
         this.completeModel.customerEmail = this.initiateModel.customerEmail;
-        this.completeModel.customerBusinessName =
-          this.initiateModel.customerBusinessName;
-        this.$store.dispatch(
-          StoreUtils.actions.auth.completeEnrollment,
-          this.completeModel,
-          { root: false }
-        );
+        this.completeModel.customerBusinessName = this.initiateModel.customerBusinessName;
+        StoreUtils.dispatch( StoreUtils.actions.auth.completeEnrollment,this.completeModel);
       } else {
-        document.getElementById("passmisMatched").innerText =
-          "Passwords are not the same";
+        document.getElementById("passmisMatched").innerText = "Passwords are not the same";
         setTimeout(() => {
           document.getElementById("passmisMatched").style.display = "none";
         }, 2000);
@@ -360,12 +345,8 @@ export default {
   },
   computed: {
     ...mapState({
-      errors: (state) => state.auth.errors,
       loading: (state) => state.auth.loading,
-      success: (state) => state.auth.success,
       screen: (state) => state.auth.screen,
-      // getOtp: (state) => state.auth.otp,
-      isresendOtp: (state) => state.auth.resendOpt,
     }),
   },
   watch: {

@@ -8,7 +8,7 @@
           <sidebar-item v-for="item in sidebar.items" :link="{
             name: item.name,
             icon: item.icon,
-            path: item.icon }" v-bind:key="item.name"/>
+            path: item.path }" v-bind:key="item.name"/>
         </span>
       </template>
     </side-bar>
@@ -45,6 +45,9 @@ function initScrollbar(className) {
   }
 }
 
+console.log(DashboardSidebarItems)
+let dashboardSidebarItems = DashboardSidebarItems
+
 import DashboardNavbar from './DashboardNavbar.vue';
 import ContentFooter from './ContentFooter.vue';
 import {FadeTransition} from 'vue2-transitions';
@@ -69,9 +72,8 @@ export default {
   },
   computed:{
     sidebarItems(){
-      let sidebar=[]
-      return sidebar.push(DashboardSidebarItems,ReportSidebarItems,SettingsSidebarItems,UserSidebarItems)
-    }
+      return [DashboardSidebarItems,ReportSidebarItems,SettingsSidebarItems,UserSidebarItems]
+    },
   },
   mounted() {
     this.initScrollbar()

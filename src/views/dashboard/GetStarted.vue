@@ -15,7 +15,7 @@
             <div class="col-lg-12 col-md-12 text-center">
               <div class="onboarding-title text-center">
                 <h3 class="m-b-xs"><b>Welcome to BizGem</b></h3>
-                <h4>Your business is in <span v-if="isSwitched == false">Test</span> <span v-if="isSwitched == true">Live</span> mode</h4>
+                <h4>Your business is in <span v-if="stage === 'DEV'">Test</span><span v-else>Live</span> mode</h4>
               </div>
             </div>
           </div>
@@ -227,6 +227,7 @@
 </template>
 <script>
 import { mapState} from "vuex";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 export default {
   name:"GetStarted",
@@ -241,6 +242,7 @@ export default {
   methods: {
     getbiz() {
       this.$router.push({ name: "NewBusiness" });
+      StoreUtils.rootGetters(StoreUtils.getters)
     },
     hide$show() {
       let b = document.getElementById("pwd");
@@ -263,6 +265,12 @@ export default {
       api:(state) => state.apiKey.apiKey
 
     }),
+    currentOrganisation(){
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
+    },
+    stage(){
+      return this.currentOrganisation.organisationStage
+    }
   },
 
   mounted: function () {},
