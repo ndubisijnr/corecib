@@ -40,11 +40,13 @@
 </template>
 <script>
   import { SlideYUpTransition } from "vue2-transitions";
+  // import DisputeForm from "../components/form/DisputeForm"
 
   export default {
     name: "modal1",
     components: {
-      SlideYUpTransition
+      SlideYUpTransition,
+      // DisputeForm
     },
     props: {
       show: Boolean,

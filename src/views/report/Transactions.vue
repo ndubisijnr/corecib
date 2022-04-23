@@ -69,7 +69,11 @@
         </div>
       </div>
     </div>
-    {{ allTransactions }}
+     <base-table
+          :items="allTransactions"
+          :fields="fields"
+          filter-mode="default"
+          :is-busy="loading" />
   </div>
 </template>
 <script>
@@ -85,12 +89,15 @@ import { mapState } from "vuex";
 import { Datetime } from "vue-datetime";
 import WalletRequest from "../../model/request/WalletRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
+import BaseTable from "../../components/table/BaseTable";
+
 
 export default {
   name: "AllTransaction",
   components: {
     Datetime,
     BaseHeader,
+    BaseTable
   },
   data() {
     return {
@@ -113,7 +120,7 @@ export default {
       ],
       items: [],
       bitems: [],
-      field: [
+      fields: [
         { key: "drCr", label: "drCr" },
         { key: "amount", label: "amount" },
         { key: "accountNumber", label: "accountNumber" },
@@ -127,16 +134,6 @@ export default {
         { key: "eventDate", label: "eventDate" },
         { key: "actions", label: "actions" },
       ],
-
-      totalRows: 1,
-      currentPage: 1,
-      perPage: 5,
-      pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
-      sortBy: "",
-      sortDesc: false,
-      sortDirection: "asc",
-      filter: null,
-      filterOn: [],
     };
   },
   methods: {

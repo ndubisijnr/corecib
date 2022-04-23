@@ -9,7 +9,7 @@
             <span class="arrow ni ni-bold-down text-primary" id="arrow"></span>
             <div class="d-flex">
               <span :class="{'spinner-border': loading}"></span>
-              <h4 class="link-drop">{{ currentOrganisation.organisationName }}</h4>
+              <h6 class="link-drop">{{ currentOrganisation.organisationName }}</h6>
             </div>
           </div>
         </div>

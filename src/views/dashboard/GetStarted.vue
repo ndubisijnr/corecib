@@ -14,8 +14,8 @@
           <div class="row">
             <div class="col-lg-12 col-md-12 text-center">
               <div class="onboarding-title text-center">
-                <h3 class="m-b-xs"><b>Welcome to BizGem</b></h3>
-                <h4>Your business is in <span v-if="stage === 'DEV'">Test</span><span v-else>Live</span> mode</h4>
+                <h5 class="m-b-xs"><b>Welcome to BizGem</b></h5>
+                <h6>Your business is in <span v-if="stage === 'DEV'">Test</span><span v-else>Live</span> mode</h6>
               </div>
             </div>
           </div>
@@ -109,17 +109,17 @@
               </div>
 
               <div class="container mt-5 d-flex">
-                <div class="d-flex bg-white w-50 shadow">
+                <div class="d-flex bg-white card w-50">
                   <div class="p-3">
                     <h3>API Documentation</h3>
                     <p>
                       Our documentation contains the Libraries, APIs, and SDKs
                       you need to integrate BizGem in your website or app.
                     </p>
-                    <base-button size="md" outline> Go to Docs </base-button>
+                    <base-button size="md" class="btn-primary btn"> Go to Docs </base-button>
                   </div>
                 </div>
-                <div class="w-50 ml-5 shadow bg-white p-3">
+                <div class="w-50 ml-5 card bg-white p-3">
                   <h3 text-center>Your Test Key</h3>
                   <p>
                     Also available in

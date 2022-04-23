@@ -68,7 +68,11 @@
           </div>
         </div>
         </div>
-        {{wallet}}
+         <base-table
+          :items="this.wallet.data"
+          :fields="fields"
+          filter-mode="default"
+          :is-busy="loading" />
     </div>
   </div>
 </template>
@@ -77,6 +81,8 @@
 import BaseHeader from "@/components/BaseHeader";
 import WalletRequest from "../../model/request/WalletRequest"
 import StoreUtils from "../../util/baseUtils/StoreUtils";
+import BaseTable from "../../components/table/BaseTable";
+
 
 import { mapState} from "vuex";
 import { Datetime } from "vue-datetime";
@@ -85,6 +91,7 @@ export default {
   components: {
     Datetime,
     BaseHeader,
+    BaseTable
   },
   data() {
     return {
@@ -106,8 +113,7 @@ export default {
         { value: "thisyear", label: "This Year" },
       ],
       items: [],
-      bitems: [],
-      field: [
+      fields: [
         { key: "accountId", label: "accountId" },
         { key: "accountCustomerId", label: "accountCustomerId" },
         { key: "accountNumber", label: "accountNumber" },
@@ -123,16 +129,6 @@ export default {
         { key: "accountEmail", label: "accountEmail" },
         { key: "accountBvn", label: "accountBvn" },
       ],
-
-      totalRows: 1,
-      currentPage: 1,
-      perPage: 5,
-      pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
-      sortBy: "",
-      sortDesc: false,
-      sortDirection: "asc",
-      filter: null,
-      filterOn: [],
     }
   },
   methods: {

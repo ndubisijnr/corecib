@@ -1,7 +1,11 @@
 <template>
   
  <div>
-   {{wallettransactions}}
+   <base-table
+          :items="wallettransactions"
+          fields:="fields"
+          filter-mode="default"
+          :is-busy="loading" />
   </div>
 </template>
 
@@ -9,12 +13,17 @@
 <script>
 import { mapState } from "vuex";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
+import BaseTable from "../../components/table/BaseTable";
+
 
 
 import WalletRequest from "../../model/request/WalletRequest"
 
 export default {
   name:"WalletTransaction",
+  components: {
+    BaseTable
+  },
   data() {
     return {
       minDatetime: "2022-04-28",
@@ -35,7 +44,7 @@ export default {
         { value: "thisyear", label: "This Year" },
       ],
       items: [],
-      field: [
+      fields: [
         { key: "accountId", label: "accountId" },
         { key: "accountCustomerId", label: "accountCustomerId" },
         { key: "accountNumber", label: "accountNumber" },
@@ -52,21 +61,6 @@ export default {
         { key: "accountBvn", label: "accountBvn" },
         // { key: "actions", label: "actions" },
       ],
-
-      totalRows: 1,
-      currentPage: 1,
-      perPage: 5,
-      pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
-      sortBy: "",
-      sortDesc: false,
-      sortDirection: "asc",
-      filter: null,
-      filterOn: [],
-      infoModal: {
-        id: "info-modal",
-        title: "",
-        content: "",
-      },
     };
   },
   computed: {

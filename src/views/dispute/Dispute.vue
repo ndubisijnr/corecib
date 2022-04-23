@@ -1,64 +1,102 @@
 <template>
   <div class="">
     <div class="text-right m-3">
-      <button
-          class="btn btn-success mt-3"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasRight"
-          aria-controls="offcanvasRight"
-      >
+      <button class="btn btn-success mt-3" @click="show = true">
         <i class="fa fa-plus"></i> Create Disputes
       </button>
       <base-table
-          :items="this.disputes.data"
-          :fields="fields"
-          filter-mode="default"
-          :is-busy="loading" />
+        :items="this.disputes.data"
+        :fields="fields"
+        filter-mode="default"
+        :is-busy="loading"
+      />
     </div>
-</div>
+
+    <dispute-form
+      @closeCreateDispute="updateCreateDispute"
+      :showCreateDispute="show"
+    ></dispute-form>
+  </div>
 </template>
 
 <script>
-import {mapState} from "vuex";
-import DisputeResquest from "../../model/request/DisputeRequest"
-import StoreUtils from '../../util/baseUtils/StoreUtils';
+import { mapState } from "vuex";
+import DisputeResquest from "../../model/request/DisputeRequest";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BaseTable from "../../components/table/BaseTable";
+import DisputeForm from "../../components/form/DisputeForm";
 
 export default {
   name: "Dispute",
-  components: {BaseTable},
+  components: { BaseTable, DisputeForm },
   data() {
     return {
+      show: false,
       disputeReadModel: DisputeResquest.disputeRead,
-      perPage: 9,
-      currentPage: 1,
       fields: [
-        { key: "disputeId", label: "disputeId", sortable: true, class: "text-left", },
-        { key: "disputeSessionId", label: "disputeSessionId", sortable: true, class: "text-left",},
-        { key: "disputeTrnType",label: "disputeTrnType",sortable: true,class: "text-left", },
-        { key: "disputeIssueType", label: "disputeIssueType", sortable: true, class: "text-left", },
-        { key: "disputeComment", label: "disputeComment", sortable: true, class: "text-left",},
-        { key: "disputeOrgId", label: "disputeOrgId  ", sortable: true, class: "text-left",},
-        { key: "disputeStatus", label: "disputeStatus"},
-        { key: "disputeActions", label: "Actions"},
+        {
+          key: "disputeId",
+          label: "disputeId",
+          sortable: true,
+          class: "text-left",
+        },
+        {
+          key: "disputeSessionId",
+          label: "disputeSessionId",
+          sortable: true,
+          class: "text-left",
+        },
+        {
+          key: "disputeTrnType",
+          label: "disputeTrnType",
+          sortable: true,
+          class: "text-left",
+        },
+        {
+          key: "disputeIssueType",
+          label: "disputeIssueType",
+          sortable: true,
+          class: "text-left",
+        },
+        {
+          key: "disputeComment",
+          label: "disputeComment",
+          sortable: true,
+          class: "text-left",
+        },
+        {
+          key: "disputeOrgId",
+          label: "disputeOrgId  ",
+          sortable: true,
+          class: "text-left",
+        },
+        { key: "disputeStatus", label: "disputeStatus" },
+        { key: "disputeActions", label: "Actions" },
       ],
     };
   },
 
-  methods: {},
+  methods: {
+    updateCreateDispute(value) {
+      this.show = value;
+    },
+  },
 
   mounted() {
-    StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes, this.disputeReadModel)
+    this.disputeReadModel.disputeId = localStorage.getItem("organisationId");
+    StoreUtils.dispatch(
+      StoreUtils.actions.dispute.updateDisputes,
+      this.disputeReadModel
+    );
   },
 
   computed: {
     ...mapState({
       user: (state) => state.auth.userInfo,
       loading: (state) => state.dispute.loading,
-      disputes: state => state.dispute.disputes
+      disputes: (state) => state.dispute.disputes,
     }),
   },
-
 };
 </script>
 

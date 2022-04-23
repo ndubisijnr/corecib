@@ -25,23 +25,14 @@
                 </el-select>
               </base-input>
             </div>
-            <base-input
-              label="Search"
-              input-classes="form-control-md"
-              name="Report Name"
-              placeholder="Search"
-              v-model="filter"
-              class="w-50 ml-1"
-            >
-            </base-input>
-            <div v-if="type === 'customperiod'" class="">
+             <div v-if="type === 'customperiod'" class="">
               <div style="display: flex">
                 <div></div>
                 <div class="ml-2">
                   <label class="form-control-label"> From</label>
                   <datetime
                     v-model="startDate"
-                    input-class="form-control"
+                    input-class="form-control-lg form-control"
                     class="theme-green"
                     placeholder="Start Date"
                     zone="Africa/Lagos"
@@ -54,7 +45,7 @@
                   <label class="form-control-label"> To</label>
                   <datetime
                     v-model="endDate"
-                    input-class="form-control"
+                    input-class="form-control form-control-lg"
                     class="theme-green"
                     placeholder="End Date"
                     zone="Africa/Lagos"
@@ -65,6 +56,19 @@
                 </div>
               </div>
             </div>
+            <div class="d-flex align-items-center w-75">
+            <base-input
+              label="Search"
+              input-classes="form-control-lg"
+              name="Report Name"
+              placeholder="Search Here"
+              class="ml-2 w-50"
+            >
+            </base-input>
+            <button class="btn btn-success mt-3 ml-2">Search <i class="fa fa-search" style="position:relative"></i></button>
+           
+            </div>
+           
           </div>
           <!-- </div> -->
           <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3">
@@ -73,7 +77,10 @@
         </div>
       </div>
     </div>
-    {{ accounts }}
+     <base-table
+          :items="accounts.data"
+          filter-mode=""
+          :is-busy="loading" />
   </div>
 </template>
 <script>
@@ -81,6 +88,7 @@
 // Components
 import BaseHeader from "@/components/BaseHeader";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
+import BaseTable from "../../components/table/BaseTable"
 
 // Lists
 
@@ -95,10 +103,11 @@ export default {
   components: {
     Datetime,
     BaseHeader,
+    BaseTable
   },
   data() {
     return {
-       minDatetime: "2022-04-28",
+      minDatetime: "2022-04-28",
       maxDatetime: "2022-04-01",
       startDate: "",
       endDate: "",
@@ -116,8 +125,7 @@ export default {
         { value: "thisyear", label: "This Year" },
       ],
       items: [],
-      bitems: [],
-      field: [
+      fields: [
         { key: "drCr", label: "drCr" },
         { key: "amount", label: "amount" },
         { key: "accountNumber", label: "accountNumber" },
@@ -131,16 +139,6 @@ export default {
         { key: "eventDate", label: "eventDate" },
         { key: "actions", label: "actions" },
       ],
-
-      totalRows: 1,
-      currentPage: 1,
-      perPage: 5,
-      pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
-      sortBy: "",
-      sortDesc: false,
-      sortDirection: "asc",
-      filter: null,
-      filterOn: [],
     };
   },
   methods: {
