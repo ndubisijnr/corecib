@@ -46,11 +46,13 @@
       <template v-slot:cell(serial)="row">
         {{ row.index + 1 }}
       </template>
-      <template v-slot:cell(actions)="row">
+      <!-- <template v-slot:cell(actions)="row">
         <b-icon-eye-slash style="cursor: pointer; width: 25px; height: 15px;" v-if="row.detailsShowing" href="#" @click="row.toggleDetails" />
         <b-icon-eye style="cursor: pointer; width: 25px; height: 15px;" v-else href="#" @click="row.toggleDetails" />
-      </template>
+      </template> -->
       <template v-slot:cell(disputeActions)="row">
+        <b-icon-folder2-open v-if="row.disputeStatus == 'CLOSED'" />
+        <b-icon-folder2 v-if="row.disputeStatus == 'OPEN'"/>
         <b-icon-eye-slash style="cursor: pointer; width: 25px; height: 15px;" v-if="row.detailsShowing" href="#" @click="row.toggleDetails" />
         <b-icon-eye style="cursor: pointer; width: 25px; height: 15px;" v-else href="#" @click="row.toggleDetails" />
       </template>

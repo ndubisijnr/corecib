@@ -16,8 +16,8 @@ class DisputeRequest {
         disputeId: null
     }
 
-    static disputeReadSingle={
-        disputeId: null,
+    static transactionStatusQuery={
+        reference:null
 
     }
 

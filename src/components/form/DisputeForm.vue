@@ -13,18 +13,17 @@
             @click="closeModal()"
           ></button>
         </div>
-        <div class="">
-          <h6 class="mb-0 text-start ml-3">Log Dispute</h6>
-        </div>
+        <div class=""></div>
       </div>
       <div class="card-body">
-        <form role="form" @submit.prevent="handleSubmit(logDispute())">
+        <form role="form" @submit.prevent="logDispute()">
           <div class="form-floating mb-3">
             <input
               type="tel"
               class="form-control"
               placeholder="Session ID or Transaction Refrenence"
               required
+              v-model="transactionsQuerymodel.reference"
             />
             <label>Session ID or Transaction Refrenence</label>
           </div>
@@ -74,16 +73,25 @@
                 type="tel"
                 class="form-control"
                 placeholder="disputeSessionId"
+                :value="orgnasationId"
                 required
                 disabled
               />
               <label>disputeOrgId</label>
             </div>
           </template>
-          <button type="submit" class="btn btn-success">proceed</button>
-          <button type="submit" class="btn btn-success" v-if="status == true">
-            Proceed
-          </button>
+          <b-button
+            type="button"
+            v-if="status == false"
+            @click="transactionsQuery()"
+          >
+            <span v-if="!loading2">Proceed</span>
+            <span :class="{ 'spinner-border': loading2 }"></span
+          ></b-button>
+          <b-button type="submit" v-if="status == true" @click="logDispute()"
+            ><span v-if="!loading2">Proceed</span>
+            <span :class="{ 'spinner-border': loading2 }"></span
+          ></b-button>
         </form>
       </div>
     </div>
@@ -91,7 +99,10 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import DisputeRequest from "../../model/request/DisputeRequest";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
+
 export default {
   name: "Dispute-Form",
   props: {
@@ -102,16 +113,66 @@ export default {
       showModal: true,
       status: false,
       createDisputemodel: DisputeRequest.disputeCreate,
+      transactionsQuerymodel: DisputeRequest.transactionStatusQuery,
     };
   },
 
   methods: {
     closeModal() {
-      console.log("Closing Moddalslslslsl");
       this.showModal = false;
       this.$emit("closeCreateDispute", false);
       this.showModal = true;
     },
+
+    logDispute() {
+      StoreUtils.dispatch(StoreUtils.actions.dispute.createDispute,this.createDisputemodel)
+    },
+
+    transactionsQuery() {
+      StoreUtils.dispatch(
+        StoreUtils.actions.dispute.updateTransactionQuery,
+        this.transactionsQuerymodel
+      ).then(() => {
+        this.status = true;
+      });
+    },
   },
+
+  computed: {
+    ...mapState({
+      loading2: (state) => state.dispute.loading2,
+      orgnasationId: () => {
+        return localStorage.organisationId;
+      },
+      transactionquery: (state) => state.dispute.transactionsquery,
+      success:state => state.dispute.success
+    }),
+  },
+
+  watch:{
+    success(value){
+      if(value){
+        this.closeModal()
+      }
+    }
+    
+  }
 };
 </script>
+
+<style scoped>
+.spinner-border {
+  display: inline-block;
+  vertical-align: text-bottom;
+  border: 0.15em solid currentColor;
+  border-right-color: transparent;
+  -webkit-animation: spinner-border 0.75s linear infinite;
+  animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

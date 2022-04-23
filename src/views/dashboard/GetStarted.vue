@@ -48,7 +48,7 @@
                     class="mt-3 btn btn-primary"
                     @click="getbiz()"
                   >
-                    Activate Business
+                    Activate a Business
                   </base-button>
                 </div>
                 <div class="onboarding-card">
@@ -108,18 +108,8 @@
                 </div>
               </div>
 
-              <div class="container mt-5 d-flex">
-                <div class="d-flex bg-white card w-50">
-                  <div class="p-3">
-                    <h3>API Documentation</h3>
-                    <p>
-                      Our documentation contains the Libraries, APIs, and SDKs
-                      you need to integrate BizGem in your website or app.
-                    </p>
-                    <base-button size="md" class="btn-primary btn"> Go to Docs </base-button>
-                  </div>
-                </div>
-                <div class="w-50 ml-5 card bg-white p-3">
+              <div class="container mt-3 d-flex justify-content-center">
+                <div class="card bg-white p-3">
                   <h3 text-center>Your Test Key</h3>
                   <p>
                     Also available in
@@ -129,6 +119,7 @@
                       ></router-link
                     >
                   </p>  
+                  
                   <api-form></api-form>                           
                 </div>
               </div>
@@ -158,19 +149,6 @@ export default {
     getbiz() {
       this.$router.push({ name: "NewBusiness" });
       StoreUtils.rootGetters(StoreUtils.getters)
-    },
-    hide$show() {
-      let b = document.getElementById("pwd");
-      let eye = document.getElementById("eye");
-      if (b.type === "password") {
-        b.type = "text";
-        eye.classList.remove("fa-eye");
-        eye.classList.add("fa-eye-slash");
-      } else {
-        b.type = "password";
-        eye.classList.add("fa-eye");
-        eye.classList.remove("fa-eye-slash");
-      }
     },
   },
   computed: {

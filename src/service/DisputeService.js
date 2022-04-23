@@ -18,4 +18,8 @@ export default {
         return apiClient.appClient.post("/dispute/update",payload);
     },
 
+    callTransactionStatusQuerApi(payload){
+        return apiClient.appClient.post("/virtual-account/transaction-status-query",payload)
+    }
+
 };
