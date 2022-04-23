@@ -14,7 +14,7 @@
           ></button>
         </div>
         <div class="">
-          <h6 class="mb-0 text-start">Enter Dispute Session ID</h6>
+          <h6 class="mb-0 text-start ml-3">Log Dispute</h6>
         </div>
       </div>
       <div class="card-body">
@@ -23,10 +23,10 @@
             <input
               type="tel"
               class="form-control"
-              placeholder="disputeSessionId"
+              placeholder="Session ID or Transaction Refrenence"
               required
             />
-            <label>disputeSessionId</label>
+            <label>Session ID or Transaction Refrenence</label>
           </div>
           <template v-if="status == true">
             <div class="form-floating mb-3">

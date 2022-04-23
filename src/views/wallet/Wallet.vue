@@ -25,23 +25,14 @@
                 </el-select>
               </base-input>
             </div>
-            <base-input
-              label="Search"
-              input-classes="form-control-md"
-              name="Report Name"
-              placeholder="Search"
-              v-model="filter"
-              class="w-50 ml-1"
-            >
-            </base-input>
-            <div v-if="type === 'customperiod'" class="">
+              <div v-if="type === 'customperiod'" class="">
               <div style="display: flex">
                 <div></div>
                 <div class="ml-2">
                   <label class="form-control-label"> From</label>
                   <datetime
                     v-model="startDate"
-                    input-class="form-control"
+                    input-class="form-control form-control-lg"
                     class="theme-green"
                     placeholder="Start Date"
                     zone="Africa/Lagos"
@@ -54,7 +45,7 @@
                   <label class="form-control-label"> To</label>
                   <datetime
                     v-model="endDate"
-                    input-class="form-control"
+                    input-class="form-control form-control-lg"
                     class="theme-green"
                     placeholder="End Date"
                     zone="Africa/Lagos"
@@ -65,6 +56,19 @@
                 </div>
               </div>
             </div>
+            <div class="d-flex align-items-center w-75">
+            <base-input
+              label="Search"
+              input-classes="form-control-lg"
+              name="Report Name"
+              placeholder="Search Here"
+              class="ml-2 w-50"
+            >
+            </base-input>
+            <button class="btn btn-success mt-3 ml-2">Search <i class="fa fa-search" style="position:relative"></i></button>
+           
+            </div>
+          
           </div>
         </div>
         </div>

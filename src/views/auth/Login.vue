@@ -6,9 +6,9 @@
       <div class="login">
         <login-form/>
         <div class="mt-4">
-          <h4 class="forgot-password" @click="forgotPassword()">
+          <h6 class="forgot-password" @click="forgotPassword()">
             Forgot Password
-          </h4>
+          </h6>
         </div>
         <span class="text-dark">New To BizGem?<span class="join-now-text" @click="signUp()" >Create Account</span></span>
       </div>

@@ -12,7 +12,7 @@
     <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(onSubmit)">
       <div class="text-center">
         <img src="" alt="" class="img-fluid" />
-        <h4 class="mt-1">Sign in to continue to BizGem</h4>
+        <h6 class="mt-1">Sign in to continue to BizGem</h6>
       </div>
       <div class="form-floating mb-3">
         <input type="email" class="form-control" name="email" placeholder="businessname@gmail.com" v-model="model.username" required/>

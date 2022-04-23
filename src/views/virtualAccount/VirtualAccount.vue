@@ -68,12 +68,7 @@
             <button class="btn btn-success mt-3 ml-2">Search <i class="fa fa-search" style="position:relative"></i></button>
            
             </div>
-           
           </div>
-          <!-- </div> -->
-          <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3">
-              
-            </div> -->
         </div>
       </div>
     </div>
