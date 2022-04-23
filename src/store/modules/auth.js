@@ -166,7 +166,7 @@ export const actions = {
     });
   },
 
-  switchOrganisation: ({ commit }, paylaod) => {
+  switchOrganisation: ({}, paylaod) => {
     localStorage.organisationId = paylaod.organisationId
     location.reload()
   },

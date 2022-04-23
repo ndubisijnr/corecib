@@ -11,7 +11,7 @@ export const state = {
 
 export const mutations = {
   updateLoading: (state, payload) => {
-    state.token = payload
+    state.loading = payload
   },
   updateApikey: (state, payload) => {
     state.apiKey = payload
@@ -25,10 +25,9 @@ export const actions = {
     if(state.apiKey.responseCode !== "00") commit("updateLoading", true)
     return ApikeyService.callReadApiKeyOrgansation(payload).then(response => {
       let responseData = response.data
-      commit("updateLoading",false)
       if(responseData.responseCode === "00"){
+        commit("updateLoading",false)
         commit("updateApikey", responseData)
-        console.log(state.apiKey)
       }
     }).catch(error => {
         console.log(error)

@@ -66,131 +66,20 @@
               </div>
             </div>
           </div>
-          <!-- </div> -->
-          <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3">
-              
-            </div> -->
         </div>
-      </div>
-
-      <div class="dispute" v-if="!wallet">
-        <div class="text-center">
-          <img src="@/assets/empty.svg" />
-          <h3>No Wallets</h3>
         </div>
-      </div>
-      <div class="dispute" v-if="loading">
-        <div class="text-center">
-          <div class="d-flex align-items-center justify-content-center">
-            <span :class="{ 'spinner-border': loading }"></span
-            ><span class="m-2">Loading wallets...</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-if="wallet">
-
-      <!-- <singleTrans  v-if="wallettrans"/> -->
-
-      <div class="dispute-table" v-if="!loading">
-        <b-table
-          class="table table-striped shadow"
-          :fields="field"
-          :items="wallet"
-          :current-page="currentPage"
-          :per-page="perPage"
-          :filter="filter"
-          :filter-included-fields="filterOn"
-          :sort-by.sync="sortBy"
-          :sort-desc.sync="sortDesc"
-          :sort-direction="sortDirection"
-          @filtered="onFiltered"
-          show-empty
-        >
-          <template #cell(accountNumber)="row">
-            <span
-              size="md"
-              style="cursor: pointer"
-              @click="getvalue(row.value)"
-            >
-              {{ row.value }}
-              <i class="fa fa-info-circle"></i>
-            </span>
-          </template>
-        </b-table>
-      </div>
-      <div class="text-center mt-3 mr-5 ml-5" v-if="!loading">
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="items.length"
-          :per-page="perPage"
-          align="right"
-          size="md"
-          class="my-0"
-        ></b-pagination>
-      </div>
-    </div>
-
-
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-xl modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <!-- <h5 v-for="(i, key) in wallettrans[0]" :key="key">  {{key}} : {{i}}</h5> -->
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div class="dispute" v-if="loading2">
-              <div class="text-center">
-                <p>Please Wait.</p>
-                <span :class="{ 'spinner-border': loading2 }"></span>
-              </div>
-            </div>
-
-            <ul class="list-group list-group-flush" v-if="!loading2">
-              <div style="width: 100%;overflow-x:scroll;">
-                <b-table :items="wallettrans" show-empty class="table table-striped shadow"></b-table>
-              </div>
-            </ul>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
+        {{wallet}}
     </div>
   </div>
 </template>
 <script>
-// charts
-// Components
+
 import BaseHeader from "@/components/BaseHeader";
+import WalletRequest from "../../model/request/WalletRequest"
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
-// Lists
-
-// Tables
-
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState} from "vuex";
 import { Datetime } from "vue-datetime";
-import router from '../../router/router';
-
 export default {
   name: "Wallet",
   components: {
@@ -199,18 +88,13 @@ export default {
   },
   data() {
     return {
-      minDatetime: "1960-01-01",
-      maxDatetime: "2022-12-12",
+      minDatetime: "2022-04-28",
+      maxDatetime: "2022-04-01",
       startDate: "",
       endDate: "",
 
       light: "light",
-      model: {
-        startDate: "",
-        endDate: "",
-        searchItem: "",
-        page: 1,
-      },
+      allWalletModel: WalletRequest.readWallet,
       type: "",
       option_time: [
         { value: "last30", label: "Last 30 days" },
@@ -238,7 +122,6 @@ export default {
         { key: "accountPhone", label: "accountPhone" },
         { key: "accountEmail", label: "accountEmail" },
         { key: "accountBvn", label: "accountBvn" },
-        // { key: "actions", label: "actions" },
       ],
 
       totalRows: 1,
@@ -250,57 +133,7 @@ export default {
       sortDirection: "asc",
       filter: null,
       filterOn: [],
-      infoModal: {
-        id: "info-modal",
-        title: "",
-        content: "",
-      },
-      bigLineChart: {
-        chartData: {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
-          datasets: [
-            {
-              data: [
-                86, 114, 106, 106, 107, 111, 133, 221, 783, 2478, 107, 111,
-              ],
-              label: "Card Transaction",
-              borderColor: "#3e95cd",
-              fill: true,
-            },
-            {
-              data: [
-                282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267, 107, 111,
-              ],
-              label: "NIP",
-              borderColor: "#8e5ea2",
-              fill: true,
-            },
-            {
-              data: [
-                168, 170, 178, 190, 203, 276, 408, 547, 675, 734, 107, 111,
-              ],
-              label: "Intra BAnk",
-              borderColor: "#3cba9f",
-              fill: true,
-            },
-          ],
-        },
-        //extraOptions: chartConfigs.blueChartOptions,
-      },
-    };
+    }
   },
   methods: {
     info(item, index, button) {
@@ -437,26 +270,6 @@ export default {
       }
       return model;
     },
-
-    getData() {
-      let payload = {
-        startDate: "2022-04-01",
-        endDate: "2022-04-28",
-        searchItem: "",
-        page: 1,
-      };
-      this.$store.dispatch("readWallet", payload);
-    },
-
-    getvalue(accountnumber) {
-      let payload = {
-        accountNumber: accountnumber,
-        page: 1,
-      };
-      this.$store.dispatch("readWalletTrans", payload).then(()=>{
-        this.$router.push("/all-transactions")
-      });
-    },
   },
 
   computed: {
@@ -470,55 +283,20 @@ export default {
     },
     ...mapState({
       userInformation: (state) => state.auth.userInfo,
-      loading: (state) => state.walletransactions.loading,
-      error: (state) => state.walletransactions.errors,
-      success: (state) => state.walletransactions.success,
-      wallet: (state) => state.walletransactions.allwallet,
-      retrievewallet: (state) => state.walletransactions.walletretrieve,
-      loading2: (state) => state.walletransactions.retrieveloading,
-      wallettrans: (state) => state.walletransactions.wallettrans,
+      loading: (state) => state.walletTransactions.loading,
+      wallet: (state) => state.walletTransactions.wallets,
     }),
 
     myStyles() {
       return { height: "150px" };
     },
-
-    checkcustome: function () {
-      return this.endDate, this.startDate;
-    },
-    checktype: function () {
-      return this.model.endDate, this.model.startDate;
-    },
   },
   mounted() {
-    console.log(this.wallet);
-    this.getData();
+    this.allWalletModel.page = 1;
+    StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets,this.allWalletModel);
+    console.log(this.allWalletModel)
   },
 
-  watch: {
-    checkcustome() {
-      if (this.endDate !== null) {
-        let payload = {
-          startDate: this.startDate.slice(0, 10),
-          endDate: this.endDate.slice(0, 10),
-          searchItem: "",
-          page: 1,
-        };
-        this.$store.dispatch("readWallet", payload);
-      }
-    },
-    checktype() {
-      if (this.model) {
-        this.$store.dispatch("readWallet", this.model);
-      }
-    },
-
-    // success(newValue) {
-    //   if (newValue) {
-    //     this.$toast.success(newValue);
-    //   }
-    // },
-  },
 };
 </script>
 <style scoped>

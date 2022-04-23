@@ -1,29 +1,28 @@
 <template>
   <div>
     <div class="mt-4">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3 ">
-        <div class="row  ">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+        <div class="row">
           <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3"> -->
           <div style="display: flex">
-           
             <div class="">
-               <base-input label="Transaction Period">
-              <el-select
-                class="select-danger"
-                filterable
-                placeholder=""
-                @change="getStartEndDate()"
-                v-model="type"
-              >
-                <el-option
-                  v-for="option in option_time"
+              <base-input label="Transaction Period">
+                <el-select
                   class="select-danger"
-                  :value="option.value"
-                  :label="option.label"
-                  :key="option.value"
+                  filterable
+                  placeholder=""
+                  @change="getStartEndDate()"
+                  v-model="type"
                 >
-                </el-option>
-              </el-select>
+                  <el-option
+                    v-for="option in option_time"
+                    class="select-danger"
+                    :value="option.value"
+                    :label="option.label"
+                    :key="option.value"
+                  >
+                  </el-option>
+                </el-select>
               </base-input>
             </div>
             <base-input
@@ -35,10 +34,7 @@
               class="w-50 ml-1"
             >
             </base-input>
-            <div
-              v-if="type === 'customperiod'"
-              class=""
-            >
+            <div v-if="type === 'customperiod'" class="">
               <div style="display: flex">
                 <div></div>
                 <div class="ml-2">
@@ -70,132 +66,10 @@
               </div>
             </div>
           </div>
-          <!-- </div> -->
-          <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3">
-              
-            </div> -->
-        </div>
-      </div>
-
-      <div class="dispute" v-if="!alltrans">
-        <div class="text-center">
-          <img src="@/assets/empty.svg" />
-          <h3>No Transactions</h3>
-        </div>
-      </div>
-      <div class="dispute" v-if="loading">
-        <div class="text-center">
-          <div class="d-flex align-items-center justify-content-center">
-            <span :class="{ 'spinner-border': loading }"></span
-            ><span class="m-2">Loading transactions...</span>
-          </div>
         </div>
       </div>
     </div>
-    <div class="dispute-table" v-if="!loading">
-      <b-table
-        class="table table-striped shadow"
-        :fields="field"
-        :items="alltrans"
-        :current-page="currentPage"
-        :per-page="perPage"
-        :filter="filter"
-        :filter-included-fields="filterOn"
-        :sort-by.sync="sortBy"
-        :sort-desc.sync="sortDesc"
-        :sort-direction="sortDirection"
-        @filtered="onFiltered"
-        show-empty
-      >
-        <template #cell(actions)="row">
-          <b-button size="sm" @click="row.toggleDetails">
-            {{ row.detailsShowing ? "Hide" : "Show" }} Details
-          </b-button>
-        </template>
-        <template #cell(accountNumber)="row">
-          <span
-            size="md"
-            style="cursor: pointer"
-            @click="getvalue(row.value)"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
-            {{ row.value }}
-            <i class="fa fa-info-circle"></i>
-          </span>
-        </template>
-        <template #row-details="row">
-          <b-card>
-            <table class="table dark">
-              <tbody>
-                <tr v-for="(value, key) in row.item" :key="key">
-                  {{
-                    key
-                  }}:
-                  {{
-                    value
-                  }}
-                </tr>
-              </tbody>
-            </table>
-            <!-- <ul>
-            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-          </ul> -->
-          </b-card>
-        </template>
-      </b-table>
-    </div>
-    <div class="text-center mt-3 mr-5 ml-5" v-if="!loading">
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="items.length"
-        :per-page="perPage"
-        align="right"
-        size="md"
-        class="my-0"
-      ></b-pagination>
-    </div>
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="dispute" v-if="loading2">
-              <div class="text-center">
-                <p>Please Wait.</p>
-                <span :class="{ 'spinner-border': loading2 }"></span>
-              </div>
-            </div>
-
-            <ul class="list-group list-group-flush" v-if="!loading2">
-              <li
-                class="list-group-item small"
-                v-for="(value, key) in banlance_enq"
-                :key="key"
-              >
-                <span v-if="key !== 'responseCode' && key !== 'responseMessage'"
-                  >{{ key }}:{{ value }}</span
-                >
-              </li>
-            </ul>
-          </div>
-          <!-- <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div> -->
-        </div>
-      </div>
-    </div>
+    {{ allTransactions }}
   </div>
 </template>
 <script>
@@ -207,8 +81,10 @@ import BaseHeader from "@/components/BaseHeader";
 
 // Tables
 
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState } from "vuex";
 import { Datetime } from "vue-datetime";
+import WalletRequest from "../../model/request/WalletRequest";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 export default {
   name: "AllTransaction",
@@ -218,18 +94,13 @@ export default {
   },
   data() {
     return {
-      minDatetime: "1960-01-01",
-      maxDatetime: "2022-12-12",
+      minDatetime: "2022-04-28",
+      maxDatetime: "2022-04-01",
       startDate: "",
       endDate: "",
+      allTransactionsModel: WalletRequest.readAllWalletTransaction,
 
       light: "light",
-      model: {
-        startDate: "",
-        endDate: "",
-        searchItem: "",
-        page: 1,
-      },
       type: "",
       option_time: [
         { value: "last30", label: "Last 30 days" },
@@ -266,56 +137,6 @@ export default {
       sortDirection: "asc",
       filter: null,
       filterOn: [],
-      infoModal: {
-        id: "info-modal",
-        title: "",
-        content: "",
-      },
-      bigLineChart: {
-        chartData: {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
-          datasets: [
-            {
-              data: [
-                86, 114, 106, 106, 107, 111, 133, 221, 783, 2478, 107, 111,
-              ],
-              label: "Card Transaction",
-              borderColor: "#3e95cd",
-              fill: true,
-            },
-            {
-              data: [
-                282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267, 107, 111,
-              ],
-              label: "NIP",
-              borderColor: "#8e5ea2",
-              fill: true,
-            },
-            {
-              data: [
-                168, 170, 178, 190, 203, 276, 408, 547, 675, 734, 107, 111,
-              ],
-              label: "Intra BAnk",
-              borderColor: "#3cba9f",
-              fill: true,
-            },
-          ],
-        },
-        //extraOptions: chartConfigs.blueChartOptions,
-      },
     };
   },
   methods: {
@@ -324,9 +145,7 @@ export default {
       // console.log(`##########${this.form1.category}`);
       console.log(`##########>>>${event}`);
     },
-    logthis() {
-      console.log("logged");
-    },
+
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
@@ -392,9 +211,9 @@ export default {
     getStartEndDate() {
       let today = new Date();
       let model = {
-        startDate: "",
-        endDate: "",
-      };
+        startDate:"",
+        endDate:""
+      }
       if (this.type === "today") {
         this.model.startDate = today.toJSON().slice(0, 10);
         this.model.endDate = today.toJSON().slice(0, 10);
@@ -403,8 +222,8 @@ export default {
         //   .slice(0, 10);
         console.log(
           "today:: in a bit",
-          this.model.startDate,
-          this.model.endDate
+          this.allTransactionsModel.startDate,
+          this.allTransactionsModel.endDate
         );
       } else if (this.type === "thisweek") {
         let priorDate = this.getMonday(new Date());
@@ -444,30 +263,9 @@ export default {
       }
       return model;
     },
-
-   
-
-    getvalue(accountnumber) {
-      let payload = {
-        accountNumber: accountnumber,
-      };
-      console.log(payload);
-      this.$store.dispatch("readBalanceEnq", payload);
-    },
   },
 
   computed: {
-    getData() {
-          let payload = {
-            startDate: "2022-04-01",
-            endDate: "2022-04-28",
-            searchItem: "",
-            page: 1,
-          };
-          let action = this.$store.dispatch("readAllTrans", payload);
-          return action
-        },
-
     sortOptions() {
       // Create an options list from our fields
       return this.fields
@@ -478,54 +276,22 @@ export default {
     },
     ...mapState({
       userInformation: (state) => state.auth.userInfo,
-      loading: (state) => state.walletransactions.loading,
-      error: (state) => state.walletransactions.errors,
-      success: (state) => state.walletransactions.success,
-      alltrans: (state) => state.walletransactions.alltransactions,
-      banlance_enq: (state) => state.walletransactions.balance_enq,
-      loading2: state => state.walletransactions.retrieveloading
-
+      allTransactions: (state) =>
+        state.walletTransactions.allWalletTransactions,
     }),
 
     myStyles() {
       return { height: "150px" };
     },
-
-    checkcustome: function () {
-      return this.endDate, this.startDate;
-    },
-    checktype: function () {
-      return this.model.endDate, this.model.startDate;
-    },
   },
   mounted() {
-    console.log(this.alltrans);
-    this.getData();
-  },
-
-  watch: {
-    checkcustome() {
-      if (this.endDate !== null) {
-        let payload = {
-          startDate: this.startDate.slice(0, 10),
-          endDate: this.endDate.slice(0, 10),
-          searchItem: "",
-          page: 1,
-        };
-        this.$store.dispatch("readAllTrans", payload);
-      }
-    },
-    checktype() {
-      if (this.model) {
-        this.$store.dispatch("readAllTrans", this.model);
-      }
-    },
-
-    // success(newValue) {
-    //   if (newValue) {
-    //     this.$toast.success(newValue);
-    //   }
-    // },
+    this.allTransactionsModel.startDate = this.maxDatetime;
+    this.allTransactionsModel.endDate = this.minDatetime;
+    this.allTransactionsModel.page = 1;
+    StoreUtils.dispatch(
+      StoreUtils.actions.walletTransactions.updateAllWalletTransactions,
+      this.allWalletTransactions
+    );
   },
 };
 </script>

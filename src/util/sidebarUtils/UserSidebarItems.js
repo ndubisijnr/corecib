@@ -16,7 +16,7 @@ export default
         {
             name:'Transactions',
             icon:'ni ni-support-16 text-primary',
-            path:'/user/transactions'
+            path:'/user/all-transactions'
         }
     ]
 };

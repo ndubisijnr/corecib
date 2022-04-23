@@ -45,9 +45,6 @@ function initScrollbar(className) {
   }
 }
 
-console.log(DashboardSidebarItems)
-let dashboardSidebarItems = DashboardSidebarItems
-
 import DashboardNavbar from './DashboardNavbar.vue';
 import ContentFooter from './ContentFooter.vue';
 import {FadeTransition} from 'vue2-transitions';

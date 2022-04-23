@@ -27,7 +27,7 @@ class StoreUtils {
     walletTransactions: {
       updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions",
       updateBalanceEnquiry: "walletTransactions/updateBalanceEnquiry",
-      updateWallets: "walletTransactions/updateWallets",
+      updateReadAllWallets: "walletTransactions/updateReadAllWallets",
       updateWalletTransactions: "walletTransactions/updateWalletTransactions",
       updateWallet: "walletTransactions/updateWallet",
     },
@@ -57,7 +57,7 @@ class StoreUtils {
     walletTransactions: {
       updateLoading: "walletTransactions/updateLoading",
       updateBalanceEnquiry: "walletTransactions/updateBalanceEnquiry",
-      updateWallets: "walletTransactions/updateWallets",
+      updateReadAllWallets: "walletTransactions/updateReadAllWallets",
       updateWalletTransactions: "walletTransactions/updateWalletTransactions",
       updateWallet: "walletTransactions/updateWallet",
       updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions"

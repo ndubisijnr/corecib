@@ -1,78 +1,29 @@
 <template>
   
-  <div class="dispute-table">
-   <b-table
-      class="table table-striped shadow"
-      :items="wallettrans"
-      :current-page="currentPage"
-      :per-page="perPage"
-      :filter="filter"
-      :filter-included-fields="filterOn"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      :sort-direction="sortDirection"
-      @filtered="onFiltered"
-    >
-      <template #cell(actions)="row">
-        <b-button size="sm" @click="row.toggleDetails">
-          {{ row.detailsShowing ? "Hide" : "Show" }} Details
-        </b-button>
-      </template>
-      <template #cell(accountNumber)="row">
-        <span
-          size="md"
-          style="cursor: pointer"
-          @click="getvalue(row.value)"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          {{ row.value }}
-          <i class="fa fa-info-circle"></i>
-        </span>
-      </template>
-      <template #row-details="row">
-        <b-card>
-          <table class="table dark">
-            <tbody>
-              <tr v-for="(value, key) in row.item" :key="key">
-                {{
-                  key
-                }}:
-                {{
-                  value
-                }}
-              </tr>
-            </tbody>
-          </table> 
-          <!-- <ul>
-            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-          </ul> -->
-      </b-card>
-      </template>
-    </b-table> 
+ <div>
+   {{wallettransactions}}
   </div>
 </template>
 
 
 <script>
-// import { mapState } from "vuex";
+import { mapState } from "vuex";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
+
+
+import WalletRequest from "../../model/request/WalletRequest"
 
 export default {
   name:"WalletTransaction",
   data() {
     return {
-      minDatetime: "1960-01-01",
-      maxDatetime: "2022-12-12",
+      minDatetime: "2022-04-28",
+      maxDatetime: "2022-04-01",
       startDate: "",
       endDate: "",
 
       light: "light",
-      model: {
-        startDate: "",
-        endDate: "",
-        searchItem: "",
-        page: 1,
-      },
+      allWalletTransactionsmodel: WalletRequest.readAllWalletTransaction,
       type: "",
       option_time: [
         { value: "last30", label: "Last 30 days" },
@@ -120,9 +71,19 @@ export default {
   },
   computed: {
     ...mapState({
-        loading2: (state) => state.walletransactions.retrieveloading,
-       wallettrans: (state) => state.walletransactions.wallettrans,
+        loading: (state) => state.walletTransactions.loading,
+       wallettransactions: (state) => state.walletTransactions.allWalletTransactions,
     }),
   },
+
+  mounted(){
+    this.allWalletTransactionsmodel.startDate = this.maxDatetime;
+    this.allWalletTransactionsmodel.endDate = this.minDatetime;
+    this.allWalletTransactionsmodel.page = 1;
+    StoreUtils.dispatch(
+      StoreUtils.actions.walletTransactions.updateAllWalletTransactions,
+      this.allWalletTransactionsmodel
+    );
+  }
 };
 </script>

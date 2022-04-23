@@ -30,7 +30,7 @@ export const mutations = {
   updateBalanceEnquiry: (state, payload) => {
     state.balanceEnquiry = payload
   },
-  updateWallets: (state, payload) => {
+  updateReadAllWallets: (state, payload) => {
     state.wallets = payload
   }
 }
@@ -38,12 +38,12 @@ export const mutations = {
 export const actions = {
 
   updateAllWalletTransactions: ({ commit, state }, payload = WalletRequest.readAllWalletTransaction) => {
-    if (state.allWalletTransactions.data.length > 1) commit("updateLoading", true)
+    if (state.allWalletTransactions.length > 1) commit("updateLoading", true)
     return WalletService.callReadAllWalletTransactionApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        commit("updateAllTransaction", responseData.data)
+        commit("updateAllWalletTransactions", responseData.data)
       }
     }).catch(error => {
       commit("updateLoading", false)
@@ -67,22 +67,21 @@ export const actions = {
 
   },
 
-  updateWallets: ({ commit, state }, payload = WalletRequest.readWallet) => {
-    if (state.wallets.data.length < 1) commit("updateLoading", true)
+  updateReadAllWallets: ({ commit, state }, payload = WalletRequest.readWallet) => {
+    if (state.wallets.length < 1) commit("updateLoading", true)
     return WalletService.callReadWalletApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        commit("updateWallets", responseData)
+        commit("updateReadAllWallets", responseData)
       }
     }).catch(error => {
-      commit("updateLoading", false)
-      commit("updateError", error)
+     console.log(error)
     })
   },
 
   updateWalletTransactions: ({ commit, state }, payload = WalletRequest.readAllWalletTransaction) => {
-    if (state.wallets.data.length < 1) commit("updateLoading", true)
+    if (state.wallets.length < 1) commit("updateLoading", true)
     return WalletService.callReadWalletTransactionApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)

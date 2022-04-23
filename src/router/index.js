@@ -8,6 +8,10 @@ import store from "../store/store";
 import authRoutes from './routes/auth-routes'
 import dashRoutes from './routes/dashboard-routes'
 import StoreUtils from "../util/baseUtils/StoreUtils";
+import reportRoutes from "./routes/report-routes"
+import virtualAccountRoutes from "./routes/virtual-account-routes"
+import walletRoutes from "./routes/wallet-routes"
+import settingsRoutes from "./routes/settings-routes"
 
 
 Vue.use(VueRouter);
@@ -26,7 +30,7 @@ VueRouter.prototype.absUrl = function(url, newTab = true) {
 
 const baseRoutes = [];
 
-const routes = baseRoutes.concat(dashRoutes,authRoutes);
+const routes = baseRoutes.concat(settingsRoutes,walletRoutes,virtualAccountRoutes,reportRoutes,dashRoutes,authRoutes);
 
 const router = new VueRouter({
     routes,

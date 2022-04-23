@@ -22,9 +22,9 @@ class WalletRequest {
     }
 
     static readWallet={
-        startDate: null,
-        endDate: null,
-        searchItem: null,
+        startDate: "",
+        endDate: "",
+        searchItem: "",
         page: null
     }
 
@@ -34,9 +34,9 @@ class WalletRequest {
     }
 
     static readAllWalletTransaction={
-        startDate: null,
-        endDate: null,
-        searchItem: null,
+        startDate: "",
+        endDate: "",
+        searchItem: "",
         page: null
     }
 

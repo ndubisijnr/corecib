@@ -13,7 +13,7 @@ class DisputeRequest {
     }
 
     static disputeRead={
-        readAll: null
+        disputeId: "YES"
     }
 
     static disputeReadSingle={

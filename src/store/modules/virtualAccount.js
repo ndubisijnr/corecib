@@ -1,10 +1,10 @@
 import VirtualAccountService from "../../service/VirtualAccountService"
-import VirtualAccountResponse from "../../model/reponse/VirtualAccountResponse"
+import BaseResponse from "../../model/reponse/BaseResponse"
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
 
 export const state = {
   loading: false,
-  virtualAccount: VirtualAccountResponse.retrieveVirtualAccount
+  virtualAccount: BaseResponse.list
 }
 
 export const getters = {}
@@ -23,7 +23,7 @@ export const mutations = {
 export const actions = {
 
   updateVirtualAccount: ({ commit, state }, payload = VirtualAccountRequest.readVirtualAccount) => {
-    if (state.virtualAccount.data.length < 1) commit("updateLoading", true)
+    if (state.virtualAccount.length < 1) commit("updateLoading", true)
     return VirtualAccountService.callReadVirtualAccountApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)

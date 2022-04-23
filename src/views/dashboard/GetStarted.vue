@@ -109,7 +109,7 @@
               </div>
 
               <div class="container mt-5 d-flex">
-                <div class="d-flex bg-white align-items-center w-50 shadow">
+                <div class="d-flex bg-white w-50 shadow">
                   <div class="p-3">
                     <h3>API Documentation</h3>
                     <p>
@@ -128,94 +128,8 @@
                         >Settings > API Keys & Webhooks</span
                       ></router-link
                     >
-                  </p>
-                  <div v-if="isSwitched == false">
-                  <label class="form-label">Test Secret Key </label>
-                  <div class="form-floating">
-                    <input
-                      type="password"
-                      class="form-control"
-                      value="api[0].apikeyTestSK"
-                      id="pwd"
-                      disabled="true"
-                    />
-                    <i
-                      class="fas fa-eye"
-                      style="
-                        position: absolute;
-                        right: 20px;
-                        top: 5px;
-                        cursor: pointer;
-                      "
-                      id="eye"
-                      @click="hide$show()"
-                    ></i>
-                  </div>
-                  </div>
-
-                  <div v-if="isSwitched == true">
-                  <label class="form-label">Live Secret Key </label>
-                  <div class="form-floating" >
-                    <input
-                      type="password"
-                      class="form-control"
-                      value="api[0].apikeyLiveSK"
-                      id="pwd"
-                      disabled="true"
-                    />
-                    <i
-                      class="fas fa-eye"
-                      style="
-                        position: absolute;
-                        right: 20px;
-                        top: 5px;
-                        cursor: pointer;
-                      "
-                      id="eye"
-                      @click="hide$show()"
-                    ></i>
-                  </div>
-                  </div>
-                  <!-- <div
-                    class="
-                      d-flex
-                      justify-content-center
-                      align-items-center
-                      ml-3
-                    "
-                  >
-                    <input
-                      type="password"
-                      class="form-control form-control-sm"
-                      :value="api[0].apikeyTestSK"
-                      disabled="true"
-                    />
-                   
-                  </div> -->
-                  <div v-if="isSwitched == false">
-                  <label class="form-label mt-2 pr-4">Test Public Key </label>
-                  <div class="form-floating">
-                    <input
-                      type="text"
-                      class="form-control"
-                      value="api[0].apikeyTestPK"
-                      id="pwd1"
-                      disabled="true"
-                    />
-                  </div>
-                  </div>
-                  <div  v-if="isSwitched == true"> 
-                  <label class="form-label mt-2 pr-4">Live Public Key </label>
-                  <div class="form-floating">
-                    <input
-                      type="text"
-                      class="form-control"
-                      value="api[0].apikeyLivePK"
-                      id="pwd1"
-                      disabled="true"
-                    />
-                  </div>
-                  </div>
+                  </p>  
+                  <api-form></api-form>                           
                 </div>
               </div>
             </div>
@@ -228,10 +142,11 @@
 <script>
 import { mapState} from "vuex";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
+import ApiForm from '../../components/form/ApiKeyDisplayForm.vue'
 
 export default {
   name:"GetStarted",
-  components: {},
+  components: {ApiForm},
 
   data: ()=>{
       return{
