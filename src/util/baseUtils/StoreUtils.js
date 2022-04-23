@@ -24,6 +24,7 @@ class StoreUtils {
     },
     virtualAccount: {
       updateVirtualAccount: "virtualAccount/updateVirtualAccount",
+      updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions"
     },
     walletTransactions: {
       updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions",
@@ -57,6 +58,7 @@ class StoreUtils {
     virtualAccount: {
       updateLoading: "virtualAccount/updateLoading",
       updateVirtualAccount: "virtualAccount/updateVirtualAccount",
+      updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions"
     },
     walletTransactions: {
       updateLoading: "walletTransactions/updateLoading",

@@ -4,7 +4,7 @@
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
         <div class="row">
           <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3"> -->
-          <div style="display: flex">
+          <!-- <div style="display: flex">
             <div class="">
               <base-input label="Transaction Period">
                 <el-select
@@ -69,7 +69,7 @@
            
             </div>
           
-          </div>
+          </div> -->
         </div>
         </div>
          <base-table
@@ -106,6 +106,7 @@ export default {
 
       light: "light",
       allWalletModel: WalletRequest.readWallet,
+      singleWalletTransactionmodel: WalletRequest.readWalletTransaction,
       type: "",
       option_time: [
         { value: "last30", label: "Last 30 days" },
@@ -119,19 +120,20 @@ export default {
       items: [],
       fields: [
         { key: "accountId", label: "accountId" },
-        { key: "accountCustomerId", label: "accountCustomerId" },
+        // { key: "accountCustomerId", label: "accountCustomerId" },
         { key: "accountNumber", label: "accountNumber" },
         { key: "accountName", label: "accountName" },
-        {
-          key: "accountCurrency",
-          label: "accountCurrency",
-        },
+        // {
+        //   key: "accountCurrency",
+        //   label: "accountCurrency",
+        // },
         { key: "accountBalance", label: "accountBalance" },
         { key: "accountStatus", label: "accountStatus" },
         { key: "accountLedgerBalance", label: "accountLedgerBalance" },
-        { key: "accountPhone", label: "accountPhone" },
-        { key: "accountEmail", label: "accountEmail" },
+        // { key: "accountPhone", label: "accountPhone" },
+        // { key: "accountEmail", label: "accountEmail" },
         { key: "accountBvn", label: "accountBvn" },
+        { key: "walletAction", label: "Actions" },
       ],
     }
   },
@@ -141,6 +143,8 @@ export default {
       this.infoModal.content = JSON.stringify(item, null, 2);
       this.$root.$emit("bv::show::modal", this.infoModal.id, button);
     },
+
+  
     resetInfoModal() {
       this.infoModal.title = "";
       this.infoModal.content = "";

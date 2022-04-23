@@ -4,7 +4,7 @@
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
         <div class="row">
           <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3"> -->
-          <div style="display: flex">
+          <!-- <div style="display: flex">
             <div class="">
               <base-input label="Transaction Period">
                 <el-select
@@ -68,13 +68,14 @@
             <button class="btn btn-success mt-3 ml-2">Search <i class="fa fa-search" style="position:relative"></i></button>
            
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
      <base-table
           :items="accounts.data"
           filter-mode=""
+          :fields="fields"
           :is-busy="loading" />
   </div>
 </template>
@@ -121,18 +122,17 @@ export default {
       ],
       items: [],
       fields: [
-        { key: "drCr", label: "drCr" },
-        { key: "amount", label: "amount" },
+        { key: "accountId", label: "accountId" },
         { key: "accountNumber", label: "accountNumber" },
         { key: "accountName", label: "accountName" },
         {
-          key: "counterPartyAccountNumber",
-          label: "counterPartyAccountNumber",
+          key: "channelBankCode",
+          label: "channelBankCode",
         },
-        { key: "counterPartyAccountName", label: "counterPartyAccountName" },
-        { key: "counterPartyBankCode", label: "counterPartyBankCode" },
-        { key: "eventDate", label: "eventDate" },
-        { key: "actions", label: "actions" },
+        { key: "channelBankName", label: "channelBankName" },
+        { key: "accountParent", label: "accountParent" },
+        { key: "accountStatus", label: "accountStatus" },
+        { key: "virtualAccountactions", label: "actions" },
       ],
     };
   },

@@ -30,7 +30,7 @@ class WalletRequest {
 
     static readWalletTransaction={
         accountNumber: null,
-        page: null
+        page: 1
     }
 
     static readAllWalletTransaction={

@@ -4,7 +4,7 @@
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
         <div class="row">
           <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3"> -->
-          <div style="display: flex">
+          <!-- <div style="display: flex">
             <div class="">
               <base-input label="Transaction Period">
                 <el-select
@@ -65,7 +65,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -132,7 +132,7 @@ export default {
         { key: "counterPartyAccountName", label: "counterPartyAccountName" },
         { key: "counterPartyBankCode", label: "counterPartyBankCode" },
         { key: "eventDate", label: "eventDate" },
-        { key: "actions", label: "actions" },
+        { key: "TransactionAction", label: "actions" },
       ],
     };
   },

@@ -38,7 +38,7 @@ export const mutations = {
 export const actions = {
 
   updateAllWalletTransactions: ({ commit, state }, payload = WalletRequest.readAllWalletTransaction) => {
-    if (state.allWalletTransactions.length > 1) commit("updateLoading", true)
+    if (state.allWalletTransactions.data.length > 1) commit("updateLoading", true)
     return WalletService.callReadAllWalletTransactionApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
@@ -68,7 +68,7 @@ export const actions = {
   },
 
   updateReadAllWallets: ({ commit, state }, payload = WalletRequest.readWallet) => {
-    if (state.wallets.length < 1) commit("updateLoading", true)
+    if (state.wallets.data.length < 1) commit("updateLoading", true)
     return WalletService.callReadWalletApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
@@ -81,12 +81,13 @@ export const actions = {
   },
 
   updateWalletTransactions: ({ commit, state }, payload = WalletRequest.readAllWalletTransaction) => {
-    if (state.wallets.length < 1) commit("updateLoading", true)
+    if (state.wallets.data.length < 1) commit("updateLoading", true)
     return WalletService.callReadWalletTransactionApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        commit("updateWalletTransactions", responseData)
+        commit("updateWalletTransactions", responseData.data)
+        console.log(state.walletTransactions)
       }
     }).catch(error => {
       commit("updateLoading", false)
