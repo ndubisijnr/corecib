@@ -1,6 +1,5 @@
 <template>
   <div class="">
-   <div> {{readDispute}}</div>
     <div class="text-right m-3">
       <button
           class="btn btn-success mt-3"
@@ -10,6 +9,11 @@
       >
         <i class="fa fa-plus"></i> Create Disputes
       </button>
+      <base-table
+          :items="this.disputes.data"
+          :fields="fields"
+          filter-mode="default"
+          :is-busy="loading" />
     </div>
 </div>
 </template>
@@ -18,52 +22,25 @@
 import {mapState} from "vuex";
 import DisputeResquest from "../../model/request/DisputeRequest"
 import StoreUtils from '../../util/baseUtils/StoreUtils';
+import BaseTable from "../../components/table/BaseTable";
 
 export default {
   name: "Dispute",
+  components: {BaseTable},
   data() {
     return {
       disputeReadModel: DisputeResquest.disputeRead,
       perPage: 9,
       currentPage: 1,
       fields: [
-        {
-          key: "disputeId",
-          label: "disputeId",
-          sortable: true,
-          class: "text-left",
-        },
-        {
-          key: "disputeSessionId",
-          label: "disputeSessionId",
-          sortable: true,
-          class: "text-left",
-        },
-        {
-          key: "disputeTrnType",
-          label: "disputeTrnType",
-          sortable: true,
-          class: "text-left",
-        },
-        {
-          key: "disputeIssueType",
-          label: "disputeIssueType",
-          sortable: true,
-          class: "text-left",
-        },
-        {
-          key: "disputeComment",
-          label: "disputeComment",
-          sortable: true,
-          class: "text-left",
-        },
-        {
-          key: "disputeOrgId",
-          label: "disputeOrgId  ",
-          sortable: true,
-          class: "text-left",
-        },
-        {key: "disputeStatus", label: "disputeStatus"},
+        { key: "disputeId", label: "disputeId", sortable: true, class: "text-left", },
+        { key: "disputeSessionId", label: "disputeSessionId", sortable: true, class: "text-left",},
+        { key: "disputeTrnType",label: "disputeTrnType",sortable: true,class: "text-left", },
+        { key: "disputeIssueType", label: "disputeIssueType", sortable: true, class: "text-left", },
+        { key: "disputeComment", label: "disputeComment", sortable: true, class: "text-left",},
+        { key: "disputeOrgId", label: "disputeOrgId  ", sortable: true, class: "text-left",},
+        { key: "disputeStatus", label: "disputeStatus"},
+        { key: "disputeActions", label: "Actions"},
       ],
     };
   },
@@ -78,7 +55,7 @@ export default {
     ...mapState({
       user: (state) => state.auth.userInfo,
       loading: (state) => state.dispute.loading,
-      readDispute: state => state.dispute.disputes
+      disputes: state => state.dispute.disputes
     }),
   },
 

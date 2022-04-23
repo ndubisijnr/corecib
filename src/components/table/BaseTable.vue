@@ -47,9 +47,12 @@
         {{ row.index + 1 }}
       </template>
       <template v-slot:cell(actions)="row">
-        <b-button size="xs" @click="row.toggleDetails">
-          {{ row.detailsShowing ? 'less' : 'more' }}
-        </b-button>
+        <b-icon-eye-slash style="cursor: pointer; width: 25px; height: 15px;" v-if="row.detailsShowing" href="#" @click="row.toggleDetails" />
+        <b-icon-eye style="cursor: pointer; width: 25px; height: 15px;" v-else href="#" @click="row.toggleDetails" />
+      </template>
+      <template v-slot:cell(disputeActions)="row">
+        <b-icon-eye-slash style="cursor: pointer; width: 25px; height: 15px;" v-if="row.detailsShowing" href="#" @click="row.toggleDetails" />
+        <b-icon-eye style="cursor: pointer; width: 25px; height: 15px;" v-else href="#" @click="row.toggleDetails" />
       </template>
       <template v-slot:row-details="row">
         <b-card>
