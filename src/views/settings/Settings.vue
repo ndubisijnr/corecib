@@ -16,28 +16,28 @@
                       <input
                         type="email"
                         class="form-control"
-                        id="floatingInput"
+                        id="floatingInput1"
                         placeholder="name@example.com"
                       />
-                      <label for="floatingInput">First Name</label>
+                      <label for="floatingInput1">First Name</label>
                     </div>
                     <div class="form-floating mb-3">
                       <input
                         type="email"
                         class="form-control"
-                        id="floatingInput"
+                        id="floatingInput2"
                         placeholder="name@example.com"
                       />
-                      <label for="floatingInput">Last Name</label>
+                      <label for="floatingInput2">Last Name</label>
                     </div>
                     <div class="form-floating mb-3">
                       <input
                         type="email"
                         class="form-control"
-                        id="floatingInput"
+                        id="floatingInput3"
                         placeholder="name@example.com"
                       />
-                      <label for="floatingInput">Phone Number</label>
+                      <label for="floatingInput3">Phone Number</label>
                     </div>
                     <div class="form-floating mb-3">
                       <input
@@ -155,7 +155,7 @@
                           <h3>Incorporated Company</h3>
                         </div>
                         <div
-                          style="display:flex;width;100%;justify-content:space-between"
+                          style="display:flex;width:100%;justify-content:space-between"
                         >
                           <button
                             class="btn btn-outline-light"
@@ -195,12 +195,10 @@
                                     <input
                                       type="text"
                                       class="form-control"
-                                      id="inputEmail4"
                                     />
                                   </div>
                                   <div class="col-md-12 mb-3">
                                     <label
-                                      for="inputPassword4"
                                       class="form-label"
                                       >Industry</label
                                     >
@@ -208,12 +206,10 @@
                                       type="text"
                                       class="form-control"
                                       value="Industry"
-                                      id="inputPassword4"
                                     />
                                   </div>
                                   <div class="col-12 mb-3">
                                     <label
-                                      for="inputAddress"
                                       class="form-label mt-2"
                                       >Category</label
                                     >
@@ -221,7 +217,6 @@
                                       type="email"
                                       class="form-control"
                                       value="NGOs"
-                                      id="inputAddress"
                                     />
                                   </div>
                                   <div class="col-12 mb-3">
@@ -231,7 +226,6 @@
                                     <input
                                       type="tel"
                                       class="form-control"
-                                      id="inputAddress"
                                     />
                                   </div>
 
@@ -255,7 +249,6 @@
                                     <textarea
                                       type="tel"
                                       class="form-control"
-                                      id="inputAddress"
                                     />
                                   </div>
 
@@ -292,7 +285,7 @@
                         <h3>Business Address</h3>
                       </div>
                       <div
-                        style="display:flex;width;100%;justify-content:space-between"
+                        style="display:flex;width:100%;justify-content:space-between"
                       >
                         <button
                           class="btn btn-outline-light"
@@ -381,50 +374,46 @@
                       <br />
                       <div class="mb-3">
                         <i class="fas fa-info-circle text-danger"></i>
-                        <label for="formFileMultiple" class="form-label"
+                        <label class="form-label"
                           >Form CAC</label
                         >
                         <input
                           class="form-control"
                           type="file"
-                          id="formFileMultiple"
                           multiple
                         />
                       </div>
 
                       <div class="mb-3">
                         <i class="fas fa-info-circle text-danger"></i>
-                        <label for="formFileMultiple" class="form-label"
+                        <label class="form-label"
                           >Certificate of Incorporation</label
                         >
                         <input
                           class="form-control"
                           type="file"
-                          id="formFileMultiple"
                           multiple
                         />
                       </div>
                       <div class="mb-3">
                         <i class="fas fa-info-circle text-danger"></i>
-                        <label for="formFileMultiple" class="form-label"
+                        <label class="form-label"
                           >RC Number</label
                         >
                         <input
                           class="form-control"
                           type="file"
-                          id="formFileMultiple"
                           multiple
                         />
                       </div>
                       <div class="mb-3">
                         <i class="fas fa-info-circle text-danger"></i>
-                        <label for="formFileMultiple" class="form-label"
+                        <label  class="form-label"
                           >Tax Identification Number</label
                         >
                         <input
                           class="form-control"
                           type="file"
-                          id="formFileMultiple"
                           multiple
                         />
                       </div>
@@ -542,7 +531,6 @@ export default {
 
     ...mapState({}),
   },
-  mounted() {},
   methods: {
    
     closeModal0() {
@@ -554,9 +542,6 @@ export default {
       this.page = "contact";
       this.edit = "null";
       document.getElementById("flexRadioDefault2").classList.add("bg-success");
-    },
-    nav() {
-      this.nav = "true";
     },
     showprofile() {
       this.page = "profile";
