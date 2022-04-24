@@ -458,7 +458,7 @@
                     >
                       <template #header>
                           <b-container class="text-right">
-                             <b-button>Generate Api Key</b-button>
+                             <b-button @click="regenerateApiKey()">Generate Api Key</b-button>
                           </b-container>
 
                       </template>
@@ -481,6 +481,8 @@
 import { mapState } from "vuex";
 import ApiKeyDisplayForm from "../../components/form/ApiKeyDisplayForm";
 import { DropdownMenu, DropdownItem, Dropdown } from "element-ui";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
+import ApikeyRequest from "../../model/request/ApiKeyRequest";
 
 export default {
   name: "Settings",
@@ -503,6 +505,7 @@ export default {
       light: "light",
       nav: "false",
       edit: "null",
+      apikeyModel: ApikeyRequest.regenerateApiKey,
       modals: {
         modal0: false,
       },
@@ -540,10 +543,17 @@ export default {
         });
     },
 
-    ...mapState({}),
+    ...mapState({
+      loading: (state) => state.apiKey.loading
+    }),
   },
-  mounted() {},
+  mounted() {
+    this.apikeyModel.organisationId = localStorage.organisationId;
+    },
   methods: {
+    regenerateApiKey() {
+      StoreUtils.dispatch(StoreUtils.actions.apiKey.regenerateApiKey, this.apikeyModel)
+    },
    
     closeModal0() {
       this.modals.modal0 = false;
@@ -621,14 +631,14 @@ export default {
   },
 
   created: function () {},
-  mounted: function () {},
+
 };
 </script>
 <style lang="css" scoped>
 .APIWebhooks {
   display: flex;
   justify-content: center;
-  height: 75vh;
+  height: 100vh;
 }
 .settings-profile-header {
   color: #919191;

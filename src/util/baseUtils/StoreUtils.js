@@ -4,7 +4,9 @@ class StoreUtils {
   static actions = {
     apiKey: {
       updateApikey: "apiKey/updateApikey",
-      create: "apiKey/create"
+      create: "apiKey/create",
+      regenerateApiKey:"apiKey/regenerateApiKey",
+      updateWebhookCallback:"apiKey/updateWebhookCallback"
     },
     auth: {
       initialEnrollment: "auth/initialEnrollment",
