@@ -8,6 +8,7 @@
      <base-table
           :items="accounts.data"
           filter-mode=""
+          :fields="fields"
           :is-busy="loading" />
   </div>
 </template>
@@ -53,18 +54,17 @@ export default {
       ],
       items: [],
       fields: [
-        { key: "drCr", label: "drCr" },
-        { key: "amount", label: "amount" },
+        { key: "accountId", label: "accountId" },
         { key: "accountNumber", label: "accountNumber" },
         { key: "accountName", label: "accountName" },
         {
-          key: "counterPartyAccountNumber",
-          label: "counterPartyAccountNumber",
+          key: "channelBankCode",
+          label: "channelBankCode",
         },
-        { key: "counterPartyAccountName", label: "counterPartyAccountName" },
-        { key: "counterPartyBankCode", label: "counterPartyBankCode" },
-        { key: "eventDate", label: "eventDate" },
-        { key: "actions", label: "actions" },
+        { key: "channelBankName", label: "channelBankName" },
+        { key: "accountParent", label: "accountParent" },
+        { key: "accountStatus", label: "accountStatus" },
+        { key: "virtualAccountactions", label: "actions" },
       ],
     };
   },

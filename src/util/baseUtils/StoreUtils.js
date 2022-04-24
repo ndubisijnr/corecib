@@ -20,9 +20,11 @@ class StoreUtils {
     dispute: {
       updateDisputes: "dispute/updateDisputes",
       createDispute: "dispute/createDispute",
+      updateTransactionQuery:"dispute/updateTransactionQuery"
     },
     virtualAccount: {
       updateVirtualAccount: "virtualAccount/updateVirtualAccount",
+      updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions"
     },
     walletTransactions: {
       updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions",
@@ -48,11 +50,15 @@ class StoreUtils {
     },
     dispute: {
       updateLoading: "dispute/updateLoading",
-      updateDisputes: "dispute/updateDisputes"
+      updateLoading2: "dispute/updateLoading2",
+      updateDisputes: "dispute/updateDisputes",
+      updateTransactionQuery:"dispute/updateTransactionQuery",
+      updateSuccess:"dispute/updateSuccess"
     },
     virtualAccount: {
       updateLoading: "virtualAccount/updateLoading",
       updateVirtualAccount: "virtualAccount/updateVirtualAccount",
+      updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions"
     },
     walletTransactions: {
       updateLoading: "walletTransactions/updateLoading",

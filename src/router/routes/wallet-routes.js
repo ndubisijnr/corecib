@@ -1,6 +1,5 @@
 import Wallet from '../../views/wallet/Wallet'
 import WalletTransaction from '../../views/wallet/WalletTransactions'
-
 export default [
     {
         path: '/user/wallet',

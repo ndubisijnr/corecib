@@ -25,15 +25,12 @@ class VirtualAccountRequest {
         page: 1
     }
 
-    static readVirtualAccountTransactionList={
-        address: null,
-        bvn: null,
-        dob: null,
-        firstName: null,
-        gender: null,
-        lastName: null,
-        middleName: null,
-        phone: null
+    static readVirtualAccountTransactions={
+        startDate: null,
+        endDate: null,
+        accountNumber: null,
+        searchItem: null,
+        page: 1
     }
 
     static getChennelCodes={

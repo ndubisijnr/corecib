@@ -4,11 +4,11 @@ class DisputeRequest {
 
     static disputeCreate={
         disputeSessionId: null,
-        disputeTrnType: null,
+        disputeTrnType: "NA",
         disputeIssueType: null,
         disputeComment: null,
-        disputeRemark: null,
-        disputeOrgId: null
+        disputeRemark: "Transaction",
+        disputeOrgId: localStorage.getItem("organisationId")
 
     }
 
@@ -16,8 +16,8 @@ class DisputeRequest {
         disputeId: null
     }
 
-    static disputeReadSingle={
-        disputeId: null,
+    static transactionStatusQuery={
+        reference:null
 
     }
 

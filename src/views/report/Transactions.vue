@@ -50,7 +50,7 @@ export default {
         { key: "counterPartyAccountName", label: "C. AccountName" },
         //{ key: "counterPartyBankCode", label: "counterPartyBankCode" },
         { key: "eventDate", label: "eventDate" },
-        { key: "actions", label: "actions" },
+        { key: "TransactionAction", label: "actions" },
       ],
     };
   },

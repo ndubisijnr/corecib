@@ -1,9 +1,9 @@
 <template>
   <div class="">
     <div class="text-right m-3">
-      <button class="btn btn-success mt-3" @click="show = true">
+      <b-button  @click="show = true">
         <i class="fa fa-plus"></i> Create Disputes
-      </button>
+      </b-button>
       <base-table
         :items="this.disputes.data"
         :fields="fields"

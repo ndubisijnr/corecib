@@ -126,6 +126,8 @@ export default {
       this.$store.dispatch("logOut", {
         customerEmail: this.user.customerEmail,
       }, {root: false})
+      localStorage.clear()
+      this.$router.push("/")
 
     },
     swithApi() {

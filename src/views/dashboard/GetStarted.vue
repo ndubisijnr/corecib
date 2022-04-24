@@ -42,13 +42,13 @@
                   <h5 class="onboarding-card-description">
                     Submit compliance details to accept live payments
                   </h5>
-                  <base-button
+                  <base-button style="background-color: #3F88C5; color: white;"
                     size="md"
                     outline
                     class="mt-3 btn btn-primary"
                     @click="getbiz()"
                   >
-                    Activate Business
+                    Activate a Business
                   </base-button>
                 </div>
                 <div class="onboarding-card">
@@ -71,7 +71,7 @@
                   <h5 class="onboarding-card-description">
                     Learn what you can do with the BizGem Dashboard
                   </h5>
-                  <base-button size="md" outline class="mt-3 btn btn-primary">
+                  <base-button style="background-color: #3F88C5; color: white;" size="md" outline class="mt-3 btn btn-primary">
                     Take a tour
                   </base-button>
                 </div>
@@ -102,24 +102,14 @@
                   <h5 class="onboarding-card-description">
                     Find answers to questions you might have or get in touch
                   </h5>
-                  <base-button size="md" outline class="mt-3 btn btn-primary">
+                  <base-button style="background-color: #3F88C5; color: white;" size="md" outline class="mt-3 btn btn-primary">
                     Go to Support
                   </base-button>
                 </div>
               </div>
 
-              <div class="container mt-5 d-flex">
-                <div class="d-flex bg-white card w-50">
-                  <div class="p-3">
-                    <h3>API Documentation</h3>
-                    <p>
-                      Our documentation contains the Libraries, APIs, and SDKs
-                      you need to integrate BizGem in your website or app.
-                    </p>
-                    <base-button size="md" class="btn-primary btn"> Go to Docs </base-button>
-                  </div>
-                </div>
-                <div class="w-50 ml-5 card bg-white p-3">
+              <div class="container mt-3 d-flex justify-content-center">
+                <div class="card bg-white p-3">
                   <h3 text-center>Your Test Key</h3>
                   <p>
                     Also available in
@@ -129,7 +119,7 @@
                       ></router-link
                     >
                   </p>  
-                  <api-form></api-form>                           
+                  <api-form></api-form>
                 </div>
               </div>
             </div>
@@ -158,19 +148,6 @@ export default {
     getbiz() {
       this.$router.push({ name: "NewBusiness" });
       StoreUtils.rootGetters(StoreUtils.getters)
-    },
-    hide$show() {
-      let b = document.getElementById("pwd");
-      let eye = document.getElementById("eye");
-      if (b.type === "password") {
-        b.type = "text";
-        eye.classList.remove("fa-eye");
-        eye.classList.add("fa-eye-slash");
-      } else {
-        b.type = "password";
-        eye.classList.add("fa-eye");
-        eye.classList.remove("fa-eye-slash");
-      }
     },
   },
   computed: {

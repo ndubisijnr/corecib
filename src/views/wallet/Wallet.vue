@@ -36,6 +36,7 @@ export default {
 
       light: "light",
       allWalletModel: WalletRequest.readWallet,
+      singleWalletTransactionmodel: WalletRequest.readWalletTransaction,
       type: "",
       option_time: [
         { value: "last30", label: "Last 30 days" },
@@ -49,25 +50,25 @@ export default {
       items: [],
       fields: [
         { key: "accountId", label: "accountId" },
-        { key: "accountCustomerId", label: "accountCustomerId" },
+        // { key: "accountCustomerId", label: "accountCustomerId" },
         { key: "accountNumber", label: "accountNumber" },
         { key: "accountName", label: "accountName" },
-        {
-          key: "accountCurrency",
-          label: "accountCurrency",
-        },
+        // {
+        //   key: "accountCurrency",
+        //   label: "accountCurrency",
+        // },
         { key: "accountBalance", label: "accountBalance" },
         { key: "accountStatus", label: "accountStatus" },
         { key: "accountLedgerBalance", label: "accountLedgerBalance" },
-        { key: "accountPhone", label: "accountPhone" },
-        { key: "accountEmail", label: "accountEmail" },
+        // { key: "accountPhone", label: "accountPhone" },
+        // { key: "accountEmail", label: "accountEmail" },
         { key: "accountBvn", label: "accountBvn" },
+        { key: "walletAction", label: "Actions" },
       ],
     }
   },
   methods: {
   },
-
   computed: {
     sortOptions() {
       // Create an options list from our fields
