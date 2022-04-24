@@ -1,9 +1,8 @@
 <template>
-  
  <div>
    <base-table
           :items="wallettransactions"
-          fields:="fields"
+          :fields="fields"
           filter-mode="default"
           :is-busy="loading" />
   </div>

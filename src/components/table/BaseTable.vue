@@ -110,9 +110,8 @@ export default {
       dateFormat: 'D MMM',
       totalRows: 1,
       currentPage: 1,
-      filterMode:null,
-      perPage: 15,
-      pageOptions: [15, 20],
+      perPage: 50,
+      pageOptions: [50, 100],
       sortBy: '',
       row: {},
       sortDesc: false,
@@ -146,6 +145,15 @@ export default {
         localStorage._product = _id
         this.showBill = !this.showBill
       }
+    },
+    onFiltered(data){
+      if (this.filterMode === 'accountActivities')
+        this.$store.commit('account/updateAccountActivitiesFiltered', data);
+      else if (this.filterMode === 'balances')
+        this.$store.commit('account/updateAccountsFiltered', data);
+      else if (this.filterMode === 'statements')
+        this.$store.commit('account/updateAccountStatementsFiltered', data);
+      //console.log(data)
     },
     navigate(_id){
       localStorage.suOfficerID = _id;
@@ -291,11 +299,9 @@ export default {
     },
     rowClass(item, type) {
       if (!item || type !== 'row') return '';
-      if (item.status != null)
-        if (item.status.toLowerCase() === 'invalid account' && item.status != null) return 'table-danger';
-        else if(item.status.toLowerCase() === 'account validated' && (item.beneficiaryname.toLowerCase() === item.nename.toLowerCase())) return 'table-success';
-        else if (item.status.toLowerCase() === 'account validated') return 'table-primary';
-        else if (item.status.toLowerCase().trim() === 'no response from server') return 'table-warning';
+      if (item.drCr != null)
+        if (item.drCr === 'DRr') return 'table-danger';
+        else if(item.drCr === 'CRr') return 'table-success';
         else return '';
     },
   }

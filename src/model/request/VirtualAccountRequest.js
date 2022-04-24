@@ -19,10 +19,10 @@ class VirtualAccountRequest {
     }
 
     static readVirtualAccount={
-        startDate: null,
-        endDate: null,
-        searchItem: null,
-        page: null
+        startDate: "",
+        endDate: "",
+        searchItem: "",
+        page: 1
     }
 
     static readVirtualAccountTransactionList={

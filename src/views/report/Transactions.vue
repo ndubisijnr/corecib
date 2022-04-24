@@ -2,75 +2,11 @@
   <div>
     <div class="mt-4">
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-        <div class="row">
-          <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3"> -->
-          <div style="display: flex">
-            <div class="">
-              <base-input label="Transaction Period">
-                <el-select
-                  class="select-danger"
-                  filterable
-                  placeholder=""
-                  @change="getStartEndDate()"
-                  v-model="type"
-                >
-                  <el-option
-                    v-for="option in option_time"
-                    class="select-danger"
-                    :value="option.value"
-                    :label="option.label"
-                    :key="option.value"
-                  >
-                  </el-option>
-                </el-select>
-              </base-input>
-            </div>
-            <base-input
-              label="Search"
-              input-classes="form-control-md"
-              name="Report Name"
-              placeholder="Search"
-              v-model="filter"
-              class="w-50 ml-1"
-            >
-            </base-input>
-            <div v-if="type === 'customperiod'" class="">
-              <div style="display: flex">
-                <div></div>
-                <div class="ml-2">
-                  <label class="form-control-label"> From</label>
-                  <datetime
-                    v-model="startDate"
-                    input-class="form-control"
-                    class="theme-green"
-                    placeholder="Start Date"
-                    zone="Africa/Lagos"
-                    value-zone="Africa/Lagos"
-                    :min-datetime="minDatetime"
-                    :max-datetime="maxDatetime"
-                  ></datetime>
-                </div>
-                <div class="ml-2">
-                  <label class="form-control-label"> To</label>
-                  <datetime
-                    v-model="endDate"
-                    input-class="form-control"
-                    class="theme-green"
-                    placeholder="End Date"
-                    zone="Africa/Lagos"
-                    value-zone="Africa/Lagos"
-                    :min-datetime="minDatetime"
-                    :max-datetime="maxDatetime"
-                  ></datetime>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <search-form module="allTransaction"></search-form>
       </div>
     </div>
      <base-table
-          :items="allTransactions"
+          :items="allTransactions.data"
           :fields="fields"
           filter-mode="default"
           :is-busy="loading" />
@@ -86,38 +22,23 @@ import BaseHeader from "@/components/BaseHeader";
 // Tables
 
 import { mapState } from "vuex";
-import { Datetime } from "vue-datetime";
 import WalletRequest from "../../model/request/WalletRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BaseTable from "../../components/table/BaseTable";
+import SearchForm from "../../components/form/SearchForm";
 
 
 export default {
   name: "AllTransaction",
   components: {
-    Datetime,
-    BaseHeader,
+    SearchForm,
     BaseTable
   },
   data() {
     return {
-      minDatetime: "2022-04-28",
-      maxDatetime: "2022-04-01",
-      startDate: "",
-      endDate: "",
       allTransactionsModel: WalletRequest.readAllWalletTransaction,
-
       light: "light",
       type: "",
-      option_time: [
-        { value: "last30", label: "Last 30 days" },
-        { value: "last90", label: "Last 90 days" },
-        { value: "alltime", label: "All TIme" },
-        { value: "customperiod", label: "Custom Period" },
-        { value: "thismonth", label: "This Month" },
-        { value: "today", label: "Today" },
-        { value: "thisyear", label: "This Year" },
-      ],
       items: [],
       bitems: [],
       fields: [
@@ -125,141 +46,16 @@ export default {
         { key: "amount", label: "amount" },
         { key: "accountNumber", label: "accountNumber" },
         { key: "accountName", label: "accountName" },
-        {
-          key: "counterPartyAccountNumber",
-          label: "counterPartyAccountNumber",
-        },
-        { key: "counterPartyAccountName", label: "counterPartyAccountName" },
-        { key: "counterPartyBankCode", label: "counterPartyBankCode" },
+        { key: "counterPartyAccountNumber", label: "C. AccountNumber"},
+        { key: "counterPartyAccountName", label: "C. AccountName" },
+        //{ key: "counterPartyBankCode", label: "counterPartyBankCode" },
         { key: "eventDate", label: "eventDate" },
         { key: "actions", label: "actions" },
       ],
     };
   },
   methods: {
-    changeDate(event) {
-      //this.showDate = (this.form1.category==='')?true:false;
-      // console.log(`##########${this.form1.category}`);
-      console.log(`##########>>>${event}`);
-    },
 
-    onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length;
-      this.currentPage = 1;
-    },
-    getMonday(d) {
-      d = new Date(d);
-      let day = d.getDay(),
-        diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
-      return new Date(d.setDate(diff));
-    },
-    formatDates(dateOne, dateTwo) {
-      let formattedDates = "";
-      if (dateOne) {
-        formattedDates = format(dateOne, this.dateFormat);
-      }
-      if (dateTwo) {
-        //this.query(true);
-        formattedDates += " - " + format(dateTwo, this.dateFormat);
-      }
-      return formattedDates;
-    },
-    getDuration(_startDate, _endDate) {
-      let years =
-        new Date(new Date(_endDate) - new Date(_startDate)).getFullYear() -
-        1970;
-      //console.log(years);
-      let months = new Date(
-        new Date(_endDate) - new Date(_startDate)
-      ).getMonth();
-      //console.log(months);
-      let days =
-        (new Date(_endDate).getTime() - new Date(_startDate).getTime()) /
-        (1000 * 3600 * 24);
-      //console.log(days);
-      let hours =
-        (new Date(_endDate).getTime() - new Date(_startDate).getTime()) /
-        (1000 * 3600);
-      //console.log(hours);
-      let minutes =
-        (new Date(_endDate).getTime() - new Date(_startDate).getTime()) /
-        (1000 * 60);
-      //console.log(minutes);
-      let seconds =
-        (new Date(_endDate).getTime() - new Date(_startDate).getTime()) / 1000;
-      // //console.log(seconds);
-      //return years;
-      if (years > 0) return `${years} Years`;
-      else if (months > 0) return `${months} Months`;
-      else if (days > 0) return `${days} Days`;
-      else if (hours > 0) return `${hours} Hours`;
-      else if (minutes > 0) return `${minutes} Minutes`;
-      else `${seconds} Seconds`;
-    },
-    getDaysArray(start, end) {
-      let arr = [];
-      let dt = new Date(start);
-      for (; dt <= end; dt.setDate(dt.getDate() + 1)) {
-        arr.push(format(new Date(dt), "YYYY-MM-DD"));
-      }
-      return arr;
-    },
-    getStartEndDate() {
-      let today = new Date();
-      let model = {
-        startDate:"",
-        endDate:""
-      }
-      if (this.type === "today") {
-        this.model.startDate = today.toJSON().slice(0, 10);
-        this.model.endDate = today.toJSON().slice(0, 10);
-        // model.endDate = new Date(new Date().setDate(today.getDate() + 1))
-        //   .toJSON()
-        //   .slice(0, 10);
-        console.log(
-          "today:: in a bit",
-          this.allTransactionsModel.startDate,
-          this.allTransactionsModel.endDate
-        );
-      } else if (this.type === "thisweek") {
-        let priorDate = this.getMonday(new Date());
-        this.myStylesmodel.startDate = priorDate.toJSON().slice(0, 10);
-        this.model.endDate = new Date(new Date().setDate(today.getDate() + 1))
-          .toJSON()
-          .slice(0, 10);
-        // console.log("thisweek::", model.startDate, model.endDate);
-      } else if (this.type === "thismonth") {
-        let priorDate = new Date(today.getFullYear(), today.getMonth(), 2);
-        this.model.startDate = priorDate.toJSON().slice(0, 10);
-        this.model.endDate = new Date(new Date().setDate(today.getDate() + 1))
-          .toJSON()
-          .slice(0, 10);
-      } else if (this.type === "last30") {
-        let priorDate = new Date(new Date().setDate(today.getDate() - 30));
-        this.model.startDate = priorDate.toJSON().slice(0, 10);
-        this.model.endDate = new Date(new Date().setDate(today.getDate() + 1))
-          .toJSON()
-          .slice(0, 10);
-        console.log("last30::", model.startDate, model.endDate);
-      } else if (this.type === "last90") {
-        let priorDate = new Date(new Date().setDate(today.getDate() - 90));
-        this.model.startDate = priorDate.toJSON().slice(0, 10);
-        this.model.endDate = new Date(new Date().setDate(today.getDate() + 1))
-          .toJSON()
-          .slice(0, 10);
-      } else if (this.type === "thisyear") {
-        let priorDate = new Date(new Date().getFullYear(), 0, 1);
-        this.model.startDate = priorDate.toJSON().slice(0, 10);
-        this.model.endDate = new Date(new Date().setDate(today.getDate() + 1))
-          .toJSON()
-          .slice(0, 10);
-      } else if (this.type === "alltime") {
-        this.model.startDate = this.minDatetime;
-        this.model.endDate = this.maxDatetime;
-      }
-      return model;
-    },
   },
 
   computed: {
@@ -273,8 +69,8 @@ export default {
     },
     ...mapState({
       userInformation: (state) => state.auth.userInfo,
-      allTransactions: (state) =>
-        state.walletTransactions.allWalletTransactions,
+      allTransactions: (state) => state.walletTransactions.allWalletTransactions,
+      loading: (state) => state.walletTransactions.loading,
     }),
 
     myStyles() {
@@ -282,9 +78,6 @@ export default {
     },
   },
   mounted() {
-    this.allTransactionsModel.startDate = this.maxDatetime;
-    this.allTransactionsModel.endDate = this.minDatetime;
-    this.allTransactionsModel.page = 1;
     StoreUtils.dispatch(
       StoreUtils.actions.walletTransactions.updateAllWalletTransactions,
       this.allWalletTransactions

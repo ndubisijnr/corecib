@@ -25,12 +25,15 @@ class WalletRequest {
         startDate: "",
         endDate: "",
         searchItem: "",
-        page: null
+        page: 1
     }
 
     static readWalletTransaction={
-        accountNumber: null,
-        page: null
+        accountNumber: "",
+        endDate: "",
+        startDate: "",
+        searchItem: "",
+        page: 1
     }
 
     static readAllWalletTransaction={
