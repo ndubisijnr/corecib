@@ -15,7 +15,7 @@ class StoreUtils {
       logOut: "auth/logOut",
       initiatePasswordReset: "auth/initiatePasswordReset",
       completePasswordReset: "auth/completePasswordReset",
-      switchOrganisation: "auth/switchOrganisation"
+      updateStage: "auth/updateStage"
     },
     dispute: {
       updateDisputes: "dispute/updateDisputes",

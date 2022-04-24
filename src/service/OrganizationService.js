@@ -21,6 +21,11 @@ export default {
         return apiClient.appClient.post("/organisation/read-users-by-organisation-id",payload);
     },
 
+    callOrganisationStageApi(payload) {
+        return apiClient.appClient.post("/organisation/update/stage",payload);
+    },
+
+
 };
 
 

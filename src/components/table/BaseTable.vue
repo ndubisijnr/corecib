@@ -209,23 +209,21 @@ export default {
   methods: {
     getValue(payload) {
       console.log(payload);
+      this.$router.replace("/user/all-transactions");
       this.walletTransactionmodel.accountNumber = payload;
       StoreUtils.dispatch(
         StoreUtils.actions.walletTransactions.updateWalletTransactions,
         this.walletTransactionmodel
-      ).then(() => {
-        this.$router.replace("/user/all-transactions");
-      });
+      )
     },
     getValueCallVAT(payload) {
       console.log(payload);
+      this.$router.replace(`/user/virtual-acccount/transactions`);
       this.virtualAccountTransactionmodel.accountNumber = payload;
       StoreUtils.dispatch(
         StoreUtils.actions.virtualAccount.updateVirtualaccountTransactions,
         this.virtualAccountTransactionmodel
-      ).then(() => {
-        this.$router.replace(`/user/virtual-acccount/transactions`);
-      });
+      )
     },
     billsNavigate(_id, _type) {
       if (_type === "billers") {

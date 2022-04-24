@@ -2,7 +2,7 @@
   <div>
     <div class="mt-4">
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-        <search-form module="virtualAccount"/>
+        <search-form :module="SearchModuleUtil"/>
       </div>
     </div>
      <base-table
@@ -31,7 +31,7 @@ export default {
   name: "VirtualAccount",
   components: {
     SearchForm,
-    BaseTable
+    BaseTable,
   },
   data() {
     return {
@@ -95,7 +95,6 @@ export default {
       StoreUtils.actions.virtualAccount.updateVirtualAccount,
       this.virtualAccountModel
     );
-    console.log(this.virtualAccountModel);
   },
 };
 </script>

@@ -1,8 +1,10 @@
 <template>
+<b-breadcrumb>
+
   <div class="row">
     <b-form @submit.prevent="fetchResult">
       <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3"> -->
-      <div style="display: flex">
+      <div class="" style="display: flex;">
         <div class="">
           <base-input label="Transaction Period">
             <el-select
@@ -11,6 +13,8 @@
                 placeholder=""
                 @change="getStartEndDate()"
                 v-model="type"
+                required
+
             >
               <el-option
                   v-for="option in options"
@@ -35,6 +39,8 @@
                   placeholder="Start Date"
                   zone="Africa/Lagos"
                   value-zone="Africa/Lagos"
+                  required
+
               ></datetime>
             </div>
             <div class="ml-2">
@@ -46,25 +52,28 @@
                   placeholder="End Date"
                   zone="Africa/Lagos"
                   value-zone="Africa/Lagos"
+                  required
               ></datetime>
             </div>
           </div>
         </div>
-        <div class="d-flex align-items-center w-75">
+        <div class="d-flex align-items-center">
           <base-input
               label="Search"
               input-classes="form-control-lg"
               name="Report Name"
               v-model="model.searchItem"
               placeholder="Search Here"
-              class="ml-2 w-50"
+              class="ml-2"
+              required
           >
           </base-input>&nbsp;
-          <base-button :loading="loading" class="mt-3" icon="b-icon-search" styles="height: 42px;" title="Search"/>
+           <base-button :loading="loading" class="mt-3" icon="b-icon-search"  title="Search"/>
         </div>
       </div>
     </b-form>
   </div>
+</b-breadcrumb>
 </template>
 
 <script>
@@ -74,6 +83,7 @@ import WalletRequest from "../../model/request/WalletRequest"
 import {Datetime} from "vue-datetime";
 import BaseButton from "../../components/button/BaseButton";
 import BaseResponse from "../../model/reponse/BaseResponse";
+import SearchModuleUtil from "../../util/constant/SearchModulutil"
 
 let module = ''
 
@@ -215,23 +225,16 @@ export default {
       }
       return model;
     },
-    mutateState() {
-      if (this.module === "allTransaction")
-        StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, this.data)
-      else
-        StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, this.data)
-    },
     fetchResult() {
       this.model.endDate = this.model.endDate.split("T")[0]
       this.model.startDate = this.model.startDate.split("T")[0]
-      console.log(this.module)
-      if (this.module === "allTransaction") {
+      if (this.module === SearchModuleUtil.ALL_TRANSACTION) {
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.model);
-      } else if (this.module === "wallet") {
+      } else if (this.module === SearchModuleUtil.WALLET) {
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateReadAllWallets, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets, this.model);
-      } else if (this.module === "virtualAccount") {
+      } else if (this.module === SearchModuleUtil.VIRTUAL_ACCOUNT) {
         StoreUtils.commit(StoreUtils.mutations.virtualAccount.updateVirtualAccount, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount, this.model);
       } else {
@@ -253,19 +256,19 @@ export default {
       userInformation: (state) => state.auth.userInfo,
       loading: (state) => {
         console.log(module)
-        if (module === "allTransaction" || "wallet")
+        if (module === SearchModuleUtil.ALL_TRANSACTION || SearchModuleUtil.WALLET)
           return state.walletTransactions.loading
-        else if (module === "virtualAccount")
+        else if (module === SearchModuleUtil.VIRTUAL_ACCOUNT)
           return state.walletTransactions.loading
         else
           return state.walletTransactions.loading
       },
       data: (state) => {
-        if (module === "allTransaction")
+        if (module === SearchModuleUtil.ALL_TRANSACTION)
           return state.walletTransactions.allWalletTransactions
-        else if (module === "wallet")
+        else if (module === SearchModuleUtil.WALLET)
           return state.walletTransactions.wallets
-        else if (module === "virtualAccount")
+        else if (module === SearchModuleUtil.VIRTUAL_ACCOUNT)
           return state.virtualAccount.virtualAccount
         else
           return state.walletTransactions.allWalletTransactions

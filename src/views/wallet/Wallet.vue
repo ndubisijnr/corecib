@@ -62,7 +62,7 @@ export default {
         { key: "accountLedgerBalance", label: "accountLedgerBalance" },
         // { key: "accountPhone", label: "accountPhone" },
         // { key: "accountEmail", label: "accountEmail" },
-        { key: "accountBvn", label: "accountBvn" },
+        // { key: "accountBvn", label: "accountBvn" },
         { key: "walletAction", label: "Actions" },
       ],
     }

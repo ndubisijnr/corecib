@@ -17,7 +17,7 @@ appClient.interceptors.request.use(config => {
     config.headers.Authorization = StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken)
         ? StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken)
         : StoreUtils.rootGetters(StoreUtils.getters.auth.getToken);
-    console.log(config.headers.Authorization)
+    // console.log(config.headers.Authorization)
     config.headers.mid = localStorage.organisationId;
     return config
 })

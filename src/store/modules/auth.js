@@ -2,15 +2,17 @@ import AuthService from "../../service/AuthService";
 import router from "../../router";
 import AuthenticationRequest from "../../model/request/AuthRequest";
 import Swal from "sweetalert2";
-import AuthenticationResponse from "../../model/reponse/AuthenticationResponse";
+import BaseResponse from "../../model/reponse/BaseResponse";
+import OrganisationRequest from "../../model/request/OrganisationRequest";
+import OrganizationService from "../../service/OrganizationService";
 
 export const state = {
   token: null,
   loading: false,
-  userInfo: AuthenticationResponse.login,
+  userInfo: BaseResponse.list,
   screen: "register",
   passwordResetScreen: "email",
-  stage: "dev"
+  stage: null
 }
 export const getters = {
   getUserInfo: state => { return state.userInfo },
@@ -35,6 +37,7 @@ export const mutations = {
   updateToken: (state, payload) => { state.token = payload },
   updateUserInfo: (state, payload) => { state.userInfo = payload; },
   updateScreen: (state, payload) => { state.screen = payload; },
+  updateStage:(state, payload) => {state.stage = payload},
   updatePasswordResetScreen: (state, payload) => { state.passwordResetScreen = payload; },
 }
 export const actions = {
@@ -166,8 +169,19 @@ export const actions = {
     });
   },
 
-  switchOrganisation: ({}, paylaod) => {
-    localStorage.organisationId = paylaod.organisationId
-    location.reload()
+  updateStage: ({commit,state}, paylaod = OrganisationRequest.switchStage) => {
+    commit('updateLoading',true)
+    return OrganizationService.callOrganisationStageApi(paylaod).then(response => {
+      let responseData = response.data
+      if(responseData.responseCode == "00"){
+        commit("updateLoading", false)
+        commit("updateStage", responseData.data[0].organisationStage)
+        console.log(state.stage)
+      }
+    }).catch((error) => {
+      commit("updateLoading", false);
+      console.log(error)
+    });
+   
   },
 }

@@ -1,5 +1,10 @@
 <template>
  <div>
+    <div class="mt-4">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+        <search-form :module="SearchModuleUtil"/>
+      </div>
+    </div>
    <base-table
           :items="wallettransactions"
           :fields="fields"
@@ -12,6 +17,8 @@
 <script>
 import { mapState } from "vuex";
 import BaseTable from "../../components/table/BaseTable";
+import SearchForm from "../../components/form/SearchForm";
+
 
 
 
@@ -20,7 +27,8 @@ import WalletRequest from "../../model/request/WalletRequest"
 export default {
   name:"WalletTransaction",
   components: {
-    BaseTable
+    BaseTable,
+    SearchForm
   },
   data() {
     return {

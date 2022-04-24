@@ -28,10 +28,9 @@
         </div>
       </li>
 
-      <toggle-button v-model="switchBtn" :value="true" :width="100" :height="30" :font-size="10"
+      <toggle-button v-model="toogleBtnValue" :width="70" :height="30" :font-size="10"
                      :color="{checked: '#75c791', unchecked: '#c02026'}"
-                     :labels="{unchecked: 'Test Mode', checked: 'Live Mode'}" @change="onChecked, swithApi()"/>
-
+                     :labels="{unchecked: stage, checked:  stage}" @change="swithApi()"/>              
       <base-dropdown class="nav-item"
                      tag="li"
                      title-classes="nav-link"
@@ -65,7 +64,7 @@
             <div class="media-body ml-2 d-none d-lg-block">
               <span
                   class="mb-0 text-sm  font-weight-bold">{{ user.customerFirstName }} {{ user.customerLastName }} </span><br>
-              <span class="mb-0 text-sm  font-weight-bold">{{ organisation.organisationName }} </span>
+              <span class="mb-0 text-sm  font-weight-bold">{{ organisation[0].organisationName }} </span>
             </div>
           </div>
         </a>
@@ -89,6 +88,8 @@
 import {BaseNav} from '@/components';
 import {mapState, mapActions, mapGetters} from "vuex";
 import {ToggleButton} from 'vue-js-toggle-button'
+import OrganisationRequest from "../../model/request/OrganisationRequest"
+import StoreUtils from "../../util/baseUtils/StoreUtils"
 
 export default {
   name: "DashboardNavbar",
@@ -98,14 +99,15 @@ export default {
   },
   props: {
     type: {
-      type: String,
-      default: 'default', // default|light
+      type: Boolean,
+      default:false, // default|light
       description: 'Look of the dashboard navbar. Default (Green) or light (gray)'
     }
   },
   data() {
     return {
-      switchBtn: false,
+      toogleBtnValue:true,
+      switchStageModel: OrganisationRequest.switchStage,
       activeNotifications: false,
       showMenu: false,
       searchModalVisible: false,
@@ -115,7 +117,9 @@ export default {
   computed: {
     ...mapState({
       user: state => state.auth.userInfo,
-      organisation: state => state.apiKey.apiKey
+      organisation: state =>  state.auth.userInfo.organisations,
+      stage: state=> state.auth.stage
+      
     }),
     ...mapActions(['logOut']),
     ...mapGetters([""]),
@@ -131,7 +135,12 @@ export default {
 
     },
     swithApi() {
-      this.$store.dispatch('switchMode', this.switchBtn, {root: false})
+      if(this.toogleBtnValue === true) 
+        this.switchStageModel.organisationStage = "PROD"
+      else
+        this.switchStageModel.organisationStage = "DEV"
+      StoreUtils.dispatch(StoreUtils.actions.auth.updateStage, this.switchStageModel)
+
     },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
