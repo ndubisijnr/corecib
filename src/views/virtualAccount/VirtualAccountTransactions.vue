@@ -1,7 +1,8 @@
 <template>
+  
  <div>
    <base-table
-          :items="wallettransactions"
+          :items="virtualAccounttransactions"
           :fields="fields"
           filter-mode="default"
           :is-busy="loading" />
@@ -15,10 +16,10 @@ import BaseTable from "../../components/table/BaseTable";
 
 
 
-import WalletRequest from "../../model/request/WalletRequest"
+import VirtualAccountRequest from "../../model/request/VirtualAccountRequest"
 
 export default {
-  name:"WalletTransaction",
+  name:"VirtualAccountTransaction",
   components: {
     BaseTable
   },
@@ -30,7 +31,7 @@ export default {
       endDate: "",
 
       light: "light",
-      allWalletTransactionsmodel: WalletRequest.readAllWalletTransaction,
+      virtualAccountmodel: VirtualAccountRequest.readVirtualAccountTransactions,
       type: "",
       option_time: [
         { value: "last30", label: "Last 30 days" },
@@ -43,33 +44,35 @@ export default {
       ],
       items: [],
       fields: [
-        { key: "id", label: "id" },
-        { key: "amount", label: "amount" },
+        { key: "accountId", label: "accountId" },
+        { key: "accountCustomerId", label: "accountCustomerId" },
         { key: "accountNumber", label: "accountNumber" },
         { key: "accountName", label: "accountName" },
         {
-          key: "contractReference",
-          label: "contractReference",
+          key: "accountCurrency",
+          label: "accountCurrency",
         },
-        { key: "counterPartyAccountName", label: "counterPartyAccountName" },
-        { key: "counterPartyAccountNumber", label: "counterPartyAccountNumber" },
-        { key: "transactionType", label: "transactionType" },
-        { key: "action", label: "Action" },
-
-       
+        { key: "accountBalance", label: "accountBalance" },
+        { key: "accountStatus", label: "accountStatus" },
+        { key: "accountLedgerBalance", label: "accountLedgerBalance" },
+        { key: "accountPhone", label: "accountPhone" },
+        { key: "accountEmail", label: "accountEmail" },
+        { key: "accountBvn", label: "accountBvn" },
         // { key: "actions", label: "actions" },
       ],
     };
   },
+
+
   computed: {
     ...mapState({
-      loading: (state) => state.walletTransactions.loading,
-      wallettransactions: (state) => state.walletTransactions.walletTransactions,
+        loading: (state) => state.walletTransactions.loading,
+       virtualAccounttransactions: (state) => state.walletTransactions.walletTransactions,
     }),
   },
 
   mounted(){
-    console.log(this.wallettransactions)
   }
+
 };
 </script>

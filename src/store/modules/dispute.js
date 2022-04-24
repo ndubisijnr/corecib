@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 export const state = {
   loading: false,
   loading2:false,
-  success:"",
+  success:false,
   disputes: DisputeResponse.disputeRead,
   transactionsquery:{}
 }
@@ -33,7 +33,7 @@ export const mutations = {
 export const actions = {
 
   updateDisputes: ({ commit, state}, payload = DisputeRequest.disputeRead) => {
-    if(state.disputes.length < 1) commit("updateLoading", true)
+    if(state.disputes.data.length < 1) commit("updateLoading", true)
     return DisputeService.callReadDisputeApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
@@ -76,7 +76,9 @@ export const actions = {
       if(responseData.responseCode === "00"){
         commit("updateLoading2", false)
         commit("updateTransactionQuery", responseData)
-        console.log(state.transactionsquery)
+      }else{
+        commit("updateLoading2", false)
+        Swal.fire({title: responseData.responseMessage, icon: 'error'}).then(()=>{})
       }
     }).catch(error => {
       commit("updateLoading2", false)

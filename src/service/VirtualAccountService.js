@@ -14,8 +14,8 @@ export default {
         return apiClient.appClient.post("/virtual-account/read",payload);
     },
 
-    callReadVirtualAccountTransactionListApi(payload) {
-        return apiClient.appClient.post("/virtual-account/transaction-list",payload);
+    callReadVirtualAccountTransactionApi(payload) {
+        return apiClient.appClient.post("/virtual-account/read-transaction",payload);
     },
 
     callGetChannelCodesApi(payload) {

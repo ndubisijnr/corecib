@@ -1,11 +1,10 @@
 import axios from "axios";
-import {qgBaseUrl} from "../app.config";
 import Swal from 'sweetalert2'
 import router from "../router";
 import StoreUtils from "../util/baseUtils/StoreUtils";
 
 export const appClient = axios.create({
-    baseURL: qgBaseUrl,
+    baseURL: window.__env.api.baseUrl,
     withCredentials: false,
     headers: {
          Accept: "application/json",
@@ -18,6 +17,7 @@ appClient.interceptors.request.use(config => {
     config.headers.Authorization = StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken)
         ? StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken)
         : StoreUtils.rootGetters(StoreUtils.getters.auth.getToken);
+    console.log(config.headers.Authorization)
     config.headers.mid = localStorage.organisationId;
     return config
 })
@@ -43,7 +43,7 @@ appClient.interceptors.response.use(response => {
             },
             willClose: () => {
               clearInterval(timerInterval)
-              router.push({name:"Login"})
+              router.push({name:"Logon"})
             }
           }).then((result) => {
             /* Read more about handling dismissals below */

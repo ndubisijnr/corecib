@@ -42,7 +42,7 @@
                   <h5 class="onboarding-card-description">
                     Submit compliance details to accept live payments
                   </h5>
-                  <base-button
+                  <base-button style="background-color: #3F88C5; color: white;"
                     size="md"
                     outline
                     class="mt-3 btn btn-primary"
@@ -71,7 +71,7 @@
                   <h5 class="onboarding-card-description">
                     Learn what you can do with the BizGem Dashboard
                   </h5>
-                  <base-button size="md" outline class="mt-3 btn btn-primary">
+                  <base-button style="background-color: #3F88C5; color: white;" size="md" outline class="mt-3 btn btn-primary">
                     Take a tour
                   </base-button>
                 </div>
@@ -102,7 +102,7 @@
                   <h5 class="onboarding-card-description">
                     Find answers to questions you might have or get in touch
                   </h5>
-                  <base-button size="md" outline class="mt-3 btn btn-primary">
+                  <base-button style="background-color: #3F88C5; color: white;" size="md" outline class="mt-3 btn btn-primary">
                     Go to Support
                   </base-button>
                 </div>
@@ -119,8 +119,7 @@
                       ></router-link
                     >
                   </p>  
-                  
-                  <api-form></api-form>                           
+                  <api-form></api-form>
                 </div>
               </div>
             </div>

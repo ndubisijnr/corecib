@@ -33,51 +33,55 @@
                 class="form-select"
                 aria-label="Default select example"
                 required
+                placeholder="Dispute Issue Type"
+                v-model="createDisputemodel.disputeIssueType"
               >
                 <option value="Credit" selected>Credit</option>
                 <option value="Debit">Debit</option>
               </select>
-              <label>disputeIssueType</label>
+              <label>Dispute Issue Type</label>
             </div>
             <div class="form-floating mb-3">
               <input
                 type="tel"
                 class="form-control"
-                placeholder="disputeSessionId"
+                placeholder="Dispute Transaction Type"
                 disabled
+                v-model="createDisputemodel.disputeTrnType"
                 required
               />
-              <label>disputeTrnType</label>
+              <label>Dispute Transaction Type</label>
             </div>
             <div class="form-floating mb-3">
               <input
                 type="text"
                 class="form-control"
-                placeholder="disputeSessionId"
-                value="Transaction"
+                placeholder="Dispute Remark"
+                v-model="createDisputemodel.disputeRemark"
                 disabled
               />
-              <label>disputeRemark</label>
+              <label>Dispute Remark</label>
             </div>
             <div class="form-floating mb-3">
               <textarea
                 type="text"
                 class="form-control"
-                placeholder="disputeSessionId"
+                placeholder="Dispute Comment"
                 required
+                v-model="createDisputemodel.disputeComment"
               />
-              <label>disputeComment</label>
+              <label>Dispute Comment</label>
             </div>
             <div class="form-floating mb-3">
               <input
                 type="tel"
                 class="form-control"
-                placeholder="disputeSessionId"
-                :value="orgnasationId"
+                placeholder="Organasation ID"
+                v-model="createDisputemodel.disputeOrgId"
                 required
                 disabled
               />
-              <label>disputeOrgId</label>
+              <label>Organasation ID</label>
             </div>
           </template>
           <b-button
@@ -86,11 +90,11 @@
             @click="transactionsQuery()"
           >
             <span v-if="!loading2">Proceed</span>
-            <span :class="{ 'spinner-border': loading2 }"></span
+            <span :class="{ 'spinner-border': loading2 }" :disabled="loading2"></span
           ></b-button>
           <b-button type="submit" v-if="status == true" @click="logDispute()"
             ><span v-if="!loading2">Proceed</span>
-            <span :class="{ 'spinner-border': loading2 }"></span
+            <span :class="{ 'spinner-border': loading2 }" :disabled="loading2"></span
           ></b-button>
         </form>
       </div>
@@ -114,25 +118,41 @@ export default {
       status: false,
       createDisputemodel: DisputeRequest.disputeCreate,
       transactionsQuerymodel: DisputeRequest.transactionStatusQuery,
+      disputeReadModel: DisputeRequest.disputeRead
     };
   },
 
   methods: {
     closeModal() {
+      //close modal form
       this.showModal = false;
       this.$emit("closeCreateDispute", false);
       this.showModal = true;
+      this.status = false
     },
 
     logDispute() {
-      StoreUtils.dispatch(StoreUtils.actions.dispute.createDispute,this.createDisputemodel)
+      //set dispute session id from transaction reference
+      this.createDisputemodel.disputeSessionId = this.transactionsQuerymodel.reference,
+      //call create dispute action
+        StoreUtils.dispatch(
+          StoreUtils.actions.dispute.createDispute,
+          this.createDisputemodel
+        ).then(()=> {
+          //clear create dispute form
+          this.createDisputemodel={disputeComment: null,disputeSessionId: null},this.transactionsQuerymodel={}
+          this.closeModal();
+          this.status=false
+        });
     },
 
     transactionsQuery() {
+      //call create transaction query action
       StoreUtils.dispatch(
         StoreUtils.actions.dispute.updateTransactionQuery,
         this.transactionsQuerymodel
       ).then(() => {
+        //update form to true to create dispute
         this.status = true;
       });
     },
@@ -141,22 +161,27 @@ export default {
   computed: {
     ...mapState({
       loading2: (state) => state.dispute.loading2,
+      //get's oraganisation ID from localstorage
       orgnasationId: () => {
         return localStorage.organisationId;
       },
       transactionquery: (state) => state.dispute.transactionsquery,
-      success:state => state.dispute.success
+      success: (state) => state.dispute.success,
     }),
   },
 
-  watch:{
-    success(value){
-      if(value){
-        this.closeModal()
+  watch: {
+    success(newvalue) {
+      //watch for change to close modal form and update dispute table 
+      if (newvalue) {
+        this.disputeReadModel.disputeId = localStorage.getItem("organisationId");
+        StoreUtils.dispatch(
+          StoreUtils.actions.dispute.updateDisputes,
+          this.disputeReadModel
+        );
       }
-    }
-    
-  }
+    },
+  },
 };
 </script>
 
