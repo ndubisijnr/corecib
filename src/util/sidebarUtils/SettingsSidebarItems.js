@@ -1,3 +1,4 @@
+
 export default
 {
     header: 'Settings',
@@ -7,6 +8,11 @@ export default
             name:'Settings',
             icon:'ni ni-support-16 text-primary',
             path:'/settings/settings'
+        },
+        {
+            name:'Referral',
+            icon:'ni ni-support-16 text-primary',
+            path:'/bizgem/Referral'
         }
     ]
 };

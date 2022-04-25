@@ -3,7 +3,7 @@ import SignUp from '../../views/auth/SignUp'
 import ForgotPassword from '../../views/auth/ForgotPassword'
 
 
-export default [
+export default [    
     {
         path: '/',
         name: 'Logon',

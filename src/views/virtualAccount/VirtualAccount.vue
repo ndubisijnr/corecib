@@ -2,7 +2,7 @@
   <div>
     <div class="mt-4">
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-        <search-form :module="SearchModuleUtil"/>
+        <search-form :module="searchVirtualAccount"/>
       </div>
     </div>
      <base-table
@@ -26,6 +26,7 @@ import BaseTable from "../../components/table/BaseTable"
 import { mapState } from "vuex";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
 import SearchForm from "../../components/form/SearchForm";
+import SearchModuleutil from "../../util/constant/SearchModuleutil"
 
 export default {
   name: "VirtualAccount",
@@ -42,6 +43,7 @@ export default {
 
       light: "light",
       virtualAccountModel: VirtualAccountRequest.readVirtualAccount,
+      searchVirtualAccount: SearchModuleutil.VIRTUAL_ACCOUNT,
       type: "",
       option_time: [
         { value: "last30", label: "Last 30 days" },

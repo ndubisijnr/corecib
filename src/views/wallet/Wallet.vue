@@ -2,7 +2,7 @@
   <div>
     <div class="mt-4">
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-        <search-form module="wallet"/>
+        <search-form :module="searchWALLET"/>
       </div>
        <base-table
         :items="this.wallet.data"
@@ -17,6 +17,8 @@
 import WalletRequest from "../../model/request/WalletRequest"
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BaseTable from "../../components/table/BaseTable";
+import SearchModuleutil from "../../util/constant/SearchModuleutil"
+
 
 
 import { mapState } from "vuex";
@@ -37,6 +39,7 @@ export default {
       light: "light",
       allWalletModel: WalletRequest.readWallet,
       singleWalletTransactionmodel: WalletRequest.readWalletTransaction,
+      searchWALLET: SearchModuleutil.WALLET,
       type: "",
       option_time: [
         { value: "last30", label: "Last 30 days" },

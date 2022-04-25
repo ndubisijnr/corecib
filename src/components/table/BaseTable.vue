@@ -123,7 +123,7 @@
       </template>
     </b-table>
     <b-row>
-      <b-col md="3" class="my-1 ml-0">
+      <b-col md="6" class="my-1 ml-0">
         <b-form-group
           :label="showTitle ? 'perPage' : 'Page'"
           label-cols-sm="6"
@@ -142,15 +142,12 @@
           ></b-form-select>
         </b-form-group>
       </b-col>
-      <b-col sm="4"></b-col>
-      <b-col sm="5" md="4" class="my-1 mr-0 mx-3">
+      <b-col sm="5" md="6" class="">
         <b-pagination
           v-model="currentPage"
           :total-rows="items == null ? 0 : items.length"
           :per-page="perPage"
-          align="fill"
-          size="sm"
-          class="my-0"
+          pills 
         ></b-pagination>
       </b-col>
     </b-row>

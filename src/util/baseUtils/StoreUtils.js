@@ -78,6 +78,7 @@ class StoreUtils {
       getOrganizationId: "auth/getOrganizationId",
       getCurrentOrganization: "auth/getCurrentOrganization",
       getStage: "auth/getStage",
+      getOrginizationReferralLink:"auth/getOrginizationReferralLink"
     },
   };
 

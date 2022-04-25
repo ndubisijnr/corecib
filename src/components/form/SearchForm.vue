@@ -39,7 +39,6 @@
                   placeholder="Start Date"
                   zone="Africa/Lagos"
                   value-zone="Africa/Lagos"
-                  required
 
               ></datetime>
             </div>
@@ -52,7 +51,6 @@
                   placeholder="End Date"
                   zone="Africa/Lagos"
                   value-zone="Africa/Lagos"
-                  required
               ></datetime>
             </div>
           </div>
@@ -62,10 +60,9 @@
               label="Search"
               input-classes="form-control-lg"
               name="Report Name"
-              v-model="model.searchItem"
+              v-model="searchModel.searchItem"
               placeholder="Search Here"
               class="ml-2"
-              required
           >
           </base-input>&nbsp;
            <base-button :loading="loading" class="mt-3" icon="b-icon-search"  title="Search"/>
@@ -83,7 +80,7 @@ import WalletRequest from "../../model/request/WalletRequest"
 import {Datetime} from "vue-datetime";
 import BaseButton from "../../components/button/BaseButton";
 import BaseResponse from "../../model/reponse/BaseResponse";
-import SearchModuleUtil from "../../util/constant/SearchModulutil"
+import SearchModuleUtil from "../../util/constant/SearchModuleutil"
 
 let module = ''
 
@@ -108,7 +105,9 @@ export default {
       startDate: "",
       endDate: "",
       type: "",
-      model: WalletRequest.readWalletTransaction,
+      searchModel: WalletRequest.readWallet,
+     
+
     }
   },
   methods: {
@@ -226,20 +225,25 @@ export default {
       return model;
     },
     fetchResult() {
-      this.model.endDate = this.model.endDate.split("T")[0]
-      this.model.startDate = this.model.startDate.split("T")[0]
+      this.searchModel.endDate = this.searchModel.endDate.split("T")[0]
+      this.searchModel.startDate = this.searchModel.startDate.split("T")[0]
       if (this.module === SearchModuleUtil.ALL_TRANSACTION) {
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.model);
+        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
+        console.log("hello ALL_TRANSACTION", this.searchModel)
       } else if (this.module === SearchModuleUtil.WALLET) {
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateReadAllWallets, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets, this.model);
+        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets, this.searchModel);
+        console.log("hello WALLET", this.searchModel)
+
       } else if (this.module === SearchModuleUtil.VIRTUAL_ACCOUNT) {
         StoreUtils.commit(StoreUtils.mutations.virtualAccount.updateVirtualAccount, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount, this.model);
+        StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount, this.searchModel);
+        console.log("hello VIRTUAL_ACCOUNT", this.searchModel)
       } else {
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.model);
+        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
+        console.log("hello Something else", this.searchModel)
       }
     }
   },
@@ -259,7 +263,7 @@ export default {
         if (module === SearchModuleUtil.ALL_TRANSACTION || SearchModuleUtil.WALLET)
           return state.walletTransactions.loading
         else if (module === SearchModuleUtil.VIRTUAL_ACCOUNT)
-          return state.walletTransactions.loading
+          return state.virtualAccount.loading
         else
           return state.walletTransactions.loading
       },
