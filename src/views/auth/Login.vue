@@ -6,11 +6,11 @@
       <div class="login">
         <login-form/>
         <div class="mt-4">
-          <h6 class="forgot-password" @click="forgotPassword()">
+          <a class="forgot-password" @click="forgotPassword()">
             Forgot Password
-          </h6>
+          </a>
         </div>
-        <span class="text-dark">New To BizGem?<span class="join-now-text" @click="signUp()" >Create Account</span></span>
+        <span class="text-dark">New To BizGem?<a class="join-now-text" @click="signUp()" > Create Account</a></span>
       </div>
     </div>
   </div>
@@ -39,19 +39,13 @@ export default {
 </script>
 <style lang="css" scoped>
 .forgot-password {
-  color: black;
+  color: rgb(10, 133, 190);
   cursor: pointer;
 }
 
 
-.img-fluid,
-.img-thumbnail {
-  max-width: 100%;
-  height: auto;
-}
-
 .join-now-text {
-  color: black;
+  color: rgb(10, 133, 190);
   cursor: pointer;
 }
 
@@ -60,25 +54,12 @@ export default {
   height: 43px;
   left: 51px;
   top: 601px;
-
-  background: #053c57;
+  background-color: rgb(10, 133, 190);
   border-radius: 25px;
   border: none;
   color: white;
 }
 
-.img-fluid,
-.img-thumbnail {
-  max-width: 100%;
-  height: auto;
-}
-img,
-svg {
-  vertical-align: middle;
-}
-img {
-  border-style: none;
-}
 .spinner-border {
   display: inline-block;
   width: 1rem;
@@ -106,8 +87,6 @@ img {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /*background-color: rgba(2, 32, 61, 0.99);*/
-
   background-color: whitesmoke;
 }
 
@@ -115,10 +94,7 @@ img {
   display: flex;
   justify-content: center;
   height: 100vh;
-  /*background-color: rgba(2, 32, 61, 0.99);*/
   background-color: whitesmoke;
-
-  /*background-color: var(--sidebar-bg-color);*/
 }
 
 .form-login {

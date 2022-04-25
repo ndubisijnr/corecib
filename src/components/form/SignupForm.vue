@@ -34,10 +34,9 @@
           </base-input>
         </div>
         <div class="form-floating mt-3 mb-3">
-          <span class="small text-danger"
-            >Business name must contain two words (eg. Dangote Groups)</span
-          >
           <base-input
+            prependIcon="fa fa-info-circle"
+            title="Business name must contain two words (eg. Dangote Groups)"
             label="Business Name"
             class="mb-2"
             name="Business Name"
@@ -91,7 +90,7 @@
           <vue-country-code
             @onSelect="onSelect"
             :preferredCountries="['ng', 'us', 'gb']"
-            style="height: 46px"
+            style="height: 38px"
             v-model="initiateModel.customerCountryCode"
           >
           </vue-country-code>
@@ -328,9 +327,10 @@ export default {
       if (
         this.completeModel.customerPassword ===
         this.completeModel.customerConfirmPassword
-      ) {
+      ) {;
         this.completeModel.customerEmail = this.initiateModel.customerEmail;
         this.completeModel.customerBusinessName = this.initiateModel.customerBusinessName;
+        this.completeModel.customerReferralCode = localStorage.referralCode;
         StoreUtils.dispatch( StoreUtils.actions.auth.completeEnrollment,this.completeModel);
       } else {
         document.getElementById("passmisMatched").innerText = "Passwords are not the same";
@@ -391,7 +391,7 @@ export default {
   left: 51px;
   top: 601px;
 
-  background: #053c57;
+  background: rgb(10, 133, 190);
   border-radius: 25px;
   border: none;
   color: white;

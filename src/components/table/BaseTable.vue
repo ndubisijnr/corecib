@@ -25,8 +25,7 @@
     >
       <template v-slot:table-busy>
         <div class="text-center text-danger my-2">
-          <b-spinner class="align-middle"></b-spinner>
-          <strong>Loading ...</strong>
+          <b-spinner class="align-middle" type="grow"></b-spinner>
         </div>
       </template>
       <!-- TODO AMOUNT FORMATTING -->
@@ -51,12 +50,32 @@
         {{ row.index + 1 }}
       </template>
       <template v-slot:cell(action)="row">
-        <b-icon-eye-slash style="cursor: pointer; width: 25px; height: 15px;" v-if="row.detailsShowing" href="#" @click="row.toggleDetails" />
-        <b-icon-eye style="cursor: pointer; width: 25px; height: 15px;" v-else href="#" @click="row.toggleDetails" />
+        <b-icon-eye-slash
+          style="cursor: pointer; width: 25px; height: 15px"
+          v-if="row.detailsShowing"
+          href="#"
+          @click="row.toggleDetails"
+        />
+        <b-icon-eye
+          style="cursor: pointer; width: 25px; height: 15px"
+          v-else
+          href="#"
+          @click="row.toggleDetails"
+        />
       </template>
       <template v-slot:cell(TransactionAction)="row">
-        <b-icon-eye-slash style="cursor: pointer; width: 25px; height: 15px;" v-if="row.detailsShowing" href="#" @click="row.toggleDetails" />
-        <b-icon-eye style="cursor: pointer; width: 25px; height: 15px;" v-else href="#" @click="row.toggleDetails" />
+        <b-icon-eye-slash
+          style="cursor: pointer; width: 25px; height: 15px"
+          v-if="row.detailsShowing"
+          href="#"
+          @click="row.toggleDetails"
+        />
+        <b-icon-eye
+          style="cursor: pointer; width: 25px; height: 15px"
+          v-else
+          href="#"
+          @click="row.toggleDetails"
+        />
       </template>
       <template v-slot:cell(disputeActions)="row">
         <b-icon-folder2-open v-if="row.disputeStatus == 'CLOSED'" />
@@ -75,7 +94,10 @@
         />
       </template>
       <template v-slot:cell(virtualAccountactions)="row">
-        <b-icon-file style="cursor: pointer; width: 25px; height: 15px" @click="getValueCallVAT(row.item.accountNumber)" />
+        <b-icon-file
+          style="cursor: pointer; width: 25px; height: 15px"
+          @click="getValueCallVAT(acct = row.item.accountNumber, name = row.item.accountName)"
+        />
         <b-icon-eye-slash
           style="cursor: pointer; width: 25px; height: 15px"
           v-if="row.detailsShowing"
@@ -147,7 +169,7 @@
           v-model="currentPage"
           :total-rows="items == null ? 0 : items.length"
           :per-page="perPage"
-          pills 
+          pills
         ></b-pagination>
       </b-col>
     </b-row>
@@ -158,7 +180,7 @@
 import { mapGetters, mapState } from "vuex";
 import Swal from "sweetalert2";
 import WalletRequest from "../../model/request/WalletRequest";
-import VirtualAccountRequest from "../../model/request/VirtualAccountRequest"
+import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 export default {
   props: [
@@ -177,13 +199,14 @@ export default {
     return {
       show: false,
       walletTransactionmodel: WalletRequest.readWalletTransaction,
-      virtualAccountTransactionmodel: VirtualAccountRequest.readVirtualAccountTransactions,
+      virtualAccountTransactionmodel:
+        VirtualAccountRequest.readVirtualAccountTransactions,
       dateFormat: "D MMM",
       totalRows: 1,
       currentPage: 1,
       perPage: 50,
       pageOptions: [50, 100],
-      sortBy: '',
+      sortBy: "",
       row: {},
       sortDesc: false,
       sortDirection: "asc",
@@ -205,22 +228,24 @@ export default {
   mounted() {},
   methods: {
     getValue(payload) {
-      console.log(payload);
-      this.$router.replace("/user/all-transactions");
       this.walletTransactionmodel.accountNumber = payload;
-      StoreUtils.dispatch(
-        StoreUtils.actions.walletTransactions.updateWalletTransactions,
-        this.walletTransactionmodel
-      )
+      this.$router
+        .replace(`/user/all-transactions?account-number=${payload}`)
+        .then(() => {
+          StoreUtils.dispatch(
+            StoreUtils.actions.walletTransactions.updateWalletTransactions,
+            this.walletTransactionmodel
+          );
+        });
     },
-    getValueCallVAT(payload) {
-      console.log(payload);
-      this.$router.replace(`/user/virtual-acccount/transactions`);
-      this.virtualAccountTransactionmodel.accountNumber = payload;
-      StoreUtils.dispatch(
-        StoreUtils.actions.virtualAccount.updateVirtualaccountTransactions,
-        this.virtualAccountTransactionmodel
-      )
+    getValueCallVAT(acct, name) {
+      this.virtualAccountTransactionmodel.accountNumber = acct;
+      this.$router.replace(`/user/virtual-acccount/transactions?name=${name}?account-number=${acct}`).then(() => {
+        StoreUtils.dispatch(
+          StoreUtils.actions.virtualAccount.updateVirtualaccountTransactions,
+          this.virtualAccountTransactionmodel
+        );
+      });
     },
     billsNavigate(_id, _type) {
       if (_type === "billers") {
@@ -234,16 +259,16 @@ export default {
         this.showBill = !this.showBill;
       }
     },
-    onFiltered(data){
-      if (this.filterMode === 'accountActivities')
-        this.$store.commit('account/updateAccountActivitiesFiltered', data);
-      else if (this.filterMode === 'balances')
-        this.$store.commit('account/updateAccountsFiltered', data);
-      else if (this.filterMode === 'statements')
-        this.$store.commit('account/updateAccountStatementsFiltered', data);
+    onFiltered(data) {
+      if (this.filterMode === "accountActivities")
+        this.$store.commit("account/updateAccountActivitiesFiltered", data);
+      else if (this.filterMode === "balances")
+        this.$store.commit("account/updateAccountsFiltered", data);
+      else if (this.filterMode === "statements")
+        this.$store.commit("account/updateAccountStatementsFiltered", data);
       //console.log(data)
     },
-    navigate(_id){
+    navigate(_id) {
       localStorage.suOfficerID = _id;
       this.$router.push("/onboarding/officer-details");
     },
@@ -386,11 +411,11 @@ export default {
       });
     },
     rowClass(item, type) {
-      if (!item || type !== 'row') return '';
+      if (!item || type !== "row") return "";
       if (item.drCr != null)
-        if (item.drCr === 'DRr') return 'table-danger';
-        else if(item.drCr === 'CRr') return 'table-success';
-        else return '';
+        if (item.drCr === "DRr") return "table-danger";
+        else if (item.drCr === "CRr") return "table-success";
+        else return "";
     },
   },
 };

@@ -14,7 +14,11 @@ export default {
     if (localStorage.token) {
       StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, localStorage.token)
     }
-  }
+  },
+  mounted() {
+    if(this.$route.param.referralCode != null)
+      localStorage.referralCode = this.$route.param.referralCode
+  },
 }
 </script>
 

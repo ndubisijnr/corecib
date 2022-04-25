@@ -15,7 +15,8 @@ class AuthenticationRequest {
         customerPassword: null,
         customerConfirmPassword: null,
         customerEmail: null,
-        customerBusinessName: null
+        customerBusinessName: null,
+        customerReferralCode: null
 
     }
     static changePassword = {

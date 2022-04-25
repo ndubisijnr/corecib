@@ -17,6 +17,12 @@ export default [
         component: SignUp
     },
     {
+        path: '/signup/:referralCode',
+        name: 'SignUp',
+        meta: {layout: 'auth',authRequired:false},
+        component: SignUp
+    },
+    {
         path: '/password-reset',
         name: 'ForgotPassword',
         meta: {layout: 'auth',authRequired:false},
