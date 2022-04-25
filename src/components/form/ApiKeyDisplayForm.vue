@@ -73,9 +73,12 @@ export default {
     ...mapState({
       api: (state) => state.apiKey.apiKey,
       loading: (state) => state.apiKey.loading,
-      stage:(state) => state.auth.stage
     }),
+    stage(){
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
+    },
     testLive() {
+      if (!this.stage) return "Test"
       return this.stage.replace("PROD", "Live").replace("DEV", "Test");
     },
     currentOrganisation() {

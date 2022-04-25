@@ -27,10 +27,9 @@
           </div>
         </div>
       </li>
-
-      <toggle-button v-model="toogleBtnValue" :width="70" :height="30" :font-size="10"
+      <toggle-button v-model="toggleBtnValue" :width="70" :height="30" :font-size="10"
                      :color="{checked: '#75c791', unchecked: '#c02026'}"
-                     :labels="{unchecked: stage, checked:  stage}" @change="swithApi()"/>              
+                     :labels="{unchecked: stage, checked:  stage}" @change="switchApi()"/>
       <base-dropdown class="nav-item"
                      tag="li"
                      title-classes="nav-link"
@@ -64,11 +63,10 @@
             <div class="media-body ml-2 d-none d-lg-block">
               <span
                   class="mb-0 text-sm  font-weight-bold">{{ user.customerFirstName }} {{ user.customerLastName }} </span><br>
-              <span class="mb-0 text-sm  font-weight-bold">{{ organisation[0].organisationName }} </span>
+              <span class="mb-0 text-sm  font-weight-bold">{{ organisation[0]?organisation[0].organisationName:"" }} </span>
             </div>
           </div>
         </a>
-
         <template>
 
           <div class="dropdown-header noti-title">
@@ -106,7 +104,7 @@ export default {
   },
   data() {
     return {
-      toogleBtnValue:true,
+      toggleBtnValue:true,
       switchStageModel: OrganisationRequest.switchStage,
       activeNotifications: false,
       showMenu: false,
@@ -117,10 +115,16 @@ export default {
   computed: {
     ...mapState({
       user: state => state.auth.userInfo,
-      organisation: state =>  state.auth.userInfo.organisations,
-      stage: state=> state.auth.stage
-      
+      organisation: state =>  state.auth.userInfo.organisations
     }),
+    stage(){
+      let testLive = (StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
+          ?StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
+          :"-").replace("PROD", "Live").replace("DEV", "Test")
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      this.toggleBtnValue = testLive === "Live"
+      return testLive
+    },
     ...mapActions(['logOut']),
     ...mapGetters([""]),
 
@@ -134,8 +138,8 @@ export default {
       this.$router.push("/")
 
     },
-    swithApi() {
-      if(this.toogleBtnValue === true) 
+    switchApi() {
+      if(this.toggleBtnValue === true)
         this.switchStageModel.organisationStage = "PROD"
       else
         this.switchStageModel.organisationStage = "DEV"
