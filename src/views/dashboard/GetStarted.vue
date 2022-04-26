@@ -16,6 +16,7 @@
               <div class="onboarding-title text-center">
                 <h5 class="m-b-xs"><b>Welcome to BizGem</b></h5>
                 <h6>Your business is in <span v-if="stage === 'DEV'">Test</span><span v-else>Live</span> mode</h6>
+                {{stage}}
               </div>
             </div>
           </div>
@@ -154,15 +155,14 @@ export default {
     ...mapState({
       user: (state) => state.auth.userInfo,
       loading: (state) => state.auth.loading,
-      api:(state) => state.apiKey.apiKey
+      api:(state) => state.apiKey.apiKey,
+      stage:(state) => state.auth.stage
 
     }),
     currentOrganisation(){
       return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
     },
-    stage(){
-      return this.currentOrganisation.organisationStage
-    }
+   
   },
 
   mounted: function () {},

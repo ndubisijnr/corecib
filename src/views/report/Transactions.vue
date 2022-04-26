@@ -2,7 +2,7 @@
   <div>
     <div class="mt-4">
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-        <search-form module="allTransaction"></search-form>
+        <search-form :module="searchALL_TRANSACTION"></search-form>
       </div>
     </div>
      <base-table
@@ -13,19 +13,14 @@
   </div>
 </template>
 <script>
-// charts
-// Components
-import BaseHeader from "@/components/BaseHeader";
-
-// Lists
-
-// Tables
 
 import { mapState } from "vuex";
 import WalletRequest from "../../model/request/WalletRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BaseTable from "../../components/table/BaseTable";
 import SearchForm from "../../components/form/SearchForm";
+import SearchModuleutil from "../../util/constant/SearchModuleutil"
+
 
 
 export default {
@@ -37,6 +32,7 @@ export default {
   data() {
     return {
       allTransactionsModel: WalletRequest.readAllWalletTransaction,
+      searchALL_TRANSACTION: SearchModuleutil.ALL_TRANSACTION,
       light: "light",
       type: "",
       items: [],

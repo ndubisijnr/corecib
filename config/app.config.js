@@ -13,6 +13,7 @@ Example for Docker:
         description: "FBNDirect Portal",
         primaryColor: "#3F88C5",
         publicPath: "/home/",
+        url: "http://localhost:8080",
         stage: "dev"
     };
     window.__env.api = {

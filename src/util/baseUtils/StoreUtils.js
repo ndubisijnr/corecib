@@ -22,7 +22,7 @@ class StoreUtils {
       logOut: "auth/logOut",
       initiatePasswordReset: "auth/initiatePasswordReset",
       completePasswordReset: "auth/completePasswordReset",
-      switchOrganisation: "auth/switchOrganisation"
+      updateStage: "auth/updateStage"
     },
     dispute: {
       updateDisputes: "dispute/updateDisputes",
@@ -89,6 +89,7 @@ class StoreUtils {
       getOrganizationId: "auth/getOrganizationId",
       getCurrentOrganization: "auth/getCurrentOrganization",
       getStage: "auth/getStage",
+      getOrginizationReferralLink:"auth/getOrginizationReferralLink"
     },
   };
 

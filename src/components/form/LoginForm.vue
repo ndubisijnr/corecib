@@ -114,7 +114,7 @@ export default {
   left: 51px;
   top: 601px;
 
-  background: #053c57;
+  background: rgb(10, 133, 190);
   border-radius: 25px;
   border: none;
   color: white;

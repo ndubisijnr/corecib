@@ -48,6 +48,10 @@ class OrganisationRequest{
         organisationId: null
     }
 
+    static switchStage={
+        organisationStage: null
+    }
+
 }
 
 export default OrganisationRequest

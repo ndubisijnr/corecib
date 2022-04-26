@@ -1,5 +1,10 @@
 <template>
  <div>
+    <div class="mt-4">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+        <search-form :module="searchWALLET_TRANSACTION"/>
+      </div>
+    </div>
    <base-table
           :items="wallettransactions"
           :fields="fields"
@@ -12,6 +17,10 @@
 <script>
 import { mapState } from "vuex";
 import BaseTable from "../../components/table/BaseTable";
+import SearchForm from "../../components/form/SearchForm";
+import SearchModuleutil from "../../util/constant/SearchModuleutil"
+
+
 
 
 
@@ -20,7 +29,8 @@ import WalletRequest from "../../model/request/WalletRequest"
 export default {
   name:"WalletTransaction",
   components: {
-    BaseTable
+    BaseTable,
+    SearchForm
   },
   data() {
     return {
@@ -31,6 +41,7 @@ export default {
 
       light: "light",
       allWalletTransactionsmodel: WalletRequest.readAllWalletTransaction,
+      searchWALLET_TRANSACTION: SearchModuleutil.WALLET_TRANSACTION,
       type: "",
       option_time: [
         { value: "last30", label: "Last 30 days" },

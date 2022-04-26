@@ -63,25 +63,13 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
 
     // If auth isn't required for the route, just continue.
     if (!authRequired) return next();
-    // console.log("Token: ",store.getters["getToken"])
-    // If auth is required and the user is logged in...
-    console.log("user getter info: "+store.getters[StoreUtils.getters.auth.getUserInfo].responseCode)
-    if (store.getters[StoreUtils.getters.auth.getUserInfo].responseCode === '00') {
-        // Validate the local user token...
-        // console.log("found user info: "+store.getters["auth/getUser"])
-        // return next()
-        // if (!localStorage.tk) return next({ name: "Logon", query: { redirectFrom: routeTo.fullPath } });
+    console.log("user getter info: "+StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo))
+    if (StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).responseCode === '00') {
         return next()
-
-    }else if (store.getters[StoreUtils.getters.auth.getToken] != null){
-        if (!localStorage.token) return next({ name: "Logon", query: { redirectFrom: routeTo.fullPath } });
-        return next({name:"Preloader"})
+    }else if (StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken) != null){
+        return next()
     }
-
-    // If auth is required and the user is NOT currently logged in,
-    // redirect to login.
     redirectToLogin();
-
     // eslint-disable-next-line no-unused-vars
     function redirectToLogin() {
         next({ name: "Logon", query: { redirectFrom: routeTo.fullPath } });

@@ -1,6 +1,6 @@
 <template>
   <validation-provider :rules="rules" :name="name" v-bind="$attrs" v-slot="{errors, valid, invalid, validated}">
-    <div class="form-group">
+    <div class="from-group">
       <slot name="label">
         <label v-if="label" :class="labelClasses">
           {{label}}
@@ -16,7 +16,7 @@
         <div v-if="prependIcon || $slots.prepend" class="input-group-prepend">
         <span class="input-group-text">
           <slot name="prepend">
-            <i :class="prependIcon"></i>
+            <i :class="prependIcon" title="Business name must contain two words (eg. Dangote Groups)"></i>
           </slot>
         </span>
         </div>

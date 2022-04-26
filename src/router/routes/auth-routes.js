@@ -3,7 +3,7 @@ import SignUp from '../../views/auth/SignUp'
 import ForgotPassword from '../../views/auth/ForgotPassword'
 
 
-export default [
+export default [    
     {
         path: '/',
         name: 'Logon',
@@ -12,6 +12,12 @@ export default [
     },
     {
         path: '/signup',
+        name: 'SignUp',
+        meta: {layout: 'auth',authRequired:false},
+        component: SignUp
+    },
+    {
+        path: '/signup/:referralCode',
         name: 'SignUp',
         meta: {layout: 'auth',authRequired:false},
         component: SignUp

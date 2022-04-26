@@ -142,10 +142,12 @@ export default {
       api: (state) => state.apiKey.apiKey,
       loading: (state) => state.apiKey.loading,
     }),
+    stage(){
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
+    },
     testLive() {
-      return this.currentOrganisation.organisationStage
-        .replace("PROD", "Live")
-        .replace("DEV", "Test");
+      if (!this.stage) return "Test"
+      return this.stage.replace("PROD", "Live").replace("DEV", "Test");
     },
     currentOrganisation() {
       return StoreUtils.rootGetters(
