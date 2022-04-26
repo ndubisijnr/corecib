@@ -42,7 +42,7 @@
 
           />
         </div>
-        <label class="form-label mt-2 pr-4">{{ testLive }} Webhook </label>
+        <!--<label class="form-label mt-2 pr-4">{{ testLive }} Webhook </label>
         <div class="form-floating">
           <input
             type="text"
@@ -50,7 +50,7 @@
             v-model="webHook"
             required
           />
-        </div>
+        </div>-->
         <label class="form-label mt-2 pr-4">{{ testLive }} Authorization Header </label>
         <div class="row">
           <div class="col-5">
@@ -97,7 +97,7 @@ export default {
     return {
       headerKey:"",
       headerValue:"",
-      webHook:"",
+      //webHook:"",
       callBackUrl:"",
       model: ApikeyRequest.updateWebHook,
     };
@@ -122,7 +122,7 @@ export default {
       this.model[`apikey${this.testLive}HeaderKey`] = this.headerKey
       this.model[`apikey${this.testLive}HeaderValue`] = this.headerValue
       this.model[`apikey${this.testLive}Callback`] = this.callBackUrl
-      this.model[`apikey${this.testLive}Webhook`] = this.webHook
+      //this.model[`apikey${this.testLive}Webhook`] = this.webHook
 
       StoreUtils.dispatch(StoreUtils.actions.apiKey.updateWebhookCallback, this.model)
 

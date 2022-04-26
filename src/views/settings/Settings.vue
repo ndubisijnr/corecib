@@ -16,7 +16,7 @@
                       <input
                         type="email"
                         class="form-control"
-                        id="floatingInput"
+                        id="floatingInput1"
                         placeholder="name@example.com"
                       />
                       <label for="floatingInput">First Name</label>
@@ -25,7 +25,7 @@
                       <input
                         type="email"
                         class="form-control"
-                        id="floatingInput"
+                        id="floatingInput2"
                         placeholder="name@example.com"
                       />
                       <label for="floatingInput">Last Name</label>
@@ -34,7 +34,7 @@
                       <input
                         type="email"
                         class="form-control"
-                        id="floatingInput"
+                        id="floatingInput3"
                         placeholder="name@example.com"
                       />
                       <label for="floatingInput">Phone Number</label>
@@ -43,7 +43,7 @@
                       <input
                         type="email"
                         class="form-control"
-                        id="floatingInput"
+                        id="floatingInput4"
                         placeholder="name@example.com"
                       />
                       <label for="floatingInput">Email</label>
@@ -377,9 +377,83 @@
 
                     <div class="" v-if="page == 'document'">
                       <h4>Documents</h4>
-                      <h5>Please upload all documents</h5>
+                      <h5>Please upload all documents {{documents.data.length}}</h5>
                       <br />
-                      <div class="mb-3">
+                      <div class="card-body">
+                        <div v-show="loading" ><p class="text-center"><button class="btn btn-secondary"><span class="spinner-border" ></span>
+                        </button>hhh</p></div>
+                        <!-- <div v-show="cust_doc_loading" class="loading-div" ><div class="text-center"><LoadingPanel></LoadingPanel></div></div>-->
+                        <div>
+                          <div class="row">
+                            <div class="col">
+                              <div  v-if="'data' in documents">
+                                <!-- Card body -->
+                                <div class="row">
+                                  <div class="col-lg-6 col-md-6 col-sm-6 col-12" v-for="(doc, index) in documents.data"
+                                       :key="index">
+                                    <div v-if="'documentStatus' in doc && 'documentUrl' in doc">
+                                      <div class="our-team">
+                                        <div class="picture">
+                                          <img class="img-fluid" :src="(doc.documentUrl.endsWith('.pdf'))?'https://coregem-imgs.s3.amazonaws.com/PDF_File.png':doc.documentUrl">
+                                        </div>
+                                        <div class="team-content">
+                                          <h6 class="name">{{doc.documentTypeName}}</h6>
+                                          <span :class="{ 'text-success': (doc.documentStatus!=='PENDING'), 'text-danger': (doc.documentStatus==='PENDING') }" class="text-success">●</span>
+                                          <small>{{doc.documentStatus}}</small>
+
+                                          <!--<h4 class="title">Web Developer</h4>-->
+                                        </div>
+                                        <ul class="social">
+                                          <li><a :href="doc.documentUrl" target="_blank" class="pointer fas fa-cloud-download-alt" data-toggle="tooltip" data-placement="top" title="Download" aria-hidden="true"></a></li>
+                                          <li><a @click="updateDocument(doc)" class="pointer fas fa-edit" data-toggle="tooltip" data-placement="top" title="Update" aria-hidden="true"></a></li>
+                                          <!--<li v-show="doc.documentStatus!=='APPROVED'" ><a @click="authorizeDocument(doc)" class="pointer far fa-check-square" data-toggle="tooltip" data-placement="top" title="Approve" aria-hidden="true"></a></li>-->
+                                        </ul>
+                                      </div>
+                                    </div>
+                                    <div v-else>
+                                      <form @submit.prevent="submitDocument(index, doc)" :id="'form'+index" >
+                                        <p v-show="errorArr[index]" class="form-error-message"> The File is required </p>
+                                        <div class="our-team">
+                                          <div class="pic">
+                                            <label class="pointer">
+                                              <input type="file" :ref="'file-input'+index" style="display: none;" accept="application/pdf, image/*" :id="'myfile'+index"  @change="handleImages($event,index)">
+                                              <img class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/picture_logo.jpg" alt="" />
+                                            </label>
+                                            <!--<img class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/picture_logo.jpg">-->
+                                          </div>
+                                          <div class="team-content mt--2">
+                                            <small class="name">Click &#x1F446; To Select File</small>
+
+                                            <button type="submit" class="btn btn-primary">Submit
+                                            </button>
+
+                                            <h6 class="name">{{doc.documentTypeName}}</h6>
+                                            <small class="name">{{doc.documentTypeDescription}}</small>
+                                            <!--<span :class="{ 'text-success': (doc.documentStatus!=='PENDING'), 'text-danger': (doc.documentStatus==='PENDING') }" class="text-success">●</span>
+                                            <small>{{doc.documentStatus}}</small>-->
+                                            <!--<h4 class="title">Web Developer</h4>-->
+                                          </div>
+                                          <!--<ul class="social"> :class="{ disabled: loading }"
+                                            <li><a class="pointer fas fa-cloud-download-alt" data-toggle="tooltip" data-placement="top" title="Download" aria-hidden="true"></a></li>
+                                            <li><a class="pointer far fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Delete" aria-hidden="true"></a></li>
+                                            <li><a class="pointer far fa-check-square" data-toggle="tooltip" data-placement="top" title="Approve" aria-hidden="true"></a></li>
+                                          </ul>-->
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                      <!--<div class="mb-3">
                         <i class="fas fa-info-circle text-danger"></i>
                         <label for="formFileMultiple" class="form-label"
                           >Form CAC</label
@@ -427,8 +501,8 @@
                           id="formFileMultiple"
                           multiple
                         />
-                      </div>
-                      <div class="mt-3">
+                      </div>-->
+                      <!--<div class="mt-3">
                         <button
                           type="submit"
                           class="btn btn-success"
@@ -437,7 +511,7 @@
                         >
                           Save
                         </button>
-                      </div>
+                      </div>-->
                     </div>
                   </div>
                 </div>
@@ -483,6 +557,8 @@ import ApiKeyDisplayForm from "../../components/form/ApiKeyDisplayForm";
 import { DropdownMenu, DropdownItem, Dropdown } from "element-ui";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import ApikeyRequest from "../../model/request/ApiKeyRequest";
+import DocumentRequest from "../../model/request/DocumentRequest";
+import DocumentResponse from "../../model/reponse/DocumentResponse";
 
 export default {
   name: "Settings",
@@ -497,6 +573,7 @@ export default {
   },
   data() {
     return {
+      files:[],
       activeName: "first",
       selectedItem: {},
       blacklist: false,
@@ -505,7 +582,11 @@ export default {
       light: "light",
       nav: "false",
       edit: "null",
+      errorArr:[],
       apikeyModel: ApikeyRequest.regenerateApiKey,
+      documentModel: DocumentRequest.createDocument,
+      //documents: DocumentResponse.readByOrganisationId,
+      readDoc: DocumentRequest.readDocument,
       modals: {
         modal0: false,
       },
@@ -543,14 +624,58 @@ export default {
         });
     },
 
+
     ...mapState({
-      loading: (state) => state.apiKey.loading
+      loading: (state) => state.apiKey.loading,
+      documents:(state) => state.document.document
     }),
+    currentOrganisation(){
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
+    },
   },
   mounted() {
     this.apikeyModel.organisationId = localStorage.organisationId;
+    this.readDoc.readAll = 'YES';
+    StoreUtils.dispatch(
+        StoreUtils.actions.document.readDocument,
+        {readAll:this.readDoc.readAll}
+    );
     },
   methods: {
+
+    submitDocument(index,doc){
+      console.log('Testing'+index);
+      if( document.getElementById('myfile'+index).files.length == 0 ){
+        this.errorArr[index]=true;
+        //this.notifyVue("danger", `Upload file ${name}`);
+      }
+      else{
+        this.documentModel.fileUpload.username = `${this.currentOrganisation.organisationName}_${doc.documentTypeName.replace(/[^a-zA-Z ]/g, "")}`
+        this.documentModel.fileUpload.base64 = this.files[index]
+        this.documentModel.document.documentDocumentTypeId = doc.documentTypeId
+            StoreUtils.dispatch(
+            StoreUtils.actions.document.createDocument,
+                this.documentModel
+        );
+
+        console.log(this.files[index]);
+      }
+      //console.log(evt);
+    },
+
+    handleImages(e,index){
+      const selectedImage = e.target.files[0];
+      this.createBase64Images(selectedImage,index);
+    },
+    createBase64Images(fileObject,index){
+      const img_reader = new FileReader();
+      const vm = this;
+      img_reader.onload=(e)=>{
+        vm.files[index]=e.target.result;
+        vm.notifyVue("success","Click on Submit");
+      }
+      img_reader.readAsDataURL(fileObject);
+    },
     regenerateApiKey() {
       StoreUtils.dispatch(StoreUtils.actions.apiKey.regenerateApiKey, this.apikeyModel)
     },
@@ -743,7 +868,7 @@ svg {
   padding-bottom: 40px;
   /*max-width: 100%;*/
 }
-.hand {
+.pointer {
   cursor: pointer;
 }
 
@@ -945,4 +1070,122 @@ hr.solid {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
 }
+
+
+.our-team {
+  padding: 30px 0 40px;
+  margin-bottom: 30px;
+  background-color: #ffffff80;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  border-radius:5%;
+  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
+}
+
+.our-team .picture {
+  display: inline-block;
+  height: 130px;
+  width: 130px;
+  margin-bottom: 10px;
+  z-index: 1;
+  position: relative;
+}
+
+.our-team .picture::before {
+  content: "";
+  width: 100%;
+  height: 0;
+  border-radius: 0%;
+  background-color: #1369ce;
+  position: absolute;
+  bottom: 135%;
+  right: 0;
+  left: 0;
+  opacity: 0.9;
+  transform: scale(3);
+  transition: all 0.3s linear 0s;
+}
+
+
+.our-team .pic img {
+  width: 50%;
+  height: 50%;
+  border-radius: 0%;
+  transform: scale(1);
+  transition: all 0.9s ease 0s;
+}
+
+.our-team .picture img {
+  width: 100%;
+  height: auto;
+  border-radius: 0%;
+  transform: scale(1);
+  transition: all 0.9s ease 0s;
+}
+
+
+.our-team .title {
+  display: block;
+  font-size: 15px;
+  color: #4e5052;
+  text-transform: capitalize;
+}
+
+.our-team .social {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #56585c;
+  position: absolute;
+  bottom: -100px;
+  left: 0;
+  transition: all 0.5s ease 0s;
+}
+
+.our-team:hover .social {
+  bottom: 0;
+}
+
+.our-team .social li {
+  display: inline-block;
+}
+
+.our-team .social li a {
+  display: block;
+  padding: 10px;
+  font-size: 17px;
+  color: white;
+  transition: all 0.3s ease 0s;
+  text-decoration: none;
+}
+
+.our-team .social li a:hover {
+  color: #56585c;
+  background-color: #f7f5ec;
+}
+
+.card-head:first-child {
+  border-radius: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 0;
+}
+.card-head {
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 0;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.form-error-message {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #fb6340;
+}
+
+.top-area {
+  display: flex;
+  margin-top: 0px !important;
+  justify-content: space-between;
+  align-items: center;
+}
+
 </style>
