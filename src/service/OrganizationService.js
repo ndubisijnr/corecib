@@ -25,6 +25,10 @@ export default {
         return apiClient.appClient.post("/organisation/update/stage",payload);
     },
 
+    callUpdateOrganisationApi(payload) {
+        return apiClient.appClient.post("/organisation/update",payload);
+    },
+
 
 };
 

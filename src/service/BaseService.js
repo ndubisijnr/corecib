@@ -43,7 +43,7 @@ appClient.interceptors.response.use(response => {
             },
             willClose: () => {
               clearInterval(timerInterval)
-              router.push({name:"Logon"})
+              router.push("/")
             }
           }).then((result) => {
             /* Read more about handling dismissals below */

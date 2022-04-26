@@ -1,9 +1,11 @@
 <template>
   <div class="">
     <div class="text-right m-3">
-      <b-button  @click="show = true">
-        <i class="fa fa-plus"></i> Create Disputes
-      </b-button>
+      <div class="mr-4">
+        <b-button @click="show = true" class="dispute-btn">
+          <i class="fa fa-plus"></i> Create Disputes
+        </b-button>
+      </div>
       <base-table
         :items="this.disputes.data"
         :fields="fields"
@@ -25,20 +27,31 @@ import DisputeResquest from "../../model/request/DisputeRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BaseTable from "../../components/table/BaseTable";
 import DisputeForm from "../../components/form/DisputeForm";
+import BaseButton from "../../components/button/BaseButton";
 
 export default {
   name: "Dispute",
-  components: { BaseTable, DisputeForm },
+  components: { BaseTable, DisputeForm, BaseButton },
   data() {
     return {
       show: false,
       disputeReadModel: DisputeResquest.disputeRead,
       fields: [
-        { key: "disputeId", label: "Id", sortable: true, class: "text-left", },
-        { key: "disputeSessionId", label: "SessionId", sortable: true, class: "text-left",},
+        { key: "disputeId", label: "Id", sortable: true, class: "text-left" },
+        {
+          key: "disputeSessionId",
+          label: "SessionId",
+          sortable: true,
+          class: "text-left",
+        },
         //{ key: "disputeTrnType", label: "Trn Type", sortable: true, class: "text-left",},
         //{ key: "disputeIssueType", label: "IssueType", sortable: true, class: "text-left",},
-        { key: "disputeComment", label: " Comment", sortable: true, class: "text-left", },
+        {
+          key: "disputeComment",
+          label: " Comment",
+          sortable: true,
+          class: "text-left",
+        },
         //{ key: "disputeOrgId", label: "disputeOrgId  ", sortable: true, class: "text-left",},
         { key: "disputeStatus", label: "Status" },
         { key: "disputeActions", label: "Actions" },
@@ -87,5 +100,10 @@ export default {
   to {
     transform: rotate(360deg);
   }
+}
+
+.dispute-btn {
+  background-color: var(--primary) !important;
+  border: none !important;
 }
 </style>

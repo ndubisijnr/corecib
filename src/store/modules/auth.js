@@ -12,15 +12,19 @@ export const state = {
   userInfo: AuthenticationResponse.login,
   screen: "register",
   passwordResetScreen: "email",
+  Orginisation:{}
 }
 export const getters = {
   getUserInfo: state => { return state.userInfo },
   getToken: state => { return state.token },
   getUserToken: state => { return localStorage.token },
   getOrganizationId: state => { return localStorage.organisationId },
+  getOrganizationName: state => {return state.userInfo.organisations[0].organisationName},
+  getorganisationRegistrationDate: state => {return state.userInfo.organisations[0].organisationRegistrationDate}, 
+  getorganisationPhone: state => {return state.userInfo.organisations[0].organisationPhone}, 
+  getorganisationEmail: state => {return state.userInfo.organisations[0].organisationEmail}, 
+  getorganisationCountry: state => {return state.userInfo.customerCountry}, 
   getCurrentOrganization: state => {
-    console.log(state.userInfo.organisations)
-    console.log(localStorage.organisationId)
     if (state.userInfo.organisations == null) return {}
     return state.userInfo.organisations.filter(it => it.organisationId.toString() === localStorage.organisationId).length < 1
       ? {}
@@ -39,6 +43,7 @@ export const mutations = {
   updateUserInfo: (state, payload) => { state.userInfo = payload; },
   updateScreen: (state, payload) => { state.screen = payload; },
   updatePasswordResetScreen: (state, payload) => { state.passwordResetScreen = payload; },
+  updateOrganisation:(state, payload) => {state.organisation = payload}
 }
 export const actions = {
   initialEnrollment: ({ commit }, payload = AuthenticationRequest.initiateEnrollment) => {
@@ -184,4 +189,24 @@ export const actions = {
     });
 
   },
+
+  updateOrganisation:({commit}, payload = OrganisationRequest.updateOrganisation) => {
+    commit('updateLoading', true)
+    return OrganizationService.callUpdateOrganisationApi(payload).then(response => {
+      let responseData = response.data
+      if(responseData.responseCode == "00"){
+        commit("updateLoading", false)
+        commit("updateOrginasation", responseData)
+        Swal.fire({ text: responseData.responseMessage, icon: 'success', })
+      }else{
+        commit("updateLoading", false)
+        Swal.fire({ text: responseData.responseMessage, icon: 'error', })
+      }
+    }).catch((error) => {
+      commit("updateLoading", false)
+      Swal.fire({ text: error, icon: 'error', })
+
+    })
+
+  }
 }

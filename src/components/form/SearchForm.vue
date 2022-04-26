@@ -55,7 +55,7 @@
             </div>
           </div>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-end">
           <base-input
               label="Search"
               input-classes="form-control-lg"
@@ -65,7 +65,7 @@
               class="ml-2"
           >
           </base-input>&nbsp;
-           <base-button :loading="loading" class="mt-3" icon="b-icon-search"  title="Search"/>
+           <base-button :loading="loading" icon="b-icon-search"  title="Search"/>
         </div>
       </div>
     </b-form>

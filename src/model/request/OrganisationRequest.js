@@ -1,24 +1,23 @@
-
 class OrganisationRequest{
 
     static updateOrganisation={
         organisationId: null,
         organisationAddress: null,
         organisationName: null,
-        organisationLogo: null,
+        organisationLogo: "Company Logo",
         organisationRegistrationNo: null,
         organisationRegistrationDate: null,
         organisationCity: null,
         organisationState: null,
         organisationPhone: null,
         organisationMemorandumAndArticleOfAssociation: null,
-        organisationEmail: null,
+        organisationEmail:null,
         organisationType: null,
-        organisationCustomerId: null,
+        organisationCustomerId:null,
         organisationAccountNumber: null,
         organisationStatus: null,
         organisationWebsite: null,
-        organisationCountry: null,
+        organisationCountry:null,
         organisationIndustryType: null,
         organisationFormCac: null,
         organisationCertificateIncorpation: null,

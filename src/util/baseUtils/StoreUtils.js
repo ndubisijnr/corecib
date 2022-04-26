@@ -15,7 +15,8 @@ class StoreUtils {
       logOut: "auth/logOut",
       initiatePasswordReset: "auth/initiatePasswordReset",
       completePasswordReset: "auth/completePasswordReset",
-      updateStage: "auth/updateStage"
+      updateStage: "auth/updateStage",
+      updateOrganisation:"auth/updateOrganisation"
     },
     dispute: {
       updateDisputes: "dispute/updateDisputes",
@@ -46,7 +47,8 @@ class StoreUtils {
       updateToken: "auth/updateToken",
       updateUserInfo: "auth/updateUserInfo",
       updateScreen: "auth/updateScreen",
-      updatePasswordResetScreen: "auth/updatePasswordResetScreen"
+      updatePasswordResetScreen: "auth/updatePasswordResetScreen",
+      updateOrganisation:"auth/updateOrganisation"
     },
     dispute: {
       updateLoading: "dispute/updateLoading",
@@ -78,7 +80,13 @@ class StoreUtils {
       getOrganizationId: "auth/getOrganizationId",
       getCurrentOrganization: "auth/getCurrentOrganization",
       getStage: "auth/getStage",
-      getOrginizationReferralLink:"auth/getOrginizationReferralLink"
+      getOrginizationReferralLink:"auth/getOrginizationReferralLink",
+      getOrganizationName:"auth/getOrganizationName",
+      getorganisationRegistrationDate:"auth/getorganisationRegistrationDate",
+      getorganisationPhone:"auth/getorganisationPhone",
+      getorganisationEmail:"auth/getorganisationEmail",
+      getorganisationCountry:"auth/getorganisationCountry"
+
     },
   };
 

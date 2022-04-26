@@ -7,10 +7,10 @@
             <el-tabs type="card" v-model="activeName" @tab-click="handleClick">
               <el-tab-pane id="tab-0" :key="1" name="first" label="Profile">
                 <span :class="{ 'spinner-border': loading }"></span>
-                <div class="center-block" v-if="!loading">
-                  <form class="form-group px-2 bg-white p-5 m-5 shadow">
-                    <h3 class="text-center settings-profile-header">
-                      Your Profile
+                <b-container class="p-3" v-if="!loading">
+                  <b-form class="container card p-3 form-group">
+                    <h3 class="text-center">
+                      <i class="fa fa-user-circle profile-settings"></i>
                     </h3>
                     <div class="form-floating mb-3">
                       <input
@@ -18,6 +18,8 @@
                         class="form-control"
                         id="floatingInput1"
                         placeholder="name@example.com"
+                        :value="null ? '' : userInfo.customerFirstName"
+                        readonly
                       />
                       <label for="floatingInput1">First Name</label>
                     </div>
@@ -27,15 +29,19 @@
                         class="form-control"
                         id="floatingInput2"
                         placeholder="name@example.com"
+                        :value="null ? '' : userInfo.customerLastName"
+                        readonly
                       />
                       <label for="floatingInput2">Last Name</label>
                     </div>
                     <div class="form-floating mb-3">
                       <input
-                        type="email"
+                        type="tel"
                         class="form-control"
                         id="floatingInput3"
                         placeholder="name@example.com"
+                        :value="null ? '' : userInfo.customerPhone"
+                        readonly
                       />
                       <label for="floatingInput3">Phone Number</label>
                     </div>
@@ -45,19 +51,14 @@
                         class="form-control"
                         id="floatingInput"
                         placeholder="name@example.com"
+                        :value="null ? '' : userInfo.customerEmail"
+                        readonly
                       />
                       <label for="floatingInput">Email</label>
                     </div>
-                    <button
-                      type="submit"
-                      class="btn btn-success"
-                      disabled
-                      style="cursor: not-allowed; width: 100%"
-                    >
-                      Update
-                    </button>
-                  </form>
-                </div>
+                    <base-button title="Update" disabled> </base-button>
+                  </b-form>
+                </b-container>
               </el-tab-pane>
 
               <!-- END PROFILE -->
@@ -68,365 +69,308 @@
                 name="second"
                 label="Business Profile"
               >
-                <span :class="{ 'spinner-border': loading }"></span>
-
-                <div
-                  style="position: absolute; top: 0; left: 10%"
-                  v-if="!loading"
-                >
-                  <div class="form-check" @click="showprofile()">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
-                    />
-                    <label class="form-check-label" for="flexRadioDefault1">
-                      Profile
-                    </label>
-                  </div>
-                  <i class="fas fa-ellipsis-v"></i>
-                  <div class="form-check" @click="showcontact()">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault2"
-                    />
-                    <label class="form-check-label" for="flexRadioDefault2">
-                      Contact
-                    </label>
-                  </div>
-                  <i class="fas fa-ellipsis-v"></i>
-                  <div class="form-check" @click="showdoc()">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault3"
-                    />
-                    <label class="form-check-label" for="flexRadioDefault3">
-                      Document
-                    </label>
-                  </div>
-                </div>
-
-                <div class="d-flex justify-content-center" v-if="!loading">
-                  <div
-                    class="shadow bg-white"
-                    style="width: 400px; padding: 20px"
-                  >
-                    <div>
-                      <div class="" v-if="page == 'profile'">
-                        <div>
-                          <span>Country</span>
-                          <h3>user.customerCountry</h3>
-                        </div>
-                        <div>
-                          <span>Industry</span>
-                          <h3>Non-profits</h3>
-                        </div>
-                        <div>
-                          <span>Category</span>
-                          <h3>NGOs</h3>
-                        </div>
-                        <div>
-                          <span> Trading Name</span>
-                          <h3>organisation.organisationName</h3>
-                        </div>
-                        <div>
-                          <span>Size</span>
-                          <h3>5-10 people</h3>
-                        </div>
-                        <div>
-                          <span>Description</span>
-                          <h3>Description</h3>
-                        </div>
-                        <div>
-                          <span> Business Type</span>
-                          <h3>Registered Business</h3>
-                        </div>
-                        <div>
-                          <span>Legal Name</span>
-                          <h3>organisation.organisationName</h3>
-                        </div>
-                        <div>
-                          <span>Registration Type</span>
-                          <h3>Incorporated Company</h3>
-                        </div>
-                        <div
-                          style="display:flex;width:100%;justify-content:space-between"
-                        >
-                          <button
-                            class="btn btn-outline-light"
-                            @click="showedit()"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            class="btn btn-outline-light"
-                            @click="showcontact()"
-                          >
-                            Next
-                          </button>
-                        </div>
-                      </div>
-                      <div class="" v-if="edit == 'first' && !loading">
-                        <div class="">
-                          <div class="">
-                            <form class="px-2">
-                              <h4
-                                class="
-                                  text-center
-                                  mt-4
-                                  mb-4
-                                  settings-profile-header
-                                "
-                              >
-                                Your Business Profile
-                              </h4>
-                              <div></div>
-                              <div class="form-group">
-                                <div class="row">
-                                  <div class="col-md-12 mb-3">
-                                    <label for="inputEmail4" class="form-label"
-                                      >Country</label
-                                    >
-                                    <input
-                                      type="text"
-                                      class="form-control"
-                                    />
-                                  </div>
-                                  <div class="col-md-12 mb-3">
-                                    <label
-                                      class="form-label"
-                                      >Industry</label
-                                    >
-                                    <input
-                                      type="text"
-                                      class="form-control"
-                                      value="Industry"
-                                    />
-                                  </div>
-                                  <div class="col-12 mb-3">
-                                    <label
-                                      class="form-label mt-2"
-                                      >Category</label
-                                    >
-                                    <input
-                                      type="email"
-                                      class="form-control"
-                                      value="NGOs"
-                                    />
-                                  </div>
-                                  <div class="col-12 mb-3">
-                                    <label class="form-label mt-2"
-                                      >Trading Name</label
-                                    >
-                                    <input
-                                      type="tel"
-                                      class="form-control"
-                                    />
-                                  </div>
-
-                                  <div class="form-group">
-                                    <label class="form-label mt-2"
-                                      >Company size</label
-                                    >
-                                    <select
-                                      class="form-select form-select-lg mb-3"
-                                      aria-label=".form-select-sm example"
-                                    >
-                                      <option value="1">5-10 people</option>
-                                      <option value="2">20-50 people</option>
-                                      <option value="3">S50-100 people</option>
-                                    </select>
-                                  </div>
-                                  <div class="col-12 mb-3">
-                                    <label class="form-label mt-2"
-                                      >Description</label
-                                    >
-                                    <textarea
-                                      type="tel"
-                                      class="form-control"
-                                    />
-                                  </div>
-
-                                  <div class="mt-3">
-                                    <button
-                                      type="submit"
-                                      class="btn btn-success"
-                                      disabled
-                                      style="cursor: not-allowed; width: 100%"
-                                    >
-                                      Save
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
+                <div class="m-3" style="display: flex">
+                  <div>
+                    <div class="form-check" @click="showprofile()">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault1"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Profile
+                      </label>
                     </div>
-                    <!-- contact -->
-
-                    <div class="" v-if="page == 'contact' && !loading">
-                      <div>
-                        <span>Email</span>
-                        <h3>organisation.organisationEmail</h3>
-                      </div>
-                      <div>
-                        <span>Phone Number</span>
-                        <h3>organisation.organisationPhone</h3>
-                      </div>
-                      <div>
-                        <span>Business Address</span>
-                        <h3>Business Address</h3>
-                      </div>
-                      <div
-                        style="display:flex;width:100%;justify-content:space-between"
+                    <i class="fas fa-ellipsis-v"></i>
+                    <div class="form-check" @click="showcontact()">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault2"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault2">
+                        Contact
+                      </label>
+                    </div>
+                    <i class="fas fa-ellipsis-v"></i>
+                    <div class="form-check" @click="showdoc()">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="flexRadioDefault"
+                        id="flexRadioDefault3"
+                      />
+                      <label class="form-check-label" for="flexRadioDefault3">
+                        Document
+                      </label>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center w-100 m-3">
+                    <div class="card ">
+                      <form
+                        class="p-3 form-group"
+                        @submit.prevent="updateOrginasation()"
                       >
-                        <button
-                          class="btn btn-outline-light"
-                          @click="showedit2()"
-                        >
-                          Edit
-                        </button>
-                        <button
-                          class="btn btn-outline-light"
-                          @click="showdoc()"
-                        >
-                          Next
-                        </button>
-                      </div>
-                    </div>
-                    <div class="" v-if="edit == 'second' && !loading">
-                      <div class="">
-                        <div class="">
-                          <form class="px-2">
-                            <h4
-                              class="
-                                text-center
-                                mt-4
-                                mb-4
-                                settings-profile-header
+                        <h3 class="text-center">
+                          <i class="fa fa-user-circle profile-settings"></i>
+                        </h3>
+                        <h6 class="text-center">
+                          <b>Business Details </b>
+                          <i class="fa fa-info-circle"></i>
+                        </h6>
+                        <b-container class="" v-if="edit == 'first'">
+                          <div class="form-floating mb-3">
+                            <input
+                              type="email"
+                              class="form-control"
+                              id="floatingInput2"
+                              placeholder="name@example.com"
+                              :value="
+                                userInfo.organisations[0].organisationName
                               "
+                              readonly
+                            />
+                            <label for="floatingInput2">Business Name</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="email"
+                              class="form-control"
+                              id="floatingInput"
+                              placeholder="name@example.com"
+                              :value="
+                                userInfo.organisations[0].organisationEmail
+                              "
+                              readonly
+                            />
+                            <label for="floatingInput">Company Email</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="email"
+                              class="form-control"
+                              id="floatingInput1"
+                              placeholder="Country"
+                              :value="
+                                userInfo.organisations[0].organisationPhone
+                              "
+                              readonly
+                            />
+                            <label for="floatingInput1">Company Phone</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="email"
+                              class="form-control"
+                              id="floatingInput1"
+                              placeholder="Country"
+                              readonly
+                              :value="userInfo.customerCountry"
+                            />
+                            <label for="floatingInput1">Country</label>
+                          </div>
+                        </b-container>
+
+                        <!-- Second layer -->
+                        <b-container class="" v-if="edit == 'second' && organisation.length < 1">
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="floatingInput2"
+                              placeholder="!004 Federal Housing Estate, Victoral Island"
+                              v-model="
+                                updateOrganisationModel.organisationAddress
+                              "
+                              required
+                            />
+                            <label for="floatingInput2">Address</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="floatingInput1"
+                              placeholder="Ikeja"
+                              v-model="updateOrganisationModel.organisationCity"
+                              required
+                            />
+                            <label for="floatingInput1">City</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="floatingInput1"
+                              placeholder="Lagos"
+                              v-model="
+                                updateOrganisationModel.organisationState
+                              "
+                              required
+                            />
+                            <label for="floatingInput1">State</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                              v-model="updateOrganisationModel.organisationType"
+                              required
                             >
-                              Your Business Contact
-                            </h4>
-                            <div class="form-group">
-                              <div class="row">
-                                <div class="col-md-12 mb-3">
-                                  <label for="inputEmail4" class="form-label"
-                                    >Email</label
-                                  >
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    id="inputEmail4"
-                                  />
-                                </div>
-                                <div class="col-md-12 mb-3">
-                                  <label for="inputPassword4" class="form-label"
-                                    >Phone</label
-                                  >
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    id="inputPassword4"
-                                  />
-                                </div>
-                                <div class="col-12 mb-3">
-                                  <label
-                                    for="inputAddress"
-                                    class="form-label mt-2"
-                                    >Business Address</label
-                                  >
-                                  <input
-                                    type="email"
-                                    class="form-control"
-                                    value="Business Address"
-                                    id="inputAddress"
-                                  />
-                                </div>
+                              <option>FINTECH</option>
+                            </select>
+                            <label for="floatingInput3"
+                              >Organization Type</label
+                            >
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="floatingInput"
+                              placeholder="RC 291837820"
+                              v-model="
+                                updateOrganisationModel.organisationRegistrationNo
+                              "
+                              required
+                            />
+                            <label for="floatingInput"
+                              >Business Registration No</label
+                            >
+                          </div>
 
-                                <div class="mt-3">
-                                  <button
-                                    type="submit"
-                                    class="btn btn-success"
-                                    disabled
-                                    style="cursor: not-allowed; width: 100%"
-                                  >
-                                    Save
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="floatingInput1"
+                              placeholder="wwww.websiteLink.com"
+                              v-model="
+                                updateOrganisationModel.organisationWebsite
+                              "
+                            />
+                            <label for="floatingInput1">Company Website</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                              v-model="
+                                updateOrganisationModel.organisationIndustryType
+                              "
+                              required
+                            >
+                              <option>FINTECH</option>
+                            </select>
+                            <label for="floatingInput3"
+                              >Organisation Industry Type</label
+                            >
+                          </div>
+                          <base-button title="Update" :loading="loading">
+                          </base-button>
+                        </b-container>
+                      </form>
 
-                    <div class="" v-if="page == 'document'">
-                      <h4>Documents</h4>
-                      <h5>Please upload all documents</h5>
-                      <br />
-                      <div class="mb-3">
-                        <i class="fas fa-info-circle text-danger"></i>
-                        <label class="form-label"
-                          >Form CAC</label
-                        >
-                        <input
-                          class="form-control"
-                          type="file"
-                          multiple
-                        />
-                      </div>
+                      <!-- third phase -->
+                      <b-container  v-if="edit == 'second' && organisation.length > 1">
+                          <div class="form-floating mb-3 card">
+                            <input
+                              type="text" 
+                              class="form-control"
+                              id="floatingInput2"
+                              placeholder="1004 Federal Housing Estate, Victoral Island"
+                              v-model="
+                                updateOrganisationModel.organisationAddress
+                              "
+                              readonly
+                            />
+                            <label for="floatingInput2">Address</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="floatingInput1"
+                              placeholder="Ikeja"
+                              v-model="updateOrganisationModel.organisationCity"
+                              readonly
+                            />
+                            <label for="floatingInput1">City</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="floatingInput1"
+                              placeholder="Lagos"
+                              v-model="
+                                updateOrganisationModel.organisationState
+                              "
+                              readonly
+                            />
+                            <label for="floatingInput1">State</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                              v-model="updateOrganisationModel.organisationType"
+                              disabled
+                            >
+                              <option>FINTECH</option>
+                            </select>
+                            <label for="floatingInput3"
+                              >Organization Type</label
+                            >
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="floatingInput"
+                              placeholder="RC 291837820"
+                              v-model="
+                                updateOrganisationModel.organisationRegistrationNo
+                              "
+                              readonly
+                            />
+                            <label for="floatingInput"
+                              >Business Registration No</label
+                            >
+                          </div>
 
-                      <div class="mb-3">
-                        <i class="fas fa-info-circle text-danger"></i>
-                        <label class="form-label"
-                          >Certificate of Incorporation</label
-                        >
-                        <input
-                          class="form-control"
-                          type="file"
-                          multiple
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <i class="fas fa-info-circle text-danger"></i>
-                        <label class="form-label"
-                          >RC Number</label
-                        >
-                        <input
-                          class="form-control"
-                          type="file"
-                          multiple
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <i class="fas fa-info-circle text-danger"></i>
-                        <label  class="form-label"
-                          >Tax Identification Number</label
-                        >
-                        <input
-                          class="form-control"
-                          type="file"
-                          multiple
-                        />
-                      </div>
-                      <div class="mt-3">
-                        <button
-                          type="submit"
-                          class="btn btn-success"
-                          disabled
-                          style="cursor: not-allowed; width: 100%"
-                        >
-                          Save
-                        </button>
-                      </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="floatingInput1"
+                              placeholder="wwww.websiteLink.com"
+                              v-model="
+                                updateOrganisationModel.organisationWebsite
+                              "
+                              readonly
+                            />
+                            <label for="floatingInput1">Company Website</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                              v-model="
+                                updateOrganisationModel.organisationIndustryType
+                              "
+                              disabled
+                            >
+                              <option>FINTECH</option>
+                            </select>
+                            <label for="floatingInput3"
+                              >Organisation Industry Type</label
+                            >
+                          </div>
+                      
+                        </b-container>
                     </div>
                   </div>
                 </div>
@@ -438,26 +382,23 @@
                 name="five"
                 label=" API Keys and Webhooks"
               >
-                  <b-card-group deck class="APIWebhooks">
-                    <b-card
-                      header="featured"
-                      header-tag="header"
-                      header-bg-variant="white"
-                      body-class="shadow"
-                    >
-                      <template #header>
-                          <b-container class="text-right">
-                             <b-button>Generate Api Key</b-button>
-                          </b-container>
-
-                      </template>
+                <b-card-group deck class="APIWebhooks">
+                  <b-card
+                    header="featured"
+                    header-tag="header"
+                    header-bg-variant="white"
+                    body-class="shadow"
+                  >
+                    <template #header>
+                      <b-container class="text-right">
+                        <b-button>Generate Api Key</b-button>
+                      </b-container>
+                    </template>
                     <div class="d-flex justify-content-center">
                       <api-key-display-form> </api-key-display-form>
                     </div>
-                      
-                    </b-card>
-
-                  </b-card-group>
+                  </b-card>
+                </b-card-group>
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -467,9 +408,12 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, Store } from "vuex";
 import ApiKeyDisplayForm from "../../components/form/ApiKeyDisplayForm";
 import { DropdownMenu, DropdownItem, Dropdown } from "element-ui";
+import BaseButton from "../../components/button/BaseButton";
+import updateOrganisationRequest from "../../model/request/OrganisationRequest";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 export default {
   name: "Settings",
@@ -478,12 +422,15 @@ export default {
     [DropdownItem.name]: DropdownItem,
     [DropdownMenu.name]: DropdownMenu,
     ApiKeyDisplayForm,
+    BaseButton,
 
     //LoadingPanel,
     //NoPage
   },
   data() {
     return {
+      updateOrganisationModel: updateOrganisationRequest.updateOrganisation,
+      edit: "first",
       activeName: "first",
       selectedItem: {},
       blacklist: false,
@@ -491,7 +438,6 @@ export default {
       page: "profile",
       light: "light",
       nav: "false",
-      edit: "null",
       modals: {
         modal0: false,
       },
@@ -529,23 +475,50 @@ export default {
         });
     },
 
-    ...mapState({}),
+    ...mapState({
+      userInfo: (state) => state.auth.userInfo,
+      loading: (state) => state.auth.loading,
+      organisation:state => state.auth.Orginisation
+    }),
   },
   methods: {
-   
     closeModal0() {
       this.modals.modal0 = false;
       this.blacklist = false;
     },
 
-    showcontact() {
-      this.page = "contact";
-      this.edit = "null";
+    updateOrginasation() {
+      this.updateOrganisationModel.organizationName = StoreUtils.rootGetters(
+        StoreUtils.getters.auth.getOrganizationName
+      );
+      this.updateOrganisationModel.organisationEmail = StoreUtils.rootGetters(
+        StoreUtils.getters.auth.getorganisationEmail
+      );
+      this.updateOrganisationModel.organisationCountry = StoreUtils.rootGetters(
+        StoreUtils.getters.auth.getorganisationCountry
+      );
+      this.updateOrganisationModel.organisationPhone = StoreUtils.rootGetters(
+        StoreUtils.getters.auth.getorganisationPhone
+      );
+      this.updateOrganisationModel.organisationId = localStorage.organisationId
+      StoreUtils.dispatch(
+        StoreUtils.actions.auth.updateOrganisation,
+        this.updateOrganisationModel
+      ).then(() => {
+        this.edit = "third";
+        console.log(this.updateOrganisationModel)
+      });
+    },
+    file() {
+      this.edit = "second";
+    },
+
+    showprofile() {
+      this.edit = "first";
       document.getElementById("flexRadioDefault2").classList.add("bg-success");
     },
-    showprofile() {
-      this.page = "profile";
-      this.edit = "null";
+    showcontact() {
+      this.edit = "second";
       document.getElementById("flexRadioDefault1").classList.add("bg-success");
     },
     showfourth() {
@@ -615,9 +588,17 @@ export default {
   justify-content: center;
   height: 75vh;
 }
+.profile-settings {
+  font-size: 100px;
+  color: var(--primary);
+}
 .settings-profile-header {
   color: #919191;
   font-weight: 700;
+}
+
+.in {
+  pointer-events: none;
 }
 .center-block {
   width: 600px;
@@ -689,6 +670,22 @@ svg {
   right: 92px;
   border: none;
   border-radius: 5px;
+}
+
+.form-group-b {
+  width: 400px;
+  margin-top: -70px;
+}
+
+.form-group {
+  width: 400px;
+}
+
+.box {
+  border: solid red;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 5px;
 }
 
 .form-groups {
@@ -840,7 +837,7 @@ p {
   margin-bottom: 10px;
   font-size: 12px;
   font-weight: 400;
-  color: #a4a59a;
+  color: white;
 }
 
 .input-group {
@@ -919,5 +916,145 @@ hr.solid {
 .drop-btn {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
+}
+
+.section {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  display: block;
+}
+
+[type="checkbox"]:checked,
+[type="checkbox"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+}
+
+.pricing:checked + label,
+.pricing:not(:checked) + label {
+  position: relative;
+  display: block;
+  text-align: center;
+  width: 260px;
+  height: 44px;
+  border-radius: 4px;
+  padding: 0;
+  margin: 0 auto;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 1px;
+  line-height: 44px;
+  padding: 0 25px;
+  padding-right: 27px;
+  overflow: hidden;
+  color: #fff;
+  text-align: left;
+}
+.pricing:checked + label:before,
+.pricing:not(:checked) + label:before {
+  position: absolute;
+  content: "";
+  z-index: -2;
+  color: white !important;
+  width: 100%;
+  height: 100%;
+  display: block;
+  top: 0;
+  left: 0;
+}
+.pricing:checked + label:after,
+.pricing:not(:checked) + label:after {
+  position: absolute;
+  content: "";
+  z-index: -1;
+  background-color: whitesmoke;
+  width: 128px;
+  height: 40px;
+  display: block;
+  top: 2px;
+  left: 2px;
+  border-radius: 2px;
+  transition: left 300ms linear;
+}
+.pricing:checked + label:after {
+  left: 130px;
+}
+.block-diff {
+  display: block;
+  mix-blend-mode: difference;
+}
+
+.card-3d-wrap {
+  position: relative;
+  width: 340px;
+  max-width: calc(100% - 20px);
+  height: 510px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  margin-top: 90px;
+}
+.card-3d-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transition: transform 700ms 400ms ease-out;
+}
+.card-front,
+.card-back {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 1);
+  position: absolute;
+  border-radius: 6px;
+  left: 0;
+  top: 0;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-shadow: 0 12px 35px 0 rgba(16, 39, 112, 0.07);
+}
+.card-back {
+  transform: rotateY(180deg);
+}
+.pricing:checked ~ .card-3d-wrap .card-3d-wrapper {
+  transform: rotateY(180deg);
+  transition: transform 700ms 400ms ease-out;
+}
+
+@keyframes border-transform {
+  0%,
+  100% {
+    border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+  }
+  14% {
+    border-radius: 40% 60% 54% 46% / 49% 60% 40% 51%;
+  }
+  28% {
+    border-radius: 54% 46% 38% 62% / 49% 70% 30% 51%;
+  }
+  42% {
+    border-radius: 61% 39% 55% 45% / 61% 38% 62% 39%;
+  }
+  56% {
+    border-radius: 61% 39% 67% 33% / 70% 50% 50% 30%;
+  }
+  70% {
+    border-radius: 50% 50% 34% 66% / 56% 68% 32% 44%;
+  }
+  84% {
+    border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%;
+  }
 }
 </style>
