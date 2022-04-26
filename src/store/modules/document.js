@@ -27,29 +27,6 @@ export const mutations = {
 
 export const actions = {
 
-  updateDocument:({commit,state}, payload = DocumentRequest.updateDocument) =>{
-    commit("updateLoading", true)
-    return DocumentService.callUpdateDocumentApi(payload).then(response => {
-      let responseData = response.data
-      if(responseData.responseCode === "00"){
-        Swal.fire({ text:responseData.responseMessage, icon:'success'}).then(()=>{
-          DocumentService.callReadDocumentApi({
-            readAll:"YES"
-          }).then(response1 => {
-            let responseData1 = response1.data
-            if(responseData1.responseCode === "00"){
-              commit("updateLoading",false)
-              commit("updateDocument", responseData1)
-            }
-          }).catch(error => {
-            console.log(error)
-          })
-        })
-      }
-    }).catch(error => {
-        console.log(error)
-      })
-  },
 
   readDocument:({commit,state}, payload = DocumentRequest.readDocument) =>{
     commit("updateLoading", true)
@@ -73,6 +50,44 @@ export const actions = {
       if(responseData.responseCode === "00"){
         payload.document.documentUrl = responseData.url
         DocumentService.callCreateDocumentApi(payload.document).then(response1 => {
+          let responseData1 = response1.data
+          commit("updateLoading",false)
+          if(responseData1.responseCode === "00"){
+            Swal.fire({ text:responseData1.responseMessage, icon:'success'}).then(()=>{
+              DocumentService.callReadDocumentApi({
+                readAll:"YES"
+              }).then(response2 => {
+                let responseData2 = response2.data
+                if(responseData2.responseCode === "00"){
+                  commit("updateLoading",false)
+                  commit("updateDocument", responseData2)
+                }
+              }).catch(error => {
+                console.log(error)
+              })
+            })
+          }else{
+            Swal.fire({ text:responseData.responseMessage, icon:'error'}).then(()=>{
+              commit("updateLoading",false)
+            })
+          }
+        }).catch(error => {
+          console.log(error)
+        })
+
+      }
+      else commit("updateLoading",false)
+    }).catch(error => {
+      console.log(error)
+    })
+  },
+  updateDocument:({commit, dispatch, state}, payload = DocumentRequest.updateDocument) =>{
+    commit("updateLoading", true)
+    return DocumentService.callImageUploadApi(payload.fileUpload).then(response => {
+      let responseData = response.data
+      if(responseData.responseCode === "00"){
+        payload.document.documentUrl = responseData.url
+        DocumentService.callUpdateDocumentApi(payload.document).then(response1 => {
           let responseData1 = response1.data
           commit("updateLoading",false)
           if(responseData1.responseCode === "00"){

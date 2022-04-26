@@ -361,18 +361,26 @@
                                     <div v-if="'documentStatus' in doc && 'documentUrl' in doc">
                                       <div class="our-team">
                                         <div class="picture">
-                                          <img class="img-fluid" :src="(doc.documentUrl.endsWith('.pdf'))?'https://coregem-imgs.s3.amazonaws.com/PDF_File.png':doc.documentUrl">
+                                          <img v-if="doc.documentStatus =='PENDING'" class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-amber.png">
+                                          <img v-else-if="doc.documentStatus =='APPROVED'" class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-green.png">
+                                          <img v-else-if="doc.documentStatus =='REJECTED'" class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-red.png">
                                         </div>
                                         <div class="team-content">
                                           <h6 class="name">{{doc.documentTypeName}}</h6>
-                                          <span :class="{ 'text-success': (doc.documentStatus!=='PENDING'), 'text-danger': (doc.documentStatus==='PENDING') }" class="text-success">●</span>
+                                          <span :class="{ 'text-success': (doc.documentStatus!=='APPROVED'), 'text-warning': (doc.documentStatus==='PENDING'),
+                                          'text-danger': (doc.documentStatus==='REJECTED')}">●</span>
                                           <small>{{doc.documentStatus}}</small>
 
                                           <!--<h4 class="title">Web Developer</h4>-->
                                         </div>
                                         <ul class="social">
                                           <li><a :href="doc.documentUrl" target="_blank" class="pointer fas fa-cloud-download-alt" data-toggle="tooltip" data-placement="top" title="Download" aria-hidden="true"></a></li>
-                                          <li><a @click="updateDocument(doc)" class="pointer fas fa-edit" data-toggle="tooltip" data-placement="top" title="Update" aria-hidden="true"></a></li>
+                                          <li>
+                                            <!--<i class="fas fa-edit"></i>-->
+                                            <label  class="pointer" data-toggle="tooltip" data-placement="down" title="Update" aria-hidden="true">
+                                              <input type="file" :ref="'file-input'+index" accept="application/pdf, image/*" :id="'myfile'+index"  style="display:none; z-index: 1;" @change="handleImages($event,index,doc,'UPDATE')">
+                                            <i class="fas fa-edit"></i>
+                                            </label></li>
                                           <!--<li v-show="doc.documentStatus!=='APPROVED'" ><a @click="authorizeDocument(doc)" class="pointer far fa-check-square" data-toggle="tooltip" data-placement="top" title="Approve" aria-hidden="true"></a></li>-->
                                         </ul>
                                       </div>
@@ -383,19 +391,19 @@
                                         <div class="our-team">
                                           <div class="pic">
                                             <label class="pointer">
-                                              <input type="file" :ref="'file-input'+index" style="display: none;" accept="application/pdf, image/*" :id="'myfile'+index"  @change="handleImages($event,index)">
-                                              <img class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/picture_logo.jpg" alt="" />
+                                              <input type="file" :ref="'file-input'+index" style="display: none;" accept="application/pdf, image/*" :id="'myfile'+index"  @change="handleImages($event,index,doc,'CREATE')">
+                                              <img class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-grey.png" alt="" />
                                             </label>
                                             <!--<img class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/picture_logo.jpg">-->
                                           </div>
                                           <div class="team-content mt--2">
-                                            <small class="name">Click &#x1F446; To Select File</small>
+                                            <small class="name">Click &#x1F446; to upload file</small>
 
-                                            <button type="submit" class="btn btn-primary">Submit
-                                            </button>
+                                            <!--<button type="submit" class="btn btn-primary">Submit
+                                            </button>-->
 
                                             <h6 class="name">{{doc.documentTypeName}}</h6>
-                                            <small class="name">{{doc.documentTypeDescription}}</small>
+                                            <!--<small class="name">{{doc.documentTypeDescription}}</small>-->
                                             <!--<span :class="{ 'text-success': (doc.documentStatus!=='PENDING'), 'text-danger': (doc.documentStatus==='PENDING') }" class="text-success">●</span>
                                             <small>{{doc.documentStatus}}</small>-->
                                             <!--<h4 class="title">Web Developer</h4>-->
@@ -613,18 +621,21 @@ export default {
     );
     },
   methods: {
-
-    submitDocument(index,doc){
+    submitDocument(index,doc, action){
       console.log('Testing'+index);
-      if( document.getElementById('myfile'+index).files.length == 0 ){
-        this.errorArr[index]=true;
-        //this.notifyVue("danger", `Upload file ${name}`);
+      this.documentModel.fileUpload.username = `${this.currentOrganisation.organisationName}_${doc.documentTypeName.replace(/[^a-zA-Z ]/g, "")}_${Math.random()} `
+      this.documentModel.fileUpload.base64 = this.files[index]
+      this.documentModel.document.documentDocumentTypeId = doc.documentTypeId
+      if(action==='UPDATE'){
+        //this.errorArr[index]=true;
+        this.documentModel.document.documentId = doc.documentId
+        StoreUtils.dispatch(
+            StoreUtils.actions.document.updateDocument,
+            this.documentModel
+        );
       }
       else{
-        this.documentModel.fileUpload.username = `${this.currentOrganisation.organisationName}_${doc.documentTypeName.replace(/[^a-zA-Z ]/g, "")}`
-        this.documentModel.fileUpload.base64 = this.files[index]
-        this.documentModel.document.documentDocumentTypeId = doc.documentTypeId
-            StoreUtils.dispatch(
+        StoreUtils.dispatch(
             StoreUtils.actions.document.createDocument,
                 this.documentModel
         );
@@ -634,16 +645,21 @@ export default {
       //console.log(evt);
     },
 
-    handleImages(e,index){
+    handleImages(e,index,doc, action){
+      const vm = this;
       const selectedImage = e.target.files[0];
-      this.createBase64Images(selectedImage,index);
+      this.createBase64Images(selectedImage,index,doc, action);
+      console.log("Submit");
+
     },
-    createBase64Images(fileObject,index){
+    createBase64Images(fileObject,index,doc, action){
       const img_reader = new FileReader();
       const vm = this;
       img_reader.onload=(e)=>{
         vm.files[index]=e.target.result;
-        vm.notifyVue("success","Click on Submit");
+        console.log(this.files[index])
+        vm.submitDocument(index, doc, action)
+        //vm.notifyVue("success","Click on Submit");
       }
       img_reader.readAsDataURL(fileObject);
     },
@@ -700,6 +716,7 @@ export default {
 };
 </script>
 <style lang="css" scoped>
+
 .APIWebhooks {
   display: flex;
   justify-content: center;
@@ -1049,8 +1066,8 @@ hr.solid {
 
 .our-team .picture {
   display: inline-block;
-  height: 130px;
-  width: 130px;
+  height: 100%;
+  width: 100%;
   margin-bottom: 10px;
   z-index: 1;
   position: relative;
@@ -1081,8 +1098,8 @@ hr.solid {
 }
 
 .our-team .picture img {
-  width: 100%;
-  height: auto;
+  width: 50%;
+  height: 50%;
   border-radius: 0%;
   transform: scale(1);
   transition: all 0.9s ease 0s;
