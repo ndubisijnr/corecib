@@ -4,9 +4,10 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
           <div>
+         <span :class="{ 'spinner-border': loading }"></span>
+
             <el-tabs type="card" v-model="activeName" @tab-click="handleClick">
               <el-tab-pane id="tab-0" :key="1" name="first" label="Profile">
-                <span :class="{ 'spinner-border': loading }"></span>
                 <b-container class="p-3" v-if="!loading">
                   <b-form class="container card p-3 form-group">
                     <h3 class="text-center">
@@ -113,23 +114,20 @@
                         class="p-3 form-group"
                         @submit.prevent="updateOrginasation()"
                       >
-                        <h3 class="text-center">
+                        <!-- <h3 class="text-center">
                           <i class="fa fa-user-circle profile-settings"></i>
                         </h3>
                         <h6 class="text-center">
                           <b>Business Details </b>
                           <i class="fa fa-info-circle"></i>
-                        </h6>
-                        <b-container class="" v-if="edit == 'first'">
+                        </h6> -->
+                        <b-container class="" v-if="page =='Profile'">
                           <div class="form-floating mb-3">
                             <input
                               type="email"
                               class="form-control"
                               id="floatingInput2"
                               placeholder="name@example.com"
-                              :value="
-                                userInfo.organisations[0].organisationName
-                              "
                               readonly
                             />
                             <label for="floatingInput2">Business Name</label>
@@ -140,9 +138,7 @@
                               class="form-control"
                               id="floatingInput"
                               placeholder="name@example.com"
-                              :value="
-                                userInfo.organisations[0].organisationEmail
-                              "
+                            
                               readonly
                             />
                             <label for="floatingInput">Company Email</label>
@@ -153,9 +149,7 @@
                               class="form-control"
                               id="floatingInput1"
                               placeholder="Country"
-                              :value="
-                                userInfo.organisations[0].organisationPhone
-                              "
+                            
                               readonly
                             />
                             <label for="floatingInput1">Company Phone</label>
@@ -174,7 +168,7 @@
                         </b-container>
 
                         <!-- Second layer -->
-                        <b-container class="" v-if="edit == 'second' && organisation.objects.length < 1">
+                        <b-container class="" v-if="edit == 'second'">
                           <div class="form-floating mb-3">
                             <input
                               type="text"
@@ -274,7 +268,7 @@
                       </form>
 
                       <!-- third phase -->
-                      <b-container  v-if="edit == 'second' && organisation.length > 1">
+                      <b-container  v-if="edit == 'second'">
                           <div class="form-floating mb-3 card">
                             <input
                               type="text" 
@@ -342,14 +336,13 @@
                           </div>
                       </b-container>
 
-                    <div class="" v-if="page == 'document'">
+                    <div class="" v-if="edit == 'third'">
                       <h4>Documents</h4>
                       <h5>Please upload all documents {{documents.data.length}}</h5>
                       <br />
                       <div class="card-body">
                         <div v-show="loading" ><p class="text-center"><button class="btn btn-secondary"><span class="spinner-border" ></span>
                         </button>hhh</p></div>
-                        <!-- <div v-show="cust_doc_loading" class="loading-div" ><div class="text-center"><LoadingPanel></LoadingPanel></div></div>-->
                         <div>
                           <div class="row">
                             <div class="col">
@@ -371,17 +364,14 @@
                                           'text-danger': (doc.documentStatus==='REJECTED')}">●</span>
                                           <small>{{doc.documentStatus}}</small>
 
-                                          <!--<h4 class="title">Web Developer</h4>-->
                                         </div>
                                         <ul class="social">
                                           <li><a :href="doc.documentUrl" target="_blank" class="pointer fas fa-cloud-download-alt" data-toggle="tooltip" data-placement="top" title="Download" aria-hidden="true"></a></li>
                                           <li>
-                                            <!--<i class="fas fa-edit"></i>-->
                                             <label  class="pointer" data-toggle="tooltip" data-placement="down" title="Update" aria-hidden="true">
                                               <input type="file" :ref="'file-input'+index" accept="application/pdf, image/*" :id="'myfile'+index"  style="display:none; z-index: 1;" @change="handleImages($event,index,doc,'UPDATE')">
                                             <i class="fas fa-edit"></i>
                                             </label></li>
-                                          <!--<li v-show="doc.documentStatus!=='APPROVED'" ><a @click="authorizeDocument(doc)" class="pointer far fa-check-square" data-toggle="tooltip" data-placement="top" title="Approve" aria-hidden="true"></a></li>-->
                                         </ul>
                                       </div>
                                     </div>
@@ -394,25 +384,16 @@
                                               <input type="file" :ref="'file-input'+index" style="display: none;" accept="application/pdf, image/*" :id="'myfile'+index"  @change="handleImages($event,index,doc,'CREATE')">
                                               <img class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-grey.png" alt="" />
                                             </label>
-                                            <!--<img class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/picture_logo.jpg">-->
                                           </div>
                                           <div class="team-content mt--2">
                                             <small class="name">Click &#x1F446; to upload file</small>
 
-                                            <!--<button type="submit" class="btn btn-primary">Submit
-                                            </button>-->
+                                           
 
                                             <h6 class="name">{{doc.documentTypeName}}</h6>
-                                            <!--<small class="name">{{doc.documentTypeDescription}}</small>-->
-                                            <!--<span :class="{ 'text-success': (doc.documentStatus!=='PENDING'), 'text-danger': (doc.documentStatus==='PENDING') }" class="text-success">●</span>
-                                            <small>{{doc.documentStatus}}</small>-->
-                                            <!--<h4 class="title">Web Developer</h4>-->
+                                          
                                           </div>
-                                          <!--<ul class="social"> :class="{ disabled: loading }"
-                                            <li><a class="pointer fas fa-cloud-download-alt" data-toggle="tooltip" data-placement="top" title="Download" aria-hidden="true"></a></li>
-                                            <li><a class="pointer far fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Delete" aria-hidden="true"></a></li>
-                                            <li><a class="pointer far fa-check-square" data-toggle="tooltip" data-placement="top" title="Approve" aria-hidden="true"></a></li>
-                                          </ul>-->
+                                      
                                         </div>
                                       </form>
                                     </div>
@@ -427,62 +408,6 @@
                       </div>
 
 
-
-                      <!--<div class="mb-3">
-                        <i class="fas fa-info-circle text-danger"></i>
-                        <label class="form-label"
-                          >Form CAC</label
-                        >
-                        <input
-                          class="form-control"
-                          type="file"
-                          multiple
-                        />
-                      </div>
-
-                      <div class="mb-3">
-                        <i class="fas fa-info-circle text-danger"></i>
-                        <label class="form-label"
-                          >Certificate of Incorporation</label
-                        >
-                        <input
-                          class="form-control"
-                          type="file"
-                          multiple
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <i class="fas fa-info-circle text-danger"></i>
-                        <label class="form-label"
-                          >RC Number</label
-                        >
-                        <input
-                          class="form-control"
-                          type="file"
-                          multiple
-                        />
-                      </div>
-                      <div class="mb-3">
-                        <i class="fas fa-info-circle text-danger"></i>
-                        <label  class="form-label"
-                          >Tax Identification Number</label
-                        >
-                        <input
-                          class="form-control"
-                          type="file"
-                          multiple
-                        />
-                      </div>-->
-                      <!--<div class="mt-3">
-                        <button
-                          type="submit"
-                          class="btn btn-success"
-                          disabled
-                          style="cursor: not-allowed; width: 100%"
-                        >
-                          Save
-                        </button>
-                      </div>-->
                     </div>
                   </div>
                   </div>
@@ -546,7 +471,6 @@ export default {
   data() {
     return {
       updateOrganisationModel: updateOrganisationRequest.updateOrganisation,
-      edit: "first",
       files:[],
       activeName: "first",
       selectedItem: {},
@@ -555,7 +479,6 @@ export default {
       page: "profile",
       light: "light",
       nav: "false",
-      // edit: "null",
       errorArr:[],
       apikeyModel: ApikeyRequest.regenerateApiKey,
       documentModel: DocumentRequest.createDocument,
@@ -699,6 +622,11 @@ export default {
       console.log(tab.label);
       //console.log(tab, event);
     },
+    showdoc(){
+      this.edit = 'third'
+      document.getElementById("flexRadioDefault1").classList.add("bg-success");
+    },
+        
     readColumn() {
       this.$store.dispatch(
         "readColumn",
