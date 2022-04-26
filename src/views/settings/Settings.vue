@@ -574,7 +574,7 @@ export default {
       activeName: "first",
       selectedItem: {},
       blacklist: false,
-      show: "firstt",
+      show: "first",
       page: "profile",
       light: "light",
       nav: "false",
@@ -632,6 +632,7 @@ export default {
   },
 
   mounted() {
+    console.log(this.apikeyModel)
     this.apikeyModel.organisationId = localStorage.organisationId;
     this.readDoc.readAll = 'YES';
     StoreUtils.dispatch(
