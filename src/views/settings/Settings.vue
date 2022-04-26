@@ -7,9 +7,9 @@
          <span :class="{ 'spinner-border': loading }"></span>
 
             <el-tabs type="card" v-model="activeName" @tab-click="handleClick">
-              <el-tab-pane id="tab-0" :key="1" name="first" label="Profile">
+              <el-tab-pane id="tab-0" :key="1"  label="Profile">
                 <b-container class="p-3" v-if="!loading">
-                  <b-form class="container card p-3 form-group">
+                  <b-form class="container p-3 form-group">
                     <h3 class="text-center">
                       <i class="fa fa-user-circle profile-settings"></i>
                     </h3>
@@ -108,20 +108,20 @@
                       </label>
                     </div>
                   </div>
-                  <div class="d-flex justify-content-center w-100 m-3">
-                    <div class="card ">
+                  <div class="d-flex justify-content-center w-100">
+                    <div class="">
                       <form
-                        class="p-3 form-group"
+                        class="form-group"
                         @submit.prevent="updateOrginasation()"
                       >
-                        <!-- <h3 class="text-center">
+                        <h3 class="text-center">
                           <i class="fa fa-user-circle profile-settings"></i>
                         </h3>
                         <h6 class="text-center">
                           <b>Business Details </b>
                           <i class="fa fa-info-circle"></i>
-                        </h6> -->
-                        <b-container class="" v-if="page =='Profile'">
+                        </h6>
+                        <div>
                           <div class="form-floating mb-3">
                             <input
                               type="email"
@@ -161,23 +161,19 @@
                               id="floatingInput1"
                               placeholder="Country"
                               readonly
-                              :value="userInfo.customerCountry"
                             />
                             <label for="floatingInput1">Country</label>
                           </div>
-                        </b-container>
+                        </div>
 
                         <!-- Second layer -->
-                        <b-container class="" v-if="edit == 'second'">
+                        <div class="">
                           <div class="form-floating mb-3">
                             <input
                               type="text"
                               class="form-control"
                               id="floatingInput2"
                               placeholder="!004 Federal Housing Estate, Victoral Island"
-                              v-model="
-                                updateOrganisationModel.organisationAddress
-                              "
                               required
                             />
                             <label for="floatingInput2">Address</label>
@@ -188,7 +184,6 @@
                               class="form-control"
                               id="floatingInput1"
                               placeholder="Ikeja"
-                              v-model="updateOrganisationModel.organisationCity"
                               required
                             />
                             <label for="floatingInput1">City</label>
@@ -199,9 +194,7 @@
                               class="form-control"
                               id="floatingInput1"
                               placeholder="Lagos"
-                              v-model="
-                                updateOrganisationModel.organisationState
-                              "
+                             
                               required
                             />
                             <label for="floatingInput1">State</label>
@@ -210,7 +203,6 @@
                             <select
                               class="form-select"
                               aria-label="Default select example"
-                              v-model="updateOrganisationModel.organisationType"
                               required
                             >
                               <option>FINTECH</option>
@@ -225,9 +217,7 @@
                               class="form-control"
                               id="floatingInput"
                               placeholder="RC 291837820"
-                              v-model="
-                                updateOrganisationModel.organisationRegistrationNo
-                              "
+                             
                               required
                             />
                             <label for="floatingInput"
@@ -241,9 +231,7 @@
                               class="form-control"
                               id="floatingInput1"
                               placeholder="wwww.websiteLink.com"
-                              v-model="
-                                updateOrganisationModel.organisationWebsite
-                              "
+                             
                             />
                             <label for="floatingInput1">Company Website</label>
                           </div>
@@ -251,9 +239,7 @@
                             <select
                               class="form-select"
                               aria-label="Default select example"
-                              v-model="
-                                updateOrganisationModel.organisationIndustryType
-                              "
+                             
                               required
                             >
                               <option>FINTECH</option>
@@ -264,20 +250,18 @@
                           </div>
                           <base-button title="Update" :loading="loading">
                           </base-button>
-                        </b-container>
+                        </div>
                       </form>
 
                       <!-- third phase -->
-                      <b-container  v-if="edit == 'second'">
+                      <div>
                           <div class="form-floating mb-3 card">
                             <input
                               type="text" 
                               class="form-control"
                               id="floatingInput2"
                               placeholder="1004 Federal Housing Estate, Victoral Island"
-                              v-model="
-                                updateOrganisationModel.organisationAddress
-                              "
+                        
                               readonly
                             />
                             <label for="floatingInput2">Address</label>
@@ -288,7 +272,6 @@
                               class="form-control"
                               id="floatingInput1"
                               placeholder="Ikeja"
-                              v-model="updateOrganisationModel.organisationCity"
                               readonly
                             />
                             <label for="floatingInput1">City</label>
@@ -299,9 +282,7 @@
                               class="form-control"
                               id="floatingInput1"
                               placeholder="Lagos"
-                              v-model="
-                                updateOrganisationModel.organisationState
-                              "
+                             
                               readonly
                             />
                             <label for="floatingInput1">State</label>
@@ -310,7 +291,6 @@
                             <select
                               class="form-select"
                               aria-label="Default select example"
-                              v-model="updateOrganisationModel.organisationType"
                               disabled
                             >
                               <option>FINTECH</option>
@@ -325,18 +305,16 @@
                               class="form-control"
                               id="floatingInput"
                               placeholder="RC 291837820"
-                              v-model="
-                                updateOrganisationModel.organisationRegistrationNo
-                              "
+                             
                               readonly
                             />
                             <label for="floatingInput"
                               >Business Registration No</label
                             >
                           </div>
-                      </b-container>
+                      </div>
 
-                    <div class="" v-if="edit == 'third'">
+                    <div class="" >
                       <h4>Documents</h4>
                       <h5>Please upload all documents {{documents.data.length}}</h5>
                       <br />
@@ -425,11 +403,10 @@
                       header="featured"
                       header-tag="header"
                       header-bg-variant="white"
-                      body-class="shadow"
                     >
                       <template #header>
                           <b-container class="text-right">
-                             <b-button @click="regenerateApiKey()">Generate Api Key</b-button>
+                             <b-button @click="regenerateApiKey()" style="background-color:var(--primary);border:none;">Generate Api Key</b-button>
                           </b-container>
 
                       </template>
@@ -473,43 +450,10 @@ export default {
       updateOrganisationModel: updateOrganisationRequest.updateOrganisation,
       files:[],
       activeName: "first",
-      selectedItem: {},
-      blacklist: false,
-      show: "firstt",
-      page: "profile",
-      light: "light",
-      nav: "false",
-      errorArr:[],
       apikeyModel: ApikeyRequest.regenerateApiKey,
       documentModel: DocumentRequest.createDocument,
-      //documents: DocumentResponse.readByOrganisationId,
       readDoc: DocumentRequest.readDocument,
-      modals: {
-        modal0: false,
-      },
-
-      bindProps: {
-        mode: "international",
-        enabledCountryCode: true,
-        enabledFlags: true,
-        autocomplete: "off",
-        preferredCountries: ["NG", "US"],
-      },
-      tel_options: {
-        placeholder: "Phone Number",
-        styleClasses: "form-control",
-        maxlength: 15,
-        name: "telephone",
-        required: true,
-      },
-      dropdown_options: {
-        showDialCodeInSelection: true,
-        showFlags: true,
-        autocomplete: "off",
-        showDialCodeInList: true,
-      },
-      countryCode: "",
-    };
+  };
   },
   computed: {
     sortOptions() {
@@ -528,20 +472,18 @@ export default {
      documents:(state) => state.document.document
 
     }),
-
- 
-    currentOrganisation(){
-      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
-    },
   },
 
   mounted() {
-    this.apikeyModel.organisationId = localStorage.organisationId;
+    console.log("hello before", this.apikeyModel)
+
+    this.apikeyModel.organisationId = "1";
     this.readDoc.readAll = 'YES';
     StoreUtils.dispatch(
         StoreUtils.actions.document.readDocument,
         {readAll:this.readDoc.readAll}
     );
+    console.log("hello after")
     },
   methods: {
     submitDocument(index,doc, action){
@@ -565,7 +507,6 @@ export default {
 
         console.log(this.files[index]);
       }
-      //console.log(evt);
     },
 
     handleImages(e,index,doc, action){
@@ -659,100 +600,13 @@ export default {
   font-weight: 700;
 }
 
-.in {
-  pointer-events: none;
-}
 .center-block {
   width: 600px;
   height: 560px;
   max-width: 90%;
   margin: 30px auto;
 }
-.empty-history {
-  height: 100px;
-  width: 100%;
-  padding: 10px 10px;
-}
-.empty-history span {
-  display: block;
-  margin-bottom: 7px;
-}
-.empty-history span svg {
-  /* fill: #6e0400; */
-  height: 30px;
-  width: 30px;
-  margin: 0 auto;
-  display: block;
-}
-svg {
-  overflow: hidden;
-  vertical-align: middle;
-}
-.empty-history span svg circle {
-  fill: #ca0305;
-  /* fill: #EFCE4A; */
-}
-.empty-history span svg line {
-  fill: none;
-  stroke-width: 2;
-  stroke: #fff;
-}
 
-.card-head:first-child {
-  border-radius: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 0;
-}
-.card-head {
-  padding: 0.25rem 0.5rem;
-  margin-bottom: 0;
-  background-color: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-.black-list-group {
-  border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  padding-top: 7px;
-  padding-bottom: 7px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-.black-list-sub {
-  display: flex;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-.black-list {
-  flex: 1;
-  display: flex;
-}
-
-.tton {
-  width: 40px;
-  height: 30px;
-  position: absolute;
-  right: 92px;
-  border: none;
-  border-radius: 5px;
-}
-
-.form-group-b {
-  width: 400px;
-  margin-top: -70px;
-}
-
-.form-group {
-  width: 400px;
-}
-
-.box {
-  border: solid red;
-  justify-content: space-between;
-  padding: 10px;
-  margin: 5px;
-}
-
-.form-groups {
-  margin-bottom: 0.5rem;
-}
 @keyframes spinner-border {
   to {
     transform: rotate(360deg);
@@ -770,331 +624,11 @@ svg {
   -webkit-animation: spinner-border 0.75s linear infinite;
   animation: spinner-border 0.75s linear infinite;
 }
-.table-section {
-  display: block;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  padding-bottom: 40px;
-  /*max-width: 100%;*/
-}
+
 .pointer {
   cursor: pointer;
 }
 
-.text-title {
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-.item-right {
-  padding-left: 90%;
-  cursor: pointer;
-  margin: 0px 0% -10px 0px;
-  float: right !important;
-}
-.vodal-dialog {
-  overflow-y: scroll;
-  overflow-x: hidden !important;
-  background-color: #fff;
-}
-.vodal-dialog .card {
-  box-shadow: none !important;
-}
-body {
-  overflow-x: hidden !important;
-}
-.text-title {
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-.view-more-customer-info {
-  color: #545b62;
-}
-.view-more-customer-info .view-more-top {
-  margin-bottom: 10px;
-}
-.view-more-top .queue-title {
-  margin-bottom: 2px;
-  font-size: 10px;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: #9e9e9e;
-}
-p {
-  color: #495057;
-}
-.view-more-customer-info p {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 16px;
-  margin-bottom: 0;
-}
-.view-more-top .queue-value {
-  font-size: 14px;
-  line-height: 18px;
-  color: #212121;
-  margin-bottom: 20px;
-}
-.view-more-top .queue-title {
-  margin-bottom: 2px;
-  font-size: 10px;
-  text-transform: uppercase;
-  font-weight: 700;
-  color: #9e9e9e;
-}
-.view-more-customer-info {
-  color: #545b62;
-}
-.table-responsive {
-  display: block;
-  width: 100%;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-}
-.table {
-  width: 100%;
-  margin-bottom: 1rem;
-  color: #495057;
-}
-.table-section tbody {
-  max-width: 500px;
-  overflow-x: scroll;
-}
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: #f8f9fa;
-}
-.table td,
-.table th {
-  padding: 0.75rem;
-  vertical-align: top;
-  border-top: 1px solid #eff2f7;
-}
 
-.card-title {
-  font-size: 15px;
-  margin: 0 0 7px 0;
-  font-weight: 600;
-}
-.card-head:first-child {
-  border-radius: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 0;
-}
-.card-head {
-  padding: 0.25rem 0.5rem;
-  margin-bottom: 0;
-  background-color: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-.page-table-head:first-child {
-  border-radius: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 0;
-}
-.page-table-head {
-  margin-top: -20px;
-  padding: 0.05rem 1.5rem;
-  margin-bottom: 0;
-  background-color: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-.file-label-helper {
-  display: block;
-  line-height: 1.4;
-  margin-bottom: 10px;
-  font-size: 12px;
-  font-weight: 400;
-  color: white;
-}
-
-.input-group {
-  display: table;
-  border-collapse: collapse;
-  width: 100%;
-}
-.input-group > div {
-  display: table-cell;
-  border: 1px solid #ddd;
-  vertical-align: middle; /* needed for Safari */
-}
-.input-group-icon {
-  background: #eee;
-  color: #777;
-  padding: 0 4px;
-  font-size: 0.875rem;
-}
-.input-group-area {
-  width: 100%;
-}
-.input-group input {
-  /*border: 0;*/
-  border-radius: 0.25rem;
-  display: block;
-  width: 100%;
-  padding: 8px;
-}
-
-.no-data {
-  width: 500px;
-  max-width: 90%;
-  margin: 100px auto;
-}
-.no-data p {
-  margin: 0 auto 10px;
-  max-width: 450px;
-  line-height: 1.4;
-}
-.empty-history {
-  height: 100px;
-  width: 100%;
-  padding: 10px 10px;
-}
-.empty-history span {
-  display: block;
-  margin-bottom: 7px;
-}
-.empty-history span svg {
-  /* fill: #6e0400; */
-  height: 30px;
-  width: 30px;
-  margin: 0 auto;
-  display: block;
-}
-svg {
-  overflow: hidden;
-  vertical-align: middle;
-}
-.empty-history span svg circle {
-  fill: #ca0305;
-  /* fill: #EFCE4A; */
-}
-.empty-history span svg line {
-  fill: none;
-  stroke-width: 2;
-  stroke: #fff;
-}
-
-hr.solid {
-  border-top: 1.5px solid #bbb;
-  width: 30px;
-  transform: rotate(90deg);
-  margin: 17px 14px 0px 14px;
-}
-.drop-btn {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-}
-
-
-.our-team {
-  padding: 30px 0 40px;
-  margin-bottom: 30px;
-  background-color: #ffffff80;
-  text-align: center;
-  overflow: hidden;
-  position: relative;
-  border-radius:5%;
-  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
-}
-
-.our-team .picture {
-  display: inline-block;
-  height: 100%;
-  width: 100%;
-  margin-bottom: 10px;
-  z-index: 1;
-  position: relative;
-}
-
-.our-team .picture::before {
-  content: "";
-  width: 100%;
-  height: 0;
-  border-radius: 0%;
-  background-color: #1369ce;
-  position: absolute;
-  bottom: 135%;
-  right: 0;
-  left: 0;
-  opacity: 0.9;
-  transform: scale(3);
-  transition: all 0.3s linear 0s;
-}
-
-
-.our-team .pic img {
-  width: 50%;
-  height: 50%;
-  border-radius: 0%;
-  transform: scale(1);
-  transition: all 0.9s ease 0s;
-}
-
-.our-team .picture img {
-  width: 50%;
-  height: 50%;
-  border-radius: 0%;
-  transform: scale(1);
-  transition: all 0.9s ease 0s;
-}
-
-
-.our-team .title {
-  display: block;
-  font-size: 15px;
-  color: #4e5052;
-  text-transform: capitalize;
-}
-
-.our-team .social {
-  width: 100%;
-  padding: 0;
-  margin: 0;
-  background-color: #56585c;
-  position: absolute;
-  bottom: -100px;
-  left: 0;
-  transition: all 0.5s ease 0s;
-}
-
-.our-team:hover .social {
-  bottom: 0;
-}
-
-.our-team .social li {
-  display: inline-block;
-}
-
-.our-team .social li a {
-  display: block;
-  padding: 10px;
-  font-size: 17px;
-  color: white;
-  transition: all 0.3s ease 0s;
-  text-decoration: none;
-}
-
-.our-team .social li a:hover {
-  color: #56585c;
-  background-color: #f7f5ec;
-}
-
-.card-head:first-child {
-  border-radius: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 0;
-}
-.card-head {
-  padding: 0.25rem 0.5rem;
-  margin-bottom: 0;
-  background-color: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-.form-error-message {
-  width: 100%;
-  margin-top: 0.25rem;
-  font-size: 80%;
-  color: #fb6340;
-}
-
-.top-area {
-  display: flex;
-  margin-top: 0px !important;
-  justify-content: space-between;
-  align-items: center;
-}
 
 </style>
