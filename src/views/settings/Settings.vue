@@ -174,7 +174,7 @@
                         </b-container>
 
                         <!-- Second layer -->
-                        <b-container class="" v-if="edit == 'second' && organisation.length < 1">
+                        <b-container class="" v-if="edit == 'second' && organisation.objects.length < 1">
                           <div class="form-floating mb-3">
                             <input
                               type="text"
@@ -408,7 +408,7 @@
   </div>
 </template>
 <script>
-import { mapState, Store } from "vuex";
+import { mapState} from "vuex";
 import ApiKeyDisplayForm from "../../components/form/ApiKeyDisplayForm";
 import { DropdownMenu, DropdownItem, Dropdown } from "element-ui";
 import BaseButton from "../../components/button/BaseButton";
@@ -488,18 +488,6 @@ export default {
     },
 
     updateOrginasation() {
-      this.updateOrganisationModel.organizationName = StoreUtils.rootGetters(
-        StoreUtils.getters.auth.getOrganizationName
-      );
-      this.updateOrganisationModel.organisationEmail = StoreUtils.rootGetters(
-        StoreUtils.getters.auth.getorganisationEmail
-      );
-      this.updateOrganisationModel.organisationCountry = StoreUtils.rootGetters(
-        StoreUtils.getters.auth.getorganisationCountry
-      );
-      this.updateOrganisationModel.organisationPhone = StoreUtils.rootGetters(
-        StoreUtils.getters.auth.getorganisationPhone
-      );
       this.updateOrganisationModel.organisationId = localStorage.organisationId
       StoreUtils.dispatch(
         StoreUtils.actions.auth.updateOrganisation,
@@ -521,37 +509,6 @@ export default {
       this.edit = "second";
       document.getElementById("flexRadioDefault1").classList.add("bg-success");
     },
-    showfourth() {
-      this.show = "fourth";
-      this.edit = "null";
-    },
-    showdoc() {
-      this.page = "document";
-      this.edit = "null";
-      document.getElementById("flexRadioDefault3").classList.add("bg-success");
-    },
-    showedit() {
-      this.edit = "first";
-      this.page = "null";
-    },
-    showedit2() {
-      this.edit = "second";
-      this.page = "null";
-    },
-    myFunction() {
-      var copyText = document.getElementById("copy");
-      copyText.select();
-      copyText.setSelectionRange(0, 99999);
-      navigator.clipboard.writeText(copyText.value);
-
-      var tooltip = document.getElementById("myTooltip");
-      tooltip.innerHTML = "Copied: " + copyText.value;
-    },
-
-    outFunc() {
-      var tooltip = document.getElementById("myTooltip");
-      tooltip.innerHTML = "Copy to clipboard";
-    },
     handleClick(tab, event) {
       //console.log(tab.$vnode.key);
       console.log(tab.label);
@@ -567,15 +524,6 @@ export default {
       );
     },
 
-    countryChanged(country) {
-      this.countryCode = country.dialCode;
-    },
-
-    onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length;
-      this.currentPage = 1;
-    },
   },
 
   created: function () {},

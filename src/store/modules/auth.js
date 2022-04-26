@@ -19,11 +19,6 @@ export const getters = {
   getToken: state => { return state.token },
   getUserToken: state => { return localStorage.token },
   getOrganizationId: state => { return localStorage.organisationId },
-  getOrganizationName: state => {return state.userInfo.organisations[0].organisationName},
-  getorganisationRegistrationDate: state => {return state.userInfo.organisations[0].organisationRegistrationDate}, 
-  getorganisationPhone: state => {return state.userInfo.organisations[0].organisationPhone}, 
-  getorganisationEmail: state => {return state.userInfo.organisations[0].organisationEmail}, 
-  getorganisationCountry: state => {return state.userInfo.customerCountry}, 
   getCurrentOrganization: state => {
     if (state.userInfo.organisations == null) return {}
     return state.userInfo.organisations.filter(it => it.organisationId.toString() === localStorage.organisationId).length < 1
