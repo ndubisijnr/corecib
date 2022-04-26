@@ -8,7 +8,7 @@ class DisputeRequest {
         disputeIssueType: null,
         disputeComment: null,
         disputeRemark: "Transaction",
-        disputeOrgId: localStorage.getItem("organisationId")
+        disputeOrgId: null
 
     }
 

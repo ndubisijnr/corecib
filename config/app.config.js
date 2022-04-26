@@ -18,7 +18,8 @@ Example for Docker:
     };
     window.__env.api = {
         "baseUrl": "https://sandbox.bizgem.io",
-        timeout: 80000
+        timeout: 80000,
+        "imageUpload": "https://m2nz1o078e.execute-api.us-east-1.amazonaws.com/prod"
     };
     window.__env.captcha = {
         "enabled": true,

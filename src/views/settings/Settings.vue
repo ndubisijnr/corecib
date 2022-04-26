@@ -49,7 +49,7 @@
                       <input
                         type="email"
                         class="form-control"
-                        id="floatingInput"
+                        id="floatingInput4"
                         placeholder="name@example.com"
                         :value="null ? '' : userInfo.customerEmail"
                         readonly
@@ -340,38 +340,143 @@
                               >Business Registration No</label
                             >
                           </div>
+                      </b-container>
 
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput1"
-                              placeholder="wwww.websiteLink.com"
-                              v-model="
-                                updateOrganisationModel.organisationWebsite
-                              "
-                              readonly
-                            />
-                            <label for="floatingInput1">Company Website</label>
+                    <div class="" v-if="page == 'document'">
+                      <h4>Documents</h4>
+                      <h5>Please upload all documents {{documents.data.length}}</h5>
+                      <br />
+                      <div class="card-body">
+                        <div v-show="loading" ><p class="text-center"><button class="btn btn-secondary"><span class="spinner-border" ></span>
+                        </button>hhh</p></div>
+                        <!-- <div v-show="cust_doc_loading" class="loading-div" ><div class="text-center"><LoadingPanel></LoadingPanel></div></div>-->
+                        <div>
+                          <div class="row">
+                            <div class="col">
+                              <div  v-if="'data' in documents">
+                                <!-- Card body -->
+                                <div class="row">
+                                  <div class="col-lg-6 col-md-6 col-sm-6 col-12" v-for="(doc, index) in documents.data"
+                                       :key="index">
+                                    <div v-if="'documentStatus' in doc && 'documentUrl' in doc">
+                                      <div class="our-team">
+                                        <div class="picture">
+                                          <img class="img-fluid" :src="(doc.documentUrl.endsWith('.pdf'))?'https://coregem-imgs.s3.amazonaws.com/PDF_File.png':doc.documentUrl">
+                                        </div>
+                                        <div class="team-content">
+                                          <h6 class="name">{{doc.documentTypeName}}</h6>
+                                          <span :class="{ 'text-success': (doc.documentStatus!=='PENDING'), 'text-danger': (doc.documentStatus==='PENDING') }" class="text-success">●</span>
+                                          <small>{{doc.documentStatus}}</small>
+
+                                          <!--<h4 class="title">Web Developer</h4>-->
+                                        </div>
+                                        <ul class="social">
+                                          <li><a :href="doc.documentUrl" target="_blank" class="pointer fas fa-cloud-download-alt" data-toggle="tooltip" data-placement="top" title="Download" aria-hidden="true"></a></li>
+                                          <li><a @click="updateDocument(doc)" class="pointer fas fa-edit" data-toggle="tooltip" data-placement="top" title="Update" aria-hidden="true"></a></li>
+                                          <!--<li v-show="doc.documentStatus!=='APPROVED'" ><a @click="authorizeDocument(doc)" class="pointer far fa-check-square" data-toggle="tooltip" data-placement="top" title="Approve" aria-hidden="true"></a></li>-->
+                                        </ul>
+                                      </div>
+                                    </div>
+                                    <div v-else>
+                                      <form @submit.prevent="submitDocument(index, doc)" :id="'form'+index" >
+                                        <p v-show="errorArr[index]" class="form-error-message"> The File is required </p>
+                                        <div class="our-team">
+                                          <div class="pic">
+                                            <label class="pointer">
+                                              <input type="file" :ref="'file-input'+index" style="display: none;" accept="application/pdf, image/*" :id="'myfile'+index"  @change="handleImages($event,index)">
+                                              <img class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/picture_logo.jpg" alt="" />
+                                            </label>
+                                            <!--<img class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/picture_logo.jpg">-->
+                                          </div>
+                                          <div class="team-content mt--2">
+                                            <small class="name">Click &#x1F446; To Select File</small>
+
+                                            <button type="submit" class="btn btn-primary">Submit
+                                            </button>
+
+                                            <h6 class="name">{{doc.documentTypeName}}</h6>
+                                            <small class="name">{{doc.documentTypeDescription}}</small>
+                                            <!--<span :class="{ 'text-success': (doc.documentStatus!=='PENDING'), 'text-danger': (doc.documentStatus==='PENDING') }" class="text-success">●</span>
+                                            <small>{{doc.documentStatus}}</small>-->
+                                            <!--<h4 class="title">Web Developer</h4>-->
+                                          </div>
+                                          <!--<ul class="social"> :class="{ disabled: loading }"
+                                            <li><a class="pointer fas fa-cloud-download-alt" data-toggle="tooltip" data-placement="top" title="Download" aria-hidden="true"></a></li>
+                                            <li><a class="pointer far fa-trash-alt" data-toggle="tooltip" data-placement="top" title="Delete" aria-hidden="true"></a></li>
+                                            <li><a class="pointer far fa-check-square" data-toggle="tooltip" data-placement="top" title="Approve" aria-hidden="true"></a></li>
+                                          </ul>-->
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                </div>
+
+
+                              </div>
+                            </div>
                           </div>
-                          <div class="form-floating mb-3">
-                            <select
-                              class="form-select"
-                              aria-label="Default select example"
-                              v-model="
-                                updateOrganisationModel.organisationIndustryType
-                              "
-                              disabled
-                            >
-                              <option>FINTECH</option>
-                            </select>
-                            <label for="floatingInput3"
-                              >Organisation Industry Type</label
-                            >
-                          </div>
-                      
-                        </b-container>
+                        </div>
+                      </div>
+
+
+
+                      <!--<div class="mb-3">
+                        <i class="fas fa-info-circle text-danger"></i>
+                        <label class="form-label"
+                          >Form CAC</label
+                        >
+                        <input
+                          class="form-control"
+                          type="file"
+                          multiple
+                        />
+                      </div>
+
+                      <div class="mb-3">
+                        <i class="fas fa-info-circle text-danger"></i>
+                        <label class="form-label"
+                          >Certificate of Incorporation</label
+                        >
+                        <input
+                          class="form-control"
+                          type="file"
+                          multiple
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <i class="fas fa-info-circle text-danger"></i>
+                        <label class="form-label"
+                          >RC Number</label
+                        >
+                        <input
+                          class="form-control"
+                          type="file"
+                          multiple
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <i class="fas fa-info-circle text-danger"></i>
+                        <label  class="form-label"
+                          >Tax Identification Number</label
+                        >
+                        <input
+                          class="form-control"
+                          type="file"
+                          multiple
+                        />
+                      </div>-->
+                      <!--<div class="mt-3">
+                        <button
+                          type="submit"
+                          class="btn btn-success"
+                          disabled
+                          style="cursor: not-allowed; width: 100%"
+                        >
+                          Save
+                        </button>
+                      </div>-->
                     </div>
+                  </div>
                   </div>
                 </div>
               </el-tab-pane>
@@ -382,18 +487,19 @@
                 name="five"
                 label=" API Keys and Webhooks"
               >
-                <b-card-group deck class="APIWebhooks">
-                  <b-card
-                    header="featured"
-                    header-tag="header"
-                    header-bg-variant="white"
-                    body-class="shadow"
-                  >
-                    <template #header>
-                      <b-container class="text-right">
-                        <b-button>Generate Api Key</b-button>
-                      </b-container>
-                    </template>
+                  <b-card-group deck class="APIWebhooks">
+                    <b-card
+                      header="featured"
+                      header-tag="header"
+                      header-bg-variant="white"
+                      body-class="shadow"
+                    >
+                      <template #header>
+                          <b-container class="text-right">
+                             <b-button @click="regenerateApiKey()">Generate Api Key</b-button>
+                          </b-container>
+
+                      </template>
                     <div class="d-flex justify-content-center">
                       <api-key-display-form> </api-key-display-form>
                     </div>
@@ -411,10 +517,12 @@
 import { mapState} from "vuex";
 import ApiKeyDisplayForm from "../../components/form/ApiKeyDisplayForm";
 import { DropdownMenu, DropdownItem, Dropdown } from "element-ui";
-import BaseButton from "../../components/button/BaseButton";
-import updateOrganisationRequest from "../../model/request/OrganisationRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
+import ApikeyRequest from "../../model/request/ApiKeyRequest";
+import DocumentRequest from "../../model/request/DocumentRequest";
+import DocumentResponse from "../../model/reponse/DocumentResponse";
 
+import BaseButton from "../../components/button/BaseButton"
 export default {
   name: "Settings",
   components: {
@@ -431,6 +539,7 @@ export default {
     return {
       updateOrganisationModel: updateOrganisationRequest.updateOrganisation,
       edit: "first",
+      files:[],
       activeName: "first",
       selectedItem: {},
       blacklist: false,
@@ -438,6 +547,12 @@ export default {
       page: "profile",
       light: "light",
       nav: "false",
+      // edit: "null",
+      errorArr:[],
+      apikeyModel: ApikeyRequest.regenerateApiKey,
+      documentModel: DocumentRequest.createDocument,
+      //documents: DocumentResponse.readByOrganisationId,
+      readDoc: DocumentRequest.readDocument,
       modals: {
         modal0: false,
       },
@@ -478,10 +593,64 @@ export default {
     ...mapState({
       userInfo: (state) => state.auth.userInfo,
       loading: (state) => state.auth.loading,
-      organisation:state => state.auth.Orginisation
+      organisation:state => state.auth.Orginisation,
+     documents:(state) => state.document.document
+
     }),
+
+ 
+    currentOrganisation(){
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
+    },
   },
+
+  mounted() {
+    this.apikeyModel.organisationId = localStorage.organisationId;
+    this.readDoc.readAll = 'YES';
+    StoreUtils.dispatch(
+        StoreUtils.actions.document.readDocument,
+        {readAll:this.readDoc.readAll}
+    );
+    },
   methods: {
+
+    submitDocument(index,doc){
+      console.log('Testing'+index);
+      if( document.getElementById('myfile'+index).files.length == 0 ){
+        this.errorArr[index]=true;
+        //this.notifyVue("danger", `Upload file ${name}`);
+      }
+      else{
+        this.documentModel.fileUpload.username = `${this.currentOrganisation.organisationName}_${doc.documentTypeName.replace(/[^a-zA-Z ]/g, "")}`
+        this.documentModel.fileUpload.base64 = this.files[index]
+        this.documentModel.document.documentDocumentTypeId = doc.documentTypeId
+            StoreUtils.dispatch(
+            StoreUtils.actions.document.createDocument,
+                this.documentModel
+        );
+
+        console.log(this.files[index]);
+      }
+      //console.log(evt);
+    },
+
+    handleImages(e,index){
+      const selectedImage = e.target.files[0];
+      this.createBase64Images(selectedImage,index);
+    },
+    createBase64Images(fileObject,index){
+      const img_reader = new FileReader();
+      const vm = this;
+      img_reader.onload=(e)=>{
+        vm.files[index]=e.target.result;
+        vm.notifyVue("success","Click on Submit");
+      }
+      img_reader.readAsDataURL(fileObject);
+    },
+    regenerateApiKey() {
+      StoreUtils.dispatch(StoreUtils.actions.apiKey.regenerateApiKey, this.apikeyModel)
+    },
+   
     closeModal0() {
       this.modals.modal0 = false;
       this.blacklist = false;
@@ -527,14 +696,14 @@ export default {
   },
 
   created: function () {},
-  mounted: function () {},
+
 };
 </script>
 <style lang="css" scoped>
 .APIWebhooks {
   display: flex;
   justify-content: center;
-  height: 75vh;
+  height: 100vh;
 }
 .profile-settings {
   font-size: 100px;
@@ -663,7 +832,7 @@ svg {
   padding-bottom: 40px;
   /*max-width: 100%;*/
 }
-.hand {
+.pointer {
   cursor: pointer;
 }
 
@@ -866,143 +1035,121 @@ hr.solid {
   font-size: 0.875rem;
 }
 
-.section {
-  position: relative;
-  width: 100%;
-  z-index: 1;
-  display: block;
-}
 
-[type="checkbox"]:checked,
-[type="checkbox"]:not(:checked) {
-  position: absolute;
-  left: -9999px;
-}
-
-.pricing:checked + label,
-.pricing:not(:checked) + label {
-  position: relative;
-  display: block;
+.our-team {
+  padding: 30px 0 40px;
+  margin-bottom: 30px;
+  background-color: #ffffff80;
   text-align: center;
-  width: 260px;
-  height: 44px;
-  border-radius: 4px;
-  padding: 0;
-  margin: 0 auto;
-  cursor: pointer;
-  font-family: "Poppins", sans-serif;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 14px;
-  letter-spacing: 1px;
-  line-height: 44px;
-  padding: 0 25px;
-  padding-right: 27px;
   overflow: hidden;
-  color: #fff;
-  text-align: left;
-}
-.pricing:checked + label:before,
-.pricing:not(:checked) + label:before {
-  position: absolute;
-  content: "";
-  z-index: -2;
-  color: white !important;
-  width: 100%;
-  height: 100%;
-  display: block;
-  top: 0;
-  left: 0;
-}
-.pricing:checked + label:after,
-.pricing:not(:checked) + label:after {
-  position: absolute;
-  content: "";
-  z-index: -1;
-  background-color: whitesmoke;
-  width: 128px;
-  height: 40px;
-  display: block;
-  top: 2px;
-  left: 2px;
-  border-radius: 2px;
-  transition: left 300ms linear;
-}
-.pricing:checked + label:after {
-  left: 130px;
-}
-.block-diff {
-  display: block;
-  mix-blend-mode: difference;
-}
-
-.card-3d-wrap {
   position: relative;
-  width: 340px;
-  max-width: calc(100% - 20px);
-  height: 510px;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  margin-top: 90px;
-}
-.card-3d-wrapper {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  transition: transform 700ms 400ms ease-out;
-}
-.card-front,
-.card-back {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 1);
-  position: absolute;
-  border-radius: 6px;
-  left: 0;
-  top: 0;
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  backface-visibility: hidden;
-  box-shadow: 0 12px 35px 0 rgba(16, 39, 112, 0.07);
-}
-.card-back {
-  transform: rotateY(180deg);
-}
-.pricing:checked ~ .card-3d-wrap .card-3d-wrapper {
-  transform: rotateY(180deg);
-  transition: transform 700ms 400ms ease-out;
+  border-radius:5%;
+  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
 }
 
-@keyframes border-transform {
-  0%,
-  100% {
-    border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
-  }
-  14% {
-    border-radius: 40% 60% 54% 46% / 49% 60% 40% 51%;
-  }
-  28% {
-    border-radius: 54% 46% 38% 62% / 49% 70% 30% 51%;
-  }
-  42% {
-    border-radius: 61% 39% 55% 45% / 61% 38% 62% 39%;
-  }
-  56% {
-    border-radius: 61% 39% 67% 33% / 70% 50% 50% 30%;
-  }
-  70% {
-    border-radius: 50% 50% 34% 66% / 56% 68% 32% 44%;
-  }
-  84% {
-    border-radius: 46% 54% 50% 50% / 35% 61% 39% 65%;
-  }
+.our-team .picture {
+  display: inline-block;
+  height: 130px;
+  width: 130px;
+  margin-bottom: 10px;
+  z-index: 1;
+  position: relative;
 }
+
+.our-team .picture::before {
+  content: "";
+  width: 100%;
+  height: 0;
+  border-radius: 0%;
+  background-color: #1369ce;
+  position: absolute;
+  bottom: 135%;
+  right: 0;
+  left: 0;
+  opacity: 0.9;
+  transform: scale(3);
+  transition: all 0.3s linear 0s;
+}
+
+
+.our-team .pic img {
+  width: 50%;
+  height: 50%;
+  border-radius: 0%;
+  transform: scale(1);
+  transition: all 0.9s ease 0s;
+}
+
+.our-team .picture img {
+  width: 100%;
+  height: auto;
+  border-radius: 0%;
+  transform: scale(1);
+  transition: all 0.9s ease 0s;
+}
+
+
+.our-team .title {
+  display: block;
+  font-size: 15px;
+  color: #4e5052;
+  text-transform: capitalize;
+}
+
+.our-team .social {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #56585c;
+  position: absolute;
+  bottom: -100px;
+  left: 0;
+  transition: all 0.5s ease 0s;
+}
+
+.our-team:hover .social {
+  bottom: 0;
+}
+
+.our-team .social li {
+  display: inline-block;
+}
+
+.our-team .social li a {
+  display: block;
+  padding: 10px;
+  font-size: 17px;
+  color: white;
+  transition: all 0.3s ease 0s;
+  text-decoration: none;
+}
+
+.our-team .social li a:hover {
+  color: #56585c;
+  background-color: #f7f5ec;
+}
+
+.card-head:first-child {
+  border-radius: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 0;
+}
+.card-head {
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 0;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.form-error-message {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #fb6340;
+}
+
+.top-area {
+  display: flex;
+  margin-top: 0px !important;
+  justify-content: space-between;
+  align-items: center;
+}
+
 </style>

@@ -1,4 +1,4 @@
-class ApiKeyReponse{
+class ApiKeyResponse{
     static readByOrganisationId = {
         apikeyId: 1,
         apikeyOrganisationId:null,
@@ -14,4 +14,4 @@ class ApiKeyReponse{
     }
 }
 
-export default ApiKeyReponse
+export default ApiKeyResponse

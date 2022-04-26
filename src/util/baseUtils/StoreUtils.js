@@ -2,9 +2,16 @@ import store from "../../store/store";
 
 class StoreUtils {
   static actions = {
+    document:{
+      updateDocument:"document/updateDocument",
+      readDocument:"document/readDocument",
+      createDocument:"document/createDocument"
+    },
     apiKey: {
       updateApikey: "apiKey/updateApikey",
-      create: "apiKey/create"
+      create: "apiKey/create",
+      regenerateApiKey:"apiKey/regenerateApiKey",
+      updateWebhookCallback:"apiKey/updateWebhookCallback"
     },
     auth: {
       initialEnrollment: "auth/initialEnrollment",
@@ -37,6 +44,10 @@ class StoreUtils {
   };
 
   static mutations = {
+    document:{
+      updateLoading: "document/updateLoading",
+      updateADocument: "document/updateADocument"
+    },
     apiKey: {
       updateLoading: "apiKey/updateLoading",
       updateApikey: "apiKey/updateApikey"

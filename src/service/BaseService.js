@@ -12,6 +12,16 @@ export const appClient = axios.create({
         "Content-Type": "application/json",
     }
 });
+export const appClient1 = axios.create({
+    baseURL: window.__env.api.imageUpload,
+    withCredentials: false,
+    headers: {
+         //Accept: "application/json",
+        // "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+    }
+});
+
 
 appClient.interceptors.request.use(config => {
     config.headers.Authorization = StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken)
@@ -58,6 +68,7 @@ appClient.interceptors.response.use(response => {
 });
 
 export const apiClient = {
-    appClient: appClient
+    appClient: appClient,
+    appClient1: appClient1
 }
   

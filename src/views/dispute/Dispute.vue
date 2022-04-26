@@ -2,8 +2,7 @@
   <div class="">
     <div class="text-right m-3">
       <div class="mr-4">
-        <b-button @click="show = true" class="dispute-btn">
-          <i class="fa fa-plus"></i> Create Disputes
+        <b-button @click="show = true" style="background-color:var(--primary);border:none;"><i class="fa fa-plus"></i> Create  dispute
         </b-button>
       </div>
       <base-table

@@ -46,15 +46,13 @@ export const actions = {
 
   },
 
-  createDispute: ({ commit }, payload = DisputeRequest.disputeCreate) => {
+  createDispute: ({ commit,state }, payload = DisputeRequest.disputeCreate) => {
     commit("updateLoading2", true)
     return DisputeService.callCreateDisputeApi(payload).then(response => {
       let responseData = response.data
       if (responseData.responseCode === "00") {
         commit("updateLoading2", false)
-        commit("updateSuccess", responseData.responseMessage)
         Swal.fire({title: responseData.responseMessage, icon: 'success'}).then(()=>{
-          commit("updateSuccess", responseData.responseMessage)
         })
       }
       else {
@@ -75,9 +73,11 @@ export const actions = {
       let responseData = response.data
       if(responseData.responseCode === "00"){
         commit("updateLoading2", false)
+        commit("updateSuccess", responseData.responseCode)
         commit("updateTransactionQuery", responseData)
       }else{
         commit("updateLoading2", false)
+        commit("updateSuccess", responseData.responseCode)
         Swal.fire({title: responseData.responseMessage, icon: 'error'}).then(()=>{})
       }
     }).catch(error => {
