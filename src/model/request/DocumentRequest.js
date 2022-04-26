@@ -2,7 +2,22 @@ class DocumentRequest {
     static createDocument = {
         document:{
             documentUrl: null,
-            documentDocumentTypeId: null,
+            documentDocumentTypeId: null
+        },
+        fileUpload:{
+            username: null,
+            base64: null,
+            region: "us-east-1",
+            source: 'quickgem',
+            s3bucket: 'quikgem-repo'
+        }
+
+    }
+    static updateDocument = {
+        document:{
+            documentId:null,
+            documentDocumentTypeId:null,
+            documentUrl: null
         },
         fileUpload:{
             username: null,
@@ -17,11 +32,7 @@ class DocumentRequest {
     static readDocument = {
         readAll: null
     }
-    static updateDocument = {
-        documentId:null,
-        documentDocumentTypeId:null,
-        documentUrl: null
-    }
+
 
 }
 
