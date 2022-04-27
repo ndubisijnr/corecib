@@ -16,8 +16,8 @@ export default {
     }
   },
   mounted() {
-    if(this.$route.param.referralCode != null)
-      localStorage.referralCode = this.$route.param.referralCode
+    // if(this.$route.param.referralCode != null)
+    //   localStorage.referralCode = this.$route.param.referralCode
   },
 }
 </script>
