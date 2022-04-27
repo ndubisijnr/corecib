@@ -330,7 +330,7 @@
                           <i class="fa fa-info-circle"></i>
                         </div>
                       <div class="text-center">  
-                      <h5>Please upload all {{documents.data.length}} documents </h5>
+                      <!--<h5>Please upload all {{documents.data.length}} documents </h5>-->
                       <b-button @click="currentStep = 1" title="" style="background-color:var(--primary);border:none">Back</b-button>
 
                       </div>
@@ -341,15 +341,18 @@
                         
                               <div  v-if="'data' in documents">
                                 <!-- Card body -->
+
                                 <div class="" style="display:flex;align-items:center;flex-wrap:nowrap">
                                   <div class="" v-for="(doc, index) in documents.data"
                                        :key="index">
                                     <div v-if="'documentStatus' in doc && 'documentUrl' in doc">
+                                      <!--<span>{{progressBarArr[index].value}}</span>-->
                                       <div class="our-team">
+                                        <progress-bar v-show="progressBarArr[index].value"></progress-bar>
                                         <div class="picture">
-                                          <img v-if="doc.documentStatus =='PENDING'" class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-amber.png">
-                                          <img v-else-if="doc.documentStatus =='APPROVED'" class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-green.png">
-                                          <img v-else-if="doc.documentStatus =='REJECTED'" class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-red.png">
+                                          <img v-if="doc.documentStatus =='PENDING'" class="img-fluid img-size " src="https://coregem-imgs.s3.amazonaws.com/document-amber.png">
+                                          <img v-else-if="doc.documentStatus =='APPROVED'" class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-green.png">
+                                          <img v-else-if="doc.documentStatus =='REJECTED'" class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-red.png">
                                         </div>
                                         <div class="team-content">
                                           <h6 class="name">{{doc.documentTypeName}}</h6>
@@ -370,12 +373,13 @@
                                     </div>
                                     <div v-else>
                                       <form @submit.prevent="submitDocument(index, doc)" :id="'form'+index" >
-                                        <p v-show="errorArr[index]" class="form-error-message"> The File is required </p>
+                                        <!--<p v-show="progressBarArr[index]" class="form-error-message"> The File is required </p>-->
                                         <div class="our-team">
+                                          <progress-bar v-show="progressBarArr[index].value"></progress-bar>
                                           <div class="picture">
                                             <label class="pointer">
                                               <input type="file" :ref="'file-input'+index" style="display: none;" accept="application/pdf, image/*" :id="'myfile'+index"  @change="handleImages($event,index,doc,'CREATE')">
-                                              <img class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-grey.png" alt=""/>
+                                              <img class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-grey.png" alt=""/>
                                             </label>
                                           </div>
                                           <div class="team-content mt--2">
@@ -448,8 +452,8 @@ import StepProgress from 'vue-step-progress';
 import 'vue-step-progress/dist/main.css';
 import Swal from "sweetalert2";
 import BaseButton from "../../components/button/BaseButton"
-
-
+import OrganisationRequest from "../../model/request/OrganisationRequest";
+import ProgressBar from "@/components/ProgressBar";
 export default {
   name: "Settings",
   components: {
@@ -458,13 +462,22 @@ export default {
     [DropdownMenu.name]: DropdownMenu,
     ApiKeyDisplayForm,
     BaseButton,
-    'step-progress': StepProgress
+    'step-progress': StepProgress,
+    ProgressBar
   },
   data() {
     return {
-      organisation: JSON.parse(JSON.stringify(StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization))),
+      updateOrganisationModel: OrganisationRequest.updateOrganisation,
       files:[],
-      errorArr:[],
+      selectedItem: {},
+      blacklist: false,
+      show: "first",
+      page: "profile",
+      light: "light",
+      nav: "false",
+      edit: "null",
+      progressBarArr:[],
+      organisation: JSON.parse(JSON.stringify(StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization))),
       mySteps:["Profile", "Document Upload"],
       currentStep:1,
       apikeyModel: ApikeyRequest.regenerateApiKey,
@@ -486,16 +499,45 @@ export default {
         ...mapState({
       userInfo: (state) => state.auth.userInfo,
       loading: (state) => state.auth.loading,
-     documents:(state) => state.document.document
+      loadingDoc: (state) => state.document.loading,
+     //documents:(state) => state.document.document
 
     }),
+    documents: () =>{
+      console.log("progressBarArr")
+      let vm = this
+      let doc = StoreUtils.rootGetters(StoreUtils.getters.document.getDocuments);
+      console.log("progressBarArr",doc.data.length)
+      //vm.progressBarArr = [...Array(doc.data.length)].fill(false)
+      /*for(let i = 0; i < doc.data.length; i++){
+        vm.progressBarArr[i] = false
+        console.log("progressBarArr",i)
+      }*/
+      return doc
+      },
 
     checkInputfield: () => {
       let organization = StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
       return organization
-    }
+    },
+    currentOrganisation(){
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
+    },
 
   },
+  watch:{
+  documents(newValue){
+    console.log("progressBarArrNew",newValue.data.length)
+    this.progressBarArr=[];
+    //this.progressBarArr = [...Array(newValue.data.length)].fill(false)
+    for(let i = 0; i < newValue.data.length; i++){
+      this.progressBarArr.push({
+        value:false
+      })
+      console.log("progressBarArr",i)
+    }
+  }
+},
 
   mounted() {
  this.apikeyModel.organisationId = localStorage.organisationId;
@@ -504,6 +546,7 @@ export default {
         StoreUtils.actions.document.readDocument,
         {readAll:this.readDoc.readAll}
     );
+
     },
   methods: {
     nextStep(){
@@ -519,7 +562,8 @@ export default {
       this.documentModel.fileUpload.base64 = this.files[index]
       this.documentModel.document.documentDocumentTypeId = doc.documentTypeId
       if(action==='UPDATE'){
-        //this.errorArr[index]=true;
+        this.progressBarArr[index].value=true;
+        console.log("Conditions>> ",this.progressBarArr[index].value)
         this.documentModel.document.documentId = doc.documentId
         StoreUtils.dispatch(
             StoreUtils.actions.document.updateDocument,
@@ -527,6 +571,7 @@ export default {
         );
       }
       else{
+        this.progressBarArr[index].value=true;
         StoreUtils.dispatch(
             StoreUtils.actions.document.createDocument,
                 this.documentModel
@@ -764,7 +809,10 @@ export default {
 .pointer {
   cursor: pointer;
 }
-
+.img-size{
+    width: 32px !important;
+    height: 32px !important;
+}
 
 
 </style>

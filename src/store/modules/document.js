@@ -13,6 +13,7 @@ export const getters = {
   getDocument: state => {
     return state.document
   }
+
 }
 
 export const mutations = {
@@ -53,7 +54,7 @@ export const actions = {
           let responseData1 = response1.data
           commit("updateLoading",false)
           if(responseData1.responseCode === "00"){
-            Swal.fire({ text:responseData1.responseMessage, icon:'success'}).then(()=>{
+
               DocumentService.callReadDocumentApi({
                 readAll:"YES"
               }).then(response2 => {
@@ -61,13 +62,14 @@ export const actions = {
                 if(responseData2.responseCode === "00"){
                   commit("updateLoading",false)
                   commit("updateDocument", responseData2)
+                  Swal.fire({ text:responseData2.responseMessage, icon:'success'}).then(()=>{})
                 }
               }).catch(error => {
                 console.log(error)
               })
-            })
+
           }else{
-            Swal.fire({ text:responseData.responseMessage, icon:'error'}).then(()=>{
+            Swal.fire({ text:responseData1.responseMessage, icon:'error'}).then(()=>{
               commit("updateLoading",false)
             })
           }
@@ -91,7 +93,6 @@ export const actions = {
           let responseData1 = response1.data
           commit("updateLoading",false)
           if(responseData1.responseCode === "00"){
-            Swal.fire({ text:responseData1.responseMessage, icon:'success'}).then(()=>{
               DocumentService.callReadDocumentApi({
                 readAll:"YES"
               }).then(response2 => {
@@ -99,13 +100,13 @@ export const actions = {
                 if(responseData2.responseCode === "00"){
                   commit("updateLoading",false)
                   commit("updateDocument", responseData2)
+                  Swal.fire({ text:responseData1.responseMessage, icon:'success'}).then(()=>{})
                 }
               }).catch(error => {
                 console.log(error)
               })
-            })
           }else{
-            Swal.fire({ text:responseData.responseMessage, icon:'error'}).then(()=>{
+            Swal.fire({ text:responseData1.responseMessage, icon:'error'}).then(()=>{
               commit("updateLoading",false)
             })
           }
