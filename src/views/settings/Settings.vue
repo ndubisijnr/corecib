@@ -9,7 +9,9 @@
             <el-tabs type="card" v-model="activeName" @tab-click="handleClick">
               <el-tab-pane id="tab-0" :key="1"  label="Profile">
                 <b-container class="p-3" v-if="!loading">
-                  <b-form class="container p-3 form-group">
+               <div style="width:100%;display:flex;justify-content:center;">
+
+                  <b-form class="container p-3 form-group" style="width:400px">
                     <h3 class="text-center">
                       <i class="fa fa-user-circle profile-settings"></i>
                     </h3>
@@ -59,6 +61,7 @@
                     </div>
                     <base-button title="Update" disabled> </base-button>
                   </b-form>
+               </div>
                 </b-container>
               </el-tab-pane>
 
@@ -70,49 +73,29 @@
                 name="second"
                 label="Business Profile"
               >
-                <div class="m-3" style="display: flex">
-                  <div>
-                    <div class="form-check" @click="showprofile()">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault1"
-                      />
-                      <label class="form-check-label" for="flexRadioDefault1">
-                        Profile
-                      </label>
-                    </div>
-                    <i class="fas fa-ellipsis-v"></i>
-                    <div class="form-check" @click="showcontact()">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault2"
-                      />
-                      <label class="form-check-label" for="flexRadioDefault2">
-                        Contact
-                      </label>
-                    </div>
-                    <i class="fas fa-ellipsis-v"></i>
-                    <div class="form-check" @click="showdoc()">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="flexRadioDefault"
-                        id="flexRadioDefault3"
-                      />
-                      <label class="form-check-label" for="flexRadioDefault3">
-                        Document
-                      </label>
-                    </div>
+                <div class="m-3">
+                   
+                  <div class="d-flex w-100">
+                     <div style="width:18%">
+                      <step-progress :steps="mySteps" 
+                      :active-thickness=1 
+                      :passive-thickness=1 
+                      :current-step="currentStep"
+                        icon-class="fa fa-check" 
+                        active-color="var(--primary)"
+                        :line-thickness=1
+                        
+                        >
+                      </step-progress>
+                      
+
+
                   </div>
-                  <div class="d-flex justify-content-center w-100">
-                    <div class="">
+                    <div style="width:70%;display:flex;justify-content:center;" v-if="currentStep == 1 && organisation.organisationCity == null" >
                       <form
                         class="form-group"
                         @submit.prevent="updateOrginasation()"
+                        style="width:400px"
                       >
                         <h3 class="text-center">
                           <i class="fa fa-user-circle profile-settings"></i>
@@ -124,10 +107,11 @@
                         <div>
                           <div class="form-floating mb-3">
                             <input
-                              type="email"
+                              type="text"
                               class="form-control"
                               id="floatingInput2"
                               placeholder="name@example.com"
+                              v-model="organisation.organisationName"
                               readonly
                             />
                             <label for="floatingInput2">Business Name</label>
@@ -138,31 +122,22 @@
                               class="form-control"
                               id="floatingInput"
                               placeholder="name@example.com"
-                            
+                              v-model="organisation.organisationEmail"
                               readonly
                             />
                             <label for="floatingInput">Company Email</label>
                           </div>
                           <div class="form-floating mb-3">
                             <input
-                              type="email"
+                              type="tel"
                               class="form-control"
                               id="floatingInput1"
                               placeholder="Country"
-                            
+                              v-model="organisation.organisationPhone"
+
                               readonly
                             />
                             <label for="floatingInput1">Company Phone</label>
-                          </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="email"
-                              class="form-control"
-                              id="floatingInput1"
-                              placeholder="Country"
-                              readonly
-                            />
-                            <label for="floatingInput1">Country</label>
                           </div>
                         </div>
 
@@ -173,7 +148,8 @@
                               type="text"
                               class="form-control"
                               id="floatingInput2"
-                              placeholder="!004 Federal Housing Estate, Victoral Island"
+                              placeholder="1004 Federal Housing Estate, Victoral Island"
+                              v-model="organisation.organisationAddress"
                               required
                             />
                             <label for="floatingInput2">Address</label>
@@ -184,6 +160,7 @@
                               class="form-control"
                               id="floatingInput1"
                               placeholder="Ikeja"
+                               v-model="organisation.organisationCity"
                               required
                             />
                             <label for="floatingInput1">City</label>
@@ -194,7 +171,7 @@
                               class="form-control"
                               id="floatingInput1"
                               placeholder="Lagos"
-                             
+                               v-model="organisation.organisationState"
                               required
                             />
                             <label for="floatingInput1">State</label>
@@ -204,6 +181,8 @@
                               class="form-select"
                               aria-label="Default select example"
                               required
+                              v-model="organisation.organisationType"
+
                             >
                               <option>FINTECH</option>
                             </select>
@@ -211,58 +190,80 @@
                               >Organization Type</label
                             >
                           </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder="RC 291837820"
-                             
-                              required
-                            />
-                            <label for="floatingInput"
-                              >Business Registration No</label
-                            >
-                          </div>
+                         
 
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput1"
-                              placeholder="wwww.websiteLink.com"
-                             
-                            />
-                            <label for="floatingInput1">Company Website</label>
-                          </div>
-                          <div class="form-floating mb-3">
-                            <select
-                              class="form-select"
-                              aria-label="Default select example"
-                             
-                              required
-                            >
-                              <option>FINTECH</option>
-                            </select>
-                            <label for="floatingInput3"
-                              >Organisation Industry Type</label
-                            >
-                          </div>
-                          <base-button title="Update" :loading="loading">
+        
+                         <div style="display:flex; justify-content:space-between">
+                          <base-button title="Update" :loading="loading" :disabled="true ? checkInputfield.organisationWebsite : false" :class="{'not-allowed' : checkInputfield.organisationWebsite}"> 
                           </base-button>
+                          <b-button @click="nextStep()" title="" style="background-color:grey;border:none">Next</b-button>
+                         </div>
                         </div>
                       </form>
 
-                      <!-- third phase -->
-                      <div>
-                          <div class="form-floating mb-3 card">
+                    </div>
+
+                    <!-- show edited form -->
+                  <div style="width:70%;display:flex;justify-content:center;" v-if="currentStep == 1 && organisation.organisationCity !== null" >
+                      <form
+                        class="form-group"
+                        style="width:400px"
+                      >
+                        <h3 class="text-center">
+                          <i class="fa fa-user-circle profile-settings"></i>
+                        </h3>
+                        <h6 class="text-center">
+                          <b>Business Details </b>
+                          <i class="fa fa-info-circle"></i>
+                        </h6>
+                        <div>
+                          <div class="form-floating mb-3">
                             <input
-                              type="text" 
+                              type="text"
+                              class="form-control"
+                              id="floatingInput2"
+                              placeholder="name@example.com"
+                              v-model="organisation.organisationName"
+                              readonly
+                            />
+                            <label for="floatingInput2">Business Name</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="email"
+                              class="form-control"
+                              id="floatingInput"
+                              placeholder="name@example.com"
+                              v-model="organisation.organisationEmail"
+                              readonly
+                            />
+                            <label for="floatingInput">Company Email</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input
+                              type="tel"
+                              class="form-control"
+                              id="floatingInput1"
+                              placeholder="Country"
+                              v-model="organisation.organisationPhone"
+
+                              readonly
+                            />
+                            <label for="floatingInput1">Company Phone</label>
+                          </div>
+                        </div>
+
+                        <!-- Second layer -->
+                        <div class="">
+                          <div class="form-floating mb-3">
+                            <input
+                              type="text"
                               class="form-control"
                               id="floatingInput2"
                               placeholder="1004 Federal Housing Estate, Victoral Island"
-                        
+                              v-model="organisation.organisationAddress"
                               readonly
+                              required
                             />
                             <label for="floatingInput2">Address</label>
                           </div>
@@ -272,7 +273,9 @@
                               class="form-control"
                               id="floatingInput1"
                               placeholder="Ikeja"
-                              readonly
+                               v-model="organisation.organisationCity"
+                               readonly
+                              required
                             />
                             <label for="floatingInput1">City</label>
                           </div>
@@ -282,8 +285,9 @@
                               class="form-control"
                               id="floatingInput1"
                               placeholder="Lagos"
-                             
-                              readonly
+                               v-model="organisation.organisationState"
+                               readonly
+                              required
                             />
                             <label for="floatingInput1">State</label>
                           </div>
@@ -291,7 +295,10 @@
                             <select
                               class="form-select"
                               aria-label="Default select example"
-                              disabled
+                              required
+                              v-model="organisation.organisationType"
+                              readonly
+
                             >
                               <option>FINTECH</option>
                             </select>
@@ -299,42 +306,55 @@
                               >Organization Type</label
                             >
                           </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder="RC 291837820"
-                             
-                              readonly
-                            />
-                            <label for="floatingInput"
-                              >Business Registration No</label
-                            >
-                          </div>
-                      </div>
+                          
 
-                    <div class="" >
-                      <h4>Documents</h4>
-                      <h5>Please upload all documents {{documents.data.length}}</h5>
+        
+                         <div style="display:flex; justify-content:space-between">
+                          <!-- <base-button title="Update" :loading="loading" :disabled="true ? checkInputfield.organisationWebsite : false" :class="{'not-allowed' : checkInputfield.organisationWebsite}"> 
+                          </base-button> -->
+                          <b-button @click="nextStep()" title="" style="background-color:grey;border:none">Next</b-button>
+                         </div>
+                        </div>
+                      </form>
+
+                    </div>
+                    <!-- end show edited form -->
+
+                      <!-- third phase -->
+                    
+
+                    <div style="width:70%;display:flex;justify-content:center;" v-else>
+                      <div>
+                        <div class="text-center">
+                          <i class="fa fa-user-circle profile-settings"></i>
+                          <br>
+                          <b>Business Details </b>
+                          <i class="fa fa-info-circle"></i>
+                        </div>
+                      <div class="text-center">  
+                      <!--<h5>Please upload all {{documents.data.length}} documents </h5>-->
+                      <b-button @click="currentStep = 1" title="" style="background-color:var(--primary);border:none">Back</b-button>
+
+                      </div>
                       <br />
-                      <div class="card-body">
-                        <div v-show="loading" ><p class="text-center"><button class="btn btn-secondary"><span class="spinner-border" ></span>
-                        </button>hhh</p></div>
+                      <div class="">
+                        <span :class="{'spinner-loader':loading}"></span>
                         <div>
-                          <div class="row">
-                            <div class="col">
+                        
                               <div  v-if="'data' in documents">
                                 <!-- Card body -->
-                                <div class="row">
-                                  <div class="col-lg-6 col-md-6 col-sm-6 col-12" v-for="(doc, index) in documents.data"
+
+                                <div class="" style="display:flex;align-items:center;flex-wrap:nowrap">
+                                  <div class="" v-for="(doc, index) in documents.data"
                                        :key="index">
                                     <div v-if="'documentStatus' in doc && 'documentUrl' in doc">
+                                      <!--<span>{{progressBarArr[index].value}}</span>-->
                                       <div class="our-team">
+                                        <progress-bar v-show="progressBarArr[index].value"></progress-bar>
                                         <div class="picture">
-                                          <img v-if="doc.documentStatus =='PENDING'" class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-amber.png">
-                                          <img v-else-if="doc.documentStatus =='APPROVED'" class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-green.png">
-                                          <img v-else-if="doc.documentStatus =='REJECTED'" class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-red.png">
+                                          <img v-if="doc.documentStatus =='PENDING'" class="img-fluid img-size " src="https://coregem-imgs.s3.amazonaws.com/document-amber.png">
+                                          <img v-else-if="doc.documentStatus =='APPROVED'" class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-green.png">
+                                          <img v-else-if="doc.documentStatus =='REJECTED'" class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-red.png">
                                         </div>
                                         <div class="team-content">
                                           <h6 class="name">{{doc.documentTypeName}}</h6>
@@ -355,12 +375,13 @@
                                     </div>
                                     <div v-else>
                                       <form @submit.prevent="submitDocument(index, doc)" :id="'form'+index" >
-                                        <p v-show="errorArr[index]" class="form-error-message"> The File is required </p>
+                                        <!--<p v-show="progressBarArr[index]" class="form-error-message"> The File is required </p>-->
                                         <div class="our-team">
-                                          <div class="pic">
+                                          <progress-bar v-show="progressBarArr[index].value"></progress-bar>
+                                          <div class="picture">
                                             <label class="pointer">
                                               <input type="file" :ref="'file-input'+index" style="display: none;" accept="application/pdf, image/*" :id="'myfile'+index"  @change="handleImages($event,index,doc,'CREATE')">
-                                              <img class="img-fluid" src="https://coregem-imgs.s3.amazonaws.com/document-grey.png" alt="" />
+                                              <img class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-grey.png" alt=""/>
                                             </label>
                                           </div>
                                           <div class="team-content mt--2">
@@ -382,14 +403,13 @@
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-
+                     
 
                     </div>
+                    </div>
+                   
                   </div>
                   </div>
-                </div>
               </el-tab-pane>
 
               <el-tab-pane
@@ -430,10 +450,12 @@ import { DropdownMenu, DropdownItem, Dropdown } from "element-ui";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import ApikeyRequest from "../../model/request/ApiKeyRequest";
 import DocumentRequest from "../../model/request/DocumentRequest";
-import DocumentResponse from "../../model/reponse/DocumentResponse";
-
+import StepProgress from 'vue-step-progress';
+import 'vue-step-progress/dist/main.css';
+import Swal from "sweetalert2";
 import BaseButton from "../../components/button/BaseButton"
 import OrganisationRequest from "../../model/request/OrganisationRequest";
+import ProgressBar from "@/components/ProgressBar";
 export default {
   name: "Settings",
   components: {
@@ -442,15 +464,13 @@ export default {
     [DropdownMenu.name]: DropdownMenu,
     ApiKeyDisplayForm,
     BaseButton,
-
-    //LoadingPanel,
-    //NoPage
+    'step-progress': StepProgress,
+    ProgressBar
   },
   data() {
     return {
       updateOrganisationModel: OrganisationRequest.updateOrganisation,
       files:[],
-      activeName: "first",
       selectedItem: {},
       blacklist: false,
       show: "first",
@@ -458,12 +478,17 @@ export default {
       light: "light",
       nav: "false",
       edit: "null",
-      errorArr:[],
+      progressBarArr:[],
+      organisation: JSON.parse(JSON.stringify(StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization))),
+      mySteps:["Profile", "Document Upload"],
+      currentStep:1,
       apikeyModel: ApikeyRequest.regenerateApiKey,
       documentModel: DocumentRequest.createDocument,
       readDoc: DocumentRequest.readDocument,
   };
   },
+
+  props:['Step 1', 'Step 2','icon-class','active-color','active-thickness','passive-thickness','line-thickness'],
   computed: {
     sortOptions() {
       // Create an options list from our fields
@@ -473,37 +498,74 @@ export default {
           return { text: f.label, value: f.key };
         });
     },
-
-    ...mapState({
+        ...mapState({
       userInfo: (state) => state.auth.userInfo,
       loading: (state) => state.auth.loading,
-      organisation:state => state.auth.Orginisation,
-     documents:(state) => state.document.document
+      loadingDoc: (state) => state.document.loading,
+     //documents:(state) => state.document.document
 
     }),
+    documents: () =>{
+      console.log("progressBarArr")
+      let vm = this
+      let doc = StoreUtils.rootGetters(StoreUtils.getters.document.getDocuments);
+      console.log("progressBarArr",doc.data.length)
+      //vm.progressBarArr = [...Array(doc.data.length)].fill(false)
+      /*for(let i = 0; i < doc.data.length; i++){
+        vm.progressBarArr[i] = false
+        console.log("progressBarArr",i)
+      }*/
+      return doc
+      },
+
+    checkInputfield: () => {
+      let organization = StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
+      return organization
+    },
+    currentOrganisation(){
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
+    },
+
   },
+  watch:{
+  documents(newValue){
+    console.log("progressBarArrNew",newValue.data.length)
+    this.progressBarArr=[];
+    //this.progressBarArr = [...Array(newValue.data.length)].fill(false)
+    for(let i = 0; i < newValue.data.length; i++){
+      this.progressBarArr.push({
+        value:false
+      })
+      console.log("progressBarArr",i)
+    }
+  }
+},
 
   mounted() {
-    console.log(this.apikeyModel)
-    this.apikeyModel.organisationId = localStorage.organisationId;
-    console.log("hello before", this.apikeyModel)
-
-    this.apikeyModel.organisationId = "1";
+ this.apikeyModel.organisationId = localStorage.organisationId;
     this.readDoc.readAll = 'YES';
     StoreUtils.dispatch(
         StoreUtils.actions.document.readDocument,
         {readAll:this.readDoc.readAll}
     );
-    console.log("hello after")
+
     },
   methods: {
+    nextStep(){
+      if(this.organisation.organisationState != null){
+        this.currentStep = 2
+      }else{
+       Swal.fire({ text: "Please Fill Out All required Field", icon: 'error', }).then(() => { })
+      }
+    },
     submitDocument(index,doc, action){
       console.log('Testing'+index);
       this.documentModel.fileUpload.username = `${this.currentOrganisation.organisationName}_${doc.documentTypeName.replace(/[^a-zA-Z ]/g, "")}_${Math.random()} `
       this.documentModel.fileUpload.base64 = this.files[index]
       this.documentModel.document.documentDocumentTypeId = doc.documentTypeId
       if(action==='UPDATE'){
-        //this.errorArr[index]=true;
+        this.progressBarArr[index].value=true;
+        console.log("Conditions>> ",this.progressBarArr[index].value)
         this.documentModel.document.documentId = doc.documentId
         StoreUtils.dispatch(
             StoreUtils.actions.document.updateDocument,
@@ -511,6 +573,7 @@ export default {
         );
       }
       else{
+        this.progressBarArr[index].value=true;
         StoreUtils.dispatch(
             StoreUtils.actions.document.createDocument,
                 this.documentModel
@@ -541,44 +604,33 @@ export default {
     regenerateApiKey() {
       StoreUtils.dispatch(StoreUtils.actions.apiKey.regenerateApiKey, this.apikeyModel)
     },
-   
+
     closeModal0() {
       this.modals.modal0 = false;
       this.blacklist = false;
     },
 
     updateOrginasation() {
-      this.updateOrganisationModel.organisationId = localStorage.organisationId
+      this.organisation.organisationId = localStorage.organisationId
+      this.organisation.organisationLogo = "company Logo"
       StoreUtils.dispatch(
         StoreUtils.actions.auth.updateOrganisation,
-        this.updateOrganisationModel
-      ).then(() => {
-        this.edit = "third";
-        console.log(this.updateOrganisationModel)
-      });
+        this.organisation
+      ).then(()=>{
+        localStorage.taged = "YES"
+      })
+      console.log( this.organisation)
     },
     file() {
       this.edit = "second";
     },
 
-    showprofile() {
-      this.edit = "first";
-      document.getElementById("flexRadioDefault2").classList.add("bg-success");
-    },
-    showcontact() {
-      this.edit = "second";
-      document.getElementById("flexRadioDefault1").classList.add("bg-success");
-    },
     handleClick(tab, event) {
       //console.log(tab.$vnode.key);
       console.log(tab.label);
       //console.log(tab, event);
     },
-    showdoc(){
-      this.edit = 'third'
-      document.getElementById("flexRadioDefault1").classList.add("bg-success");
-    },
-        
+ 
     readColumn() {
       this.$store.dispatch(
         "readColumn",
@@ -611,6 +663,10 @@ export default {
   font-weight: 700;
 }
 
+.not-allowed{
+  cursor:not-allowed;
+}
+
 .center-block {
   width: 600px;
   height: 560px;
@@ -622,6 +678,122 @@ export default {
   to {
     transform: rotate(360deg);
   }
+}
+
+.our-team {
+  padding: 40px;
+  width: 100%;
+  height: 25vh;
+  background-color: #ffffff80;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+  border-radius:5%;
+  box-shadow: 0 0 1rem 0 rgb(136 152 170 / 15%);
+}
+
+.our-team .picture {
+  display: inline-block;
+  /* height: 20%;
+  width: 20%; */
+  margin-bottom: 10px;
+  z-index: 1;
+}
+
+.our-team .picture::before {
+  content: "";
+  /* width: 20%; */
+  height: 0;
+  border-radius: 0%;
+  background-color: #1369ce;
+  position: absolute;
+  bottom: 135%;
+  right: 0;
+  left: 0;
+  opacity: 0.9;
+  transform: scale(3);
+  transition: all 0.3s linear 0s;
+}
+
+
+.our-team .pic img {
+  /* width: 10%;
+  height: 20%; */
+  border-radius: 0%;
+  transform: scale(1);
+  transition: all 0.9s ease 0s;
+}
+
+.our-team .picture img {
+  width: 50%;
+  height: 50%;
+  border-radius: 0%;
+  transform: scale(1);
+  transition: all 0.9s ease 0s;
+}
+
+
+.our-team .title {
+  display: block;
+  font-size: 15px;
+  color: #4e5052;
+  text-transform: capitalize;
+}
+
+.our-team .social {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #56585c;
+  position: absolute;
+  bottom: -100px;
+  left: 0;
+  transition: all 0.5s ease 0s;
+}
+
+.our-team:hover .social {
+  bottom: 0;
+}
+
+.our-team .social li {
+  display: inline-block;
+}
+
+.our-team .social li a {
+  display: block;
+  padding: 10px;
+  font-size: 17px;
+  color: white;
+  transition: all 0.3s ease 0s;
+  text-decoration: none;
+}
+
+.our-team .social li a:hover {
+  color: #56585c;
+  background-color: #f7f5ec;
+}
+
+.card-head:first-child {
+  border-radius: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 0;
+}
+.card-head {
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 0;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.form-error-message {
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #fb6340;
+}
+
+.top-area {
+  display: flex;
+  margin-top: 0px !important;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .spinner-border {
@@ -639,7 +811,10 @@ export default {
 .pointer {
   cursor: pointer;
 }
-
+.img-size{
+    width: 32px !important;
+    height: 32px !important;
+}
 
 
 </style>

@@ -99,6 +99,9 @@ class StoreUtils {
       getorganisationCountry:"auth/getorganisationCountry"
 
     },
+    document:{
+      getDocuments:"document/getDocument"
+    }
   };
 
   static dispatch(actionToDispatch, payload) {
