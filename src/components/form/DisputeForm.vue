@@ -16,7 +16,7 @@
         <div class=""></div>
       </div>
       <div class="card-body">
-        <form role="form" @submit.prevent="logDispute()">
+        <form role="form" @submit.prevent="transactionsQuery()" v-if="status==false">
           <div class="form-floating mb-3">
             <input
               type="tel"
@@ -27,7 +27,28 @@
             />
             <label>Session ID or Transaction Refrenence</label>
           </div>
-          <template v-if="status == true">
+              <b-button
+            type="submit"
+            v-if="status == false"
+            style="background-color:var(--primary);border:none;"
+          >
+            <span v-if="!loading2">Proceed</span>
+            <span :class="{ 'spinner-border': loading2 }" :disabled="loading2"></span
+          ></b-button>
+
+        </form>
+          
+          <form role="form" @submit.prevent="logDispute()" v-if="status == true">
+               <div class="form-floating mb-3">
+            <input
+              type="tel"
+              class="form-control"
+              placeholder="Session ID or Transaction Refrenence"
+              required
+              v-model="transactionsQuerymodel.reference"
+            />
+            <label>Session ID or Transaction Refrenence</label>
+          </div>
             <div class="form-floating mb-3">
               <select
                 class="form-select"
@@ -74,7 +95,7 @@
             </div>
             <div class="form-floating mb-3">
               <input
-                type="tel"
+                type="number"
                 class="form-control"
                 placeholder="Organasation ID"
                 v-model="createDisputemodel.disputeOrgId"
@@ -83,16 +104,7 @@
               />
               <label>Organasation ID</label>
             </div>
-          </template>
-          <b-button
-            type="button"
-            v-if="status == false"
-            @click="transactionsQuery()"
-          >
-            <span v-if="!loading2">Proceed</span>
-            <span :class="{ 'spinner-border': loading2 }" :disabled="loading2"></span
-          ></b-button>
-          <b-button type="submit" v-if="status == true" @click="logDispute()"
+          <b-button type="submit" v-if="status == true"  style="background-color:var(--primary);border:none;"
             ><span v-if="!loading2">Proceed</span>
             <span :class="{ 'spinner-border': loading2 }" :disabled="loading2"></span
           ></b-button>
@@ -142,7 +154,6 @@ export default {
           //clear create dispute form
           this.createDisputemodel={disputeComment: null,disputeSessionId: null},this.transactionsQuerymodel={}
           this.closeModal();
-          this.status=false
         });
     },
 
@@ -153,32 +164,37 @@ export default {
         this.transactionsQuerymodel
       ).then(() => {
         //update form to true to create dispute
-        this.status = true;
+        if(this.success == "00"){ this.status = true;}
+        else{this.status = false}
       });
+     
     },
   },
 
   computed: {
     ...mapState({
       loading2: (state) => state.dispute.loading2,
+      userinfo:(state) => state.auth.userInfo,
       //get's oraganisation ID from localstorage
-      orgnasationId: () => {
-        return localStorage.organisationId;
-      },
+      currentOrganisationId: ()=> {return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)},
       transactionquery: (state) => state.dispute.transactionsquery,
       success: (state) => state.dispute.success,
     }),
   },
 
   watch: {
-    success(newvalue) {
+    success(oldValue, newvalue) {
       //watch for change to close modal form and update dispute table 
-      if (newvalue) {
-        this.disputeReadModel.disputeId = localStorage.getItem("organisationId");
-        StoreUtils.dispatch(
-          StoreUtils.actions.dispute.updateDisputes,
-          this.disputeReadModel
-        );
+      if (oldValue == "00") {
+        oldValue = null
+        if(newvalue == "00"){
+            this.disputeReadModel.disputeId = localStorage.organisationId;
+            StoreUtils.dispatch(
+              StoreUtils.actions.dispute.updateDisputes,
+              this.disputeReadModel
+            );
+            this.closeModal()
+          }
       }
     },
   },

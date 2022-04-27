@@ -4,12 +4,12 @@
             <span  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
           {{(loader)?'':'loading' }}...
         </button>
-      <button v-else :style="styles" class="btn">{{title}} <component :is="icon" style="height: 15px;"/></button>
+      <button v-else :style="styles" class="btn" :disabled="disabled">{{title}} <component :is="icon" style="height: 15px;"/></button>
     </span>
 </template>
 <script>
     export default {
-        props:['loading','title','loader','styles', 'icon'],
+        props:['loading','title','loader','styles', 'icon','disabled'],
         name: "BaseButton"
     }
 </script>

@@ -55,7 +55,7 @@
             </div>
           </div>
         </div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-end">
           <base-input
               label="Search"
               input-classes="form-control-lg"
@@ -65,7 +65,7 @@
               class="ml-2"
           >
           </base-input>&nbsp;
-           <base-button :loading="loading" class="mt-3" icon="b-icon-search"  title="Search"/>
+           <base-button :loading="loading" icon="b-icon-search"  title="Search"/>
         </div>
       </div>
     </b-form>
@@ -102,8 +102,11 @@ export default {
         {value: "today", label: "Today"},
         {value: "thisyear", label: "This Year"},
       ],
-      startDate: "",
-      endDate: "",
+      model:{ 
+              startDate: "",
+              endDate: ""
+              },
+     
       type: "",
       searchModel: WalletRequest.readWallet,
      
@@ -225,8 +228,8 @@ export default {
       return model;
     },
     fetchResult() {
-      this.searchModel.endDate = this.searchModel.endDate.split("T")[0]
-      this.searchModel.startDate = this.searchModel.startDate.split("T")[0]
+      this.searchModel.endDate = this.model.endDate.split("T")[0]
+      this.searchModel.startDate = this.model.startDate.split("T")[0]
       if (this.module === SearchModuleUtil.ALL_TRANSACTION) {
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
@@ -240,7 +243,12 @@ export default {
         StoreUtils.commit(StoreUtils.mutations.virtualAccount.updateVirtualAccount, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount, this.searchModel);
         console.log("hello VIRTUAL_ACCOUNT", this.searchModel)
-      } else {
+      } else if (this.module === SearchModuleUtil.WALLET_TRANSACTION) {
+        StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
+        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
+        console.log("hello WALLET_TRANSACTION", this.searchModel)
+      } 
+       else {
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
         console.log("hello Something else", this.searchModel)

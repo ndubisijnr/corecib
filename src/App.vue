@@ -1,5 +1,6 @@
 <template>
   <span>
+    <span class="support"><i class="fas fa-headset"></i> Support</span>
     <dashboard-layout v-if="layout === 'dashboard-layout'"></dashboard-layout>
     <auth-layout v-else></auth-layout>
   </span>
@@ -25,7 +26,23 @@ export default {
 </script>
 
 <style>
+:root{
+  --primary: window.__env.app.primaryColor
+}
 
+.support{
+  position: fixed;
+  background-color: var(--primary);
+  right: 100px;
+  width: 100px;
+  padding: 10px;
+  text-align: center;
+  bottom: 40px;
+  border-radius: 30px;
+  z-index: 1;
+  color: white;
+  cursor: pointer;
+}
 
 </style>
 
