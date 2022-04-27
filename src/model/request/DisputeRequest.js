@@ -7,7 +7,7 @@ class DisputeRequest {
         disputeTrnType: "NA",
         disputeIssueType: null,
         disputeComment: null,
-        disputeRemark: "Transaction",
+        disputeRemark: null,
         disputeOrgId: null
 
     }

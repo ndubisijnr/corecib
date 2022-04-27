@@ -78,9 +78,9 @@ export const actions = {
     commit("updateLoading", true)
     return AuthService.callLogonApi(payload)
       .then(response => {
-        commit("updateLoading", false)
         let responseData = response.data;
         if (responseData.responseCode === "00") {
+          commit("updateLoading", false)
           localStorage.token = responseData.token;
           commit("updateToken", responseData.token);
           if (!localStorage.organisationId) localStorage.organisationId = responseData.organisations[0].organisationId
@@ -91,7 +91,9 @@ export const actions = {
           commit("updateUserInfo", responseData);
           router.push({ name: "GetStarted" }).then(() => { })
         }
-        else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
+        else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {     
+                commit("updateLoading", false)
+      })
       }).catch((error) => {
         commit("updateLoading", false);
         console.log(error)

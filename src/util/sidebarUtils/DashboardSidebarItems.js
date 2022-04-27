@@ -8,10 +8,10 @@ export default
             icon:'ni ni-support-16 text-primary',
             path:'/dashboard/get-started'
         },
-        {
-            name:'Dashboard',
-            icon:'ni ni-support-16 text-primary',
-            path:'/dashboard/dashboard'
-        }
+        // {
+        //     name:'Dashboard',
+        //     icon:'ni ni-support-16 text-primary',
+        //     path:'/dashboard/dashboard'
+        // }
     ]
 };

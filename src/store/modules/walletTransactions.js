@@ -44,6 +44,7 @@ export const actions = {
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
         commit("updateAllWalletTransactions", responseData)
+        commit("updateWalletTransactions", responseData.data)
       }
     }).catch(error => {
       commit("updateLoading", false)

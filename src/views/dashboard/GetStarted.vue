@@ -22,104 +22,19 @@
           </div>
           <div class="mt-3 row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-              <div class="onboarding-cards">
-                <div class="onboarding-card">
-                  <div class="onboarding-card-icon">
-                    <svg
-                      width="25"
-                      height="25"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M4.5 15.5s1-1 4-1 5 2 8 2 4-1 4-1v-12s-1 1-4 1-5-2-8-2-4 1-4 1v12zM4.5 22.5v-7"
-                        stroke="#000"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                    </svg>
-                  </div>
-                  <h5 class="onboarding-card-description">
-                    Submit compliance details to accept live payments
-                  </h5>
-                  <base-button style="background-color: #3F88C5; color: white;"
-                    size="md"
-                    outline
-                    class="mt-3 btn btn-primary"
-                    @click="getbiz()"
-                  >
-                    Activate a Business
-                  </base-button>
-                </div>
-                <div class="onboarding-card">
-                  <div class="onboarding-card-icon">
-                    <svg
-                      width="25"
-                      height="25"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M18.5 21.5a3 3 0 100-6 3 3 0 000 6zM6.5 9.5a3 3 0 100-6 3 3 0 000 6zM13.5 6.5h3a2 2 0 012 2v7M6.5 9.5v12"
-                        stroke="#000"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                    </svg>
-                  </div>
-                  <h5 class="onboarding-card-description">
-                    Learn what you can do with the BizGem Dashboard
-                  </h5>
-                  <base-button style="background-color: #3F88C5; color: white;" size="md" outline class="mt-3 btn btn-primary">
-                    Take a tour
-                  </base-button>
-                </div>
-                <div class="onboarding-card">
-                  <div class="onboarding-card-icon">
-                    <svg
-                      width="25"
-                      height="25"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M12.5 22.5c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10z"
-                        stroke="#000"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                      <path
-                        d="M12.5 16.5a4 4 0 100-8 4 4 0 000 8zM5.43 5.43l4.24 4.24M15.33 15.33l4.24 4.24M15.33 9.67l4.24-4.24M15.33 9.67l3.53-3.53M5.43 19.57l4.24-4.24"
-                        stroke="#000"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                    </svg>
-                  </div>
-                  <h5 class="onboarding-card-description">
-                    Find answers to questions you might have or get in touch
-                  </h5>
-                  <base-button style="background-color: #3F88C5; color: white;" size="md" outline class="mt-3 btn btn-primary">
-                    Go to Support
-                  </base-button>
-                </div>
-              </div>
-
               <div class="container mt-3 d-flex justify-content-center">
-                <div class="card bg-white p-3">
-                  <h3 text-center>Your Test Key</h3>
-                  <p>
-                    Also available in
-                    <router-link to="/settings/settings"
-                      ><span class="text-primary" style="cursor: pointer"
-                        >Settings > API Keys & Webhooks</span
-                      ></router-link
-                    >
-                  </p>  
+                <div class="bg-white p-3">
+                  <div class="text-center">
+                    <h3 text-center>Your Test Key</h3>
+                    <p>
+                      Also available in
+                      <router-link to="/settings/settings"
+                        ><span class="text-primary" style="cursor: pointer"
+                          >Settings > API Keys & Webhooks</span
+                        ></router-link
+                      >
+                    </p>  
+                  </div>
                   <api-form></api-form>
                 </div>
               </div>

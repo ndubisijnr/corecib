@@ -43,7 +43,7 @@ export const actions = {
   },
 
   updateVirtualaccountTransactions: ({commit, state}, payload = VirtualAccountRequest.readVirtualAccountTransactions) =>{
-    if (state.virtualaccounttransaction.length < 1) commit("updateLoading", true)
+    commit("updateLoading", true)
     return VirtualAccountService.callReadVirtualAccountTransactionApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)

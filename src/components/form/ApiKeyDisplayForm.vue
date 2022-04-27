@@ -42,15 +42,7 @@
 
           />
         </div>
-        <!--<label class="form-label mt-2 pr-4">{{ testLive }} Webhook </label>
-        <div class="form-floating">
-          <input
-            type="text"
-            class="form-control"
-            v-model="webHook"
-            required
-          />
-        </div>-->
+  
         <label class="form-label mt-2 pr-4">{{ testLive }} Authorization Header </label>
         <div class="row">
           <div class="col-5">
@@ -78,7 +70,7 @@
         </div>
       <div class="text-center mt-3">
         <button id="submitBtn" class="btn-login mt-1" native-type="submit" :disabled="loading">
-          Submit <span class="span-loader" :class="{ 'spinner-border': loading }"></span>
+          Send <span class="span-loader" :class="{ 'spinner-border': loading }"></span>
         </button>
       </div>
     </div>
@@ -163,12 +155,12 @@ export default {
   height: 20px !important ;
 }
 .btn-login {
-  width: 200px;
-  height: 45px;
+  width: 332px;
+  height: 43px;
   left: 51px;
   top: 601px;
 
-  background: #053c57;
+  background: var(--primary);
   border-radius: 25px;
   border: none;
   color: white;

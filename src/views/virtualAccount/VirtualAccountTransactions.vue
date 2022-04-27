@@ -77,8 +77,8 @@ export default {
 
   computed: {
     ...mapState({
-        loading: (state) => state.walletTransactions.loading,
-       virtualAccounttransactions: (state) => state.walletTransactions.walletTransactions,
+        loading: (state) => state.virtualAccount.loading,
+       virtualAccounttransactions: (state) => state.virtualAccount.virtualaccounttransaction,
     }),
   },
 

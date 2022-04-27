@@ -7,6 +7,7 @@ export const state = {
   loading: false,
   loading2:false,
   success:false,
+  status:'false',
   disputes: DisputeResponse.disputeRead,
   transactionsquery:{}
 }
@@ -21,6 +22,9 @@ export const mutations = {
   },
   updateSuccess: (state, payload) => {
     state.success = payload
+  },
+  updateStatus:(state, payload) => {
+     state.status = payload
   },
   updateDisputes: (state, payload) => {
     state.disputes = payload
@@ -53,10 +57,12 @@ export const actions = {
       if (responseData.responseCode === "00") {
         commit("updateLoading2", false)
         Swal.fire({title: responseData.responseMessage, icon: 'success'}).then(()=>{
+          commit("updateStatus", 'read')
         })
       }
       else {
         commit("updateLoading2", false)
+        commit("updateStatus", 'true')
         Swal.fire({title:responseData.responseMessage,icon:'error'}).then(()=>{})
       }
     })
@@ -73,11 +79,12 @@ export const actions = {
       let responseData = response.data
       if(responseData.responseCode === "00"){
         commit("updateLoading2", false)
-        commit("updateSuccess", responseData.responseCode)
+        commit("updateStatus", 'true')
         commit("updateTransactionQuery", responseData)
       }else{
         commit("updateLoading2", false)
         commit("updateSuccess", responseData.responseCode)
+        commit("updateStatus", 'false')
         Swal.fire({title: responseData.responseMessage, icon: 'error'}).then(()=>{})
       }
     }).catch(error => {

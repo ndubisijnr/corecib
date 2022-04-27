@@ -18,7 +18,7 @@
           <h4 v-for="(organisation, index) in organisationList" :key="index" class="link-drop" @click="getId(organisation)">
             {{ organisation.organisationName }}
           </h4>
-          <base-button size="md" outline @click="addBusiness()" style="color:white; border:solid white;"> Add a Business
+          <base-button size="md" outline @click="alert('comming soon!')" style="color:white; border:solid white;"> Add a Business
           </base-button>
           <!-- <button class="btn btn-primary w-100 mt-2" >Add a Business</button> -->
         </div>

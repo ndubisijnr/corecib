@@ -16,7 +16,7 @@
         <div class=""></div>
       </div>
       <div class="card-body">
-        <form role="form" @submit.prevent="transactionsQuery()" v-if="status==false">
+        <form role="form" @submit.prevent="transactionsQuery()" v-if="status=='false'">
           <div class="form-floating mb-3">
             <input
               type="tel"
@@ -29,7 +29,7 @@
           </div>
               <b-button
             type="submit"
-            v-if="status == false"
+            v-if="status == 'false'"
             style="background-color:var(--primary);border:none;"
           >
             <span v-if="!loading2">Proceed</span>
@@ -38,7 +38,7 @@
 
         </form>
           
-          <form role="form" @submit.prevent="logDispute()" v-if="status == true">
+          <form role="form" @submit.prevent="logDispute()" v-else>
                <div class="form-floating mb-3">
             <input
               type="tel"
@@ -68,7 +68,7 @@
                 class="form-control"
                 placeholder="Dispute Transaction Type"
                 disabled
-                v-model="createDisputemodel.disputeTrnType"
+                value="NA"
                 required
               />
               <label>Dispute Transaction Type</label>
@@ -78,7 +78,7 @@
                 type="text"
                 class="form-control"
                 placeholder="Dispute Remark"
-                v-model="createDisputemodel.disputeRemark"
+                value="Transaction"
                 disabled
               />
               <label>Dispute Remark</label>
@@ -98,13 +98,13 @@
                 type="number"
                 class="form-control"
                 placeholder="Organasation ID"
-                v-model="createDisputemodel.disputeOrgId"
+                :value="currentOrganisationId.organisationId"
                 required
                 disabled
               />
               <label>Organasation ID</label>
             </div>
-          <b-button type="submit" v-if="status == true"  style="background-color:var(--primary);border:none;"
+          <b-button type="submit" v-if="status != 'false'"  style="background-color:var(--primary);border:none;"
             ><span v-if="!loading2">Proceed</span>
             <span :class="{ 'spinner-border': loading2 }" :disabled="loading2"></span
           ></b-button>
@@ -127,7 +127,6 @@ export default {
   data: () => {
     return {
       showModal: true,
-      status: false,
       createDisputemodel: DisputeRequest.disputeCreate,
       transactionsQuerymodel: DisputeRequest.transactionStatusQuery,
       disputeReadModel: DisputeRequest.disputeRead
@@ -140,20 +139,26 @@ export default {
       this.showModal = false;
       this.$emit("closeCreateDispute", false);
       this.showModal = true;
-      this.status = false
+      StoreUtils.commit(StoreUtils.mutations.dispute.updateStatus, 'false')
     },
 
     logDispute() {
       //set dispute session id from transaction reference
+      this.createDisputemodel.disputeOrgId = this.currentOrganisationId.organisationId
       this.createDisputemodel.disputeSessionId = this.transactionsQuerymodel.reference,
+      this.createDisputemodel.disputeRemark= "Transaction",
+      this.createDisputemodel.disputeTrnType= "NA",
       //call create dispute action
         StoreUtils.dispatch(
           StoreUtils.actions.dispute.createDispute,
           this.createDisputemodel
         ).then(()=> {
           //clear create dispute form
-          this.createDisputemodel={disputeComment: null,disputeSessionId: null},this.transactionsQuerymodel={}
+          this.createDisputemodel.disputeComment=null,
+          this.createDisputemodel.disputeSessionId=null,
+          this.transactionsQuerymodel={}
           this.closeModal();
+    
         });
     },
 
@@ -162,15 +167,10 @@ export default {
       StoreUtils.dispatch(
         StoreUtils.actions.dispute.updateTransactionQuery,
         this.transactionsQuerymodel
-      ).then(() => {
-        //update form to true to create dispute
-        if(this.success == "00"){ this.status = true;}
-        else{this.status = false}
-      });
-     
-    },
+      )
+  
   },
-
+ },
   computed: {
     ...mapState({
       loading2: (state) => state.dispute.loading2,
@@ -179,15 +179,14 @@ export default {
       currentOrganisationId: ()=> {return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)},
       transactionquery: (state) => state.dispute.transactionsquery,
       success: (state) => state.dispute.success,
+      status: state => state.dispute.status
     }),
   },
 
   watch: {
-    success(oldValue, newvalue) {
+    status(newvalue) {
       //watch for change to close modal form and update dispute table 
-      if (oldValue == "00") {
-        oldValue = null
-        if(newvalue == "00"){
+      if(newvalue == 'read'){
             this.disputeReadModel.disputeId = localStorage.organisationId;
             StoreUtils.dispatch(
               StoreUtils.actions.dispute.updateDisputes,
@@ -195,9 +194,10 @@ export default {
             );
             this.closeModal()
           }
+       
       }
     },
-  },
+ 
 };
 </script>
 

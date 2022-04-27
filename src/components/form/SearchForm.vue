@@ -60,7 +60,7 @@
               label="Search"
               input-classes="form-control-lg"
               name="Report Name"
-              v-model="searchModel.searchItem"
+              v-model="searchValue"
               placeholder="Search Here"
               class="ml-2"
           >
@@ -81,6 +81,7 @@ import {Datetime} from "vue-datetime";
 import BaseButton from "../../components/button/BaseButton";
 import BaseResponse from "../../model/reponse/BaseResponse";
 import SearchModuleUtil from "../../util/constant/SearchModuleutil"
+import VirtualAccountRequest from "../../model/request/VirtualAccountRequest"
 
 let module = ''
 
@@ -108,7 +109,9 @@ export default {
               },
      
       type: "",
+      searchValue:"",
       searchModel: WalletRequest.readWallet,
+      virtualAccountsearchModel: VirtualAccountRequest.readVirtualAccountTransactions
      
 
     }
@@ -230,27 +233,39 @@ export default {
     fetchResult() {
       this.searchModel.endDate = this.model.endDate.split("T")[0]
       this.searchModel.startDate = this.model.startDate.split("T")[0]
+      this.virtualAccountsearchModel.endDate = this.model.endDate.split("T")[0]
+      this.virtualAccountsearchModel.startDate = this.model.startDate.split("T")[0]
       if (this.module === SearchModuleUtil.ALL_TRANSACTION) {
+        this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
         console.log("hello ALL_TRANSACTION", this.searchModel)
       } else if (this.module === SearchModuleUtil.WALLET) {
+         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateReadAllWallets, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets, this.searchModel);
         console.log("hello WALLET", this.searchModel)
 
       } else if (this.module === SearchModuleUtil.VIRTUAL_ACCOUNT) {
+        this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.virtualAccount.updateVirtualAccount, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount, this.searchModel);
         console.log("hello VIRTUAL_ACCOUNT", this.searchModel)
       } else if (this.module === SearchModuleUtil.WALLET_TRANSACTION) {
+        this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
         console.log("hello WALLET_TRANSACTION", this.searchModel)
+      }  else if (this.module === SearchModuleUtil.VIRTUAL_ACCOUNT_TRANSACTION) {
+        this.virtualAccountsearchModel.searchItem = this.searchValue
+        StoreUtils.commit(StoreUtils.mutations.virtualAccount.updateVirtualaccountTransactions, BaseResponse.list)
+        StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualaccountTransactions, this.virtualAccountsearchModel);
+        console.log("hello WALLET_TRANSACTION", this.virtualAccountsearchModel)
       } 
        else {
-        StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
+        this.searchModel.searchItem = this.searchValue
+        StoreUtils.commit(StoreUtils.mutations.dispute.updateDisputes, BaseResponse.list)
+        StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes, this.searchModel);
         console.log("hello Something else", this.searchModel)
       }
     }

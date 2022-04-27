@@ -1,11 +1,12 @@
 <!--suppress ALL -->
 <template>
-  <div>
+  <div class="f">
     <form
       v-if="passwordResetScreen === 'email'"
       class="container form-group form-login"
       role="form"
       @submit.prevent="initiatePassword"
+      style="margin-top:0px"
     >
       <div class="text-center"><h4 class="mt-3">Password Reset</h4></div>
       <div>
@@ -17,6 +18,7 @@
           :rules="{ required: true }"
           placeholder="Email"
           v-model="initiateModel.customerEmail"
+          required
         >
         </base-input>
         <div class="text-center">
@@ -225,11 +227,11 @@ export default {
   cursor: pointer;
 }
 
+
 .btn-login {
   width: 332px;
   height: 43px;
-  left: 51px;
-  top: 601px;
+  margin-top: 20px;  
 
   background: #053c57;
   border-radius: 25px;

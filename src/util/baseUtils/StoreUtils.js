@@ -66,7 +66,8 @@ class StoreUtils {
       updateLoading2: "dispute/updateLoading2",
       updateDisputes: "dispute/updateDisputes",
       updateTransactionQuery:"dispute/updateTransactionQuery",
-      updateSuccess:"dispute/updateSuccess"
+      updateSuccess:"dispute/updateSuccess",
+      updateStatus:"dispute/updateStatus"
     },
     virtualAccount: {
       updateLoading: "virtualAccount/updateLoading",

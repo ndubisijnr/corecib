@@ -91,7 +91,7 @@
 
 
                   </div>
-                    <div style="width:70%;display:flex;justify-content:center;" v-if="currentStep == 1 && organisation.organisationCity == null" >
+                    <div style="width:70%;display:flex;justify-content:center;" v-if="currentStep == 1">
                       <form
                         class="form-group"
                         @submit.prevent="updateOrginasation()"
@@ -194,7 +194,7 @@
 
         
                          <div style="display:flex; justify-content:space-between">
-                          <base-button title="Update" :loading="loading" :disabled="true ? checkInputfield.organisationWebsite : false" :class="{'not-allowed' : checkInputfield.organisationWebsite}"> 
+                          <base-button title="Update" :loading="loading"> 
                           </base-button>
                           <b-button @click="nextStep()" title="" style="background-color:grey;border:none">Next</b-button>
                          </div>
@@ -204,7 +204,7 @@
                     </div>
 
                     <!-- show edited form -->
-                  <div style="width:70%;display:flex;justify-content:center;" v-if="currentStep == 1 && organisation.organisationCity !== null" >
+                  <!-- <div style="width:70%;display:flex;justify-content:center;" v-if="currentStep == 1 ">
                       <form
                         class="form-group"
                         style="width:400px"
@@ -253,7 +253,6 @@
                           </div>
                         </div>
 
-                        <!-- Second layer -->
                         <div class="">
                           <div class="form-floating mb-3">
                             <input
@@ -310,14 +309,13 @@
 
         
                          <div style="display:flex; justify-content:space-between">
-                          <!-- <base-button title="Update" :loading="loading" :disabled="true ? checkInputfield.organisationWebsite : false" :class="{'not-allowed' : checkInputfield.organisationWebsite}"> 
-                          </base-button> -->
+                       
                           <b-button @click="nextStep()" title="" style="background-color:grey;border:none">Next</b-button>
                          </div>
                         </div>
                       </form>
 
-                    </div>
+                    </div> -->
                     <!-- end show edited form -->
 
                       <!-- third phase -->
