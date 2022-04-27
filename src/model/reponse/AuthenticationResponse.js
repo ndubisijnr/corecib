@@ -18,6 +18,7 @@ class AuthenticationResponse {
     }
     static organisation = {
         organisationId:  null,
+        organisationLogo:null,
         organisationCustomerId:  null,
         organisationAccountNumber:  null,
         organisationName:  null,
