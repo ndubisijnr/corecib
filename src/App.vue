@@ -25,10 +25,7 @@ export default {
 }
 </script>
 
-<style>
-:root{
-  --primary: window.__env.app.primaryColor
-}
+<style scoped>
 
 .support{
   position: fixed;
