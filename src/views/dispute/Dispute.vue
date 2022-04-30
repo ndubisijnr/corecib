@@ -2,7 +2,7 @@
   <div class="">
     <div class="text-right m-3">
       <div class="mr-4">
-        <b-button @click="show = true" style="background-color:var(--primary);border:none;"><i class="fa fa-plus"></i> Create  dispute
+        <b-button @click="show = true" style="background-color:var(--primary);border:none;color:white"><i class="fa fa-plus"></i> Create  dispute
         </b-button>
       </div>
       <base-table
@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       show: false,
-      disputeReadModel: DisputeResquest.disputeRead,
+      disputeReadModel: DisputeResquest.disputeReadByOrg,
       fields: [
         { key: "disputeId", label: "Id", sortable: true, class: "text-left" },
         {
@@ -65,7 +65,7 @@ export default {
   },
 
   mounted() {
-    this.disputeReadModel.disputeId = localStorage.getItem("organisationId");
+    this.disputeReadModel.disputeOrgId = localStorage.getItem("organisationId");
     StoreUtils.dispatch(
       StoreUtils.actions.dispute.updateDisputes,
       this.disputeReadModel

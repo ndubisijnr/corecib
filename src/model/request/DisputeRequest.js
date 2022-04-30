@@ -4,7 +4,7 @@ class DisputeRequest {
 
     static disputeCreate={
         disputeSessionId: null,
-        disputeTrnType: "NA",
+        disputeTrnType: null,
         disputeIssueType: null,
         disputeComment: null,
         disputeRemark: null,
@@ -14,6 +14,10 @@ class DisputeRequest {
 
     static disputeRead={
         disputeId: null
+    }
+
+    static disputeReadByOrg={
+        disputeOrgId: null
     }
 
     static transactionStatusQuery={

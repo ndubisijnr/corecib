@@ -1,35 +1,32 @@
 <template>
   <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
-    <div class="text-center">
-      <img
-          src="@/assets/bizgemio.svg"
-          alt=""
-          class="mg-fluid"
-          width="80px"
-          style="margin-bottom: -35px"
-      />
-    </div>
     <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(onSubmit)">
       <div class="text-center">
-        <img src="" alt="" class="img-fluid" />
-        <h6 class="mt-1">Sign in to continue to BizGem</h6>
+        <a href="https://bizgem.io/"> 
+        <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>  
       </div>
+      <div class="p-3">
+      <h4 class="text-center">Sign in to continue to BizGem</h4>
       <div class="form-floating mb-3">
         <input type="email" class="form-control" name="email" placeholder="businessname@gmail.com" v-model="model.username" required/>
         <label >Email address</label>
       </div>
-      <div class="form-floating">
+      <div class="form-floating mb-3">
         <input type="password" class="form-control" name="password" placeholder="XXXXX" v-model="model.password" id="pwd" required/>
         <label >Password</label>
         <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye" @click="hide$show()"></i>
       </div>
-      <div class="mt-3 mb-3 text-center">
-        <span id="error" class="text-danger"></span>
-      </div>
-      <div class="text-center">
+      <div class="login-footer">
+          <div class="text-center">
+          <a class="forgot-password" @click="forgotPassword()">
+            Forgot Your Password?
+          </a><br/>
+          <span class="text-dark mt-1">New To BizGem?<a class="join-now-text" @click="signUp()" > Create Account</a></span>
+        </div>
         <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-          Login <span :class="{ 'spinner-border': loading }"></span>
+          {{loading ? "Loging in" : 'Login'}} <span :class="{ 'spinner-border': loading }"></span>
         </button>
+      </div>
       </div>
     </form>
   </validation-observer>
@@ -42,16 +39,12 @@ import {mapState} from "vuex";
 
 export default {
   name: "LoginForm",
-  components:{
-
-  },
   data(){
     return {
       model: AuthenticationRequest.login,
       notifications: {
         topCenter: false,
       },
-      showDismissibleAlert: false,
     }
   },
   methods:{
@@ -83,55 +76,30 @@ export default {
         loading: (state) => state.auth.loading,
     }),
   },
-  mounted() {
-
-  }
 
 }
 </script>
 
 <style lang="css" scoped>
-.forgot-password {
-  color: black;
-  cursor: pointer;
+
+
+.login-footer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 
-.img-fluid,
-.img-thumbnail {
-  max-width: 100%;
-  height: auto;
-}
-
-.join-now-text {
-  color: black;
-  cursor: pointer;
-}
 
 .btn-login {
-  width: 332px;
-  height: 43px;
-  left: 51px;
-  top: 601px;
-
-  background: rgb(10, 133, 190);
-  border-radius: 25px;
+  width: 132px;
+  background-color:#3F88C5;
+  border-radius: 5px;
   border: none;
   color: white;
 }
 
-.img-fluid,
-.img-thumbnail {
-  max-width: 100%;
-  height: auto;
-}
-img,
-svg {
-  vertical-align: middle;
-}
-img {
-  border-style: none;
-}
+
 .spinner-border {
   display: inline-block;
   width: 1rem;
@@ -153,25 +121,18 @@ img {
 .btn-login:hover {
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 30%);
 }
-.login {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  /*background-color: rgba(2, 32, 61, 0.99);*/
 
-  background-color: whitesmoke;
+
+
+.forgot-password {
+  color: var(--primary);
+  cursor: pointer;
 }
 
-.auth-wrap {
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-  /*background-color: rgba(2, 32, 61, 0.99);*/
-  background-color: whitesmoke;
 
-  /*background-color: var(--sidebar-bg-color);*/
+.join-now-text {
+  color: var(--primary);
+  cursor: pointer;
 }
 
 .form-login {
@@ -181,7 +142,7 @@ img {
   font-size: 14px;
   line-height: 1.42857143;
   padding-bottom: 20px;
-  background: white;
-  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 30%);
+  /* background: white;
+  box-shadow: 0 1px 1px hsl(0deg 0% 0% / 5%); */
 }
 </style>

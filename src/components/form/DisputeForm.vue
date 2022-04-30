@@ -30,7 +30,7 @@
               <b-button
             type="submit"
             v-if="status == 'false'"
-            style="background-color:var(--primary);border:none;"
+            style="background-color:var(--primary);border:none;color:white;"
           >
             <span v-if="!loading2">Proceed</span>
             <span :class="{ 'spinner-border': loading2 }" :disabled="loading2"></span
@@ -104,7 +104,7 @@
               />
               <label>Organasation ID</label>
             </div>
-          <b-button type="submit" v-if="status != 'false'"  style="background-color:var(--primary);border:none;"
+          <b-button type="submit" v-if="status != 'false'"  style="background-color:var(--primary);border:none;color:white;"
             ><span v-if="!loading2">Proceed</span>
             <span :class="{ 'spinner-border': loading2 }" :disabled="loading2"></span
           ></b-button>

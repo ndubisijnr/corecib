@@ -8,10 +8,14 @@ export default {
 
     callReadDisputeApi(payload) {
         return apiClient.appClient.post("/dispute/read",payload);
+        
     },
 
     callReadSingleDisputeApi(payload) {
         return apiClient.appClient.post("/dispute/read-by-id",payload);
+    },
+    callReadDisputeByOrgApi(payload) {
+        return apiClient.appClient.post("/dispute/read-by-organisation-id",payload);
     },
 
     callUpdateDisputeApi(payload) {

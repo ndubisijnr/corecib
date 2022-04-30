@@ -1,29 +1,26 @@
 <template>
-  <div class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs"
+  <div class="sidenav  navbar-vertical fixed-left navbar-expand-xs"
        @mouseenter="$sidebar.onMouseEnter()"
-       @mouseleave="$sidebar.onMouseLeave()" style="background-color: rgba(1,34,63,0.96);">
+       @mouseleave="$sidebar.onMouseLeave()">
     <div class="scrollbar-inner" ref="sidebarScrollArea">
-      <div class="sidenav-header">
-        <div class="add-business" @click="toggleBusinessDropDown()">
-          <div class="">
-            <span class="arrow ni ni-bold-down text-primary" id="arrow"></span>
-            <div class="d-flex">
-              <span :class="{'spinner-border': loading}"></span>
-              <h6 class="link-drop">{{ currentOrganisation.organisationName }}</h6>
-            </div>
-          </div>
-        </div>
-        <div id="k">
-          <hr style="margin:5px;border: 1px solid;color: #91a0af">
-          <h4 v-for="(organisation, index) in organisationList" :key="index" class="link-drop" @click="getId(organisation)">
-            {{ organisation.organisationName }}
-          </h4>
-          <base-button size="md" outline @click="alert('comming soon!')" style="color:white; border:solid white;"> Add a Business
-          </base-button>
-          <!-- <button class="btn btn-primary w-100 mt-2" >Add a Business</button> -->
+      <slot></slot>
+      <div class="account-details">
+        <!-- <span :class="{'spinner-border': loading}"></span> -->
+        <h3>{{ currentOrganisation.organisationName }}</h3>
+        <h4 class="small">{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
+        <div>
+        <div v-b-toggle.collapse-1 variant="primary"></div>
+        <b-collapse id="collapse-1" class="mt-2">
+        <b-card>
+          <p class="card-text">Collapse contents Here</p>
+          <!-- <b-button v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</b-button> -->
+          <b-collapse id="collapse-1-inner" class="mt-2">
+            <!-- <b-card>Hello!</b-card> -->
+          </b-collapse>
+        </b-card>
+        </b-collapse>
         </div>
       </div>
-      <slot></slot>
       <div class="navbar-inner">
         <ul class="navbar-nav one">
           <slot name="links">
@@ -39,6 +36,7 @@
               >
               </sidebar-item>
             </sidebar-item>
+            
           </slot>
         </ul>
         <slot name="links-after"></slot>
@@ -142,7 +140,6 @@ export default {
   mounted() {
     this.$sidebar.isMinimized = this.$sidebar.breakpoint < window.innerWidth
     this.minimizeSidebar()
-    document.getElementById("k").style.display = 'none'
 
   },
   beforeDestroy() {
@@ -154,46 +151,22 @@ export default {
 </script>
 
 <style scoped>
-.add-business {
-  z-index: 9999999;
-  /*display: flex;*/
-  /*flex-direction: column;*/
-  /*justify-content: center;*/
-  /*align-items: flex-start;*/
-  padding-left: 18px;
-  padding-top: 20px;
-  width: 100%;
-  /*background-color: #e7e7ef;*/
-  background-color: rgba(2, 32, 61, 0.99);
-  position: absolute;
-  left: 0;
-  height: 50px;
-  cursor: pointer;
-  transition: .2s ease-out;
 
+.account-details{
+   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 10%);
+      background-color: white;
+      text-align: center;
+      margin:10%;
+      padding: 5%;
+      color: #0000;
 }
+.sidenav{
+  background-color: rgba(1,34,63,0.96);
+  border: none !important;
+  overflow: hidden !important;
+} 
 
-#k {
-  text-align: justify;
-  z-index: 1;
-  position: absolute;
-  top: 44px;
-  left: 0;
-  /*background-color: #e7e7ef;*/
-  background-color: rgba(2, 32, 61, 0.99);
-  /*background-color: #91a0af;*/
-  width: 100%;
-  transition: 2s ease;
-  padding: 12px;
-}
 
-.arrow {
-  position: absolute;
-  right: 20px;
-  font-size: 12px;
-  font-weight: 900;
-  transform: rotate(0deg);
-}
 
 .rotate90 {
   transform: rotate(-90deg);

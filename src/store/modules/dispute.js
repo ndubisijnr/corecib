@@ -38,7 +38,7 @@ export const actions = {
 
   updateDisputes: ({ commit, state}, payload = DisputeRequest.disputeRead) => {
     if(state.disputes.data.length < 1) commit("updateLoading", true)
-    return DisputeService.callReadDisputeApi(payload).then(response => {
+    return DisputeService.callReadDisputeByOrgApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {

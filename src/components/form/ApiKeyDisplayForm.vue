@@ -1,7 +1,7 @@
 <template>
   <div>
     <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
-    <div class="form1">
+    <div class="">
       <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(saveChanges)">
       <span :class="{ 'spinner-border': loading }"></span>
 
@@ -30,8 +30,11 @@
             class="form-control"
             :value="api[`apikey${testLive}PK`]"
             disabled="true"
+            id="content"
+            @click="copyToClipboard()"
           />
         </div>
+
         <label class="form-label mt-2 pr-4">{{ testLive }} Callback URL </label>
         <div class="form-floating">
           <input
@@ -68,12 +71,10 @@
             </div>
           </div>
         </div>
-      <div class="text-center mt-3">
-        <button id="submitBtn" class="btn-login mt-1" native-type="submit" :disabled="loading">
-          Send <span class="span-loader" :class="{ 'spinner-border': loading }"></span>
-        </button>
+      <div class="text-start mt-3">
+        <base-button title="Save"></base-button>
       </div>
-    </div>
+        </div>
       </form>
   </div>
       </validation-observer>
@@ -83,8 +84,12 @@
 import { mapState } from "vuex";
 import ApikeyRequest from "../../model/request/ApiKeyRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
+import BaseButton from "../../components/button/BaseButton"
 export default {
   name: "Apikey-Form",
+  components:{
+    BaseButton
+  },
   data: () => {
     return {
       headerKey:"",
@@ -108,6 +113,14 @@ export default {
         eye.classList.add("fa-eye");
         eye.classList.remove("fa-eye-slash");
       }
+    },
+    copyToClipboard() {
+      let copyLink = document.getElementById("content").value;
+      navigator.clipboard.writeText(copyLink).then(() => {
+        Swal.fire({ text: "Copied to clipboard", icon: "success" }).then(
+          () => {}
+        );
+      });
     },
     saveChanges(){
       console.log("Heoolooooo")
@@ -161,7 +174,7 @@ export default {
   top: 601px;
 
   background: var(--primary);
-  border-radius: 25px;
+  border-radius: 5px;
   border: none;
   color: white;
 }

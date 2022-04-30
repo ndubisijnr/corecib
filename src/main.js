@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import DashboardPlugin from './plugins/dashboard-plugin';
 import store from './store/store';
-// import BootstrapVue from "bootstrap-vue";
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 import { Select, Option, DatePicker, Tabs, TabPane } from 'element-ui'
@@ -17,11 +16,13 @@ import App from './App.vue';
 import './filters'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // Import Bootstrap and BootstrapVue CSS files (order is important)
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+// import 'bootstrap/dist/css/bootstrap.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // router setup
 import router from './router'
+import "animate.css";
+
 // plugin setup
 Vue.use(Toast)
 Vue.use(VueCountryCode);

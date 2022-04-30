@@ -1,48 +1,41 @@
 <template>
   <div class="m-3">
-    <div>
+    <div class="tab">
       <b-card-body>
         <div class="inner-card">
           <b-container class="itemabc1234">
             <div class="p-2">
               <h4>Your Referral link</h4>
-              <p>
+              <p class="text-dark">
                 Refer new merchants with your referral Link and earn 10% on the
                 revenue Bizgem makes from each transaction.
               </p>
-              <div class="mb-3" @click="copyToClipboard()">
+              <div class="mb-3" @click="copyToClipboard()" title="click to copy to clipboard" >
+                <label>click on link to copy</label>
                 <input
                   class="form-control form-control-md"
                   :value="getReferralLink"
                   id="content"
+                  style="cursor: pointer;"
                   disabled
                 />
-                <div class="copy-span" @click="copyToClipboard()">
-                  <span>Copy</span>
-                </div>
               </div>
-              <span>Your Referral Link</span>
             </div>
           </b-container>
           <b-container class="itemabc123">
-            <div class="total-referrals card">
-              <span style="font-size: 50px">4</span>
-              <span>Total Referrals</span>
-            </div>
-            <div class="total-referrals card">
-              <span style="font-size: 50px"
-                ><span style="font-size: 30px">₦</span>1,000</span
-              >
-              <span>Total Revenue</span>
-            </div>
+            <dashboard-card :value="'4'" :title="'Total Referrals'" :showBtn="false" :showBtn1="false"></dashboard-card>
+            <dashboard-card :currency="'₦'" :value="'1,000'" :title="'Total Revenue'" :showBtn="false" :showBtn1="false"></dashboard-card>
           </b-container>
+          
         </div>
+         <div class="">
         <base-table
           :items="items"
           :fields="fields"
           filter-mode="default"
           :is-busy="loading"
         />
+      </div>
       </b-card-body>
     </div>
   </div>
@@ -52,11 +45,25 @@
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BaseTable from "../../components/table/BaseTable";
 import Swal from "sweetalert2";
+import DashboardView from "../../components/dashboardComponent/DashboardCircle"
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 export default {
   name: "Referral",
   components: {
     BaseTable,
+    'dashboard-card':DashboardView
   },
   data() {
     return {
@@ -83,7 +90,7 @@ export default {
     copyToClipboard() {
       let copyLink = document.getElementById("content").value;
       navigator.clipboard.writeText(copyLink).then(() => {
-        Swal.fire({ text: "Copied to clipboard", icon: "success" }).then(
+        Toast.fire({ text: "Copied to clipboard", icon: "success" }).then(
           () => {}
         );
       });
@@ -110,6 +117,31 @@ export default {
   padding: 30px;
   line-height: 3rem;
   font-family: "Fibon Sans";
+  background-color: white;
+
+}
+.tab{
+    margin-top:2%;
+    box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
+    background-color: white;
+}
+@media (max-width:999px) {
+  .inner-card {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+  flex-direction: column-reverse;
+  line-height: 3rem;
+  font-family: "Fibon Sans";
+}
+.itemabc123 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+    flex-direction: column-reverse;
+
+}
 }
 .itemabc123 {
   width: 100%;
@@ -117,29 +149,11 @@ export default {
   align-items: center;
   justify-content: space-around;
 }
-.total-referrals {
-  width: 250px;
-  height: 250px;
-  border-radius: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-color:#3F88C5;
-}
+
 .itemabc1234 {
   width: 100%;
   display: flex;
   align-items: center;
 }
 
-.copy-span {
-  position: inherit;
-  float: right;
-  margin-top: -42px;
-  margin-right: 28px;
-  cursor: pointer;
-}
-.copy-span:hover {
-  color: rgb(10, 133, 190);
-}
 </style>

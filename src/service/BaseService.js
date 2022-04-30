@@ -53,13 +53,16 @@ appClient.interceptors.response.use(response => {
             },
             willClose: () => {
               clearInterval(timerInterval)
-              router.push("/")
             }
           }).then((result) => {
             /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-              console.log('I was closed by the timer')
-            }
+            // if (result.dismiss === Swal.DismissReason.timer) {
+            //   console.log('I was closed by the timer')
+            //   router.push({name:"Logon"}).then(()=> {
+            //     window.location.reload()
+            //   })
+            // }
+            StoreUtils.dispatch(StoreUtils.actions.auth.logOut,{customerEmail: StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).customerEmail})
           })
         }
       }

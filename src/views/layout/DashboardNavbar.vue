@@ -17,6 +17,13 @@
         </div>
       </div>
     </div>
+    
+      <b-alert show variant="danger" class="dalert animate__animated animate__slower animate__flash animate__infinite	infinite"><a href="#" class="alert-link">Upgrade</a><br>
+         <span>Your account is currently limited to Bizgem bills payment API service.</span>
+           <span> Kindly upgrade your account to
+           gain access to wallet and virtual account services.
+         </span>
+      </b-alert>
     <ul class="navbar-nav align-items-center ml-md-auto">
       <li class="nav-item d-xl-none">
         <div
@@ -35,6 +42,8 @@
           </div>
         </div>
       </li>
+    <!-- <div>
+      <span class="p mr-2">switch to live mode</span>
       <toggle-button
         v-model="toggleBtnValue"
         :width="70"
@@ -44,28 +53,33 @@
         :labels="{ unchecked: stage, checked: stage }"
         @change="switchApi()"
       />
-      <base-dropdown
+    </div>   -->
+      <!-- <base-dropdown
         class="nav-item"
         tag="li"
         title-classes="nav-link"
         title-tag="a"
-        icon="ni ni-bell-55"
+        icon="fa fa-bell"
         menu-classes="dropdown-menu-xl dropdown-menu-right py-0 overflow-hidden"
       >
         <p class="text-center text-dark pt-3">No Notifications Here.</p>
-      </base-dropdown>
-      <base-dropdown
-        menu-classes="dropdown-menu-lg dropdown-menu-dark bg-default dropdown-menu-right"
-        class="nav-item"
-        tag="li"
-        title-tag="a"
-        title-classes="nav-link"
-        icon="ni ni-ungroup"
-      >
-        <p class="text-center text-white pt-3">Nothing Here.</p>
-      </base-dropdown>
+      </base-dropdown> -->
+
     </ul>
+    <!-- <span class="p m-2">Documentation</span> -->
     <ul class="navbar-nav align-items-center ml-auto ml-md-0">
+       <div class="text-center">
+                <toggle-button
+                  :value="toggleBtnValue"
+                  :width="70"
+                  :height="30"
+                  :sync="true"
+                  :font-size="15"
+                  :color="{checked:'#75c791', unchecked:'#c02026'}"
+                  :labels="{ unchecked: stage, checked: stage }"
+                  @change="switchApi()"
+                />
+              </div>
       <base-dropdown
         menu-on-right
         class="nav-item"
@@ -76,25 +90,17 @@
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <div class="media align-items-center">
             <i class="fa fa-user-circle nav-profile"></i>
-            <div class="media-body ml-2 d-none d-lg-block">
-              <span class="mb-0 text-sm font-weight-bold"
-                >{{ user.customerFirstName }} {{ user.customerLastName }} </span
-              ><br />
-              <span class="mb-0 text-sm font-weight-bold"
-                >{{ organisation[0] ? organisation[0].organisationName : "" }}
-              </span>
-            </div>
           </div>
         </a>
-        <template>
-          <div class="dropdown-header noti-title">
-            <h6 class="">Hey, {{ user.customerFirstName }}</h6>
-            <a class="dropdown-item">
-              <i class="ni ni-user-run"></i>
-              <span @click="adminLogOut()">Logout ?</span>
-            </a>
-          </div>
-        </template>
+        <div>
+          <h3 class="text-dark text-center m-1">{{ user.customerFirstName }} {{ user.customerLastName }} </h3>
+          <b-list-group class="m-3 text-left">
+            <b-list-group-item button>{{user.customerEmail}}</b-list-group-item>
+            <b-list-group-item button>Support</b-list-group-item>
+            <b-list-group-item button>Settings</b-list-group-item>
+            <b-list-group-item button  @click="adminLogOut()">Log Out</b-list-group-item>
+          </b-list-group>
+        </div>
       </base-dropdown>
     </ul>
   </base-nav>
@@ -140,10 +146,7 @@ export default {
         StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
           ? StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
           : "-"
-      )
-        .replace("PROD", "Live")
-        .replace("DEV", "Test");
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      ).replace("PROD", "Live").replace("DEV", "Test");
       this.toggleBtnValue = testLive === "Live";
       return testLive;
     },
@@ -152,24 +155,16 @@ export default {
   },
   methods: {
     adminLogOut() {
-      this.$store.dispatch(
-        "logOut",
-        {
-          customerEmail: this.user.customerEmail,
-        },
-        { root: false }
-      );
-      localStorage.clear();
-      this.$router.push("/");
+      StoreUtils.dispatch(StoreUtils.actions.auth.logOut, {customerEmail: this.user.customerEmail})
     },
     switchApi() {
       if (this.toggleBtnValue === true)
-        this.switchStageModel.organisationStage = "PROD";
-      else this.switchStageModel.organisationStage = "DEV";
+        this.switchStageModel.organisationStage = "DEV";
+      else this.switchStageModel.organisationStage = "PROD";
       StoreUtils.dispatch(
         StoreUtils.actions.auth.updateStage,
         this.switchStageModel
-      );
+      ).then(()=>{});
     },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
@@ -200,6 +195,17 @@ export default {
     this.$sidebar.isMinimized = this.$sidebar.breakpoint < window.innerWidth;
     this.minimizeSidebar();
   },
+
+  watch:{
+    user(obj){
+      if(Object.keys(obj).forEach(key => obj[key] == null)){
+        console.log('empty o')
+      }else{
+        console.log('not empty', this.user);
+       
+      }
+    }
+  }
 };
 </script>
 
@@ -211,5 +217,25 @@ export default {
 .nav-profile{
   color:var(--primary);
   font-size:40px;
+}
+.profile-drop-down li{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-bottom: solid 2px;
+
+}
+.dalert{
+  position: absolute;
+  left: 15%;
+  top: 4%;
+  width: auto;
+  font-size: 11px;
+}
+.item{
+
+  border-bottom: solid 2px;
+  width: 100% !important;
+
 }
 </style>

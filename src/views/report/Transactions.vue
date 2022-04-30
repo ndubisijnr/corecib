@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mt-4">
+    <div v-if="withSearch != 'YES' " class="mt-4">
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
         <search-form :module="searchALL_TRANSACTION"></search-form>
       </div>
@@ -25,6 +25,7 @@ import SearchModuleutil from "../../util/constant/SearchModuleutil"
 
 export default {
   name: "AllTransaction",
+  props:["withSearch"],
   components: {
     SearchForm,
     BaseTable

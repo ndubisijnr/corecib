@@ -1,7 +1,6 @@
 <template>
   <div>
     <router-view></router-view>
-    <div class="text-center text-dark"><p>© 2020 BizGem.</p></div>
   </div>
 </template>
 

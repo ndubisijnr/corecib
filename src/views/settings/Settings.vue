@@ -4,11 +4,21 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
           <div>
-         <span :class="{ 'spinner-border': loading }"></span>
-
             <el-tabs type="card" v-model="activeName" @tab-click="handleClick">
-              <el-tab-pane id="tab-0" :key="1"  label="Profile">
-                <b-container class="p-3" v-if="!loading">
+              
+              <el-tab-pane id="tab-0" :key="1"  label="Profile" class="card">
+                 <div class="accordion" role="tablist">
+       
+    <div no-body class="mb-1 add-bank-form">
+      <div header-tag="header" class="p-1" role="tab">
+        <div block v-b-toggle.accordion-1 variant="none" class="p-3">
+          <h3> <b-icon-check-circle style="font-size:25px"></b-icon-check-circle> Personal Info</h3>
+          <p>Enter a bank account information where your earnings will be deposited</p>
+        </div>
+      </div>
+      <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
+        <div>
+       <b-container class="p-3" v-if="!loading">
                <div style="width:100%;display:flex;justify-content:center;">
 
                   <b-form class="container p-3 form-group" style="width:400px">
@@ -63,35 +73,22 @@
                   </b-form>
                </div>
                 </b-container>
-              </el-tab-pane>
+        </div>
+      </b-collapse>
+    </div>
+    <hr>
 
-              <!-- END PROFILE -->
+    <div no-body class="mb-1">
+      <div header-tag="header" class="p-1" role="tab">
+        <div block v-b-toggle.accordion-2 variant="none" class="p-3">
+           <h3> <b-icon-check-circle style="font-size:25px"></b-icon-check-circle> Business Information</h3>
+          <p>Enter your merchant information, so we can verify your account and deposit your earnings.</p>
+          </div>
+      </div>
+      <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
 
-              <el-tab-pane
-                id="tab-1"
-                :key="2"
-                name="second"
-                label="Business Profile"
-              >
-                <div class="m-3">
-                   
-                  <div class="d-flex w-100">
-                     <div style="width:18%">
-                      <step-progress :steps="mySteps" 
-                      :active-thickness=1 
-                      :passive-thickness=1 
-                      :current-step="currentStep"
-                        icon-class="fa fa-check" 
-                        active-color="var(--primary)"
-                        :line-thickness=1
-                        
-                        >
-                      </step-progress>
-                      
-
-
-                  </div>
-                    <div style="width:70%;display:flex;justify-content:center;" v-if="currentStep == 1">
+        <div style="width:100%;display:flex;justify-content:center;">
+           
                       <form
                         class="form-group"
                         @submit.prevent="updateOrginasation()"
@@ -100,10 +97,10 @@
                         <h3 class="text-center">
                           <i class="fa fa-user-circle profile-settings"></i>
                         </h3>
-                        <h6 class="text-center">
-                          <b>Business Details </b>
-                          <i class="fa fa-info-circle"></i>
-                        </h6>
+                        <h4 class="text-center">
+                          <b>Your Business Information</b>
+                
+                        </h4>
                         <div>
                           <div class="form-floating mb-3">
                             <input
@@ -193,148 +190,33 @@
                          
 
         
-                         <div style="display:flex; justify-content:space-between">
+                         <div>
                           <base-button title="Update" :loading="loading"> 
                           </base-button>
-                          <b-button @click="nextStep()" title="" style="background-color:grey;border:none">Next</b-button>
+                          <!-- <b-button @click="nextStep()" title="" style="background-color:grey;border:none;color:white">Next</b-button> -->
                          </div>
                         </div>
                       </form>
 
                     </div>
 
-                    <!-- show edited form -->
-                  <!-- <div style="width:70%;display:flex;justify-content:center;" v-if="currentStep == 1 ">
-                      <form
-                        class="form-group"
-                        style="width:400px"
-                      >
-                        <h3 class="text-center">
-                          <i class="fa fa-user-circle profile-settings"></i>
-                        </h3>
-                        <h6 class="text-center">
-                          <b>Business Details </b>
-                          <i class="fa fa-info-circle"></i>
-                        </h6>
-                        <div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput2"
-                              placeholder="name@example.com"
-                              v-model="organisation.organisationName"
-                              readonly
-                            />
-                            <label for="floatingInput2">Business Name</label>
-                          </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="email"
-                              class="form-control"
-                              id="floatingInput"
-                              placeholder="name@example.com"
-                              v-model="organisation.organisationEmail"
-                              readonly
-                            />
-                            <label for="floatingInput">Company Email</label>
-                          </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="tel"
-                              class="form-control"
-                              id="floatingInput1"
-                              placeholder="Country"
-                              v-model="organisation.organisationPhone"
-
-                              readonly
-                            />
-                            <label for="floatingInput1">Company Phone</label>
-                          </div>
-                        </div>
-
-                        <div class="">
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput2"
-                              placeholder="1004 Federal Housing Estate, Victoral Island"
-                              v-model="organisation.organisationAddress"
-                              readonly
-                              required
-                            />
-                            <label for="floatingInput2">Address</label>
-                          </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput1"
-                              placeholder="Ikeja"
-                               v-model="organisation.organisationCity"
-                               readonly
-                              required
-                            />
-                            <label for="floatingInput1">City</label>
-                          </div>
-                          <div class="form-floating mb-3">
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="floatingInput1"
-                              placeholder="Lagos"
-                               v-model="organisation.organisationState"
-                               readonly
-                              required
-                            />
-                            <label for="floatingInput1">State</label>
-                          </div>
-                          <div class="form-floating mb-3">
-                            <select
-                              class="form-select"
-                              aria-label="Default select example"
-                              required
-                              v-model="organisation.organisationType"
-                              readonly
-
-                            >
-                              <option>FINTECH</option>
-                            </select>
-                            <label for="floatingInput3"
-                              >Organization Type</label
-                            >
-                          </div>
-                          
-
-        
-                         <div style="display:flex; justify-content:space-between">
-                       
-                          <b-button @click="nextStep()" title="" style="background-color:grey;border:none">Next</b-button>
-                         </div>
-                        </div>
-                      </form>
-
-                    </div> -->
-                    <!-- end show edited form -->
-
-                      <!-- third phase -->
-                    
-
-                    <div style="width:70%;display:flex;justify-content:center;" v-else>
+      
+      </b-collapse>
+    </div>
+<hr>
+    <div no-body class="mb-1">
+      <div header-tag="header" class="p-1" role="tab">
+        <div block v-b-toggle.accordion-3 variant="none" class="p-3">
+          <h3> <b-icon-check-circle style="font-size:25px"></b-icon-check-circle> Document upload</h3>
+          <p>Please upload the following documents, so we can authenticate your account.</p></div>
+      </div>
+      <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
+        <div>
+         
+                    <div style="width:100%;display:flex;justify-content:center;align-items:center;">
                       <div>
-                        <div class="text-center">
-                          <i class="fa fa-user-circle profile-settings"></i>
-                          <br>
-                          <b>Business Details </b>
-                          <i class="fa fa-info-circle"></i>
-                        </div>
-                      <div class="text-center">  
-                      <!--<h5>Please upload all {{documents.data.length}} documents </h5>-->
-                      <b-button @click="currentStep = 1" title="" style="background-color:var(--primary);border:none">Back</b-button>
-
-                      </div>
-                      <br />
+                       
+                    
                       <div class="">
                         <span :class="{'spinner-loader':loading}"></span>
                         <div>
@@ -405,10 +287,35 @@
 
                     </div>
                     </div>
+        </div>
+      </b-collapse>
+    </div>
+  </div>
+
+
+              </el-tab-pane>
+
+              <!-- END PROFILE -->
+<!-- 
+              <el-tab-pane
+                id="tab-1"
+                :key="2"
+                name="second"
+                label="Business Profile"
+                class="card"
+
+              >
+                <div class="m-3">
+                   
+                  <div class="d-flex w-100">
+                
+                   
+      
+
                    
                   </div>
                   </div>
-              </el-tab-pane>
+              </el-tab-pane> -->
 
               <el-tab-pane
                 id="tab-5"
@@ -420,13 +327,11 @@
                     <b-card
                       header="featured"
                       header-tag="header"
-                      header-bg-variant="white"
                     >
                       <template #header>
                           <b-container class="text-right">
-                             <b-button @click="regenerateApiKey()" style="background-color:var(--primary);border:none;">Generate Api Key</b-button>
+                             <b-button v-b-modal.modal-no-backdrop style="background-color:var(--primary);border:none;color:white;">Regenerate Api Key</b-button>
                           </b-container>
-
                       </template>
                     <div class="d-flex justify-content-center">
                       <api-key-display-form> </api-key-display-form>
@@ -434,10 +339,84 @@
                   </b-card>
                 </b-card-group>
               </el-tab-pane>
+
+               <el-tab-pane
+                id="tab-6"
+                :key="6"
+                name="six"
+                label=" Add Bank Account"
+                class="cardd"
+              >
+
+              <div class="text-center p-3">
+                 <h3> Add Bank Account</h3>
+                  <p>Enter a bank account information where your earnings will be deposited</p>
+              </div>
+
+    <div class="form">
+      <b-form class="bform">
+
+      <b-form-group id="input-group-3" label="Bank Name" label-for="input-3">
+         <b-form-select v-model="selected" :options="options"></b-form-select>
+      </b-form-group>
+
+       <b-form-group id="input-group-4" label="Account Number" label-for="input-4">
+         <b-form-input
+          id="input-4"
+          type="text"
+          placeholder="Account Number"
+          class="mr-2"
+          required
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-5" label="Account Name" label-for="input-5">
+       
+       <b-form-input
+          id="input-5"
+          type="text"
+          placeholder="Account Name"
+          class="mr-2"
+          required
+        ></b-form-input>
+      </b-form-group>
+        <b-form-group id="input-group-5" label="Enter OTP" label-for="input-5">
+        <div class="d-flex">
+       <b-form-input
+          id="input-5"
+          type="text"
+          placeholder="OTP"
+          class="mr-2"
+          required
+        ></b-form-input>
+        <b-button class="w-50" @click="sendOtp()">{{loadingOtp ? 'Sending' : 'Send OTP'}} <span :class="{'spinner-border':loadingOtp}"></span></b-button>
+        </div>
+      </b-form-group>
+      <b-button class="w-100 text-white" style="background-color:var(--primary)">Add Account</b-button>
+
+    </b-form>
+
+        </div>
+              </el-tab-pane>
             </el-tabs>
           </div>
         </div>
       </div>
+       <b-modal  centered title="BootstrapVue" id="modal-no-backdrop" hide-backdrop content-class="shadow" hide-footer>
+          <template #modal-title>
+                    Regenerate Api Key
+                    </template>
+                        <div class="d-block text-center">
+                           <h3>Are you sure you want to generate new API keys? 
+                              If you've integrated with the current keys, 
+                              you'd be required to change to the newly generated keys.</h3>
+                        </div>
+                <div class="d-flex">
+          <b-button class="mt-3 bg-danger text-white" block @click="$bvModal.hide('modal-no-backdrop')">Cancel</b-button>
+      <b-button class="mt-3 bg-success text-white" block @click="regenerateApiKey()">Proceed</b-button>
+   </div>
+                           
+  </b-modal>
     </div>
   </div>
 </template>
@@ -454,6 +433,20 @@ import Swal from "sweetalert2";
 import BaseButton from "../../components/button/BaseButton"
 import OrganisationRequest from "../../model/request/OrganisationRequest";
 import ProgressBar from "@/components/ProgressBar";
+import AuthenticationRequest from "../../model/request/AuthRequest";
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
 export default {
   name: "Settings",
   components: {
@@ -468,6 +461,7 @@ export default {
   data() {
     return {
       updateOrganisationModel: OrganisationRequest.updateOrganisation,
+      sendOtpModel: AuthenticationRequest.resendOtp,
       files:[],
       selectedItem: {},
       blacklist: false,
@@ -499,6 +493,7 @@ export default {
         ...mapState({
       userInfo: (state) => state.auth.userInfo,
       loading: (state) => state.auth.loading,
+      loadingOtp: (state) => state.auth.loading,
       loadingDoc: (state) => state.document.loading,
      //documents:(state) => state.document.document
 
@@ -549,6 +544,14 @@ export default {
 
     },
   methods: {
+
+    sendOtp(){
+      this.sendOtpModel.customerEmail = this.organisation.organisationEmail
+      StoreUtils.dispatch(StoreUtils.actions.auth.resendOtp, this.sendOtpModel).then(()=>{
+        Toast.fire({text: "Sent", icon: "success" })
+      })
+    },
+    
     nextStep(){
       if(this.organisation.organisationState != null){
         this.currentStep = 2
@@ -600,7 +603,9 @@ export default {
       img_reader.readAsDataURL(fileObject);
     },
     regenerateApiKey() {
-      StoreUtils.dispatch(StoreUtils.actions.apiKey.regenerateApiKey, this.apikeyModel)
+      StoreUtils.dispatch(StoreUtils.actions.apiKey.regenerateApiKey, this.apikeyModel).then(() => {
+        this.$bvModal.hide('modal-no-backdrop')
+      })
     },
 
     closeModal0() {
@@ -665,6 +670,11 @@ export default {
   cursor:not-allowed;
 }
 
+.cardd{
+    box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
+    background-color: white;
+}
+
 .center-block {
   width: 600px;
   height: 560px;
@@ -677,7 +687,15 @@ export default {
     transform: rotate(360deg);
   }
 }
+.form{
+  display: flex;
+  justify-content: center;
+}
 
+.bform{
+  width: 40%;
+  margin: 20px;
+}
 .our-team {
   padding: 40px;
   width: 100%;

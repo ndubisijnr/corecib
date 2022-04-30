@@ -1,6 +1,6 @@
 <!--suppress ALL -->
 <template>
-  <div class="f">
+  <div>
     <form
       v-if="passwordResetScreen === 'email'"
       class="container form-group form-login"
@@ -8,29 +8,29 @@
       @submit.prevent="initiatePassword"
       style="margin-top:0px"
     >
-      <div class="text-center"><h4 class="mt-3">Password Reset</h4></div>
+     <div class="text-center">
+         <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
+      </div>
+      <div class="p-3">
+        <h4 class="text-center">Password Reset</h4>
       <div>
-        <base-input
-          label="Email"
-          class="mb-2"
-          name="Email"
-          type="email"
-          :rules="{ required: true }"
-          placeholder="Email"
-          v-model="initiateModel.customerEmail"
-          required
-        >
-        </base-input>
-        <div class="text-center">
-          <button
-            id="submitBtn"
-            class="btn-login"
-            native-type="submit"
-            :class="{ disabled: loading }"
-          >
-            Password Reset<span :class="{ 'spinner-border': loading }"></span>
-          </button>
+         <div class="form-floating mb-3">
+        <input type="email" class="form-control" name="email" placeholder="businessEmail@gmail.com"  v-model="initiateModel.customerEmail" required/>
+        <label >Email address</label>
+      </div>
+          <div class="login-footer">
+          <div class="alter-links text-center">
+          <span class="text-dark">
+            Remembered your password?</span><br>
+            <a @click="login()" class="join-now-text">
+              Login</a>
+          
         </div>
+        <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
+          {{loading ? "checking" : 'Check'}} <span :class="{ 'spinner-border': loading }"></span>
+        </button>
+      </div>
+      </div>
       </div>
     </form>
 
@@ -40,91 +40,49 @@
       role="form"
       @submit.prevent="completePassword"
     >
-      <div class="completeEnrollment">
-        <div style="" class="mb-1 text-center m-3">
-          <h4>Enter OTP</h4>
-          <vue-fake-input
-            required
-            :length="6"
-            :fontSize="40"
-            inputColor="#ffc107"
-            fontColor="#ffc107"
-            :allowPaste="false"
-            v-model="completeModel.customerOtp"
-          />
-          <br /><br />
-          <b
-            ><span v-if="timerCount > 0"> {{ timerCount }} secs left </span></b
-          >
-          <h6
-            style="cursor: pointer"
-            @click="resendOtp()"
-            v-if="timerCount === 0"
-            class=""
-            id="otp"
-          >
-            Resend OTP
-          </h6>
-        </div>
-        <base-input
-          label="New Password"
-          class="mb-2"
-          name="Password"
-          :rules="{ required: true }"
-          type="password"
-          placeholder="Password"
-          v-model="completeModel.customerPassword"
-          required
-        >
-        </base-input>
-        <base-input
-          label="Confirm New Password"
-          class="mb-2"
-          name="Confirm Password"
-          :rules="{ required: true }"
-          type="password"
-          placeholder="Confirm Password"
-          v-model="completeModel.customerPasswordConfirmation"
-          required
-        >
-        </base-input>
-        <div class="text-center">
-          <div class="text-center">
-            <button
-              class="btn-login"
-              native-type="submit"
-              :class="{ disabled: loading }"
-            >
-              Password Reset<span :class="{ 'spinner-border': loading }"></span>
-            </button>
-          </div>
-        </div>
+       <div class="text-center">
+        <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
+      </div>
+      <div class="p-3">
+        <h4 class="text-center">Almost Done!</h4>
+      <div class="form-floating mb-3">
+        <input type="tel" class="form-control" maxlength="6" style="font-size:30px; padding-left:10px;letter-spacing:7px;" name="email" placeholder="Enter Your OTP Number"  v-model="completeModel.customerOtp" required/>
+        <label >Enter Your OTP Number</label>
+         <span v-if="timerCount > 0" class="m-2"> {{ timerCount }} secs left </span>
+         <h5 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="m-2" id="otp"> Resend OTP </h5>
+       </div>
+        <div class="form-floating mb-3">
+        <input type="password" class="form-control" name="password" placeholder="XXXXX"   v-model="completeModel.customerPassword" id="pwd" required/>
+        <label >Password</label>
+        <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye" @click="hide$show()"></i>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" name="password" placeholder="XXXXX"    v-model="completeModel.customerPasswordConfirmation" id="pwd2" required/>
+        <label >Confirm Password</label>
+        <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye2" @click="hide$show()"></i>
+      </div>
+    
+       <div class="login-footer">
+        <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
+          {{loading ? "reseting" : 'Reset'}} <span :class="{ 'spinner-border': loading }"></span>
+        </button>
+      </div>
       </div>
     </form>
-    <div class="mt-2">
-      <div class="text-center">
-        <div class="alter-links">
-          <span>
-            Remember your password?<a @click="login()" class="join-now-text">
-              Login</a
-            ></span
-          >
-        </div>
-      </div>
-    </div>
+   
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import VueFakeInput from "vue-fake-input";
+// import VueFakeInput from "vue-fake-input";
 import AuthenticationRequest from "../../model/request/AuthRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 export default {
   name: "ForgotPasswordForm",
   components: {
-    VueFakeInput,
+    // VueFakeInput,
   },
   data() {
     return {
@@ -132,10 +90,6 @@ export default {
       completeModel: AuthenticationRequest.completePasswordReset,
       resendOtpModel: AuthenticationRequest.resendOtp,
       timerCount: 0,
-      notifications: {
-        topCenter: false,
-      },
-      showDismissibleAlert: false,
     };
   },
   computed: {
@@ -149,6 +103,30 @@ export default {
     }),
   },
   methods: {
+       hide$show() {
+      let b = document.getElementById("pwd");
+      let eye = document.getElementById("eye");
+      let b2 = document.getElementById("pwd2");
+      let eye2 = document.getElementById("eye2");
+      if (b.type === "password") {
+        b.type = "text";
+        eye.classList.remove("fa-eye");
+        eye.classList.add("fa-eye-slash");
+      } else {
+        b.type = "password";
+        eye.classList.add("fa-eye");
+        eye.classList.remove("fa-eye-slash");
+      }
+        if (b2.type === "password") {
+        b2.type = "text";
+        eye2.classList.remove("fa-eye");
+        eye2.classList.add("fa-eye-slash");
+      } else {
+        b2.type = "password";
+        eye2.classList.add("fa-eye");
+        eye2.classList.remove("fa-eye-slash");
+      }
+    },
     login() {
       this.$router.push({ name: "Logon" });
     },
@@ -156,14 +134,20 @@ export default {
       StoreUtils.dispatch(
         StoreUtils.actions.auth.initiatePasswordReset,
         this.initiateModel
-      );
+      )
+     
     },
     completePassword() {
       this.completeModel.customerEmail = this.initiateModel.customerEmail;
       StoreUtils.dispatch(
         StoreUtils.actions.auth.completePasswordReset,
         this.completeModel
-      );
+      ).then(()=>{
+        Object.keys(this.completeModel).forEach(key => {
+          this.completeModel[key] = null;
+        });
+      })
+       
     },
     resendOtp() {
       this.resendOtpModel.customerEmail = this.initiateModel.customerEmail;
@@ -216,42 +200,29 @@ export default {
   cursor: pointer;
 }
 
-.img-fluid,
-.img-thumbnail {
-  max-width: 100%;
-  height: auto;
+.login-footer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-
-.join-now-text {
-  color: black;
-  cursor: pointer;
-}
-
 
 .btn-login {
-  width: 332px;
-  height: 43px;
-  margin-top: 20px;  
-
-  background: #053c57;
-  border-radius: 25px;
+  width: 132px;
+  background-color:var(--primary);
+  border-radius: 5px;
   border: none;
   color: white;
 }
 
-.img-fluid,
-.img-thumbnail {
-  max-width: 100%;
-  height: auto;
+::placeholder{
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding-left:0;
 }
+.join-now-text{
+  cursor: pointer;
+    color: var(--primary);
 
-img,
-svg {
-  vertical-align: middle;
-}
-
-img {
-  border-style: none;
 }
 
 .spinner-border {
@@ -284,19 +255,10 @@ img {
   flex-direction: column;
   /*background-color: rgba(2, 32, 61, 0.99);*/
 
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
 }
 
-.auth-wrap {
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-  align-items: center;
-  /* background-color: rgba(2, 32, 61, 0.99); */
-  background-color: whitesmoke;
 
-  /*background-color: var(--sidebar-bg-color);*/
-}
 
 .form-login {
   width: 450px;
@@ -305,7 +267,7 @@ img {
   font-size: 14px;
   line-height: 1.42857143;
   padding-bottom: 20px;
-  background: white;
-  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 30%);
+  /* background: white;
+  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 30%); */
 }
 </style>

@@ -6,12 +6,12 @@ export default
     items: [
         {
             name:'Settings',
-            icon:'ni ni-support-16 text-primary',
+            icon:'fa fa-cog',
             path:'/settings/settings'
         },
         {
             name:'Referral',
-            icon:'ni ni-support-16 text-primary',
+            icon:'fa fa-users',
             path:'/bizgem/Referral'
         }
     ]

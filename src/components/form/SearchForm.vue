@@ -34,7 +34,7 @@
               <label class="form-control-label"> From</label>
               <datetime
                   v-model="model.startDate"
-                  input-class="form-control form-control-lg"
+                  input-class="form-control"
                   class="theme-green"
                   placeholder="Start Date"
                   zone="Africa/Lagos"
@@ -46,7 +46,7 @@
               <label class="form-control-label"> To</label>
               <datetime
                   v-model="model.endDate"
-                  input-class="form-control form-control-lg"
+                  input-class="form-control"
                   class="theme-green"
                   placeholder="End Date"
                   zone="Africa/Lagos"
@@ -58,7 +58,7 @@
         <div class="d-flex align-items-end">
           <base-input
               label="Search"
-              input-classes="form-control-lg"
+              input-classes="form-control"
               name="Report Name"
               v-model="searchValue"
               placeholder="Search Here"

@@ -193,22 +193,22 @@ export default {
 };
 </script>
 <style>
-/* .sidebar-menu-item {
-  cursor: pointer;
-}
-.navbar-dark .sidebar-menu-item.active .nav-link-text{
-  color: black ;
-} */
 .navbar-vertical.navbar-expand-xs .navbar-nav > .nav-item > .nav-link.active{
   background: black !important;
 }
 
 
-.active{
+.nav-link-text .active{
   color: black ;
 }
 
+.nav-link{
+  color: white !important;
+  font-size: 15px !important;
+}
+
 .nav-link-text{
-  color: #ffffff !important;
+  color: white !important;
+  padding: 0;
 }
 </style>

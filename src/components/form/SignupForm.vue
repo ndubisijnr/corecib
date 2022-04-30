@@ -1,8 +1,6 @@
 <template>
 <div>
-  <div class="text-center" style="margin-bottom: -30px">
-            <img src="@/assets/bizgemio.svg" alt="" class="mg-fluid p" width="80px" />
-  </div>
+ 
     <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
       <form
         class="container form-group form-login"
@@ -10,6 +8,11 @@
         @submit.prevent="handleSubmit(onInitiateEnrollment())"
         v-if="screen == 'register'"
       >
+       <div class="text-center">
+           <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
+  </div>
+  <div class="p-3">
+      <h4 class="text-center">Create A Business Account</h4>
         <div class="form-floating mt-3 mb-3">
           <base-input label="Country">
             <el-select
@@ -25,6 +28,7 @@
                 :value="option.value"
                 :label="option.label"
                 :key="option.value"
+                
               >
               </el-option>
             </el-select>
@@ -90,7 +94,7 @@
           <vue-country-code
             @onSelect="onSelect"
             :preferredCountries="['ng', 'us', 'gb']"
-            style="height: 38px"
+            style="height: 45px"
             v-model="initiateModel.customerCountryCode"
           >
           </vue-country-code>
@@ -106,26 +110,18 @@
           >
           </base-input>
         </div>
-        <div class="text-center">
-          <button
-            id="submitBtn"
-            class="btn-login"
-            native-type="submit"
-            :class="{ disabled: loading }"
-          >
-            Sign Up <span :class="{ 'spinner-border': loading }"></span>
-          </button>
-        </div>
-        <div class="mt-2">
+        <div class="login-footer">
           <div class="text-center">
-            <p>
-              Already have an account?
-              <a class="text-primary" @click="login()" style="cursor: pointer"
-                >Login</a
-              >
-            </p>
-          </div>
+             <span class="text-dark"> I already have an account.</span>
+          <br/>
+      <a class="forgot-password" @click="login()" style="cursor:pointer"> Login</a>
         </div>
+        <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
+          {{loading ? "Working" : 'Sign Up'}} <span :class="{ 'spinner-border': loading }"></span>
+        </button>
+      </div>
+
+  </div>
       </form>
       <form
         class="p-3 form-group form-login"
@@ -133,84 +129,41 @@
         v-if="screen == 'otp'"
         @submit.prevent="handleSubmit(onCompleteEnrollment())"
       >
-        <h4 class="text-center m-4">Complete Registration</h4>
-        <div class="text-center">
-          <span>Enter OTP</span><br />
-          <vue-fake-input
-            :length="6"
-            :fontSize="40"
-            inputColor="#ffc107"
-            fontColor="#ffc107"
-            :allowPaste="false"
-            v-model="completeModel.customerOtp"
-            required
-          /><br /><br />
-          <b
-            ><span v-if="timerCount > 0"> {{ timerCount }} secs left </span></b
-          >
-          <h6
-            style="cursor: pointer"
-            @click="resendOtp()"
-            v-if="timerCount == 0"
-            class=""
-            id="otp"
-          >
-            Resend OTP
-          </h6>
-        </div>
-        <div class="form-floating mt-2 mb-3">
-          <input
-            type="password"
-            class="form-control"
-            name="password"
-            placeholder="XXXXX"
-            v-model="completeModel.customerPassword"
-            id="pwd"
-            required
-          />
-          <label>Password</label>
-          <i
-            class="fas fa-eye"
-            style="position: absolute; right: 30px; top: 25px; cursor: pointer"
-            id="eye"
-            @click="hide$show()"
-          ></i>
-        </div>
+         <div class="text-center">
+           <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
+  </div>
+      <div class="p-3">
+        <h4 class="text-center">Complete Registration!</h4>
+      <div class="form-floating mb-3">
+        <input type="tel" class="form-control" maxlength="6" style="font-size:30px; padding-left:10px;letter-spacing:7px;" name="email" placeholder="Enter Your OTP Number"   v-model="completeModel.customerOtp" required/>
+        <label >Enter Your OTP Number</label>
+         <span v-if="timerCount > 0" class="m-2"> {{ timerCount }} secs left </span>
+         <h5 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="m-2" id="otp"> Resend OTP </h5>
+       </div>
         <div class="form-floating mb-3">
-          <input
-            type="password"
-            class="form-control"
-            name="Comfirm password"
-            placeholder="XXXXX"
-            v-model="completeModel.customerConfirmPassword"
-            id="pwd1"
-            required
-          />
-          <label>Comfirm Password</label>
-          <i
-            class="fas fa-eye"
-            style="position: absolute; right: 30px; top: 25px; cursor: pointer"
-            id="eye1"
-            @click="hide$show1()"
-          ></i>
-        </div>
-        <div class="text-center">
-          <span id="passmisMatched" class="text-danger text-center"></span>
+        <input type="password" class="form-control" name="password" placeholder="XXXXX"   v-model="completeModel.customerPassword" id="pwd" required/>
+        <label >Password</label>
+        <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye" @click="hide$show()"></i>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" name="password" placeholder="XXXXX"    v-model="completeModel.customerConfirmPassword" id="pwd2" required/>
+        <label >Confirm Password</label>
+        <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye2" @click="hide$show()"></i>
+      </div>
+      </div>
+
+           <div class="login-footer">
           <div class="text-center">
-            <button
-              class="btn-login"
-              native-type="submit"
-              :class="{ disabled: loading }"
-            >
-              Proceed
-              <span :class="{ 'spinner-border': loading }"></span>
-            </button>
-          </div>
+          <a class="forgot-password text-dark">
+             By clicking the “Proceed” button, you agree to BizGem’s
+          <a class="text-primary" style="cursor:pointer">terms of acceptable use</a>.
+          </a><br/>
         </div>
-        <div class="wrapper mt-3 mb-2 text-center m-t-sm text-sm">
-          By clicking the “Proceed” button, you agree to BizGem’s
-          <a class="text-primary">terms of acceptable use</a>.
-        </div>
+        <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
+          {{loading ? "Working." : 'Proceed'}} <span :class="{ 'spinner-border': loading }"></span>
+        </button>
+      </div>
+  
       </form>
     </validation-observer>
   </div>
@@ -221,6 +174,7 @@ import BaseInput from "../../components/inputs/BaseInput";
 import AuthenticationRequest from "../../model/request/AuthRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import country from "@/components/country";
+import Swal from "sweetalert2";
 
 export default {
   name: "Signup-Form",
@@ -271,6 +225,8 @@ export default {
     hide$show() {
       let b = document.getElementById("pwd");
       let eye = document.getElementById("eye");
+      let b2 = document.getElementById("pwd2");
+      let eye2 = document.getElementById("eye2");
       if (b.type === "password") {
         b.type = "text";
         eye.classList.remove("fa-eye");
@@ -279,6 +235,15 @@ export default {
         b.type = "password";
         eye.classList.add("fa-eye");
         eye.classList.remove("fa-eye-slash");
+      }
+        if (b2.type === "password") {
+        b2.type = "text";
+        eye2.classList.remove("fa-eye");
+        eye2.classList.add("fa-eye-slash");
+      } else {
+        b2.type = "password";
+        eye2.classList.add("fa-eye");
+        eye2.classList.remove("fa-eye-slash");
       }
     },
     hide$show1() {
@@ -333,13 +298,7 @@ export default {
         this.completeModel.customerReferralCode = localStorage.referralCode;
         StoreUtils.dispatch( StoreUtils.actions.auth.completeEnrollment,this.completeModel);
       } else {
-        document.getElementById("passmisMatched").innerText = "Passwords are not the same";
-        setTimeout(() => {
-          document.getElementById("passmisMatched").style.display = "none";
-        }, 2000);
-        if (document.getElementById("passmisMatched").style.display == "none") {
-          document.getElementById("passmisMatched").style.display = "block";
-        }
+              Swal.fire({ text: 'Password Are Not The Same.', icon: 'error', }).then(() => { })
       }
     },
   },
@@ -375,34 +334,26 @@ export default {
 };
 </script>
 <style scoped>
-.forgot-password {
-  color: black;
-  cursor: pointer;
-}
 
-.join-now-text {
-  color: black;
-  cursor: pointer;
+.login-footer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .btn-login {
-  width: 332px;
-  height: 43px;
-  left: 51px;
-  top: 601px;
-
-  background: rgb(10, 133, 190);
-  border-radius: 25px;
+  width: 132px;
+  background-color:var(--primary);
+  border-radius: 5px;
   border: none;
   color: white;
 }
 
-/* .phone{
-  width:100%;
-  border-top-left-radius: 0 !important;
-} */
-
-/* */
+::placeholder{
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding-left:0;
+}
 
 .spinner-border {
   display: inline-block;
@@ -433,7 +384,7 @@ export default {
   font-size: 14px;
   line-height: 1.42857143;
   padding-bottom: 20px;
-  background: white;
-  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 30%);
+  /* background: white;
+  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 30%); */
 }
 </style>

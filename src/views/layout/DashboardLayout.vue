@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-    <notifications></notifications>
     <side-bar>
       <template slot="links">
         <span v-for="sidebar in sidebarItems" v-bind:key="sidebar.header">
@@ -69,7 +68,7 @@ export default {
   },
   computed:{
     sidebarItems(){
-      return [DashboardSidebarItems,ReportSidebarItems,SettingsSidebarItems,UserSidebarItems]
+      return [DashboardSidebarItems,ReportSidebarItems,SettingsSidebarItems]
     },
   },
   mounted() {
@@ -79,8 +78,5 @@ export default {
 </script>
 <style scoped>
 
-sidebar-link {
-  color: white;
-}
 
 </style>

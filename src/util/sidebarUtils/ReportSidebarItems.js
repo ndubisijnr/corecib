@@ -10,13 +10,26 @@ export default
         // },
         {
             name:'Dispute',
-            icon:'ni ni-support-16 text-primary',
+            icon:'fas fa-sort',
             path:'/reports/dispute'
         },
         {
             name:'Transactions',
-            icon:'ni ni-support-16 text-primary',
+            icon:'fa fa-money-bill',
             path:'/reports/transactions'
-        }
+        },
+       
+            {
+                name:'Virtual Accounts',
+                icon:'fa fa-university',
+                path:'/user/account'
+            },
+            {
+                name:'Wallets',
+                icon:'fa fa-wallet',
+                path:'/user/wallet'
+            },
+    
+        
     ]
 };

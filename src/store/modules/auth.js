@@ -74,7 +74,7 @@ export const actions = {
     });
   },
 
-  logon: ({ commit, dispatch, rootState }, payload = AuthenticationRequest.login) => {
+  logon: ({ commit, state }, payload = AuthenticationRequest.login) => {
     commit("updateLoading", true)
     return AuthService.callLogonApi(payload)
       .then(response => {
@@ -83,6 +83,7 @@ export const actions = {
           commit("updateLoading", false)
           localStorage.token = responseData.token;
           commit("updateToken", responseData.token);
+          console.log(state.token)
           if (!localStorage.organisationId) localStorage.organisationId = responseData.organisations[0].organisationId
           else {
             if (responseData.organisations.filter(it => it.organisationId === localStorage.organisationId).length < 1)
@@ -127,11 +128,11 @@ export const actions = {
     return AuthService.callLogOutApi(payload)
       .then(() => {
         commit("updateLoading", false)
-        localStorage.token = null;
+        localStorage.clear()
         commit("updateAuthToken", null);
         commit("updateUserInfo", null);
         commit("updateLoading", false);
-        router.push({ name: "Login" }).then(() => { })
+        window.location = "/"
       })
       .catch((error) => {
         commit("updateLoading", false);
@@ -178,7 +179,7 @@ export const actions = {
       if(responseData.responseCode === "00"){
         commit("updateLoading", false)
         commit("updateStage", responseData.data[0].organisationStage)
-        console.log(state.stage)
+        window.location.reload()
       }
     }).catch((error) => {
       commit("updateLoading", false);

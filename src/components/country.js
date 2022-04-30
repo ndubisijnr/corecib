@@ -1,4 +1,5 @@
 export default [
+    { "name": "Nigeria", "code": "NG" },
     { "name": "Afghanistan", "code": "AF" },
     { "name": "Åland Islands", "code": "AX" },
     { "name": "Albania", "code": "AL" },
@@ -158,7 +159,6 @@ export default [
     { "name": "New Zealand", "code": "NZ" },
     { "name": "Nicaragua", "code": "NI" },
     { "name": "Niger", "code": "NE" },
-    { "name": "Nigeria", "code": "NG" },
     { "name": "Niue", "code": "NU" },
     { "name": "Norfolk Island", "code": "NF" },
     { "name": "Northern Mariana Islands", "code": "MP" },

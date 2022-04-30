@@ -1,11 +1,11 @@
 export default
 {
-    header: 'Dashboards',
+    header: 'Complience',
     icon: '',
     items: [
         {
-            name:'Get Started',
-            icon:'ni ni-support-16 text-primary',
+            name:'Overview',
+            icon:'fas fa-project-diagram',
             path:'/dashboard/get-started'
         },
         // {
