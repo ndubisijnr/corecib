@@ -6,7 +6,7 @@
       </div>
     </div>
      <base-table
-          :items="allTransactions.data"
+          :items="JSON.parse(JSON.stringify(allTransactions.data))"
           :fields="fields"
           filter-mode="default"
           :is-busy="loading" />

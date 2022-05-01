@@ -117,7 +117,7 @@
       <a class="forgot-password" @click="login()" style="cursor:pointer"> Login</a>
         </div>
         <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-          {{loading ? "Working" : 'Sign Up'}} <span :class="{ 'spinner-border': loading }"></span>
+          {{loading ? "working" : 'Proceed'}} <span :class="{ 'spinner-border': loading }"></span>
         </button>
       </div>
 
@@ -160,7 +160,7 @@
           </a><br/>
         </div>
         <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-          {{loading ? "Working." : 'Proceed'}} <span :class="{ 'spinner-border': loading }"></span>
+          {{loading ? "working." : 'Create'}} <span :class="{ 'spinner-border': loading }"></span>
         </button>
       </div>
   

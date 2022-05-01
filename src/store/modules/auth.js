@@ -177,8 +177,8 @@ export const actions = {
     return OrganizationService.callOrganisationStageApi(paylaod).then(response => {
       let responseData = response.data
       if(responseData.responseCode === "00"){
-        commit("updateLoading", false)
         commit("updateStage", responseData.data[0].organisationStage)
+        commit("updateLoading", false)
         window.location.reload()
       }
     }).catch((error) => {

@@ -18,7 +18,7 @@ export default [
     },
     {
         path: '/signup/:referralCode',
-        name: 'SignUp',
+        name: 'ReferralSignUp',
         meta: {layout: 'auth',authRequired:false},
         component: SignUp
     },

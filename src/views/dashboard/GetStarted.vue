@@ -1,20 +1,19 @@
 <template>
   <div>
     <base-header class="pb-6" type="">
-      <span :class="{ 'spinner-border': loading }"></span>
     </base-header>
     <div class="container-fluid mt--6">
       <div class="cardd p-3 m-3">
-            <div class="text-center ">
-                <h1 class="m-b-xs"><b>Hello {{user.customerFirstName}}, Welcome to BizGem</b></h1>
-                <h2>Your business is in <span v-if="getStage === 'DEV'">Test</span><span v-else>Live</span> mode</h2>
+            <div>
+                <h1 class="m-b- text-center"><b>Hello {{user.customerFirstName}}, Welcome to BizGem</b></h1>
+                <h2 class="text-center">Your business is in <span v-if="getStage === 'DEV'">Test</span><span v-else>Live</span> mode</h2>
                 <div class="card-area">
-                  <dashboard-card :showBtn="false" :showBtn1="false" :value="'0'" :title="'Wallet Balance'"></dashboard-card>
-                  <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'" :value="'1,000,000'" :title="'Referral'"></dashboard-card>
-                  <dashboard-card  :currency="'₦'" :value="'200,000'" :title="'Referral Balance'" :button_title="'Widthdraw'"></dashboard-card>
-                  <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'" :value="'1,000,000'" :title="'Wallet Balance'"></dashboard-card>
+                  <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="'0' | formatAmount" :title="'Wallet Balance'"></dashboard-card>
+                  <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'" :value="'1000000' | formatAmount" :title="'Referral Balance'"></dashboard-card>
+                  <dashboard-card  :value="'200'" :title="'Number of Wallet'"></dashboard-card>
+                  <dashboard-card :showBtn="false" :showBtn1="false"  :value="'10'" :title="'Number of Virtual Account'"></dashboard-card>
                 </div> 
-                <div class="mb-3">
+                <div class="mb-3 text-center">
                 <b-button style="background-color:#3F88C5;color:white" v-b-modal.modal-1>Fund Wallet </b-button>
                 <b-button v-b-modal.modal-no-backdrop> Withdraw</b-button>
               </div> 
@@ -30,20 +29,18 @@
           <template #modal-title>
                     Withdraw
                     </template>
-                        <div class="d-block text-center">
-                          <div>
-                            <b-form>
-                              <label>Enter Amount</label>
-                               <b-input-group size="md" prepend="NGN" append=".00" class="mb-3">
-                                <b-form-input type="number"></b-form-input>
+                          <div class="container">
+                            <!-- <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="'100,000'" :title="'Wallet Balance'"></dashboard-card> -->
+                            <b-form class="">
+                              <h4 class="text-left">Wallet Balance: ₦{{'100000' | formatAmount}}</h4>
+                               <b-input-group size="md" prepend="NGN" class="mb-3">
+                                <b-form-input id='withdrawInput' step="0.01" type="number" autofocus v-model="withdrawModel" style="font-size:16px;letter-spacing:.2rem;" placeholder="Enter Amount"></b-form-input>
                               </b-input-group>
-                              <base-button title="Withdraw"></base-button>
+                               <h4 id="error" class="text-danger text-center"></h4>
+                              <base-button title="Withdraw" v-if="withdrawModel <= 100000"></base-button>
+                              <base-button title="Withdraw" v-else disabled></base-button>
                             </b-form>
-                          </div>
-                        </div>
-                <div class="d-flex">
-   </div>
-                           
+                          </div>                       
   </b-modal>
 
    <b-modal  centered title="BootstrapVue" id="modal-1" hide-backdrop content-class="shadow" hide-footer>
@@ -58,7 +55,7 @@
               <span>Transfer the amount you want to fund to the account
                     details below and your balance will be funded.</span>
               <div class="carddd">
-                <h6 class="text-right bg-warning rounded-3 p-1 text-white" style="position:absolute;right:50px;cursor:pointer" @click="copyToClipboard()">Copy</h6>
+                <h6 class="text-right rounded-3 p-1 text-white" style="position:absolute;right:50px;cursor:pointer;background:var(--primary)" @click="copyToClipboard()">Copy</h6>
                 <code>
                    <span class="mb-3 text-dark">Some Bank Acount Name</span><br>
                    <span class="mb-3 text-dark">{{currentOrganisation.organisationName}}</span><br>
@@ -88,7 +85,6 @@ const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
-  widthdrawmodel:"",
   timer: 3000,
   timerProgressBar: true,
   didOpen: (toast) => {
@@ -105,6 +101,8 @@ export default {
       return{
           isSwitched:false,
           apikeyModel: ApikeyRequest.regenerateApiKey,
+          withdrawModel:null,
+
 
       }
   },
@@ -128,6 +126,11 @@ export default {
         );
       });
     },
+
+    wallet(){
+      console.log(this.withdrawModel)
+    }
+   
     
 
   },
@@ -145,11 +148,26 @@ export default {
 
     getStage(){
       return StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
-    }
-   
+    },
+
+  
   },
 
-  mounted: function () {},
+  watch:{
+    withdrawModel(newValue){
+      if(newValue > 100000){
+        document.getElementById('withdrawInput').style.border= "solid red" 
+        document.getElementById('error').innerHTML= "Insufficent Funds" 
+      }else{
+        document.getElementById('withdrawInput').style.border= "solid var(--primary)" 
+        document.getElementById('error').innerHTML= "" 
+      }
+    }
+  },
+
+  mounted: function () {
+    this.wallet()
+  },
 };
 </script>
 <style scoped>
@@ -178,6 +196,16 @@ export default {
   margin: 10px;
   padding: 50px;
   text-align: center;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 .onboarding-card-icon {
   height: 60px;

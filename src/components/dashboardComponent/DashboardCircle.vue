@@ -3,7 +3,7 @@
     <span class="currency">{{currency}}<span class="value"> {{value}}</span></span>
     <p class="title">{{title}}</p>
     <div class="display-btn">
-        <b-button v-if="showBtn == true" class="mybtn">{{button_title}}</b-button>
+        <b-button v-if="showBtn == true" :id="id" class="mybtn">{{button_title}}</b-button>
         <b-button v-if="showBtn1 == true" class="mybtn">{{button_title}}</b-button>
     </div>
   </div>
@@ -28,6 +28,9 @@ export default {
         type:Boolean,
       },
        button_title:{
+        type:String,
+      },
+      id:{
         type:String,
       }
       }

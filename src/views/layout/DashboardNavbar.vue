@@ -4,7 +4,7 @@
     class="navbar-top border-bottom navbar-expand"
     :class="{ 'nav-bar-head': type === 'default' }"
   >
-    <div class="mr-5">
+    <div class="mr-5" >
       <div
         class="sidenav-toggler d-none d-xl-block"
         :class="{ active: !$sidebar.isMinimized }"
@@ -18,13 +18,14 @@
       </div>
     </div>
     
-      <b-alert show variant="danger" class="dalert animate__animated animate__slower animate__flash animate__infinite	infinite"><a href="#" class="alert-link">Upgrade</a><br>
-         <span>Your account is currently limited to Bizgem bills payment API service.</span>
-           <span> Kindly upgrade your account to
-           gain access to wallet and virtual account services.
+      <!-- <b-alert  show variant="danger" class="dalert"><a href="#" class="alert-link">Upgrade</a> &nbsp; 
+          <span class="animate__animated animate__slower animate__flash animate__infinite	infinite">Your account is currently limited to Bizgem bills payment API service.
+            Kindly upgrade your account to
+           gain access to wallet and virtual account services.  
          </span>
-      </b-alert>
+      </b-alert> -->
     <ul class="navbar-nav align-items-center ml-md-auto">
+      
       <li class="nav-item d-xl-none">
         <div
           class="pr-3 sidenav-toggler"
@@ -68,17 +69,21 @@
     </ul>
     <!-- <span class="p m-2">Documentation</span> -->
     <ul class="navbar-nav align-items-center ml-auto ml-md-0">
+      <span :class="{ 'spinner-border': loading }"></span>&nbsp;
        <div class="text-center">
+                <span style="font-size:12px">Switch to {{stage == 'Live' ? 'Test' : 'Live' }}</span>
+                <br>
                 <toggle-button
                   :value="toggleBtnValue"
-                  :width="70"
-                  :height="30"
+                  :width="60"
+                  :height="20"
                   :sync="true"
-                  :font-size="15"
-                  :color="{checked:'#75c791', unchecked:'#c02026'}"
+                  :font-size="10"
+                  :color="{checked:'#75c791', unchecked:'#EE9BA9'}"
                   :labels="{ unchecked: stage, checked: stage }"
                   @change="switchApi()"
                 />
+               
               </div>
       <base-dropdown
         menu-on-right
@@ -140,7 +145,10 @@ export default {
     ...mapState({
       user: (state) => state.auth.userInfo,
       organisation: (state) => state.auth.userInfo.organisations,
+      loading: (state) => state.auth.loading,
+
     }),
+    
     stage() {
       let testLive = (
         StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
@@ -196,16 +204,6 @@ export default {
     this.minimizeSidebar();
   },
 
-  watch:{
-    user(obj){
-      if(Object.keys(obj).forEach(key => obj[key] == null)){
-        console.log('empty o')
-      }else{
-        console.log('not empty', this.user);
-       
-      }
-    }
-  }
 };
 </script>
 
