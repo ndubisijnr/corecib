@@ -1,5 +1,7 @@
 <template>
   <div>
+  <span :class="{'spinner-border' : loading }"></span>
+
     <div class="container-fluid mt-0">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -7,12 +9,13 @@
             <el-tabs type="card" v-model="activeName" @tab-click="handleClick">
               
               <el-tab-pane id="tab-0" :key="1"  label="Profile" class="card">
+
                  <div class="accordion" role="tablist">
        
     <div no-body class="mb-1 add-bank-form">
       <div header-tag="header" class="p-1" role="tab">
         <div block v-b-toggle.accordion-1 variant="none" class="p-3">
-          <h3> <b-icon-check-circle style="font-size:25px"></b-icon-check-circle> Personal Info</h3>
+          <h3> <b-icon-check-circle style="font-size:25px"></b-icon-check-circle> nPersonal Info</h3>
           <p>Enter a bank account information where your earnings will be deposited</p>
         </div>
       </div>
@@ -218,7 +221,7 @@
                        
                     
                       <div class="">
-                        <span :class="{'spinner-loader':loading}"></span>
+                        <span :class="{'spinner-border':loading}"></span>
                         <div>
                         
                               <div  v-if="'data' in documents">
@@ -293,29 +296,7 @@
   </div>
 
 
-              </el-tab-pane>
-
-              <!-- END PROFILE -->
-<!-- 
-              <el-tab-pane
-                id="tab-1"
-                :key="2"
-                name="second"
-                label="Business Profile"
-                class="card"
-
-              >
-                <div class="m-3">
-                   
-                  <div class="d-flex w-100">
-                
-                   
-      
-
-                   
-                  </div>
-                  </div>
-              </el-tab-pane> -->
+        </el-tab-pane>
 
               <el-tab-pane
                 id="tab-5"
@@ -330,7 +311,7 @@
                     >
                       <template #header>
                           <b-container class="text-right">
-                             <b-button v-b-modal.modal-no-backdrop style="background-color:var(--primary);border:none;color:white;">Regenerate Api Key</b-button>
+                             <b-button style="background-color:var(--primary);border:none;color:white;">Regenerate Api Key</b-button>
                           </b-container>
                       </template>
                     <div class="d-flex justify-content-center">
@@ -348,23 +329,143 @@
                 class="cardd"
               >
 
-              <div class="text-center p-3">
-                 <h3> Add Bank Account</h3>
-                  <p>Enter a bank account information where your earnings will be deposited</p>
+              <div class="p-3" v-if="payoutAccount" style="width:100%;display:flex;justify-content:space-around;">
+
+           
+              <div >
+
+                 <div class="carddd mb-3 text-dark">
+                   <h3 class="text-dark">Current Added Bank </h3>
+                <span class="text-dark small">Bank Name:   {{readonlybank.accountBankCode}}</span><br>
+                <span class="text-dark small">Bank Holder Name:   {{readonlybank.accountName}}</span><br>
+                <span class="mb-3 text-dark small">Bank Account Number:   {{readonlybank.accountNumber}}</span>
               </div>
 
-    <div class="form">
-      <b-form class="bform">
+                               <b-form class="bformedit" @submit.prevent="editBank()">
 
-      <b-form-group id="input-group-3" label="Bank Name" label-for="input-3">
-         <b-form-select v-model="selected" :options="options"></b-form-select>
-      </b-form-group>
+
+                                  <b-form-group id="input-group-3" label="Bank Name" label-for="input-3"> 
+                                      <base-input>
+                                        <el-select
+                                          class="select-danger"
+                                          filterable
+                                          placeholder="Bank Name"
+                                          required
+                                          v-model="createPayoutAccountModel.accountBankCode"
+                                        >
+                                          <el-option
+                                            v-for="bank in banks"
+                                            class="select-danger"
+                                            :value="bank.value"
+                                            :label="bank.label"
+                                            :key="bank.value"
+                                          >
+                                          </el-option>
+                                        </el-select>
+                                      </base-input>
+                                    </b-form-group> 
+
+                              
+                                  <b-form-group id="input-group-4" label="Account Number" label-for="input-4">
+                                    <b-form-input
+                                      id="input-4"
+                                      type="text"
+                                      placeholder="Account Number"
+                                      v-model="createPayoutAccountModel.accountNumber"
+                                      class="mr-2"
+                                      required
+                                    ></b-form-input>
+                                  </b-form-group>
+
+                                  <b-form-group id="input-group-5" label="Account Name" label-for="input-5">
+                                  
+                                  <b-form-input
+                                      id="input-5"
+                                      type="text"
+                                      placeholder="Account Name"
+                                      v-model="createPayoutAccountModel.accountName"
+                                      class="mr-2"
+                                      required
+                                    ></b-form-input>
+                                  </b-form-group>
+                                    <b-form-group id="input-group-5" label="Enter OTP" label-for="input-5">
+                                    <div class="d-flex">
+                                  <b-form-input
+                                      id="input-5"
+                                      type="text"
+                                      placeholder="OTP"
+                                      class="mr-2"
+                                      required
+                                      v-model="createPayoutAccountModel.otp"
+                                    ></b-form-input>
+                                    <b-button class="w-50" @click="sendOtp()">{{loadingOtp ? 'Sending' : 'Send OTP'}} <span :class="{'spinner-border':loadingOtp}"></span></b-button>
+                                    </div>
+                                  </b-form-group>
+                                  <b-button class="w-100 text-white" style="background-color:var(--primary)" type="submit">{{payoutloading ? 'Editing' : 'Edit Bank'}} <span :class="{'spinner-border':payoutloading}"></span></b-button>
+
+    </b-form>
+
+                                   </div>
+
+              </div>
+              <div class="text-center p-3" v-else style="display:flex;width:100%;height:60vh;justify-content:center;align-items:center">
+                <div>
+                <i class="fa fa-ban" aria-hidden="true" style="font-size:46px;margin:10px"></i>
+                 <h5> You seem to not have any bank account added.</h5>
+                 <b-button  v-b-modal.modal-no-backdrop @click="openPayaccountmodal()">Add Bank</b-button>
+                 </div>
+              </div>
+
+
+              </el-tab-pane>
+            </el-tabs>
+          </div>
+        </div>
+      </div>
+
+       <b-modal  centered title="BootstrapVue" id="modal-no-backdrop" hide-backdrop content-class="shadow" hide-footer >
+           <template #modal-title>
+                   Add Payout Account
+                    </template>
+    <div style="display:flex;justify-content:center" v-if="loading">
+    <p :class="{'spinner-border' : loading }"></p>
+    </div>
+    <div class="form" v-if="!loading">
+      <b-form class="bform" @submit.prevent="addBank()">
+
+
+      <b-form-group id="input-group-3" label="Bank Name" label-for="input-3"> 
+          <base-input>
+            <el-select
+              class="select-danger"
+              filterable
+              placeholder="Bank Name"
+              required
+              v-model="createPayoutAccountModel.accountBankCode"
+            >
+              <el-option
+                v-for="bank in banks"
+                class="select-danger"
+                :value="bank.value"
+                :label="bank.label"
+                :key="bank.value"
+              >
+              </el-option>
+              <el-option v-if="loading">loading... </el-option>
+            </el-select>
+          </base-input>
+         </b-form-group> 
+
+      <!-- <b-form-group id="input-group-3" label="Bank Name" label-for="input-3">
+         <b-form-select v-model="selected" :options="bankList.name"></b-form-select>
+      </b-form-group> -->
 
        <b-form-group id="input-group-4" label="Account Number" label-for="input-4">
          <b-form-input
           id="input-4"
           type="text"
           placeholder="Account Number"
+          v-model="createPayoutAccountModel.accountNumber"
           class="mr-2"
           required
         ></b-form-input>
@@ -376,6 +477,7 @@
           id="input-5"
           type="text"
           placeholder="Account Name"
+          v-model="createPayoutAccountModel.accountName"
           class="mr-2"
           required
         ></b-form-input>
@@ -388,34 +490,16 @@
           placeholder="OTP"
           class="mr-2"
           required
+          v-model="createPayoutAccountModel.otp"
         ></b-form-input>
         <b-button class="w-50" @click="sendOtp()">{{loadingOtp ? 'Sending' : 'Send OTP'}} <span :class="{'spinner-border':loadingOtp}"></span></b-button>
         </div>
       </b-form-group>
-      <b-button class="w-100 text-white" style="background-color:var(--primary)">Add Account</b-button>
+      <b-button class="w-100 text-white" style="background-color:var(--primary)" type="submit">{{payoutloading ? 'Adding' : 'Add Bank'}} <span :class="{'spinner-border':payoutloading}"></span></b-button>
 
     </b-form>
 
-        </div>
-              </el-tab-pane>
-            </el-tabs>
-          </div>
-        </div>
-      </div>
-       <b-modal  centered title="BootstrapVue" id="modal-no-backdrop" hide-backdrop content-class="shadow" hide-footer>
-          <template #modal-title>
-                    Regenerate Api Key
-                    </template>
-                        <div class="d-block text-center">
-                           <h3>Are you sure you want to generate new API keys? 
-                              If you've integrated with the current keys, 
-                              you'd be required to change to the newly generated keys.</h3>
-                        </div>
-                <div class="d-flex">
-          <b-button class="mt-3 bg-danger text-white" block @click="$bvModal.hide('modal-no-backdrop')">Cancel</b-button>
-      <b-button class="mt-3 bg-success text-white" block @click="regenerateApiKey()">Proceed</b-button>
-   </div>
-                           
+        </div>         
   </b-modal>
     </div>
   </div>
@@ -427,6 +511,7 @@ import { DropdownMenu, DropdownItem, Dropdown } from "element-ui";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import ApikeyRequest from "../../model/request/ApiKeyRequest";
 import DocumentRequest from "../../model/request/DocumentRequest";
+import VirtualAccountRequest from "../../model/request/VirtualAccountRequest"
 import StepProgress from 'vue-step-progress';
 import 'vue-step-progress/dist/main.css';
 import Swal from "sweetalert2";
@@ -434,6 +519,7 @@ import BaseButton from "../../components/button/BaseButton"
 import OrganisationRequest from "../../model/request/OrganisationRequest";
 import ProgressBar from "@/components/ProgressBar";
 import AuthenticationRequest from "../../model/request/AuthRequest";
+import AccountPayoutRequest from "../../model/request/AccountPayoutRequest"
 
 const Toast = Swal.mixin({
   toast: true,
@@ -462,7 +548,11 @@ export default {
     return {
       updateOrganisationModel: OrganisationRequest.updateOrganisation,
       sendOtpModel: AuthenticationRequest.resendOtp,
+      readbanklistModel: VirtualAccountRequest.getBankList,
+      createPayoutAccountModel:AccountPayoutRequest.createAccountPayout,
+      readPayoutAccountModel:AccountPayoutRequest.readAccountPayoutById,
       files:[],
+      banks:[],
       selectedItem: {},
       blacklist: false,
       show: "first",
@@ -492,9 +582,13 @@ export default {
     },
         ...mapState({
       userInfo: (state) => state.auth.userInfo,
-      loading: (state) => state.auth.loading,
+      loading: (state) => state.virtualAccount.loading,
       loadingOtp: (state) => state.auth.loading,
       loadingDoc: (state) => state.document.loading,
+      bankList: (state) => state.virtualAccount.bankList,
+      payoutAccount:state => state.accountPayout.addedBanks,
+      payoutloading:state => state.accountPayout.accloading,
+      readonlybank:state => state.accountPayout.readOnlyAddedBanks
      //documents:(state) => state.document.document
 
     }),
@@ -541,9 +635,62 @@ export default {
         StoreUtils.actions.document.readDocument,
         {readAll:this.readDoc.readAll}
     );
+  //??//
 
+   this.readPayoutAccountModel.accountOrganisationId = localStorage.organisationId
+   StoreUtils.dispatch(StoreUtils.actions.accountPayout.readAddedBanks, this.readPayoutAccountModel)
+  //
+   let bankLists = this.bankList;
+          this.banks = bankLists.map((item) => {
+            return {
+              value: `${item.name} ${item.code}`,
+              label: `${item.name}`,
+            };
+          });
     },
   methods: {
+
+    openPayaccountmodal(){
+      StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList, this.readbanklistModel)
+
+          let bankLists = this.bankList;
+          this.banks = bankLists.map((item) => {
+            return {
+              value: `${item.name} ${item.code}`,
+              label: `${item.name}`,
+            };
+          });
+    },
+
+    addBank(){
+      let bankcode = this.createPayoutAccountModel.accountBankCode.split(' ')[0]
+      let bankName = this.createPayoutAccountModel.accountBankCode.split(' ')[1]
+      this.createPayoutAccountModel.accountCountry = this.userInfo.customerCountry
+      this.createPayoutAccountModel.accountOrganisationId = this.organisation.customerOrganisationCustomerId
+      this.createPayoutAccountModel.username = this.organisation.organisationEmail
+      this.createPayoutAccountModel.accountBankCode = bankcode
+      this.createPayoutAccountModel.accountBankName = bankName
+      StoreUtils.dispatch(StoreUtils.actions.accountPayout.createAddedBanks, this.createPayoutAccountModel).then(()=>{
+           Object.keys(this.createPayoutAccountModel).forEach(key => {
+            this.createPayoutAccountModel[key] = null;
+          });
+      })
+    },
+
+
+    editBank(){
+      let bankcode = this.createPayoutAccountModel.accountBankCode.split(' ')[0]
+      let bankName = this.createPayoutAccountModel.accountBankCode.split(' ')[1]
+      this.createPayoutAccountModel.accountCountry = this.userInfo.customerCountry
+      this.createPayoutAccountModel.accountOrganisationId = this.organisation.customerOrganisationCustomerId
+      this.createPayoutAccountModel.username = this.organisation.organisationEmail
+      this.createPayoutAccountModel.accountBankCode = bankcode
+      this.createPayoutAccountModel.accountBankName = bankName
+      StoreUtils.dispatch(StoreUtils.actions.accountPayout.editAddedBanks, this.createPayoutAccountModel).then(()=>{
+        this.createPayoutAccountModel.otp = null
+      })
+
+    },
 
     sendOtp(){
       this.sendOtpModel.customerEmail = this.organisation.organisationEmail
@@ -646,7 +793,8 @@ export default {
 
   },
 
-  created: function () {},
+  created: function () { 
+   },
 
 };
 </script>
@@ -670,9 +818,24 @@ export default {
   cursor:not-allowed;
 }
 
-.cardd{
+
+.carddd{
     box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
     background-color: white;
+    margin-top: 20px;
+    padding: 10px;
+  
+    
+}
+
+.cardd{
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
+    background-color: white;
+    height: 80vh; 
+    display: flex;
+    width:100%;
+    /* justify-content: center;
+    align-items: center; */
 }
 
 .center-block {
@@ -693,8 +856,13 @@ export default {
 }
 
 .bform{
-  width: 40%;
+  width: 100%;
   margin: 20px;
+}
+
+.bformedit{
+  width: 100%;
+  margin-top:2%;
 }
 .our-team {
   padding: 40px;

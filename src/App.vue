@@ -1,11 +1,13 @@
 <template>
   <span>
     <div class="myalert" v-if="layout === 'dashboard-layout' && currentOrganisation.organisationStatus == 'PENDING'" id="myalert">
-      <h3 class="text-white" > &nbsp; &nbsp; &nbsp; &nbsp; <b-icon-bell-fill/> &nbsp; Your account is currently limited to bills payment API service.
+      <h3 class="text-white" > &nbsp; &nbsp; &nbsp; &nbsp; <b-icon-bell-fill/> &nbsp; Your account is currently limited to bills payment APIs
             Kindly upgrade your account to
-           gain access to wallet and virtual account services.  </h3>
+           gain access to wallet and virtual account APIs  </h3>
     </div> 
-    <dashboard-layout v-if="layout === 'dashboard-layout'" id="body"></dashboard-layout>
+    <dashboard-layout v-if="layout === 'dashboard-layout'">
+      
+    </dashboard-layout>
     <auth-layout v-else></auth-layout>
   </span>
 </template>
@@ -53,6 +55,7 @@ export default {
 :root{
   --primary: #3F88C5;
 }
+
 
 .myalert{
     background-color: #EE9BA9 !important;

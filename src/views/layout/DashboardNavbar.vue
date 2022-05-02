@@ -17,13 +17,6 @@
         </div>
       </div>
     </div>
-    
-      <!-- <b-alert  show variant="danger" class="dalert"><a href="#" class="alert-link">Upgrade</a> &nbsp; 
-          <span class="animate__animated animate__slower animate__flash animate__infinite	infinite">Your account is currently limited to Bizgem bills payment API service.
-            Kindly upgrade your account to
-           gain access to wallet and virtual account services.  
-         </span>
-      </b-alert> -->
     <ul class="navbar-nav align-items-center ml-md-auto">
       
       <li class="nav-item d-xl-none">
@@ -43,31 +36,7 @@
           </div>
         </div>
       </li>
-    <!-- <div>
-      <span class="p mr-2">switch to live mode</span>
-      <toggle-button
-        v-model="toggleBtnValue"
-        :width="70"
-        :height="30"
-        :font-size="10"
-        :color="{ checked: '#75c791', unchecked: '#c02026' }"
-        :labels="{ unchecked: stage, checked: stage }"
-        @change="switchApi()"
-      />
-    </div>   -->
-      <!-- <base-dropdown
-        class="nav-item"
-        tag="li"
-        title-classes="nav-link"
-        title-tag="a"
-        icon="fa fa-bell"
-        menu-classes="dropdown-menu-xl dropdown-menu-right py-0 overflow-hidden"
-      >
-        <p class="text-center text-dark pt-3">No Notifications Here.</p>
-      </base-dropdown> -->
-
     </ul>
-    <!-- <span class="p m-2">Documentation</span> -->
     <ul class="navbar-nav align-items-center ml-auto ml-md-0">
       <span :class="{ 'spinner-border': loading }"></span>&nbsp;
        <div class="text-center">
@@ -83,7 +52,6 @@
                   :labels="{ unchecked: stage, checked: stage }"
                   @change="switchApi()"
                 />
-               
               </div>
       <base-dropdown
         menu-on-right
@@ -102,6 +70,7 @@
           <b-list-group class="m-3 text-left">
             <b-list-group-item button>{{user.customerEmail}}</b-list-group-item>
             <b-list-group-item button>Support</b-list-group-item>
+            <b-list-group-item button>Documentation</b-list-group-item>
             <b-list-group-item button>Settings</b-list-group-item>
             <b-list-group-item button  @click="adminLogOut()">Log Out</b-list-group-item>
           </b-list-group>
@@ -223,17 +192,6 @@ export default {
   border-bottom: solid 2px;
 
 }
-.dalert{
-  position: absolute;
-  left: 15%;
-  top: 4%;
-  width: auto;
-  font-size: 11px;
-}
-.item{
 
-  border-bottom: solid 2px;
-  width: 100% !important;
-
-}
+/*  */
 </style>

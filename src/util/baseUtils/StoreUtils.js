@@ -32,7 +32,8 @@ class StoreUtils {
     },
     virtualAccount: {
       updateVirtualAccount: "virtualAccount/updateVirtualAccount",
-      updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions"
+      updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions",
+      updateReadBankList:"virtualAccount/updateReadBankList"
     },
     walletTransactions: {
       updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions",
@@ -41,6 +42,11 @@ class StoreUtils {
       updateWalletTransactions: "walletTransactions/updateWalletTransactions",
       updateWallet: "walletTransactions/updateWallet",
     },
+    accountPayout:{
+      readAddedBanks:"accountPayout/readAddedBanks",
+      createAddedBanks:"accountPayout/createAddedBanks",
+      editAddedBanks:"accountPayout/editAddedBanks"
+    }
   };
 
   static mutations = {
@@ -72,7 +78,8 @@ class StoreUtils {
     virtualAccount: {
       updateLoading: "virtualAccount/updateLoading",
       updateVirtualAccount: "virtualAccount/updateVirtualAccount",
-      updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions"
+      updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions",
+      updateReadBankList:"virtualAccount/updateReadBankList"
     },
     walletTransactions: {
       updateLoading: "walletTransactions/updateLoading",
@@ -82,6 +89,11 @@ class StoreUtils {
       updateWallet: "walletTransactions/updateWallet",
       updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions"
     },
+    accountPayout:{
+      updateAddedBanks:"accountPayout/updateAddedBanks",
+      updateAccLoading:"accountPayout/updateAccLoading",
+      updatereadAddedBanks:"accountPayout/updatereadAddedBanks"
+    }
   };
 
   static getters = {

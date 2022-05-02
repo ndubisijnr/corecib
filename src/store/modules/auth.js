@@ -12,7 +12,7 @@ export const state = {
   userInfo: AuthenticationResponse.login,
   screen: "register",
   passwordResetScreen: "email",
-  Orginisation:{}
+  Orginisation: {}
 }
 export const getters = {
   getUserInfo: state => { return state.userInfo },
@@ -38,7 +38,7 @@ export const mutations = {
   updateUserInfo: (state, payload) => { state.userInfo = payload; },
   updateScreen: (state, payload) => { state.screen = payload; },
   updatePasswordResetScreen: (state, payload) => { state.passwordResetScreen = payload; },
-  updateOrganisation:(state, payload) => {state.organisation = payload}
+  updateOrganisation: (state, payload) => { state.organisation = payload }
 }
 export const actions = {
   initialEnrollment: ({ commit }, payload = AuthenticationRequest.initiateEnrollment) => {
@@ -92,9 +92,9 @@ export const actions = {
           commit("updateUserInfo", responseData);
           router.push({ name: "GetStarted" }).then(() => { })
         }
-        else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {     
-                commit("updateLoading", false)
-      })
+        else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {
+          commit("updateLoading", false)
+        })
       }).catch((error) => {
         commit("updateLoading", false);
         console.log(error)
@@ -117,7 +117,7 @@ export const actions = {
       let responseData = response.data
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        if (router.currentRoute.meta.layout === 'auth') router.push({name:"GetStarted"}).then(()=>{})
+        if (router.currentRoute.meta.layout === 'auth') router.push({ name: "GetStarted" }).then(() => { })
         commit("updateUserInfo", responseData)
       }
     }).catch(error => { commit("updateLoading", false); console.log(error) })
@@ -176,27 +176,30 @@ export const actions = {
     commit('updateLoading', true)
     return OrganizationService.callOrganisationStageApi(paylaod).then(response => {
       let responseData = response.data
-      if(responseData.responseCode === "00"){
+      if (responseData.responseCode === "00") {
         commit("updateStage", responseData.data[0].organisationStage)
-        commit("updateLoading", false)
-        window.location.reload()
       }
-    }).catch((error) => {
-      commit("updateLoading", false);
-      console.log(error)
-    });
+    }).then(() => {
+      window.location.reload()
+    }).then(() => {
+      commit("updateLoading", false)
+    })
+      .catch((error) => {
+        commit("updateLoading", false);
+        console.log(error)
+      });
 
   },
 
-  updateOrganisation:({commit}, payload = OrganisationRequest.updateOrganisation) => {
+  updateOrganisation: ({ commit }, payload = OrganisationRequest.updateOrganisation) => {
     commit('updateLoading', true)
     return OrganizationService.callUpdateOrganisationApi(payload).then(response => {
       let responseData = response.data
-      if(responseData.responseCode == "00"){
+      if (responseData.responseCode == "00") {
         commit("updateLoading", false)
         commit("updateOrginasation", responseData)
         Swal.fire({ text: responseData.responseMessage, icon: 'success', })
-      }else{
+      } else {
         commit("updateLoading", false)
         Swal.fire({ text: responseData.responseMessage, icon: 'error', })
       }

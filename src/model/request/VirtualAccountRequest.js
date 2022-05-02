@@ -37,6 +37,10 @@ class VirtualAccountRequest {
         requestType: null
     }
 
+    static getBankList={
+        readAll:"YES"
+    }
+
 }
 
 export default VirtualAccountRequest

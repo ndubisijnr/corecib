@@ -5,7 +5,8 @@ import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
 export const state = {
   loading: false,
   virtualAccount: BaseResponse.list,
-  virtualaccounttransaction:{}
+  virtualaccounttransaction:{},
+  bankList:{}
 
 }
 
@@ -18,6 +19,9 @@ export const mutations = {
   },
   updateVirtualAccount: (state, payload) => {
     state.virtualAccount = payload
+  },
+  updateBankList: (state, payload) => {
+    state.bankList = payload
   },
   updateVirtualaccountTransactions:(state,payload) => {
     state.virtualaccounttransaction = payload
@@ -53,7 +57,19 @@ export const actions = {
     }) .catch(error => {
       console.log(error)
     })
+  },
+
+  updateReadBankList: ({commit, state}, payload= VirtualAccountRequest.readBankList) => {
+    commit("updateLoading", true)
+    return VirtualAccountService.callReadBankList(payload).then(response => {
+      let responseData = response.data
+      if(responseData.responseCode == "00"){
+        commit("updateBankList", responseData.data)
+        commit("updateLoading", false)
+      }
+    })
   }
+
 }
 
 

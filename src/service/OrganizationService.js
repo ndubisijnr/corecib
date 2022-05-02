@@ -29,7 +29,6 @@ export default {
         return apiClient.appClient.post("/organisation/update",payload);
     },
 
-
 };
 
 

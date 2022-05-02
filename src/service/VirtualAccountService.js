@@ -22,4 +22,10 @@ export default {
         return apiClient.appClient.post("/virtual-account/channel-codes",payload);
     },
 
+
+    callReadBankList(payload){
+        return apiClient.appClient.post("/virtual-account/bank-list",payload)
+    }
+
+
 };

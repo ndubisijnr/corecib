@@ -1,6 +1,6 @@
 export default
 {
-    header: 'Complience',
+    header: 'Overview',
     icon: '',
     items: [
         {
@@ -8,10 +8,5 @@ export default
             icon:'fas fa-project-diagram',
             path:'/dashboard/get-started'
         },
-        // {
-        //     name:'Dashboard',
-        //     icon:'ni ni-support-16 text-primary',
-        //     path:'/dashboard/dashboard'
-        // }
     ]
 };

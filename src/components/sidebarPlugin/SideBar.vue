@@ -4,22 +4,20 @@
        @mouseleave="$sidebar.onMouseLeave()">
     <div class="scrollbar-inner" ref="sidebarScrollArea">
       <slot></slot>
-      <div class="account-details">
+      <!-- <b-icon-arrows-collapse block v-b-toggle.collapse-a style="position:absolute;right:30px;top:40px;color:black;cursor:pointer"/> -->
+      <div class="account-details" v-b-toggle.collapse-a>
         <!-- <span :class="{'spinner-border': loading}"></span> -->
         <h3>{{ currentOrganisation.organisationName }}</h3>
         <h4 class="small">{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
         <div>
-        <div v-b-toggle.collapse-1 variant="primary"></div>
-        <b-collapse id="collapse-1" class="mt-2">
-        <b-card>
-          <p class="card-text">Collapse contents Here</p>
-          <!-- <b-button v-b-toggle.collapse-1-inner size="sm">Toggle Inner Collapse</b-button> -->
-          <b-collapse id="collapse-1-inner" class="mt-2">
-            <!-- <b-card>Hello!</b-card> -->
-          </b-collapse>
-        </b-card>
-        </b-collapse>
         </div>
+         <b-collapse id="collapse-a">
+        
+             <b-list-group>
+            <b-list-group-item button  @click="adminLogOut()" style="font-size:12px">Sign Out</b-list-group-item>
+          </b-list-group>
+  
+        </b-collapse>
       </div>
       <div class="navbar-inner">
         <ul class="navbar-nav one">
