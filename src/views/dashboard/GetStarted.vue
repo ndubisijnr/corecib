@@ -31,14 +31,14 @@
                     </template>
                           <div class="container">
                             <!-- <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="'100,000'" :title="'Wallet Balance'"></dashboard-card> -->
-                            <b-form class="">
+                            <b-form class="" @submit.prevent="requestPayout()">
                               <h4 class="text-left">Wallet Balance: ₦{{'100000' | formatAmount}}</h4>
                                <b-input-group size="md" prepend="NGN" class="mb-3">
-                                <b-form-input id='withdrawInput' step="0.01" type="number" autofocus v-model="withdrawModel" style="font-size:16px;letter-spacing:.2rem;" placeholder="Enter Amount"></b-form-input>
+                                <b-form-input id='withdrawInput' step="0.01" type="number" autofocus v-model="payoutModel.payoutAmount" style="font-size:16px;letter-spacing:.2rem;" placeholder="Enter Amount" required></b-form-input>
                               </b-input-group>
                                <h4 id="error" class="text-danger text-center"></h4>
-                              <base-button title="Withdraw" v-if="withdrawModel <= 100000"></base-button>
-                              <base-button title="Withdraw" v-else disabled></base-button>
+                              <b-button v-if="payoutModel.payoutAmount <= 100000" class="w-100 text-white" type="submit" style="background-color:var(--primary)">{{accLoading ? 'please wait..' : 'withdraw'}} <span :class="{'spinner-border':accLoading}"></span></b-button>
+                              <base-button title="Insufficent Funds" v-else disabled></base-button>
                             </b-form>
                           </div>                       
   </b-modal>
@@ -79,6 +79,7 @@ import ApikeyRequest from "../../model/request/ApiKeyRequest";
 import Swal from "sweetalert2";
 import Transaction from "../report/Transactions.vue"
 import BaseButton from "../../components/button/BaseButton"
+import AccountPayoutRequest from "../../model/request/AccountPayoutRequest"
 
 
 const Toast = Swal.mixin({
@@ -101,9 +102,8 @@ export default {
       return{
           isSwitched:false,
           apikeyModel: ApikeyRequest.regenerateApiKey,
-          withdrawModel:null,
-
-
+          payoutModel:AccountPayoutRequest.createPayout,
+          payoutTransactionsModel: AccountPayoutRequest.readPayout,
       }
   },
 
@@ -118,7 +118,7 @@ export default {
       })
 
     },
-        copyToClipboard() {
+     copyToClipboard() {
       let copyLink = document.getElementById("content").textContent;
       navigator.clipboard.writeText(copyLink).then(() => {
         Toast.fire({ text: "Copied to clipboard", icon: "success" }).then(
@@ -127,19 +127,36 @@ export default {
       });
     },
 
-    wallet(){
-      console.log(this.withdrawModel)
-    }
-   
-    
+    reference(length) {
+      let result = ""  
+      let characters= 'abcdefghijklmnopgrstuvwxyzABCDEFJHIJKLMNOPQRSTUVWXYZ0123456789';
+      let charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    },
+  
 
+    requestPayout(){
+    this.payoutModel.payoutReference = `BIZGEM-${this.reference(30)}`
+     StoreUtils.dispatch(StoreUtils.actions.accountPayout.requestPayout, this.payoutModel).then(()=>{
+       StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutTransactionsModel)
+       this.payoutModel.payoutAmount = null
+     })
+
+
+      
+    
+    }
   },
   computed: {
     ...mapState({
       user: (state) => state.auth.userInfo,
       loading: (state) => state.auth.loading,
       api:(state) => state.apiKey.apiKey,
-      stage:(state) => state.auth.stage
+      stage:(state) => state.auth.stage,
+      accLoading:state => state.accountPayout.accloading
 
     }),
     currentOrganisation(){
@@ -150,11 +167,12 @@ export default {
       return StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
     },
 
+
   
   },
 
   watch:{
-    withdrawModel(newValue){
+    payoutModel(newValue){
       if(newValue > 100000){
         document.getElementById('withdrawInput').style.border= "solid red" 
         document.getElementById('error').innerHTML= "Insufficent Funds" 
@@ -166,7 +184,7 @@ export default {
   },
 
   mounted: function () {
-    this.wallet()
+    console.log(this.result)
   },
 };
 </script>

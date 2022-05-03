@@ -18,17 +18,22 @@ export default
             icon:'fa fa-money-bill',
             path:'/reports/transactions'
         },
+        {
+            name:'Payout',
+            icon:'fas fa-chart-line',
+            path:'/reports/payout-transactions'
+        },
        
-            {
+        {
                 name:'Virtual Accounts',
                 icon:'fa fa-university',
                 path:'/user/account'
-            },
-            {
+        },
+        {
                 name:'Wallets',
                 icon:'fa fa-wallet',
                 path:'/user/wallet'
-            },
+        },
     
         
     ]

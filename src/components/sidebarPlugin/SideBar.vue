@@ -3,10 +3,28 @@
        @mouseenter="$sidebar.onMouseEnter()"
        @mouseleave="$sidebar.onMouseLeave()">
     <div class="scrollbar-inner" ref="sidebarScrollArea">
+            <div class="sidenav-header">
+
+           <div class="add-business" @click="toogleD()">
+            <div class="">
+              <span class="arrow ni ni-bold-down text-primary" id="arrow"></span>
+              <div class="">
+              <h4 class="text-white">{{currentOrganisation.organisationName}}</h4>
+              <h4 class="small text-white">{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
+              </div>
+            </div>
+          </div>
+        <div id="k">
+          <hr style="margin:5px;border: 1px solid;color: #91a0af">
+            <h4 v-for="(org, index) in organisationList" :key="index" class="link-drop" @click="getId(org)"> {{org.organisationName}}</h4>
+               <base-button size="md" outline @click="addbiz()" style="color:white; border:solid white;"> Sign Out</base-button>
+          <!-- <button class="btn btn-primary w-100 mt-2" >Add a Bussiness</button> -->
+        </div>
+            </div>
       <slot></slot>
       <!-- <b-icon-arrows-collapse block v-b-toggle.collapse-a style="position:absolute;right:30px;top:40px;color:black;cursor:pointer"/> -->
-      <div class="account-details" v-b-toggle.collapse-a>
-        <!-- <span :class="{'spinner-border': loading}"></span> -->
+      <!-- <div class="account-details" v-b-toggle.collapse-a>
+         <span :class="{'spinner-border': loading}"></span> 
         <h3>{{ currentOrganisation.organisationName }}</h3>
         <h4 class="small">{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
         <div>
@@ -18,8 +36,8 @@
           </b-list-group>
   
         </b-collapse>
-      </div>
-      <div class="navbar-inner">
+      </div> -->
+      <div class="navbar-inner mt-3">
         <ul class="navbar-nav one">
           <slot name="links">
             <sidebar-item
@@ -104,8 +122,7 @@ export default {
       console.log(JSON.stringify(payload.organisationId));
       this.$store.dispatch('switchOrganisation', payload, {root: false})
     },
-
-    toggleBusinessDropDown() {
+       toogleD(){
       let x = document.getElementById("k");
       let y = document.getElementById("arrow")
       if (x.style.display === "none") {
@@ -118,6 +135,8 @@ export default {
         y.classList.remove("rotate-180");
       }
     }
+
+
   },
   computed: {
     ...mapState({
@@ -138,6 +157,8 @@ export default {
   mounted() {
     this.$sidebar.isMinimized = this.$sidebar.breakpoint < window.innerWidth
     this.minimizeSidebar()
+    document.getElementById("k").style.display = 'none'
+
 
   },
   beforeDestroy() {
@@ -148,9 +169,55 @@ export default {
 };
 </script>
 
-<style scoped>
 
-.account-details{
+<style scoped>
+.add-business{
+  z-index: 9999999;
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*justify-content: center;*/
+  /*align-items: flex-start;*/
+  padding-left: 18px;
+  padding-top: 8px;
+  width: 100%;
+  /*background-color: #e7e7ef;*/
+  background-color: rgba(2, 32, 61, 0.99);
+  position: absolute;
+  left: 0;
+  height: 70px;
+  cursor: pointer;
+  transition: .2s ease-out;
+
+}
+
+#k{
+  text-align: justify;
+  z-index: 1;
+  position: absolute;
+  top: 44px;
+  left: 0;
+  /*background-color: #e7e7ef;*/
+  background-color: rgba(2, 32, 61, 0.99);
+  /*background-color: #91a0af;*/
+  width: 100%;
+  transition: 2s ease;
+  padding: 12px;
+}
+
+.arrow{
+  position: absolute;
+  right: 20px;
+  font-size: 12px;
+  font-weight: 900;
+  transform: rotate(0deg);
+}
+
+.rotate90 {
+  transform: rotate(-90deg);
+  transition: ease 0.4s;
+}
+
+/* .account-details{
    box-shadow: 0 1px 2px hsl(0deg 0% 0% / 10%);
       background-color: white;
       text-align: center;
@@ -158,13 +225,13 @@ export default {
       padding: 5%;
       color: #0000;
 }
+ */
+
 .sidenav{
   background-color: rgba(1,34,63,0.96);
   border: none !important;
   overflow: hidden !important;
 } 
-
-
 
 .rotate90 {
   transform: rotate(-90deg);

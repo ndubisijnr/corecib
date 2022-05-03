@@ -25,6 +25,19 @@ class AccountPayoutRequest{
         accountOrganisationId:null 
     }
 
+    static createPayout = {
+        payoutReference:null,
+        payoutAmount: null,
+        payoutMessage:"this is a message"
+    }
+
+
+    static readPayout = {
+        startDate: null,
+        endDate: null,
+        page: 1
+    }
+
 }
 
 export default AccountPayoutRequest

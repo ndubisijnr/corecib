@@ -45,7 +45,9 @@ class StoreUtils {
     accountPayout:{
       readAddedBanks:"accountPayout/readAddedBanks",
       createAddedBanks:"accountPayout/createAddedBanks",
-      editAddedBanks:"accountPayout/editAddedBanks"
+      editAddedBanks:"accountPayout/editAddedBanks",
+      requestPayout:"accountPayout/requestPayout",
+      readPayout:"accountPayout/readPayout"
     }
   };
 
@@ -92,7 +94,8 @@ class StoreUtils {
     accountPayout:{
       updateAddedBanks:"accountPayout/updateAddedBanks",
       updateAccLoading:"accountPayout/updateAccLoading",
-      updatereadAddedBanks:"accountPayout/updatereadAddedBanks"
+      updatereadAddedBanks:"accountPayout/updatereadAddedBanks",
+      updateAllPayouts:"accountPayout/updateAllPayouts"
     }
   };
 

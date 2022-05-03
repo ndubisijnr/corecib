@@ -70,8 +70,8 @@
           <b-list-group class="m-3 text-left">
             <b-list-group-item button>{{user.customerEmail}}</b-list-group-item>
             <b-list-group-item button>Support</b-list-group-item>
-            <b-list-group-item button>Documentation</b-list-group-item>
-            <b-list-group-item button>Settings</b-list-group-item>
+           <router-link to="https://documenter.getpostman.com/view/20549781/Uyr7HJuB"> <b-list-group-item button>Documentation</b-list-group-item></router-link>
+           <router-link to="/settings/settings"> <b-list-group-item button>Settings</b-list-group-item></router-link>
             <b-list-group-item button  @click="adminLogOut()">Log Out</b-list-group-item>
           </b-list-group>
         </div>

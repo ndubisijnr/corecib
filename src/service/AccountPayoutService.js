@@ -13,6 +13,14 @@ export default {
         return apiClient.appClient.post("/account-payout/update",payload);
     },
 
+    callPayoutApi(payload) {
+        return apiClient.appClient.post("/payout/create",payload)
+    },
+    callReadPayoutApi(payload) {
+        return apiClient.appClient.post("/payout/read",payload)
+    }
+
+
 };
 
 
