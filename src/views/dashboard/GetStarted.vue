@@ -144,10 +144,6 @@ export default {
        StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutTransactionsModel)
        this.payoutModel.payoutAmount = null
      })
-
-
-      
-    
     }
   },
   computed: {

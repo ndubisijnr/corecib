@@ -501,7 +501,7 @@
                 label=" Bank Account"
                 class="cardd"
               >
-                <div class="p-3" v-if="payoutAccount">
+                <div class="p-3" v-if="!Object.values(payoutAccount).every(o => o === null)">
                   <div>
                     <div
                       class="carddd 3 text-dark py-3 px-3 p-3"
@@ -865,7 +865,7 @@ export default {
         this.progressBarArr.push({
           value: false,
         });
-        console.log("progressBarArr", i);
+        // console.log("progressBarArr", i);
       }
     },
     timerCount: {
@@ -879,12 +879,12 @@ export default {
       //immediate: true, // This ensures the watcher is triggered upon creation
     },
     bankList(newValue, oldValue) {
-      console.log(
-        `Updating from Branch ${JSON.stringify(oldValue)} to ${JSON.stringify(
-          newValue
-        )}`
-      );
-      console.log("$$$$$$$%%%%%>>>>\n " + JSON.stringify(this.bankList));
+      // console.log(
+      //   `Updating from Branch ${JSON.stringify(oldValue)} to ${JSON.stringify(
+      //     newValue
+      //   )}`
+      // );
+      // console.log("$$$$$$$%%%%%>>>>\n " + JSON.stringify(this.bankList));
       if (this.bankList.length !== 0) {
         //if(this.bankList.data.length!==0){
         let bank = [];
@@ -896,9 +896,9 @@ export default {
           };
         });
         /* }
-                    else{
-                      this.option_bank=[{value:'',label:'No Record'}];
-                  }*/
+            else{
+                this.option_bank=[{value:'',label:'No Record'}];
+             }*/
       }
     },
   },
