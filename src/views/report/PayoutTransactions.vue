@@ -31,7 +31,7 @@
       <div class="container">
         <b-form class="" @submit.prevent="requestPayout()">
           <h4 class="text-left">
-            Wallet Balance: ₦{{ "100000" | formatAmount }}
+            Wallet Balance: ₦{{ balances.walletBalance.accountBalance | formatAmount}}
           </h4>
           <b-input-group size="md" prepend="NGN" class="mb-3">
             <b-form-input
@@ -47,14 +47,14 @@
           </b-input-group>
           <h4 id="error" class="text-danger text-center"></h4>
           <b-button
-            v-if="payoutModel.payoutAmount <= 100000"
+            v-if="payoutModel.payoutAmount <= balances.walletBalance.accountBalance"
             class="w-100 text-white"
             type="submit"
             style="background-color: var(--primary)"
             >{{ loading ? "please wait.." : "withdraw" }}
             <span :class="{ 'spinner-border': loading }"></span
           ></b-button>
-          <base-button title="Insufficent Funds" v-else disabled></base-button>
+          <b-button v-else disabled style="background-color:var(--primary);width:100%;color:white">Insufficent Funds</b-button>
         </b-form>
       </div>
     </b-modal>
@@ -117,6 +117,8 @@ export default {
     ...mapState({
       transactions: (state) => state.accountPayout.allpayouts,
       loading: (state) => state.accountPayout.accloading,
+      balances:state => state.auth.balances
+
     }),
   },
 

@@ -5,6 +5,7 @@ function resolveSrc(_path) {
 }
 // vue.config.js
 module.exports = {
+  productionSourceMap: false,
   chainWebpack: config => {
     config.plugin("copy").tap(([pathConfigs]) => {
       pathConfigs.unshift({

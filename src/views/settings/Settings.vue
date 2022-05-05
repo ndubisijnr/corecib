@@ -1,6 +1,14 @@
 <template>
   <div>
-    <span :class="{ 'spinner-border': loading }"></span>
+    <div class="loading">
+      <span :class="{ 'spinner-border': loading }" v-if="loading"></span>
+      <span
+        :class="{ 'spinner-border': payoutloading }"
+        v-if="payoutloading"
+      ></span>
+      <span :class="{ 'spinner-border': loadingDoc }" v-if="loadingDoc"></span>
+      <span :class="{ 'spinner-border': loadingOtp }" v-if="loadingOtp"></span>
+    </div>
     <div class="container-fluid mt-0">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -15,6 +23,8 @@
                         v-b-toggle.accordion-1
                         variant="none"
                         class="p-3"
+                        style="color:black;"
+
                       >
                         <h3>
                           <b-icon-check-circle
@@ -22,11 +32,11 @@
                           ></b-icon-check-circle>
                           Personal Info
                         </h3>
+                        <p>You can update your personal info here.</p>
                       </div>
                     </div>
                     <b-collapse
                       id="accordion-1"
-                      visible
                       accordion="my-accordion"
                       role="tabpanel"
                     >
@@ -41,13 +51,13 @@
                           >
                             <b-form
                               class="container p-3 form-group"
-                              style="width: 400px"
+                              style="width: 50%"
                             >
-                              <h3 class="text-center">
+                              <!-- <h3 class="text-center">
                                 <i
                                   class="fa fa-user-circle profile-settings"
                                 ></i>
-                              </h3>
+                              </h3> -->
                               <div class="form-floating mb-3">
                                 <input
                                   type="email"
@@ -111,6 +121,7 @@
                         v-b-toggle.accordion-2
                         variant="none"
                         class="p-3"
+                        style="color:black;"
                       >
                         <h3>
                           <b-icon-check-circle
@@ -119,8 +130,9 @@
                           Business Information
                         </h3>
                         <p>
-                          Enter your merchant information, so we can verify your
-                          account and deposit your earnings.
+                          Update your merchant information here, so that your
+                          account can be verified while you gain access to our
+                          APIs.
                         </p>
                       </div>
                     </div>
@@ -134,58 +146,91 @@
                           width: 100%;
                           display: flex;
                           justify-content: center;
+                          margin:10px;
+
                         "
                       >
                         <form
                           class="form-group"
                           @submit.prevent="updateOrginasation()"
-                          style="width: 400px"
+                          style="width: 65%;padding:30px; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);color:black"
                         >
-                          <h3 class="text-center">
+                          <!-- <h3 class="text-center">
                             <i class="fa fa-user-circle profile-settings"></i>
                           </h3>
                           <h4 class="text-center">
                             <b>Your Business Information</b>
-                          </h4>
+                          </h4> -->
                           <div>
-                            <div class="form-floating mb-3">
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput2"
-                                placeholder="name@example.com"
-                                v-model="organisation.organisationName"
-                                readonly
-                              />
-                              <label for="floatingInput2">Business Name</label>
+                            <div class="row">
+                              <div class="col mb-3">
+                                <label for="floatingInput2">Business Name</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="floatingInput2"
+                                  placeholder="name@example.com"
+                                  v-model="organisation.organisationName"
+                                  readonly
+                                />
+                              </div>
+                              <div class="col mb-3">
+                               <label for="floatingInput">Company Email</label>
+                                <input
+                                  type="email"
+                                  class="form-control"
+                                  id="floatingInput"
+                                  placeholder="name@example.com"
+                                  v-model="organisation.organisationEmail"
+                                  readonly
+                                />
+                              </div>
                             </div>
-                            <div class="form-floating mb-3">
+                            <div class="row">
+                              <div class="col mb-3">
+                                <label for="floatingInput1">Company Phone</label>
+                                <input
+                                  type="tel"
+                                  class="form-control"
+                                  id="floatingInput1"
+                                  placeholder="Country"
+                                  v-model="organisation.organisationPhone"
+                                  readonly
+                                />
+                              </div>
+                                <div class="col mb-3">
+                               <label for="floatingInput1">Company Phone</label>
+                                <input
+                                  type="tel"
+                                  class="form-control"
+                                  id="floatingInput1"
+                                  placeholder="Country"
+                                  v-model="organisation.organisationPhone"
+                                  readonly
+                                />
+                              </div>
+                              <b-tooltip target="tooltip-target-1" triggers="hover">
+                                      I am tooltip <b>component</b> content!
+                                    </b-tooltip>
+                                 <div class="col mb-3">
+                               <label for="floatingInput1">Director's BVN Number </label> <i class="fa fa-info-circle text-danger" style="font-size:15px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"  ></i>
                               <input
-                                type="email"
-                                class="form-control"
-                                id="floatingInput"
-                                placeholder="name@example.com"
-                                v-model="organisation.organisationEmail"
-                                readonly
-                              />
-                              <label for="floatingInput">Company Email</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                              <input
-                                type="tel"
+                                type="number"
                                 class="form-control"
                                 id="floatingInput1"
-                                placeholder="Country"
-                                v-model="organisation.organisationPhone"
-                                readonly
+                                placeholder="Director's BVN Number"
+                                v-model="organisation.organisationDirectorBvn"
+                                required  
                               />
-                              <label for="floatingInput1">Company Phone</label>
+                            </div>
                             </div>
                           </div>
 
                           <!-- Second layer -->
                           <div class="">
-                            <div class="form-floating mb-3">
+                            <div class="row">
+                            <div class="col mb-3">
+                              <label for="floatingInput2">Address</label>
                               <input
                                 type="text"
                                 class="form-control"
@@ -194,9 +239,9 @@
                                 v-model="organisation.organisationAddress"
                                 required
                               />
-                              <label for="floatingInput2">Address</label>
                             </div>
-                            <div class="form-floating mb-3">
+                            <div class="col mb-3">
+                              <label for="floatingInput1">City</label>
                               <input
                                 type="text"
                                 class="form-control"
@@ -205,9 +250,9 @@
                                 v-model="organisation.organisationCity"
                                 required
                               />
-                              <label for="floatingInput1">City</label>
                             </div>
-                            <div class="form-floating mb-3">
+                            <div class="col mb-3">
+                               <label for="floatingInput1">State</label>
                               <input
                                 type="text"
                                 class="form-control"
@@ -216,25 +261,243 @@
                                 v-model="organisation.organisationState"
                                 required
                               />
-                              <label for="floatingInput1">State</label>
                             </div>
-                            <div class="form-floating mb-3">
+                            </div>
+                            <div class="row">
+                            <div class="col mb-3">
+                                  <label for="floatingInput3"
+                                >Organization Type</label
+                              > <i class="fa fa-info-circle text-danger" style="font-size:15px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"  ></i>
                               <select
-                                class="form-select"
+                                class="form-select form-control"
                                 aria-label="Default select example"
                                 required
                                 v-model="organisation.organisationType"
                               >
-                                <option>FINTECH</option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Agric produce"
+                                >
+                                  Agric produce
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Betting/Lottery"
+                                >
+                                  Betting / Lottery
+                                </option>
+                                <option data-v-00a70ddc="" value="Book Stores">
+                                  Book Stores
+                                </option>
+                                <option data-v-00a70ddc="" value="Bus Lines">
+                                  Bus Lines
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Cable/Satellite/Pay Television"
+                                >
+                                  Cable / Satellite / Pay Television
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Clothing and Accessories"
+                                >
+                                  Clothing and Accessories
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Commercial footware"
+                                >
+                                  Commercial footware
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Credit Lending Companies"
+                                >
+                                  Credit Lending Companies
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Cryptocurrency"
+                                >
+                                  Cryptocurrency
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Department Stores"
+                                >
+                                  Department Stores
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Digital Goods/Entertainment"
+                                >
+                                  Digital Goods / Entertainment
+                                </option>
+                                <option data-v-00a70ddc="" value="Education">
+                                  Education
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Electronics Stores"
+                                >
+                                  Electronics Stores
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Financial Institutions/Fund Manager/Investment"
+                                >
+                                  Financial Institutions / Fund Manager /
+                                  Investment
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="General Contractors"
+                                >
+                                  General Contractors
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="General Merchandise Stores"
+                                >
+                                  General Merchandise Stores
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Grocery Stores and Supermarkets"
+                                >
+                                  Grocery Stores and Supermarkets
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Hospitality/Lodging"
+                                >
+                                  Hospitality / Lodging
+                                </option>
+                                <option data-v-00a70ddc="" value="Insurance">
+                                  Insurance
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Money Transfer"
+                                >
+                                  Money Transfer
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Non-Financial Institution"
+                                >
+                                  Non-Financial Institution
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Professional Services"
+                                >
+                                  Professional Services
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Real Estate/Facility Management"
+                                >
+                                  Real Estate / Facility Management
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Religious Organizations"
+                                >
+                                  Religious Organizations
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Security Broker/Dealer_Custom"
+                                >
+                                  Security Broker / Dealer_Custom
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Security Brokers/Dealers"
+                                >
+                                  Security Brokers / Dealers
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Tax/Accounting/Audit"
+                                >
+                                  Tax / Accounting / Audit
+                                </option>
+                                <option data-v-00a70ddc="" value="Taxicabs">
+                                  Taxicabs
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Telecommunication"
+                                >
+                                  Telecommunication
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Ticketing/Events"
+                                >
+                                  Ticketing / Events
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Transportation Services"
+                                >
+                                  Transportation Services
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Travel/Airlines"
+                                >
+                                  Travel / Airlines
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Travel Agencies/Tour"
+                                >
+                                  Travel Agencies / Tour
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Utilities/Electric/Gas"
+                                >
+                                  Utilities / Electric / Gas
+                                </option>
+                                <option
+                                  data-v-00a70ddc=""
+                                  value="Video Game Arcades/Establishments"
+                                >
+                                  Video Game Arcades / Establishments
+                                </option>
                               </select>
-                              <label for="floatingInput3"
-                                >Organization Type</label
-                              >
+                          
+                            </div>
+                            <div class="col mb-3">
+                               <label for="floatingInput1">Organisation Website</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput1"
+                                placeholder=" Website"
+                                v-model="organisation.organisationWebsite"
+                              />
+                            </div>
+                             <div class="col mb-3">
+                               <label for="floatingInput1">Organisation RC / BN Number</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="floatingInput1"
+                                placeholder="Organisation RC / BN Number"
+                                v-model="organisation.organisationRegistrationNo"
+                              />
+                            </div>
                             </div>
 
-                            <div>
-                              <base-button title="Update" :loading="loading">
-                              </base-button>
+                            <div class="mt-3">
+                              <base-button title="Update" :loading="loadingOtp" v-if="getStatus !== 'pactched'"></base-button>
+                              <base-button title="Update" v-else disabled></base-button>
                               <!-- <b-button @click="nextStep()" title="" style="background-color:grey;border:none;color:white">Next</b-button> -->
                             </div>
                           </div>
@@ -250,6 +513,8 @@
                         v-b-toggle.accordion-3
                         variant="none"
                         class="p-3"
+                        style="color:black;"
+
                       >
                         <h3>
                           <b-icon-check-circle
@@ -258,8 +523,9 @@
                           Document upload
                         </h3>
                         <p>
-                          Please upload the following documents, so we can
-                          authenticate your account.
+                          Upload the necessary documents here, so that your
+                          account can be verified while you gain access to our
+                          APIs.
                         </p>
                       </div>
                     </div>
@@ -275,6 +541,7 @@
                             display: flex;
                             justify-content: center;
                             align-items: center;
+                            color:black;
                           "
                         >
                           <div>
@@ -292,6 +559,7 @@
                                       display: flex;
                                       align-items: center;
                                       flex-wrap: nowrap;
+                                      color:black;
                                     "
                                   >
                                     <div
@@ -340,7 +608,7 @@
                                             <span
                                               :class="{
                                                 'text-success':
-                                                  doc.documentStatus !==
+                                                  doc.documentStatus ===
                                                   'APPROVED',
                                                 'text-warning':
                                                   doc.documentStatus ===
@@ -371,7 +639,12 @@
                                                 aria-hidden="true"
                                               ></a>
                                             </li>
-                                            <li>
+                                            <li
+                                              v-show="
+                                                doc.documentStatus !==
+                                                'APPROVED'
+                                              "
+                                            >
                                               <label
                                                 class="pointer"
                                                 data-toggle="tooltip"
@@ -501,123 +774,9 @@
                 label=" Bank Account"
                 class="cardd"
               >
-                <div class="p-3" v-if="!Object.values(payoutAccount).every(o => o === null)">
-                  <div>
-                    <div
-                      class="carddd 3 text-dark py-3 px-3 p-3"
-                      style="position: absolute; top: 0; left: 0"
-                    >
-                      <h3 class="text-dark">Current Added Bank</h3>
-                      <span class="text-dark"
-                        >Bank Name: {{ readonlybank.accountBankCode }}</span
-                      ><br />
-                      <span class="text-dark"
-                        >Bank Holder Name: {{ readonlybank.accountName }}</span
-                      ><br />
-                      <span class="mb-3 text-dark"
-                        >Bank Account Number:
-                        {{ readonlybank.accountNumber }}</span
-                      >
-                    </div>
-
-                    <b-form class="bformedit" @submit.prevent="editBank()">
-                      <b-form-group
-                        id="input-group-3"
-                        label="Bank Name"
-                        label-for="input-3"
-                      >
-                        <base-input>
-                          <el-select
-                            class="select-danger"
-                            filterable
-                            placeholder="Bank Name"
-                            required
-                            v-model="createPayoutAccountModel.accountBankCode"
-                          >
-                            <el-option
-                              v-for="bank in banks"
-                              class="select-danger"
-                              :value="bank.value"
-                              :label="bank.label"
-                              :key="bank.value"
-                            >
-                            </el-option>
-                          </el-select>
-                        </base-input>
-                      </b-form-group>
-
-                      <b-form-group
-                        id="input-group-4"
-                        label="Account Number"
-                        label-for="input-4"
-                      >
-                        <b-form-input
-                          id="input-4"
-                          type="text"
-                          placeholder="Account Number"
-                          v-model="createPayoutAccountModel.accountNumber"
-                          class="mr-2"
-                          required
-                        ></b-form-input>
-                      </b-form-group>
-
-                      <b-form-group
-                        id="input-group-5"
-                        label="Account Name"
-                        label-for="input-5"
-                      >
-                        <b-form-input
-                          id="input-5"
-                          type="text"
-                          placeholder="Account Name"
-                          v-model="createPayoutAccountModel.accountName"
-                          class="mr-2"
-                          required
-                        ></b-form-input>
-                      </b-form-group>
-                      <b-form-group
-                        id="input-group-5"
-                        label="Enter OTP"
-                        label-for="input-5"
-                      >
-                        <div class="d-flex">
-                          <b-form-input
-                            id="input-5"
-                            type="text"
-                            placeholder="OTP"
-                            class="mr-2"
-                            required
-                            v-model="createPayoutAccountModel.otp"
-                          ></b-form-input>
-                          <span
-                            v-if="timerCount > 0"
-                            class="m-2 small w-100 text-dark"
-                            >Resend OTP in {{ timerCount }}
-                          </span>
-                          <!-- <b-button class="w-50" v-if="timerCount > 0" disabled></b-button> -->
-                          <b-button class="w-100" @click="sendOtp()" v-else
-                            >{{ loadingOtp ? "Sending" : "Send OTP" }}
-                            <span
-                              :class="{ 'spinner-border': loadingOtp }"
-                            ></span
-                          ></b-button>
-                        </div>
-                      </b-form-group>
-                      <b-button
-                        class="w-100 text-white"
-                        style="background-color: var(--primary)"
-                        type="submit"
-                        >{{ payoutloading ? "Updating" : "Update Bank" }}
-                        <span
-                          :class="{ 'spinner-border': payoutloading }"
-                        ></span
-                      ></b-button>
-                    </b-form>
-                  </div>
-                </div>
                 <div
                   class="text-center p-3"
-                  v-else
+                  v-if="payoutloading"
                   style="
                     display: flex;
                     width: 100%;
@@ -627,17 +786,212 @@
                   "
                 >
                   <div>
-                    <i
-                      class="fa fa-ban"
-                      aria-hidden="true"
-                      style="font-size: 46px; margin: 10px"
-                    ></i>
-                    <h5>You seem to not have any bank account added.</h5>
-                    <b-button
-                      v-b-modal.modal-no-backdrop
-                      @click="openPayaccountmodal()"
-                      >Add Bank</b-button
-                    >
+                    <h5>Please wait! Bizgem is checking your bank details.</h5>
+                  </div>
+                </div>
+
+                <div
+                  v-if="!Object.values(payoutAccount).every((o) => o === null)"
+                >
+                  <div class="p-3" v-if="!payoutloading">
+                    <div>
+                      <div class="text-center">
+                        <i class="fa fa-university" style="font-size: 50px"></i>
+                        <h4>Update bank details</h4>
+                      </div>
+                      <div v-if="edit == false">
+                        <b-container class="">
+                          <div
+                            style="
+                              width: 100%;
+                              display: flex;
+                              justify-content: center;
+                            "
+                          >
+                            <div
+                              class="container p-3 form-group"
+                              style="width: 400px"
+                            >
+                              <div class="form-floating mb-3">
+                                <input
+                                  type="email"
+                                  class="form-control"
+                                  id="floatingInput1"
+                                  placeholder="name@example.com"
+                                  :value="
+                                    null ? '' : readonlybank.accountBankCode
+                                  "
+                                  readonly
+                                />
+                                <label for="floatingInput1">Bank Name</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                <input
+                                  type="email"
+                                  class="form-control"
+                                  id="floatingInput2"
+                                  placeholder="name@example.com"
+                                  :value="null ? '' : readonlybank.accountName"
+                                  readonly
+                                />
+                                <label for="floatingInput2"
+                                  >Bank Holder Name</label
+                                >
+                              </div>
+                              <div class="form-floating mb-3">
+                                <input
+                                  type="tel"
+                                  class="form-control"
+                                  id="floatingInput3"
+                                  placeholder="name@example.com"
+                                  :value="
+                                    null ? '' : readonlybank.accountNumber
+                                  "
+                                  readonly
+                                />
+                                <label for="floatingInput3"
+                                  >Bank Account Number</label
+                                >
+                              </div>
+                              <b-button
+                                @click="showedit()"
+                                class="w-100"
+                                style="
+                                  background-color: var(--primary);
+                                  color: white;
+                                "
+                                >Update
+                              </b-button>
+                            </div>
+                          </div>
+                        </b-container>
+                      </div>
+
+                      <b-form
+                        class="bformedit"
+                        @submit.prevent="editBank()"
+                        v-else
+                      >
+                        <b-form-group
+                          id="input-group-3"
+                          label="Bank Name"
+                          label-for="input-3"
+                        >
+                          <base-input>
+                            <el-select
+                              class="select-danger"
+                              filterable
+                              placeholder="Bank Name"
+                              required
+                              v-model="createPayoutAccountModel.accountBankCode"
+                            >
+                              <el-option
+                                v-for="bank in banks"
+                                class="select-danger"
+                                :value="bank.value"
+                                :label="bank.label"
+                                :key="bank.value"
+                              >
+                              </el-option>
+                            </el-select>
+                          </base-input>
+                        </b-form-group>
+
+                        <b-form-group
+                          id="input-group-4"
+                          label="Account Number"
+                          label-for="input-4"
+                        >
+                          <b-form-input
+                            id="input-4"
+                            type="text"
+                            placeholder="Account Number"
+                            v-model="createPayoutAccountModel.accountNumber"
+                            class="mr-2"
+                            required
+                          ></b-form-input>
+                        </b-form-group>
+
+                        <b-form-group
+                          id="input-group-5"
+                          label="Account Name"
+                          label-for="input-5"
+                        >
+                          <b-form-input
+                            id="input-5"
+                            type="text"
+                            placeholder="Account Name"
+                            v-model="createPayoutAccountModel.accountName"
+                            class="mr-2"
+                            required
+                          ></b-form-input>
+                        </b-form-group>
+                        <b-form-group
+                          id="input-group-5"
+                          label="Enter OTP"
+                          label-for="input-5"
+                        >
+                          <div class="d-flex">
+                            <b-form-input
+                              id="input-5"
+                              type="text"
+                              placeholder="OTP"
+                              class="mr-2"
+                              required
+                              v-model="createPayoutAccountModel.otp"
+                            ></b-form-input>
+                            <span
+                              v-if="timerCount > 0"
+                              class="m-2 small w-100 text-dark"
+                              >Resend OTP in {{ timerCount }}
+                            </span>
+                            <!-- <b-button class="w-50" v-if="timerCount > 0" disabled></b-button> -->
+                            <b-button class="w-100" @click="sendOtp()" v-else
+                              >{{ loadingOtp ? "Sending" : "Send OTP" }}
+                              <span
+                                :class="{ 'spinner-border': loadingOtp }"
+                              ></span
+                            ></b-button>
+                          </div>
+                        </b-form-group>
+                        <b-button
+                          class="w-100 text-white"
+                          style="background-color: var(--primary)"
+                          type="submit"
+                          >{{ payoutloading ? "Updating" : "Update Bank" }}
+                          <span
+                            :class="{ 'spinner-border': payoutloading }"
+                          ></span
+                        ></b-button>
+                      </b-form>
+                    </div>
+                  </div>
+                </div>
+                <div v-else>
+                  <div
+                    class="text-center p-3"
+                    v-if="!payoutloading"
+                    style="
+                      display: flex;
+                      width: 100%;
+                      height: 60vh;
+                      justify-content: center;
+                      align-items: center;
+                    "
+                  >
+                    <div>
+                      <i
+                        class="fa fa-ban"
+                        aria-hidden="true"
+                        style="font-size: 46px; margin: 10px"
+                      ></i>
+                      <h5>You seem to not have any bank account added.</h5>
+                      <b-button
+                        v-b-modal.modal-no-backdrop
+                        @click="openPayaccountmodal()"
+                        >Add Bank</b-button
+                      >
+                    </div>
                   </div>
                 </div>
               </el-tab-pane>
@@ -765,6 +1119,7 @@ import BaseButton from "../../components/button/BaseButton";
 import OrganisationRequest from "../../model/request/OrganisationRequest";
 import AuthenticationRequest from "../../model/request/AuthRequest";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest";
+import ProgressBar from "@/components/ProgressBar";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -786,6 +1141,7 @@ export default {
     [DropdownMenu.name]: DropdownMenu,
     ApiKeyDisplayForm,
     BaseButton,
+    ProgressBar,
   },
   data() {
     return {
@@ -806,6 +1162,7 @@ export default {
       documentModel: DocumentRequest.createDocument,
       readDoc: DocumentRequest.readDocument,
       timerCount: 0,
+      edit: false,
     };
   },
 
@@ -829,6 +1186,9 @@ export default {
       readonlybank: (state) => state.accountPayout.readOnlyAddedBanks,
       //documents:(state) => state.document.document
     }),
+    getStatus(){
+      return localStorage.nanuhansungida
+    },
     documents: () => {
       console.log("progressBarArr");
       let vm = this;
@@ -925,6 +1285,9 @@ export default {
     );
   },
   methods: {
+    showedit() {
+      this.edit = !this.edit;
+    },
     openPayaccountmodal() {
       StoreUtils.dispatch(
         StoreUtils.actions.virtualAccount.updateReadBankList,
@@ -958,11 +1321,7 @@ export default {
       StoreUtils.dispatch(
         StoreUtils.actions.accountPayout.createAddedBanks,
         this.createPayoutAccountModel
-      ).then(() => {
-        Object.keys(this.createPayoutAccountModel).forEach((key) => {
-          this.createPayoutAccountModel[key] = null;
-        });
-      });
+      );
     },
 
     editBank() {
@@ -983,7 +1342,6 @@ export default {
         this.createPayoutAccountModel
       ).then(() => {
         this.createPayoutAccountModel.otp = null;
-        window.location = "/settings/settings"
       });
     },
 
@@ -1158,6 +1516,11 @@ export default {
 .form {
   display: flex;
   justify-content: center;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .bform {

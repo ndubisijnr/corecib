@@ -23,14 +23,14 @@
             </div>
           </b-container>
           <b-container class="itemabc123">
-            <dashboard-card :value="'4'" :title="'Total Referrals'" :showBtn="false" :showBtn1="false"></dashboard-card>
-            <dashboard-card :currency="'₦'" :value="'1,000'" :title="'Total Revenue'" :showBtn="false" :showBtn1="false"></dashboard-card>
+            <dashboard-card :value="refferalstats.totalReferrals == null ? '0' : refferalstats.totalReferrals" :title="'Total Referrals'" :showBtn="false" :showBtn1="false"></dashboard-card>
+            <dashboard-card :currency="'₦'" :value="refferalstats.accountTotalCredit | formatAmount" :title="'Total Revenue'" :showBtn="false" :showBtn1="false"></dashboard-card>
           </b-container>
           
         </div>
          <div class="">
         <base-table
-          :items="items"
+          :items="refferalstats.referral"
           :fields="fields"
           filter-mode="default"
           :is-busy="loading"
@@ -46,6 +46,7 @@ import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BaseTable from "../../components/table/BaseTable";
 import Swal from "sweetalert2";
 import DashboardView from "../../components/dashboardComponent/DashboardCircle"
+import {mapState} from "vuex"
 
 const Toast = Swal.mixin({
   toast: true,
@@ -67,21 +68,12 @@ export default {
   },
   data() {
     return {
-      items: [
-        {
-          businessId: 40,
-          businessName: "Dickerson LTD",
-          businessStatus: "Active",
-        },
-        { businessId: 21, businessName: "Larsen Foods", businessStatus: "Active" },
-        { businessId: 89, businessName: "Geneva Hair and Lotion", businessStatus: "Active" },
-        { businessId: 38, businessName: "Jami Motors", businessStatus: "Active" },
-      ],
+      items: [],
       fields: [
-        { key: "businessId", label: "businessId" },
+        { key: "organisationName", label: "businessName" },
+        { key: "organisationStatus", label: "businessStatus" },
+        { key: "organisationCreatedAt", label: "Date Joined" },
 
-        { key: "businessName", label: "businessName" },
-        { key: "businessStatus", label: "businessStatus" },
         { key: "action", label: "Action" },
       ],
     };
@@ -104,9 +96,16 @@ export default {
       );
       return `${url}/signup?referralcode=${referralLink}`;
     },
+
+    ...mapState({
+      loadingRefferal:state => state.auth.loading,
+      refferalstats:state => state.auth.refferalstats
+    })
   },
 
-  mounted() {},
+  mounted() {
+    StoreUtils.dispatch(StoreUtils.actions.auth.readRefferalState)
+  },
 };
 </script>
 

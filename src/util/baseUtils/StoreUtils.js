@@ -23,7 +23,9 @@ class StoreUtils {
       initiatePasswordReset: "auth/initiatePasswordReset",
       completePasswordReset: "auth/completePasswordReset",
       updateStage: "auth/updateStage",
-      updateOrganisation:"auth/updateOrganisation"
+      updateOrganisation:"auth/updateOrganisation",
+      readRefferalState:"auth/readRefferalState",
+      readDashboardStats:"auth/readDashboardStats"
     },
     dispute: {
       updateDisputes: "dispute/updateDisputes",
@@ -67,7 +69,9 @@ class StoreUtils {
       updateUserInfo: "auth/updateUserInfo",
       updateScreen: "auth/updateScreen",
       updatePasswordResetScreen: "auth/updatePasswordResetScreen",
-      updateOrganisation:"auth/updateOrganisation"
+      updateOrganisation:"auth/updateOrganisation",
+      updateBalance:"auth/updateBalances",
+      updateRefferalStats:"auth/updateRefferalStats"
     },
     dispute: {
       updateLoading: "dispute/updateLoading",

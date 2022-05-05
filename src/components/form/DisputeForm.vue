@@ -24,6 +24,7 @@
               placeholder="Session ID or Transaction Refrenence"
               required
               v-model="transactionsQuerymodel.reference"
+
             />
             <label>Session ID or Transaction Refrenence</label>
           </div>
@@ -43,18 +44,18 @@
             <input
               type="tel"
               class="form-control"
-              placeholder="Session ID or Transaction Refrenence"
+              placeholder="Payment Refrenence"
               required
-              v-model="transactionsQuerymodel.reference"
+              v-model="transactionquery.paymentReference"
+              disabled
             />
-            <label>Session ID or Transaction Refrenence</label>
+            <label>Payment Refrenence</label>
           </div>
-            <div class="form-floating mb-3">
+          <div class="form-floating mb-3">
               <select
                 class="form-select"
                 aria-label="Default select example"
                 required
-                placeholder="Dispute Issue Type"
                 v-model="createDisputemodel.disputeIssueType"
               >
                 <option value="Credit" selected>Credit</option>
@@ -62,18 +63,21 @@
               </select>
               <label>Dispute Issue Type</label>
             </div>
-            <div class="form-floating mb-3">
+          <div class="row">
+             <div class="col col-6 mb-3">
+              <label>Dispute Transaction Type</label>
               <input
                 type="tel"
                 class="form-control"
                 placeholder="Dispute Transaction Type"
                 disabled
-                value="NA"
+                :value="transactionquery.transactionType == null ? 'NA' :transactionquery.transactionType"
                 required
               />
-              <label>Dispute Transaction Type</label>
             </div>
-            <div class="form-floating mb-3">
+            
+              <div class="col col-6 mb-3">
+              <label>Dispute Remark</label>
               <input
                 type="text"
                 class="form-control"
@@ -81,29 +85,96 @@
                 value="Transaction"
                 disabled
               />
-              <label>Dispute Remark</label>
+            </div>
+          </div>
+           
+          <div class="row mb-3">
+              <div class="col">
+                <label>Debit Account Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Debit Account Name"
+                  :value="transactionquery.debitAccountName"
+                  required
+                  disabled
+                />
+              </div>
+                <div class="col">
+                <label>Debit Account Number</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Organasation ID"
+                  :value="transactionquery.debitAccountNumber"
+                  required
+                  disabled
+                />
+              </div>
+         
+            </div>
+              
+          <div class="row mb-3">
+              <div class="col">
+                <label>Credit Account Number</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Organasation ID"
+                  :value="transactionquery.creditAccountNumber"
+                  required
+                  disabled
+                />
+              </div>
+                    <div class="col">
+                <label>narration</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="narration"
+                  :value="transactionquery.narration"
+                  required
+                  disabled
+                />
+              </div>
+             
+            </div>
+            <div class="row">
+             <div class="col mb-3">
+              <label>Bank Name</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Bank Name"
+                required
+                disabled
+                v-model="transactionquery.bankName"
+              />
+            </div>
+              <div class="col mb-3">
+              <label>Amount</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Bank Name"
+                required
+                disabled
+                v-model="transactionquery.amount"
+              />
+            </div>
             </div>
             <div class="form-floating mb-3">
               <textarea
                 type="text"
-                class="form-control"
+                class="form-control h-25"
                 placeholder="Dispute Comment"
+                cols="5"
                 required
                 v-model="createDisputemodel.disputeComment"
               />
               <label>Dispute Comment</label>
             </div>
-            <div class="form-floating mb-3">
-              <input
-                type="number"
-                class="form-control"
-                placeholder="Organasation ID"
-                :value="currentOrganisationId.organisationId"
-                required
-                disabled
-              />
-              <label>Organasation ID</label>
-            </div>
+
           <b-button type="submit" v-if="status != 'false'"  style="background-color:var(--primary);border:none;color:white;"
             ><span v-if="!loading2">Proceed</span>
             <span :class="{ 'spinner-border': loading2 }" :disabled="loading2"></span

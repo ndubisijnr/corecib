@@ -8,7 +8,7 @@
            <div class="add-business" @click="toogleD()">
             <div class="">
               <span class="arrow ni ni-bold-down text-primary" id="arrow"></span>
-              <div class="">
+              <div class="mt-3">
               <h4 class="text-white">{{currentOrganisation.organisationName}}</h4>
               <h4 class="small text-white">{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
               </div>
@@ -172,19 +172,19 @@ export default {
 
 <style scoped>
 .add-business{
-  z-index: 9999999;
+  /* z-index: 9999999; */
   /*display: flex;*/
   /*flex-direction: column;*/
   /*justify-content: center;*/
   /*align-items: flex-start;*/
   padding-left: 18px;
-  padding-top: 8px;
+  padding-top: 4px;
   width: 100%;
   /*background-color: #e7e7ef;*/
   background-color: rgba(2, 32, 61, 0.99);
-  position: absolute;
+  /* position: absolute; */
   left: 0;
-  height: 70px;
+  height: 90px;
   cursor: pointer;
   transition: .2s ease-out;
 

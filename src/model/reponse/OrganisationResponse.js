@@ -115,6 +115,14 @@ class OrganisationResponse {
         responseMessage: null
     }
 
+    static refferalStatsResponse = {
+        responseMessage:null,
+        responseCode: null,
+        totalReferrals: null,
+        totalReferralAmount: null,
+        referral: []
+    }
+
 }
 
 export default OrganisationResponse

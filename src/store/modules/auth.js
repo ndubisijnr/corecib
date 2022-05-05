@@ -5,14 +5,31 @@ import Swal from "sweetalert2";
 import OrganisationRequest from "../../model/request/OrganisationRequest";
 import OrganizationService from "../../service/OrganizationService";
 import AuthenticationResponse from "../../model/reponse/AuthenticationResponse";
+import WalletRequest from "../../model/request/WalletRequest";
+import WalletResponse from "../../model/reponse/WalletResponse";
+import WalletService from "../../service/WalletService";
+import OrganisationResponse from "../../model/reponse/OrganisationResponse";
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 export const state = {
   token: null,
   loading: false,
   userInfo: AuthenticationResponse.login,
   screen: "register",
   passwordResetScreen: "email",
-  Orginisation: {}
+  Orginisation: {},
+  balances:WalletResponse.readBalanceWallet,
+  refferalstats:OrganisationResponse.refferalStatsResponse
 }
 export const getters = {
   getUserInfo: state => { return state.userInfo },
@@ -38,7 +55,9 @@ export const mutations = {
   updateUserInfo: (state, payload) => { state.userInfo = payload; },
   updateScreen: (state, payload) => { state.screen = payload; },
   updatePasswordResetScreen: (state, payload) => { state.passwordResetScreen = payload; },
-  updateOrganisation: (state, payload) => { state.organisation = payload }
+  updateOrganisation: (state, payload) => { state.organisation = payload },
+  updateBalance:(state, payload) => {state.balances = payload},
+  updateRefferalStats:(state, payload) => {state.refferalstats = payload}
 }
 export const actions = {
   initialEnrollment: ({ commit }, payload = AuthenticationRequest.initiateEnrollment) => {
@@ -76,6 +95,7 @@ export const actions = {
 
   logon: ({ commit, state }, payload = AuthenticationRequest.login) => {
     commit("updateLoading", true)
+    localStorage.nanuhansungida = ""
     return AuthService.callLogonApi(payload)
       .then(response => {
         let responseData = response.data;
@@ -90,7 +110,8 @@ export const actions = {
               localStorage.organisationId = responseData.organisations[0].organisationId
           }
           commit("updateUserInfo", responseData);
-          router.push({ name: "GetStarted" }).then(() => { })
+          router.push({ name: "GetStarted" }).then(() => { 
+          })
         }
         else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {
           commit("updateLoading", false)
@@ -128,7 +149,10 @@ export const actions = {
     return AuthService.callLogOutApi(payload)
       .then(() => {
         commit("updateLoading", false)
+        // localStorage.token = null
+        // localStorage.organisationId = null
         localStorage.clear()
+
         commit("updateAuthToken", null);
         commit("updateUserInfo", null);
         commit("updateLoading", false);
@@ -198,16 +222,40 @@ export const actions = {
       if (responseData.responseCode == "00") {
         commit("updateLoading", false)
         commit("updateOrginasation", responseData)
-        Swal.fire({ text: responseData.responseMessage, icon: 'success', })
+        Toast.fire({ text: responseData.responseMessage, icon: 'success', })
+        localStorage.nanuhansungida = "pactched"
       } else {
         commit("updateLoading", false)
-        Swal.fire({ text: responseData.responseMessage, icon: 'error', })
+        Toast.fire({ text: responseData.responseMessage, icon: 'error', })
       }
     }).catch((error) => {
       commit("updateLoading", false)
-      Swal.fire({ text: error, icon: 'error', })
+      Toast.fire({ text: error, icon: 'error', })
 
     })
 
+  },
+
+  readRefferalState: ({commit}, paylaod={}) => {
+    commit("updateLoading", true)
+    return OrganizationService.callRefferalStatsApi(paylaod).then(response => {
+      let responseData = response.data
+      if(responseData.responseCode == "00"){
+        commit("updateLoading", false)
+        commit("updateRefferalStats", responseData)
+          Toast.fire({text:"Page ready", icon:"success"})
+      }
+    })
+  },
+
+  readDashboardStats:({commit}, payload)=>{
+    return WalletService.callReadAllWalletandRefferalStatsApi(payload = WalletRequest.readBalance).then((response2) =>{
+      let responseData2 = response2.data
+      if (responseData2.responseCode == "00"){
+        commit("updateBalance",responseData2)
+        Toast.fire({text:"Dashboard Ready", icon:"success"})
+        console.log(state.balances)
+      }
+    })
   }
 }

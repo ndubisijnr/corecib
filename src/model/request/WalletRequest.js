@@ -43,6 +43,10 @@ class WalletRequest {
         page: null
     }
 
+    static readBalance ={
+        requestType: "read-balances"
+    }
+
 }
 
 export default WalletRequest

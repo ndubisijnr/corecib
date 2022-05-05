@@ -99,12 +99,7 @@ export const actions = {
         commit("updateAccLoading", false)
         commit("updateAddedBanks", responseData)
         commit("updatereadAddedBanks",responseData)
-        Toast.fire({ text: responseData.responseMessage, icon: 'success', }).then(() => { 
-          Object.keys(state.addedBanks).forEach(key => {
-            state.addedBanks[key] = null;
-          });
-        })
-
+        Toast.fire({ text: responseData.responseMessage, icon: 'success', })
       }else{
         commit("updateAccLoading", false)
         Toast.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })

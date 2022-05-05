@@ -62,6 +62,31 @@ class WalletResponse {
         responseCode: null,
         responseMessage: null
     }
+
+    static readBalanceWallet={
+        walletBalance: {
+            accountBalance: null,
+            accountTotalCredit:null,
+            accountTotalDebit:null,
+            accountLedgerBalance: null,
+            accountBankCode: null,
+            accountBankName: null,
+            accountBranchCode: null,
+            accountCurrency: null,
+            accountCustomerPhone: null,
+            accountName: null,
+            accountNumber: null,
+            responseCode: null,
+            responseMessage:null
+        },
+        referralBalance: {
+            accountBalance: null,
+            accountTotalCredit: null,
+            accountTotalDebit: null
+        },
+        responseCode: null,
+        responseMessage: null
+    }
 }
 
 export default WalletResponse

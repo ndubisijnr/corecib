@@ -95,13 +95,13 @@ export default {
   data() {
     return {
       options: [
+         {value: "today", label: "Today"},
+        {value: "thismonth", label: "This Month"},
         {value: "last30", label: "Last 30 days"},
         {value: "last90", label: "Last 90 days"},
+        {value: "thisyear", label: "This Year"},
         {value: "alltime", label: "All TIme"},
         {value: "customperiod", label: "Custom Period"},
-        {value: "thismonth", label: "This Month"},
-        {value: "today", label: "Today"},
-        {value: "thisyear", label: "This Year"},
       ],
       model:{ 
               startDate: "",

@@ -29,6 +29,10 @@ export default {
         return apiClient.appClient.post("/organisation/update",payload);
     },
 
+    callRefferalStatsApi(payload){
+        return apiClient.appClient.post('/organisation/referral-stats', payload)
+    }
+
 };
 
 

@@ -7,31 +7,35 @@
 
       <div v-if="!loading">
         <label class="form-label mt-2 pr-4">{{ testLive }} Secret Key </label>
-        <div class="form-floating">
+        <div class="form-floating" >
+          <div @click="copyToClipboard2()">
           <input
             type="password"
             class="form-control"
             :value="api[`apikey${testLive}SK`]"
             id="pwd"
             disabled="true"
+            style="cursor:pointer"
+
           />
+          </div>
           <i
             class="fas fa-eye"
-            style="position: absolute; right: 20px; top: 5px; cursor: pointer"
+            style="position: absolute; right: 20px; top: 2px; cursor: pointer;z-index:99999"
             id="eye"
             @click="hide$show()"
           ></i>
         </div>
 
         <label class="form-label mt-2 pr-4">{{ testLive }} Public Key </label>
-        <div class="form-floating">
+        <div class="form-floating" @click="copyToClipboard()">
           <input
             type="text"
             class="form-control"
             :value="api[`apikey${testLive}PK`]"
             disabled="true"
             id="content"
-            @click="copyToClipboard()"
+            style="cursor:pointer"
           />
         </div>
 
@@ -85,6 +89,19 @@ import { mapState } from "vuex";
 import ApikeyRequest from "../../model/request/ApiKeyRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BaseButton from "../../components/button/BaseButton"
+import Swal from "sweetalert2";
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 export default {
   name: "Apikey-Form",
   components:{
@@ -117,7 +134,15 @@ export default {
     copyToClipboard() {
       let copyLink = document.getElementById("content").value;
       navigator.clipboard.writeText(copyLink).then(() => {
-        Swal.fire({ text: "Copied to clipboard", icon: "success" }).then(
+        Toast.fire({ text: "Copied to clipboard", icon: "success" }).then(
+          () => {}
+        );
+      });
+    },
+      copyToClipboard2() {
+      let copyLink = document.getElementById("pwd").value;
+      navigator.clipboard.writeText(copyLink).then(() => {
+        Toast.fire({ text: "Copied to clipboard", icon: "success" }).then(
           () => {}
         );
       });

@@ -1,15 +1,15 @@
 <template>
-  <span>
-    <div class="myalert" v-if="layout === 'dashboard-layout' && currentOrganisation.organisationStatus == 'PENDING'" id="myalert">
+  <div>
+   <router-link to="/settings/settings"> <div class="myalert" v-if="layout === 'dashboard-layout' && currentOrganisation.organisationStatus == 'PENDING'" id="myalert">
       <h3 class="text-white" > &nbsp; &nbsp; &nbsp; &nbsp; <b-icon-bell-fill/> &nbsp; Your account is currently limited to bills payment APIs
             Kindly upgrade your account to
            gain access to wallet and virtual account APIs  </h3>
-    </div> 
+    </div> </router-link>
     <dashboard-layout v-if="layout === 'dashboard-layout'">
       
     </dashboard-layout>
     <auth-layout v-else></auth-layout>
-  </span>
+  </div>
 </template>
 
 <script>
@@ -30,7 +30,7 @@ export default {
   methods:{
     stickyAlert(){
       window.addEventListener('scroll', (e)=>{
-        if(scrollY > 100){
+        if(scrollY){
            document.getElementById('myalert').style.position = "fixed"
         }else{
           document.getElementById('myalert').style.position = "relative"

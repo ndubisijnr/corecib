@@ -25,4 +25,7 @@ export default {
     callReadAllWalletTransactionApi(payload) {
         return apiClient.appClient.post("/wallet/read-all-transaction", payload);
     },
+    callReadAllWalletandRefferalStatsApi(payload) {
+        return apiClient.appClient.post("organisation/read-balances", payload);
+    },
 };

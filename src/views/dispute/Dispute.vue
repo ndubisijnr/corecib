@@ -1,7 +1,7 @@
 <template>
   <div class="">
-    <div class="text-right m-3">
-      <div class="mr-4">
+    <div class="m-3">
+      <div class="mr-4 text-right">
         <b-button @click="show = true" style="background-color:var(--primary);border:none;color:white"><i class="fa fa-plus"></i> Create  dispute
         </b-button>
       </div>
