@@ -136,9 +136,9 @@
         <h4 class="text-center">Complete Registration!</h4>
       <div class="form-floating mb-3">
         <input type="tel" class="form-control" maxlength="6" style="font-size:30px; padding-left:10px;letter-spacing:7px;" name="email" placeholder="Enter Your OTP Number"   v-model="completeModel.customerOtp" required/>
-        <label >Enter Your OTP Number</label>
+        <label > Enter Your OTP </label>
          <span v-if="timerCount > 0" class="m-2"> {{ timerCount }} secs left </span>
-         <h5 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="m-2" id="otp"> Resend OTP </h5>
+         <h5 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="m-2" id="otp"><i class="fas fa-redo"></i>  Resend OTP </h5>
        </div>
         <div class="form-floating mb-3">
         <input type="password" class="form-control" name="password" placeholder="XXXXX"   v-model="completeModel.customerPassword" id="pwd" required/>
@@ -153,12 +153,10 @@
       </div>
 
            <div class="login-footer">
-          <div class="text-center">
           <a class="forgot-password text-dark">
              By clicking the “Proceed” button, you agree to BizGem’s
           <a class="text-primary" style="cursor:pointer">terms of acceptable use</a>.
           </a><br/>
-        </div>
         <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
           {{loading ? "working." : 'Create'}} <span :class="{ 'spinner-border': loading }"></span>
         </button>
@@ -264,12 +262,7 @@ export default {
       this.initiateModel.customerCountryCode = dialCode;
     },
 
-    async resendOtp() {
-      this.resendOtpModel.customerEmail = this.initiateModel.customerEmail;
-      await StoreUtils.dispatch(StoreUtils.actions.auth.resendOtp, this.resendOtpModel)
-      console.log("Timer...");
-      this.timerCount = 30;
-    },
+  
     onInitiateEnrollment() {
       StoreUtils.dispatch( StoreUtils.actions.auth.initialEnrollment, this.initiateModel);
     },
@@ -288,6 +281,14 @@ export default {
         }
       }, 1000);
     },
+    resendOtp() {
+      this.resendOtpModel.customerEmail = this.initiateModel.customerEmail;
+      StoreUtils.dispatch(StoreUtils.actions.auth.resendOtp, this.resendOtpModel)
+           this.startTimer();
+           this.timerCount = 30
+
+    },
+    
     onCompleteEnrollment() {
       if (
         this.completeModel.customerPassword ===
@@ -328,8 +329,6 @@ export default {
         label: `${item.name}`,
       };
     });
-    this.startTimer();
-    this.timerCount = 30;
   },
 };
 </script>

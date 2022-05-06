@@ -756,7 +756,7 @@
                             border: none;
                             color: white;
                           "
-                          >Regenerate Api Key</b-button
+                          @click="regenerateApiKey()">Regenerate Api Key</b-button
                         >
                       </b-container>
                     </template>

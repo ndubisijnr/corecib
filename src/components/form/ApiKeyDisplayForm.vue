@@ -8,35 +8,41 @@
       <div v-if="!loading">
         <label class="form-label mt-2 pr-4">{{ testLive }} Secret Key </label>
         <div class="form-floating" >
-          <div @click="copyToClipboard2()">
+         
           <input
-            type="password"
+            type="text"
             class="form-control"
             :value="api[`apikey${testLive}SK`]"
-            id="pwd"
+            id="content"
             disabled="true"
             style="cursor:pointer"
 
           />
-          </div>
-          <i
-            class="fas fa-eye"
-            style="position: absolute; right: 20px; top: 2px; cursor: pointer;z-index:99999"
+           <i
+            class="fas fa-copy"
+            style="position: absolute; right: 20px; top: 8px; cursor: pointer;z-index:99999"
             id="eye"
-            @click="hide$show()"
+            @click="copyToClipboard()"
           ></i>
-        </div>
+          </div>
+         
 
         <label class="form-label mt-2 pr-4">{{ testLive }} Public Key </label>
-        <div class="form-floating" @click="copyToClipboard()">
+        <div class="form-floating">
           <input
             type="text"
             class="form-control"
             :value="api[`apikey${testLive}PK`]"
             disabled="true"
-            id="content"
+            id="pwd"
             style="cursor:pointer"
           />
+           <i
+            class="fas fa-copy"
+            style="position: absolute; right: 20px; top: 8px; cursor: pointer;z-index:99999"
+            id="eye"
+            @click="copyToClipboard2()"
+          ></i>
         </div>
 
         <label class="form-label mt-2 pr-4">{{ testLive }} Callback URL </label>

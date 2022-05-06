@@ -49,7 +49,7 @@
         <input type="tel" class="form-control" maxlength="6" style="font-size:30px; padding-left:10px;letter-spacing:7px;" name="email" placeholder="Enter Your OTP Number"  v-model="completeModel.customerOtp" required/>
         <label >Enter Your OTP Number</label>
          <span v-if="timerCount > 0" class="m-2"> {{ timerCount }} secs left </span>
-         <h5 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="m-2" id="otp"> Resend OTP </h5>
+         <h5 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="m-2" id="otp"><i class="fas fa-redo"></i>  Resend OTP </h5>
        </div>
         <div class="form-floating mb-3">
         <input type="password" class="form-control" name="password" placeholder="XXXXX"   v-model="completeModel.customerPassword" id="pwd" required/>
@@ -62,7 +62,7 @@
         <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye2" @click="hide$show()"></i>
       </div>
     
-       <div class="login-footer">
+       <div class="container login-footer">
         <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
           {{loading ? "reseting" : 'Reset'}} <span :class="{ 'spinner-border': loading }"></span>
         </button>
@@ -155,6 +155,9 @@ export default {
         StoreUtils.actions.auth.resendOtp,
         this.resendOtpModel
       );
+      this.startTimer()
+      this.timerCount = 30
+
     },
     startTimer(duration) {
       let timer = duration,
@@ -188,8 +191,6 @@ export default {
       StoreUtils.mutations.auth.updatePasswordResetScreen,
       "email"
     );
-    this.startTimer();
-    this.timerCount = 30;
   },
 };
 </script>
