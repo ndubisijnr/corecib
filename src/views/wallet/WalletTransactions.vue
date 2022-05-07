@@ -5,6 +5,13 @@
         <search-form :module="searchWALLET_TRANSACTION"/>
       </div>
     </div>
+        {{getParams}}
+
+    <div class="" v-if="wallettransactions== []">
+    hi
+      <!-- <h3>{{wallettransactions[0].accountNumber}}</h3>
+      <h3>{{wallettransactions[0].accountName}}</h3> -->
+    </div>
    <base-table
           :items="wallettransactions"
           :fields="fields"
@@ -56,8 +63,7 @@ export default {
       fields: [
         { key: "id", label: "id" },
         { key: "amount", label: "amount" },
-        { key: "accountNumber", label: "accountNumber" },
-        { key: "accountName", label: "accountName" },
+        { key: "drCr", label: "DR/CR" },
         {
           key: "contractReference",
           label: "contractReference",
@@ -65,6 +71,7 @@ export default {
         { key: "counterPartyAccountName", label: "counterPartyAccountName" },
         { key: "counterPartyAccountNumber", label: "counterPartyAccountNumber" },
         { key: "transactionType", label: "transactionType" },
+        { key: "transactionDate", label: "TransactionDate" },
         { key: "action", label: "Action" },
 
        
@@ -77,6 +84,10 @@ export default {
       loading: (state) => state.walletTransactions.loading,
       wallettransactions: (state) => state.walletTransactions.walletTransactions,
     }),
+
+    getParams(){
+      return JSON.parse(JSON.stringify(this.$route))
+    }
   },
 
   mounted(){

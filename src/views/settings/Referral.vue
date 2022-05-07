@@ -94,7 +94,7 @@ export default {
       let referralLink = StoreUtils.rootGetters(
         StoreUtils.getters.auth.getOrginizationReferralLink
       );
-      return `${url}/signup?referralcode=${referralLink}`;
+      return `${url}/signup/${referralLink}`;
     },
 
     ...mapState({

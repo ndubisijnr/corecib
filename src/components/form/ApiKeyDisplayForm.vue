@@ -1,93 +1,56 @@
 <template>
   <div>
     <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
-    <div class="">
-      <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(saveChanges)">
-      <span :class="{ 'spinner-border': loading }"></span>
+      <div class="">
+        <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(saveChanges)">
+          <span :class="{ 'spinner-border': loading }"></span>
 
-      <div v-if="!loading">
-        <label class="form-label mt-2 pr-4">{{ testLive }} Secret Key </label>
-        <div class="form-floating" >
-         
-          <input
-            type="text"
-            class="form-control"
-            :value="api[`apikey${testLive}SK`]"
-            id="content"
-            disabled="true"
-            style="cursor:pointer"
-
-          />
-           <i
-            class="fas fa-copy"
-            style="position: absolute; right: 20px; top: 8px; cursor: pointer;z-index:99999"
-            id="eye"
-            @click="copyToClipboard()"
-          ></i>
-          </div>
-         
-
-        <label class="form-label mt-2 pr-4">{{ testLive }} Public Key </label>
-        <div class="form-floating">
-          <input
-            type="text"
-            class="form-control"
-            :value="api[`apikey${testLive}PK`]"
-            disabled="true"
-            id="pwd"
-            style="cursor:pointer"
-          />
-           <i
-            class="fas fa-copy"
-            style="position: absolute; right: 20px; top: 8px; cursor: pointer;z-index:99999"
-            id="eye"
-            @click="copyToClipboard2()"
-          ></i>
-        </div>
-
-        <label class="form-label mt-2 pr-4">{{ testLive }} Callback URL </label>
-        <div class="form-floating">
-          <input
-            type="text"
-            class="form-control"
-            v-model="callBackUrl"
-            required
-
-          />
-        </div>
-  
-        <label class="form-label mt-2 pr-4">{{ testLive }} Authorization Header </label>
-        <div class="row">
-          <div class="col-5">
+          <div v-if="!loading">
+            <label class="form-label mt-2 pr-4">{{ testLive }} Secret Key </label>
             <div class="form-floating">
-              <input
-                  type="text"
-                  class="form-control"
-                  v-model="headerKey"
-                  required
-              />
-              <label>Key</label>
+
+              <input type="text" class="form-control" :value="api[`apikey${testLive}SK`]" id="content" disabled="true"
+                style="cursor:pointer" />
+              <i class="fas fa-copy" style="position: absolute; right: 20px; top: 8px; cursor: pointer;z-index:99999"
+                id="eye" @click="copyToClipboard()"></i>
+            </div>
+
+
+            <label class="form-label mt-2 pr-4">{{ testLive }} Public Key </label>
+            <div class="form-floating">
+              <input type="text" class="form-control" :value="api[`apikey${testLive}PK`]" disabled="true" id="pwd"
+                style="cursor:pointer" />
+              <i class="fas fa-copy" style="position: absolute; right: 20px; top: 8px; cursor: pointer;z-index:99999"
+                id="eye" @click="copyToClipboard2()"></i>
+            </div>
+
+            <label class="form-label mt-2 pr-4">{{ testLive }} Callback URL </label>
+            <div class="form-floating">
+              <input type="text" class="form-control" v-model="callBackUrl" required />
+            </div>
+
+            <label class="form-label mt-2 pr-4">{{ testLive }} Authorization Header </label>
+            <div class="row">
+              <div class="col-5">
+                <div class="form-floating">
+                  <input type="text" class="form-control" v-model="headerKey" required />
+                  <label>Key</label>
+                </div>
+              </div>
+              <div class="col-7">
+                <div class="form-floating">
+                  <input type="text" class="form-control" v-model="headerValue" required />
+                  <label>Value</label>
+                </div>
+              </div>
+            </div>
+            <div class="text-start mt-3">
+              <base-button title="Save"></base-button>
             </div>
           </div>
-          <div class="col-7">
-            <div class="form-floating">
-              <input
-                  type="text"
-                  class="form-control"
-                  v-model="headerValue"
-                  required
-              />
-              <label>Value</label>
-            </div>
-          </div>
-        </div>
-      <div class="text-start mt-3">
-        <base-button title="Save"></base-button>
+        </form>
       </div>
-        </div>
-      </form>
-  </div>
-      </validation-observer>
+    </validation-observer>
   </div>
 </template>
 <script>
@@ -110,15 +73,15 @@ const Toast = Swal.mixin({
 });
 export default {
   name: "Apikey-Form",
-  components:{
+  components: {
     BaseButton
   },
   data: () => {
     return {
-      headerKey:"",
-      headerValue:"",
+      headerKey: "",
+      headerValue: "",
       //webHook:"",
-      callBackUrl:"",
+      callBackUrl: "",
       model: ApikeyRequest.updateWebHook,
     };
   },
@@ -141,19 +104,19 @@ export default {
       let copyLink = document.getElementById("content").value;
       navigator.clipboard.writeText(copyLink).then(() => {
         Toast.fire({ text: "Copied to clipboard", icon: "success" }).then(
-          () => {}
+          () => { }
         );
       });
     },
-      copyToClipboard2() {
+    copyToClipboard2() {
       let copyLink = document.getElementById("pwd").value;
       navigator.clipboard.writeText(copyLink).then(() => {
         Toast.fire({ text: "Copied to clipboard", icon: "success" }).then(
-          () => {}
+          () => { }
         );
       });
     },
-    saveChanges(){
+    saveChanges() {
       console.log("Heoolooooo")
       this.model[`apikey${this.testLive}HeaderKey`] = this.headerKey
       this.model[`apikey${this.testLive}HeaderValue`] = this.headerValue
@@ -178,7 +141,7 @@ export default {
       api: (state) => state.apiKey.apiKey,
       loading: (state) => state.apiKey.loading,
     }),
-    stage(){
+    stage() {
       return StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
     },
     testLive() {
@@ -194,10 +157,11 @@ export default {
 };
 </script>
 <style>
-.span-loader{
+.span-loader {
   width: 20px !important;
-  height: 20px !important ;
+  height: 20px !important;
 }
+
 .btn-login {
   width: 332px;
   height: 43px;

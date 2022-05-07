@@ -27,7 +27,7 @@ export const state = {
   userInfo: AuthenticationResponse.login,
   screen: "register",
   passwordResetScreen: "email",
-  Orginisation: {},
+  orginisation: {},
   balances:WalletResponse.readBalanceWallet,
   refferalstats:OrganisationResponse.refferalStatsResponse
 }
@@ -95,7 +95,6 @@ export const actions = {
 
   logon: ({ commit, state }, payload = AuthenticationRequest.login) => {
     commit("updateLoading", true)
-    localStorage.nanuhansungida = ""
     return AuthService.callLogonApi(payload)
       .then(response => {
         let responseData = response.data;
@@ -144,15 +143,28 @@ export const actions = {
     }).catch(error => { commit("updateLoading", false); console.log(error) })
   },
 
+  changePassword:({commit}, paylaod = AuthenticationRequest.changePassword) =>{
+    commit("updateLoading", true)
+    return AuthService.callChangePasswordApi(paylaod).then((response)=>{
+      let responseData = response.data
+      if(responseData.responseCode == "00"){
+        commit("updateLoading", false)
+        Toast.fire({text:responseData.responseMessage, icon:"success"})
+      }else{
+        commit("updateLoading", false)
+        Toast.fire({text:responseData.responseMessage, icon:"error"})
+      }
+    })
+
+  },
+
   logOut: ({ commit, dispatch, rootState }, payload) => {
     commit("updateLoading", true)
     return AuthService.callLogOutApi(payload)
       .then(() => {
         commit("updateLoading", false)
-        // localStorage.token = null
-        // localStorage.organisationId = null
-        localStorage.clear()
-
+        localStorage.removeItem("token")
+        localStorage.removeItem("organisationId")
         commit("updateAuthToken", null);
         commit("updateUserInfo", null);
         commit("updateLoading", false);
@@ -185,6 +197,7 @@ export const actions = {
       let responseData = response.data;
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
+        Toast.fire({text:responseData.responseMessage, icon:"success"})
         router.push({ name: "Logon" }).then(() => { })
       }
       else {
@@ -222,8 +235,7 @@ export const actions = {
       if (responseData.responseCode == "00") {
         commit("updateLoading", false)
         commit("updateOrginasation", responseData)
-        Toast.fire({ text: responseData.responseMessage, icon: 'success', })
-        localStorage.nanuhansungida = "pactched"
+        Toast.fire({ text: responseData.responseMessage, icon: 'success', }).then(()=>{})
       } else {
         commit("updateLoading", false)
         Toast.fire({ text: responseData.responseMessage, icon: 'error', })
@@ -249,9 +261,11 @@ export const actions = {
   },
 
   readDashboardStats:({commit}, payload)=>{
+    commit("updateLoading", true)
     return WalletService.callReadAllWalletandRefferalStatsApi(payload = WalletRequest.readBalance).then((response2) =>{
       let responseData2 = response2.data
       if (responseData2.responseCode == "00"){
+        commit("updateLoading", false)
         commit("updateBalance",responseData2)
         Toast.fire({text:"Dashboard Ready", icon:"success"})
         console.log(state.balances)

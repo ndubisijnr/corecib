@@ -1,75 +1,70 @@
 <template>
   <div>
+    <blocker-loader v-if="accloading" :message="'Please Wait'"></blocker-loader>
+        <blocker-loader v-if="loading" :message="'Please Wait'"></blocker-loader>
+
     <base-header class="pb-6" type="">
     </base-header>
     <div class="container-fluid mt--6">
       <div class="cardd p-3 m-3">
-            <div>
-                <h1 class="m-b- text-center"><b>Hello {{user.customerFirstName}}, Welcome to BizGem</b></h1>
-                <h2 class="text-center">Your business is in <span v-if="getStage === 'DEV'">Test</span><span v-else>Live</span> mode</h2>
-                <div class="card-area">
-                  <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
-                  <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'" :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'"></dashboard-card>
-                  <dashboard-card  :value="currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'"></dashboard-card>
-                  <dashboard-card :showBtn="false" :showBtn1="false"  :value="currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'"></dashboard-card>
-                </div> 
-                <div class="mb-3 text-center">
-                <b-button style="background-color:#3F88C5;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>
-                <b-button v-b-modal.modal-no-backdrop> Withdraw</b-button>
-              </div> 
-              <div>
-                 <h4 class="badge"> All Transactions</h4>
-                <transaction withSearch="YES"></transaction>
-              </div>
-            </div>   
+        <div>
+          <h1 class="m-b- text-center"><b>Hello {{ user.customerFirstName }}, Welcome to BizGem</b></h1>
+          <h2 class="text-center">Your business is in <span v-if="getStage === 'DEV'">Test</span><span
+              v-else>Live</span> mode</h2>
+          <div class="card-area">
+            <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false"
+              :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
+            <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'"
+              :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'">
+            </dashboard-card>
+            <dashboard-card :value="currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'">
+            </dashboard-card>
+            <dashboard-card :showBtn="false" :showBtn1="false"
+              :value="currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'">
+            </dashboard-card>
+          </div>
+          <div class="mb-3 text-center">
+            <b-button style="background-color:#3F88C5;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>
+            <b-button @click="show = true"> Withdraw</b-button>
+          </div>
+          <div>
+            <h4 class="badge"> All Transactions</h4>
+            <transaction withSearch="YES"></transaction>
+          </div>
+        </div>
       </div>
     </div>
+    <payout-form @closeCreatePayout="updateCreatePayout" :showCreatePayout="show"></payout-form>
 
-     <b-modal  centered title="BootstrapVue" id="modal-no-backdrop" hide-backdrop content-class="shadow" hide-footer>
-          <template #modal-title>
-                    Withdraw
-                    </template>
-                          <div class="container">
-                            <!-- <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="'100,000'" :title="'Wallet Balance'"></dashboard-card> -->
-                            <b-form class="" @submit.prevent="requestPayout()">
-                              <h4 class="text-left">Wallet Balance: ₦{{ balances.walletBalance.accountBalance | formatAmount}}</h4>
-                               <b-input-group size="md" prepend="NGN" class="mb-3">
-                                <b-form-input id='withdrawInput' step="0.01" type="number" autofocus v-model="payoutModel.payoutAmount" style="font-size:16px;letter-spacing:.2rem;" placeholder="Enter Amount" required></b-form-input>
-                              </b-input-group>
-                               <h4 id="error" class="text-danger text-center"></h4>
-                              <b-button v-if="payoutModel.payoutAmount <= balances.walletBalance.accountBalance" class="w-100 text-white" type="submit" style="background-color:var(--primary)">{{accLoading ? 'please wait..' : 'withdraw'}} <span :class="{'spinner-border':accLoading}"></span></b-button>
-                              <base-button title="Insufficent Funds" v-else disabled></base-button>
-                            </b-form>
-                          </div>                       
-    </b-modal>
+    <b-modal centered id="modal-scrollable" scrollable hide-backdrop content-class="shadow" hide-footer>
 
-   <b-modal  centered id="modal-scrollable" scrollable hide-backdrop content-class="shadow" hide-footer>
-          
-             <h3  style="text-align:center">
-               Topup Balance
-            </h3>  
-            <div>
-              <h3>To fund your wallet</h3>
-              <span>Transfer the amount you want to fund to the account
-                    details below and your balance will be funded.</span>
-              <div class="carddd"  v-for="items in balances.walletBalance.virtualAccounts" :key="items">
-                <h6 class="text-right rounded-3 p-1 text-white" style="position:absolute;right:50px;cursor:pointer;background:var(--primary)" @click="copyToClipboard(id=items.accountNumber)">Copy</h6>
-                <code>
-                   <span class="mb-3 text-dark">Bank Name: {{items.accountOtherBankName}}</span><br>
-                    <span class="mb-3 text-dark">Account Name: {{items.accountName}}</span><br>
-                    <span class="mb-3 text-dark" >Account Name: <span :id="items.accountNumber">{{items.accountNumber}}</span></span>
+      <h3 style="text-align:center">
+        Topup Balance
+      </h3>
+      <div>
+        <h3>To fund your wallet</h3>
+        <span>Transfer the amount you want to fund to the account
+          details below and your balance will be funded.</span>
+        <div class="carddd" v-for="items in balances.walletBalance.virtualAccounts" :key="items">
+          <h6 class="text-right rounded-3 p-1 text-white"
+            style="position:absolute;right:50px;cursor:pointer;background:var(--primary)"
+            @click="copyToClipboard(id = items.accountNumber)">Copy</h6>
+          <code>
+                   <span class="mb-3 text-dark">Bank Name: {{ items.accountOtherBankName }}</span><br>
+                    <span class="mb-3 text-dark">Account Name: {{ items.accountName }}</span><br>
+                    <span class="mb-3 text-dark" >Account Name: <span :id="items.accountNumber">{{ items.accountNumber }}</span></span>
                 </code>
-              </div>
-            </div>
-                        
-  </b-modal>
+        </div>
+      </div>
+
+    </b-modal>
 
 
 
   </div>
 </template>
 <script>
-import { mapState} from "vuex";
+import { mapState } from "vuex";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import ApiForm from '../../components/form/ApiKeyDisplayForm.vue'
 import DashboardView from "../../components/dashboardComponent/DashboardCircle"
@@ -77,8 +72,10 @@ import ApikeyRequest from "../../model/request/ApiKeyRequest";
 import Swal from "sweetalert2";
 import Transaction from "../report/Transactions.vue"
 import BaseButton from "../../components/button/BaseButton"
+import PayoutForm from "../../components/form/PayoutForm";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest"
-
+import BlockLoader from "../../components/BlockerLoader"
+import BlockerLoader from "../../components/BlockerLoader.vue";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -93,81 +90,65 @@ const Toast = Swal.mixin({
 })
 
 export default {
-  name:"GetStarted",
-  components: {ApiForm,'dashboard-card':DashboardView, Transaction,BaseButton},
+  name: "GetStarted",
+  components: { ApiForm, "dashboard-card": DashboardView, Transaction, BaseButton, PayoutForm, BlockLoader, BlockerLoader },
 
-  data: ()=>{
-      return{
-          isSwitched:false,
-          apikeyModel: ApikeyRequest.regenerateApiKey,
-          payoutModel:AccountPayoutRequest.createPayout,
-          payoutTransactionsModel: AccountPayoutRequest.readPayout,
-      }
+  data: () => {
+    return {
+      isSwitched: false,
+      apikeyModel: ApikeyRequest.regenerateApiKey,
+      payoutModel: AccountPayoutRequest.createPayout,
+      payoutTransactionsModel: AccountPayoutRequest.readPayout,
+      show: false,
+    }
   },
 
   methods: {
-    getbiz() {
-      this.$router.push({ name: "NewBusiness" });
-      StoreUtils.rootGetters(StoreUtils.getters)
-    },
-      regenerateApiKey() {
+
+    regenerateApiKey() {
       StoreUtils.dispatch(StoreUtils.actions.apiKey.regenerateApiKey, this.apikeyModel).then(() => {
         this.$bvModal.hide('modal-no-backdrop')
       })
 
     },
-     copyToClipboard(id) {
+
+    updateCreatePayout(value) {
+      this.show = value;
+    },
+    copyToClipboard(id) {
       let copyLink = document.getElementById(id).textContent;
       navigator.clipboard.writeText(copyLink).then(() => {
         Toast.fire({ text: "Copied to clipboard", icon: "success" }).then(
-          () => {}
+          () => { }
         );
       });
     },
 
-    reference(length) {
-      let result = ""  
-      let characters= 'abcdefghijklmnopgrstuvwxyzABCDEFJHIJKLMNOPQRSTUVWXYZ0123456789';
-      let charactersLength = characters.length;
-      for ( var i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      }
-      return result;
-    },
-  
-
-    requestPayout(){
-    this.payoutModel.payoutReference = `BIZGEM-${this.reference(30)}`
-     StoreUtils.dispatch(StoreUtils.actions.accountPayout.requestPayout, this.payoutModel).then(()=>{
-       StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutTransactionsModel)
-       this.payoutModel.payoutAmount = null
-     })
-    }
   },
   computed: {
     ...mapState({
       user: (state) => state.auth.userInfo,
       loading: (state) => state.auth.loading,
-      api:(state) => state.apiKey.apiKey,
-      stage:(state) => state.auth.stage,
-      accLoading:state => state.accountPayout.accloading,
-      balances:state => state.auth.balances
+      api: (state) => state.apiKey.apiKey,
+      stage: (state) => state.auth.stage,
+      accLoading: state => state.accountPayout.accloading,
+      balances: state => state.auth.balances
 
     }),
-    currentOrganisation(){
+    currentOrganisation() {
       return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
     },
 
-    getStage(){
+    getStage() {
       return StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
     },
 
 
-  
+
   },
 
-  watch:{
- 
+  watch: {
+
   },
 
   mounted() {
@@ -179,11 +160,13 @@ export default {
 .center-block {
   float: none;
 }
+
 .center-block {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
+
 .onboarding-cards {
   /*display: -webkit-box;
     display: -ms-flexbox;*/
@@ -192,6 +175,7 @@ export default {
   -ms-flex-pack: center;
   justify-content: center;
 }
+
 .onboarding-card {
   background: #fff;
   border: solid 1px #f2f2f2;
@@ -202,6 +186,7 @@ export default {
   padding: 50px;
   text-align: center;
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -212,6 +197,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
 .onboarding-card-icon {
   height: 60px;
   width: 60px;
@@ -227,11 +213,13 @@ input[type=number] {
   background-color: #f1fbf4;
   margin: 0 auto 30px;
 }
+
 svg:not(:root) {
   overflow: hidden;
 }
-.badge{
-}
+
+.badge {}
+
 .onboarding-card-description {
   font-size: 14px;
   line-height: 1.5;
@@ -239,9 +227,11 @@ svg:not(:root) {
   margin-bottom: 0;
   color: #727366;
 }
+
 .onboarding-title {
   padding: 20px 0 0;
 }
+
 .spinner-border {
   display: inline-block;
   width: 1rem;
@@ -259,6 +249,7 @@ svg:not(:root) {
     transform: rotate(360deg);
   }
 }
+
 .inner-card {
   display: flex;
   justify-content: space-around;
@@ -266,24 +257,27 @@ svg:not(:root) {
   line-height: 3rem;
   font-family: "Fibon Sans";
 }
+
 @media (max-width:999px) {
   .inner-card {
-  display: flex;
-  justify-content: space-around;
-  padding: 5px;
-  flex-direction: column-reverse;
-  line-height: 3rem;
-  font-family: "Fibon Sans";
-}
-.itemabc123 {
-  width: auto;
-  display: flex;
-  /* align-items: center; */
-  justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    flex-direction: column-reverse;
+    line-height: 3rem;
+    font-family: "Fibon Sans";
+  }
+
+  .itemabc123 {
+    width: auto;
+    display: flex;
+    /* align-items: center; */
+    justify-content: space-around;
     flex-direction: column-reverse;
 
+  }
 }
-}
+
 .itemabc123 {
   width: 100%;
   display: flex;
@@ -292,23 +286,23 @@ svg:not(:root) {
   flex-wrap: wrap;
 }
 
-.cardd{
-    box-shadow: 0 1px 2px hsl(0deg 0% 0% / 10%);
-    background-color: white;
-  
-    
+.cardd {
+  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 10%);
+  background-color: white;
+
+
 }
 
-.carddd{
-    box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
-    background-color: white;
-    margin-top: 20px;
-    padding: 10px;
-  
-    
+.carddd {
+  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
+  background-color: white;
+  margin-top: 20px;
+  padding: 10px;
+
+
 }
 
-.card-area{
+.card-area {
   display: flex;
   justify-content: space-around;
   /* border: solid yellow; */

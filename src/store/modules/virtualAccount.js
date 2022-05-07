@@ -64,7 +64,6 @@ export const actions = {
     return VirtualAccountService.callReadBankList(payload).then(response => {
       let responseData = response.data
       if(responseData.responseCode == "00"){
-        console.log(">>>> "+JSON.stringify(responseData))
         commit("updateBankList", responseData.data)
         commit("updateLoading", false)
       }

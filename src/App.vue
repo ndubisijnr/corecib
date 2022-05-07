@@ -20,12 +20,15 @@ const default_layout = "default";
 export default {
   components: {AuthLayout, DashboardLayout},
   mounted() {
-    // const userToken = localStorage.getItem('token')
-    // StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
+    const userToken = localStorage.getItem('token')
+    StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
     this.stickyAlert()
-     if(this.$route.param.referralCode != null)S
-      localStorage.referralCode = this.$route.param.referralCode
-
+    setTimeout(()=>{
+      let params = this.$route.params
+       if(params != null){
+         if(params.referralCode != null) localStorage.referralCode = params.referralCode
+        }
+    },2000)
   },
   methods:{
     stickyAlert(){

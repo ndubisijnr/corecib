@@ -19,6 +19,7 @@ const Toast = Swal.mixin({
 
 export const state = {
   accloading: false,
+  addbankloading:false,
   addedBanks:AccountPayoutResponse.readPayoutAccountByOrganisationId,
   readOnlyAddedBanks:AccountPayoutResponse.readPayoutAccountByOrganisationId,
   allpayouts:{}
@@ -38,6 +39,9 @@ export const mutations = {
     state.accloading = payload
   },
 
+  updateAddBankLoading: (state, payload) => {
+    state.addbankloading = payload
+  },
   updateAllPayouts: (state, payload) => {
     state.allpayouts = payload
   },
@@ -47,7 +51,7 @@ export const mutations = {
 export const actions = {
 
     readAddedBanks: ({ commit, state }, payload = AccountPayoutRequest.readAccountPayoutById) => {
-        commit("updateAccLoading", true)
+          commit("updateAccLoading", true)
             return AccountPayoutService.callreadAddedBanksApi(payload).then(response => {
             let responseData = response.data
             commit("updateAccLoading", false)
@@ -64,27 +68,23 @@ export const actions = {
 
 
   createAddedBanks: ({ commit, state }, payload = AccountPayoutRequest.createAccountPayout) => {
-    commit("updateAccLoading", true)
+    commit("updateAddBankLoading", true)
     return AccountPayoutService.callcreateAddedBanksApi(payload).then(response => {
       let responseData = response.data
       if (responseData.responseCode === "00") {
-        commit("updateAccLoading", false)
+        commit("updateAddBankLoading", false)
         commit("updateAddedBanks", responseData)
         commit("updatereadAddedBanks",responseData)
-        Toast.fire({ text: responseData.responseMessage, icon: 'success', }).then(() => {
-          Object.keys(state.addedBanks).forEach(key => {
-            state.addedBanks[key] = null;
-          });
-         })
+        Toast.fire({ text: responseData.responseMessage, icon: 'success', }).then(() => {})
       }else{
-        commit("updateAccLoading", false)
+        commit("updateAddBankLoading", false)
         Toast.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { 
 
         })
       }
     })
       .catch(error => {
-        commit("updateAccLoading", false)
+        commit("updateAddBankLoading", false)
         console.log(error)
       })
 
@@ -92,16 +92,16 @@ export const actions = {
 
 
   editAddedBanks: ({ commit, state }, payload = AccountPayoutRequest.updateAccountPayout) => {
-  commit("updateAccLoading", true)
+  commit("updateAddBankLoading", true)
     return AccountPayoutService.calleditAddedBanksApi(payload).then(response => {
       let responseData = response.data
       if (responseData.responseCode === "00") {
-        commit("updateAccLoading", false)
+        commit("updateAddBankLoading", false)
         commit("updateAddedBanks", responseData)
         commit("updatereadAddedBanks",responseData)
         Toast.fire({ text: responseData.responseMessage, icon: 'success', })
       }else{
-        commit("updateAccLoading", false)
+        commit("updateAddBankLoading", false)
         Toast.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
       }
     })

@@ -1,75 +1,74 @@
 <!--suppress ALL -->
 <template>
   <div>
-    <form
-      v-if="passwordResetScreen === 'email'"
-      class="container form-group form-login"
-      role="form"
-      @submit.prevent="initiatePassword"
-      style="margin-top:0px"
-    >
-     <div class="text-center">
-         <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
+    <form v-if="passwordResetScreen === 'email'" class="container form-group form-login" role="form"
+      @submit.prevent="initiatePassword" style="margin-top:0px">
+      <div class="text-center">
+        <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
       </div>
       <div class="p-3">
         <h4 class="text-center">Password Reset</h4>
-      <div>
-         <div class="form-floating mb-3">
-        <input type="email" class="form-control" name="email" placeholder="businessEmail@gmail.com"  v-model="initiateModel.customerEmail" required/>
-        <label >Email address</label>
-      </div>
+        <div>
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" name="email" placeholder="businessEmail@gmail.com"
+              v-model="initiateModel.customerEmail" required />
+            <label>Email address</label>
+          </div>
           <div class="login-footer">
-          <div class="alter-links text-center">
-          <span class="text-dark">
-            Remembered your password?</span><br>
-            <a @click="login()" class="join-now-text">
-              Login</a>
-          
+            <div class="alter-links text-center">
+              <span class="text-dark">
+                Remembered your password?</span><br>
+              <a @click="login()" class="join-now-text">
+                Login</a>
+
+            </div>
+            <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
+              {{ loading ? "checking" : 'Check' }} <span :class="{ 'spinner-border': loading }"></span>
+            </button>
+          </div>
         </div>
-        <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-          {{loading ? "checking" : 'Check'}} <span :class="{ 'spinner-border': loading }"></span>
-        </button>
-      </div>
-      </div>
       </div>
     </form>
 
-    <form
-      v-if="passwordResetScreen === 'otp'"
-      class="container form-group form-login"
-      role="form"
-      @submit.prevent="completePassword"
-    >
-       <div class="text-center">
+    <form v-if="passwordResetScreen === 'otp'" class="container form-group form-login" role="form"
+      @submit.prevent="completePassword">
+      <div class="text-center">
         <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
       </div>
       <div class="p-3">
         <h4 class="text-center">Almost Done!</h4>
-      <div class="form-floating mb-3">
-        <input type="tel" class="form-control" maxlength="6" style="font-size:30px; padding-left:10px;letter-spacing:7px;" name="email" placeholder="Enter Your OTP Number"  v-model="completeModel.customerOtp" required/>
-        <label >Enter Your OTP Number</label>
-         <span v-if="timerCount > 0" class="m-2"> {{ timerCount }} secs left </span>
-         <h5 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="m-2" id="otp"><i class="fas fa-redo"></i>  Resend OTP </h5>
-       </div>
         <div class="form-floating mb-3">
-        <input type="password" class="form-control" name="password" placeholder="XXXXX"   v-model="completeModel.customerPassword" id="pwd" required/>
-        <label >Password</label>
-        <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye" @click="hide$show()"></i>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="password" class="form-control" name="password" placeholder="XXXXX"    v-model="completeModel.customerPasswordConfirmation" id="pwd2" required/>
-        <label >Confirm Password</label>
-        <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye2" @click="hide$show()"></i>
-      </div>
-    
-       <div class="container login-footer">
-        <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-          {{loading ? "reseting" : 'Reset'}} <span :class="{ 'spinner-border': loading }"></span>
-        </button>
-      </div>
+          <input type="tel" class="form-control" maxlength="6"
+            style="font-size:30px; padding-left:10px;letter-spacing:7px;" name="email"
+            placeholder="Enter Your OTP Number" v-model="completeModel.customerOtp" required />
+          <label>Enter Your OTP Number</label>
+          <span v-if="timerCount > 0" class="m-2"> {{ timerCount }} secs left </span>
+          <h5 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="m-2" id="otp"><i
+              class="fas fa-redo"></i> Resend OTP </h5>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" name="password" placeholder="XXXXX"
+            v-model="completeModel.customerPassword" id="pwd" required />
+          <label>Password</label>
+          <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye"
+            @click="hide$show()"></i>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" name="password" placeholder="XXXXX"
+            v-model="completeModel.customerPasswordConfirmation" id="pwd2" required />
+          <label>Confirm Password</label>
+          <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye2"
+            @click="hide$show()"></i>
+        </div>
+
+        <div class="login-footer">
+          <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
+            {{ loading ? "reseting" : 'Reset' }} <span :class="{ 'spinner-border': loading }"></span>
+          </button>
+        </div>
       </div>
     </form>
-   
+
   </div>
 </template>
 
@@ -103,7 +102,7 @@ export default {
     }),
   },
   methods: {
-       hide$show() {
+    hide$show() {
       let b = document.getElementById("pwd");
       let eye = document.getElementById("eye");
       let b2 = document.getElementById("pwd2");
@@ -117,7 +116,7 @@ export default {
         eye.classList.add("fa-eye");
         eye.classList.remove("fa-eye-slash");
       }
-        if (b2.type === "password") {
+      if (b2.type === "password") {
         b2.type = "text";
         eye2.classList.remove("fa-eye");
         eye2.classList.add("fa-eye-slash");
@@ -135,19 +134,19 @@ export default {
         StoreUtils.actions.auth.initiatePasswordReset,
         this.initiateModel
       )
-     
+
     },
     completePassword() {
       this.completeModel.customerEmail = this.initiateModel.customerEmail;
       StoreUtils.dispatch(
         StoreUtils.actions.auth.completePasswordReset,
         this.completeModel
-      ).then(()=>{
+      ).then(() => {
         Object.keys(this.completeModel).forEach(key => {
           this.completeModel[key] = null;
         });
       })
-       
+
     },
     resendOtp() {
       this.resendOtpModel.customerEmail = this.initiateModel.customerEmail;
@@ -201,7 +200,7 @@ export default {
   cursor: pointer;
 }
 
-.login-footer{
+.login-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -209,20 +208,21 @@ export default {
 
 .btn-login {
   width: 132px;
-  background-color:var(--primary);
+  background-color: var(--primary);
   border-radius: 5px;
   border: none;
   color: white;
 }
 
-::placeholder{
+::placeholder {
   font-size: 10px;
   letter-spacing: 1px;
-  padding-left:0;
+  padding-left: 0;
 }
-.join-now-text{
+
+.join-now-text {
   cursor: pointer;
-    color: var(--primary);
+  color: var(--primary);
 
 }
 

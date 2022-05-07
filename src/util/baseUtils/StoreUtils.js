@@ -25,7 +25,8 @@ class StoreUtils {
       updateStage: "auth/updateStage",
       updateOrganisation:"auth/updateOrganisation",
       readRefferalState:"auth/readRefferalState",
-      readDashboardStats:"auth/readDashboardStats"
+      readDashboardStats:"auth/readDashboardStats",
+      changePassword:"auth/changePassword"
     },
     dispute: {
       updateDisputes: "dispute/updateDisputes",
@@ -99,7 +100,8 @@ class StoreUtils {
       updateAddedBanks:"accountPayout/updateAddedBanks",
       updateAccLoading:"accountPayout/updateAccLoading",
       updatereadAddedBanks:"accountPayout/updatereadAddedBanks",
-      updateAllPayouts:"accountPayout/updateAllPayouts"
+      updateAllPayouts:"accountPayout/updateAllPayouts",
+      updateAddBankLoading:"accountPayout/updateAddBankLoading"
     }
   };
 

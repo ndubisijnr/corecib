@@ -1,167 +1,117 @@
 <template>
-<div>
- 
+  <div>
+
     <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
-      <form
-        class="container form-group form-login"
-        role="form"
-        @submit.prevent="handleSubmit(onInitiateEnrollment())"
-        v-if="screen == 'register'"
-      >
-       <div class="text-center">
-           <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
-  </div>
-  <div class="p-3">
-      <h4 class="text-center">Create A Business Account</h4>
-        <div class="form-floating mt-3 mb-3">
-          <base-input label="Country">
-            <el-select
-              class="select-danger"
-              filterable
-              placeholder="Country"
-              v-model="initiateModel.customerCountry"
-              required
-            >
-              <el-option
-                v-for="option in option_country"
-                class="select-danger"
-                :value="option.value"
-                :label="option.label"
-                :key="option.value"
-                
-              >
-              </el-option>
-            </el-select>
-            <p v-show="countryCtrl" class="form-error-message">
-              The Country is required
-            </p>
-          </base-input>
+      <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(onInitiateEnrollment())"
+        v-if="screen == 'register'">
+        <div class="text-center">
+          <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
         </div>
-        <div class="form-floating mt-3 mb-3">
-          <base-input
-            prependIcon="fa fa-info-circle"
-            title="Business name must contain two words (eg. Dangote Groups)"
-            label="Business Name"
-            class="mb-2"
-            name="Business Name"
-            :rules="{ required: true }"
-            placeholder="eg. Amanda Limited"
-            v-model="initiateModel.customerBusinessName"
-            required
-          >
-          </base-input>
-        </div>
-        <div class="form-floating mt-3 mb-3">
-          <base-input
-            label="First Name"
-            class="mb-2"
-            name="First Name"
-            :rules="{ required: true }"
-            placeholder="First Name"
-            v-model="initiateModel.customerFirstName"
-            required
-          >
-          </base-input>
-        </div>
-        <div class="form-floating mt-3 mb-3">
-          <base-input
-            label="Last Name"
-            class="mb-2"
-            name="Last Name"
-            :rules="{ required: true }"
-            placeholder="Last Name"
-            v-model="initiateModel.customerLastName"
-            required
-          >
-          </base-input>
-        </div>
-        <div class="form-floating mt-3 mb-3">
-          <base-input
-            label="Email"
-            class="mb-2"
-            name="Email"
-            type="email"
-            :rules="{ required: true }"
-            placeholder="Email"
-            v-model="initiateModel.customerEmail"
-            required
-          >
-          </base-input>
-        </div>
+        <div class="p-3">
+          <h4 class="text-center">Create A Business Account</h4>
+          <div class="form-floating mt-3 mb-3">
+            <base-input label="Country">
+              <el-select class="select-danger" filterable placeholder="Country" v-model="initiateModel.customerCountry"
+                required>
+                <el-option v-for="option in option_country" class="select-danger" :value="option.value"
+                  :label="option.label" :key="option.value">
+                </el-option>
+              </el-select>
+              <p v-show="countryCtrl" class="form-error-message">
+                The Country is required
+              </p>
+            </base-input>
+          </div>
+          <div class="form-floating mt-3 mb-3">
+            <base-input prependIcon="fa fa-info-circle"
+              title="Business name must contain two words (eg. Dangote Groups)" label="Business Name" class="mb-2"
+              name="Business Name" :rules="{ required: true }" placeholder="eg. Amanda Limited"
+              v-model="initiateModel.customerBusinessName" required>
+            </base-input>
+          </div>
+          <div class="form-floating mt-3 mb-3">
+            <base-input label="First Name" class="mb-2" name="First Name" :rules="{ required: true }"
+              placeholder="First Name" v-model="initiateModel.customerFirstName" required>
+            </base-input>
+          </div>
+          <div class="form-floating mt-3 mb-3">
+            <base-input label="Last Name" class="mb-2" name="Last Name" :rules="{ required: true }"
+              placeholder="Last Name" v-model="initiateModel.customerLastName" required>
+            </base-input>
+          </div>
+          <div class="form-floating mt-3 mb-3">
+            <base-input label="Email" class="mb-2" name="Email" type="email" :rules="{ required: true }"
+              placeholder="Email" v-model="initiateModel.customerEmail" required>
+            </base-input>
+          </div>
 
-        <b><label>Phone number </label></b>
-        <div class="form-floating mb-3" style="display: flex">
-          <vue-country-code
-            @onSelect="onSelect"
-            :preferredCountries="['ng', 'us', 'gb']"
-            style="height: 45px"
-            v-model="initiateModel.customerCountryCode"
-          >
-          </vue-country-code>
+          <b><label>Phone number </label></b>
+          <div class="form-floating mb-3" style="display: flex">
+            <vue-country-code @onSelect="onSelect" :preferredCountries="['ng', 'us', 'gb']" style="height: 45px"
+              v-model="initiateModel.customerCountryCode">
+            </vue-country-code>
 
-          <base-input
-            type="tel"
-            class="phone"
-            name="phone number"
-            placeholder="Phone Number"
-            v-model="initiateModel.customerPhone"
-            required
-            style="width: 100%"
-          >
-          </base-input>
-        </div>
-        <div class="login-footer">
-          <div class="text-center">
-             <span class="text-dark"> I already have an account.</span>
-          <br/>
-      <a class="forgot-password" @click="login()" style="cursor:pointer"> Login</a>
-        </div>
-        <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-          {{loading ? "working" : 'Proceed'}} <span :class="{ 'spinner-border': loading }"></span>
-        </button>
-      </div>
+            <base-input type="tel" class="phone" name="phone number" placeholder="Phone Number"
+              v-model="initiateModel.customerPhone" required style="width: 100%">
+            </base-input>
+          </div>
+          <div class="login-footer">
+            <div class="text-center">
+              <span class="text-dark"> I already have an account.</span>
+              <br />
+              <a class="forgot-password" @click="login()" style="cursor:pointer"> Login</a>
+            </div>
+            <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
+              {{ loading ? "working" : 'Proceed' }} <span :class="{ 'spinner-border': loading }"></span>
+            </button>
+          </div>
 
-  </div>
+        </div>
       </form>
-      <form
-        class="p-3 form-group form-login"
-        role="form"
-        v-if="screen == 'otp'"
-        @submit.prevent="handleSubmit(onCompleteEnrollment())"
-      >
-         <div class="text-center">
-           <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
-  </div>
-      <div class="p-3">
-        <h4 class="text-center">Complete Registration!</h4>
-      <div class="form-floating mb-3">
-        <input type="tel" class="form-control" maxlength="6" style="font-size:30px; padding-left:10px;letter-spacing:7px;" name="email" placeholder="Enter Your OTP Number"   v-model="completeModel.customerOtp" required/>
-        <label > Enter Your OTP </label>
-         <span v-if="timerCount > 0" class="m-2"> {{ timerCount }} secs left </span>
-         <h5 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="m-2" id="otp"><i class="fas fa-redo"></i>  Resend OTP </h5>
-       </div>
-        <div class="form-floating mb-3">
-        <input type="password" class="form-control" name="password" placeholder="XXXXX"   v-model="completeModel.customerPassword" id="pwd" required/>
-        <label >Password</label>
-        <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye" @click="hide$show()"></i>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="password" class="form-control" name="password" placeholder="XXXXX"    v-model="completeModel.customerConfirmPassword" id="pwd2" required/>
-        <label >Confirm Password</label>
-        <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye2" @click="hide$show()"></i>
-      </div>
-      </div>
+      <form class="p-3 form-group form-login" role="form" v-if="screen == 'otp'"
+        @submit.prevent="handleSubmit(onCompleteEnrollment())">
+        <div class="text-center">
+          <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
+        </div>
+        <div class="p-3">
+          <h4 class="text-center">Complete Registration!</h4>
+          <div class="form-floating mb-3">
+            <input type="tel" class="form-control" maxlength="6"
+              style="font-size:30px; padding-left:10px;letter-spacing:7px;" name="email"
+              placeholder="Enter Your OTP Number" v-model="completeModel.customerOtp" required />
+            <label> Enter Your OTP </label>
+            <span v-if="timerCount > 0" class="m-2"> {{ timerCount }} secs left </span>
+            <h5 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="m-2" id="otp"><i
+                class="fas fa-redo"></i> Resend OTP </h5>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" name="password" placeholder="XXXXX"
+              v-model="completeModel.customerPassword" id="pwd" required />
+            <label>Password</label>
+            <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye"
+              @click="hide$show()"></i>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" name="password" placeholder="XXXXX"
+              v-model="completeModel.customerConfirmPassword" id="pwd2" required />
+            <label>Confirm Password</label>
+            <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye2"
+              @click="hide$show()"></i>
+          </div>
+        </div>
 
-           <div class="login-footer">
-          <a class="forgot-password text-dark">
-             By clicking the “Proceed” button, you agree to BizGem’s
-          <a class="text-primary" style="cursor:pointer">terms of acceptable use</a>.
-          </a><br/>
-        <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-          {{loading ? "working." : 'Create'}} <span :class="{ 'spinner-border': loading }"></span>
-        </button>
-      </div>
-  
+        <div class="login-footer">
+          <div class="">
+            <a class="forgot-password text-dark">
+              By clicking the “Proceed” button, you agree to BizGem’s
+              <a class="text-primary" style="cursor:pointer">terms of acceptable use</a>.
+            </a><br />
+          </div>
+          <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
+            {{ loading ? "working." : 'Create' }} <span :class="{ 'spinner-border': loading }"></span>
+          </button>
+        </div>
+
       </form>
     </validation-observer>
   </div>
@@ -217,7 +167,7 @@ export default {
     };
   },
   methods: {
-     login() {
+    login() {
       this.$router.push({ name: "Logon" });
     },
     hide$show() {
@@ -234,7 +184,7 @@ export default {
         eye.classList.add("fa-eye");
         eye.classList.remove("fa-eye-slash");
       }
-        if (b2.type === "password") {
+      if (b2.type === "password") {
         b2.type = "text";
         eye2.classList.remove("fa-eye");
         eye2.classList.add("fa-eye-slash");
@@ -262,9 +212,10 @@ export default {
       this.initiateModel.customerCountryCode = dialCode;
     },
 
-  
+
     onInitiateEnrollment() {
-      StoreUtils.dispatch( StoreUtils.actions.auth.initialEnrollment, this.initiateModel);
+      console.log(this.$route);
+      //StoreUtils.dispatch(StoreUtils.actions.auth.initialEnrollment, this.initiateModel);
     },
     startTimer(duration) {
       let timer = duration,
@@ -284,22 +235,23 @@ export default {
     resendOtp() {
       this.resendOtpModel.customerEmail = this.initiateModel.customerEmail;
       StoreUtils.dispatch(StoreUtils.actions.auth.resendOtp, this.resendOtpModel)
-           this.startTimer();
-           this.timerCount = 30
+      this.startTimer();
+      this.timerCount = 30
 
     },
-    
+
     onCompleteEnrollment() {
       if (
         this.completeModel.customerPassword ===
         this.completeModel.customerConfirmPassword
-      ) {;
+      ) {
+        ;
         this.completeModel.customerEmail = this.initiateModel.customerEmail;
         this.completeModel.customerBusinessName = this.initiateModel.customerBusinessName;
         this.completeModel.customerReferralCode = localStorage.referralCode;
-        StoreUtils.dispatch( StoreUtils.actions.auth.completeEnrollment,this.completeModel);
+        StoreUtils.dispatch(StoreUtils.actions.auth.completeEnrollment, this.completeModel);
       } else {
-              Swal.fire({ text: 'Password Are Not The Same.', icon: 'error', }).then(() => { })
+        Swal.fire({ text: 'Password Are Not The Same.', icon: 'error', }).then(() => { })
       }
     },
   },
@@ -333,8 +285,7 @@ export default {
 };
 </script>
 <style scoped>
-
-.login-footer{
+.login-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -342,16 +293,16 @@ export default {
 
 .btn-login {
   width: 132px;
-  background-color:var(--primary);
+  background-color: var(--primary);
   border-radius: 5px;
   border: none;
   color: white;
 }
 
-::placeholder{
+::placeholder {
   font-size: 10px;
   letter-spacing: 1px;
-  padding-left:0;
+  padding-left: 0;
 }
 
 .spinner-border {

@@ -85,10 +85,12 @@ export const actions = {
     commit("updateLoading", true)
     return WalletService.callReadWalletTransactionApi(payload).then(response => {
       let responseData = response.data
-      commit("updateLoading", false)
       if (responseData.responseCode === "00") {
+        commit("updateLoading", false)
         commit("updateWalletTransactions", responseData.data)
         console.log(state.walletTransactions)
+      }else{
+        commit("updateLoading", false)
       }
     }).catch(error => {
       commit("updateLoading", false)

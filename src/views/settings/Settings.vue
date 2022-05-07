@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <div class="loading">
-      <span :class="{ 'spinner-border': loading }" v-if="loading"></span>
-      <span
-        :class="{ 'spinner-border': payoutloading }"
-        v-if="payoutloading"
-      ></span>
+  <div class="body">
+    <!-- <span :class="{ 'spinner-border': loading }" v-if="loading"></span>
+      <span :class="{ 'spinner-border': payoutloading }" v-if="payoutloading"></span>
       <span :class="{ 'spinner-border': loadingDoc }" v-if="loadingDoc"></span>
-      <span :class="{ 'spinner-border': loadingOtp }" v-if="loadingOtp"></span>
-    </div>
-    <div class="container-fluid mt-0">
+      <span :class="{ 'spinner-border': loadingOtp }" v-if="loadingOtp"></span> -->
+    <blocker-loader v-if="loading" :message="'Setting up Settings Environment'"></blocker-loader>
+    <blocker-loader v-if="loadingOtp" :message="'Please Wait'"></blocker-loader>
+    <blocker-loader v-if="payoutloading" :message="'Setting up Settings Environment'"></blocker-loader>
+    <blocker-loader v-if="loadingDoc" :message="'Setting up Settings Environment'"></blocker-loader>
+
+    <div class="container-fluid mt-0" v-else>
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
           <div>
@@ -18,90 +18,49 @@
                 <div class="accordion" role="tablist">
                   <div no-body class="mb-1 add-bank-form">
                     <div header-tag="header" class="p-1" role="tab">
-                      <div
-                        block
-                        v-b-toggle.accordion-1
-                        variant="none"
-                        class="p-3"
-                        style="color:black;"
-
-                      >
+                      <div block v-b-toggle.accordion-1 variant="none" class="p-3" style="color:black;">
                         <h3>
-                          <b-icon-check-circle
-                            style="font-size: 25px"
-                          ></b-icon-check-circle>
+                          <b-icon-check-circle style="font-size: 25px"></b-icon-check-circle>
                           Personal Info
                         </h3>
                         <p>You can update your personal info here.</p>
                       </div>
                     </div>
-                    <b-collapse
-                      id="accordion-1"
-                      accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                    <b-collapse id="accordion-1" accordion="my-accordion" role="tabpanel">
                       <div>
                         <b-container class="p-3" v-if="!loading">
-                          <div
-                            style="
+                          <div style="
                               width: 100%;
                               display: flex;
                               justify-content: center;
-                            "
-                          >
-                            <b-form
-                              class="container p-3 form-group"
-                              style="width: 50%"
-                            >
+                            ">
+                            <b-form class="container p-3 form-group" style="width: 50%">
                               <!-- <h3 class="text-center">
                                 <i
                                   class="fa fa-user-circle profile-settings"
                                 ></i>
                               </h3> -->
                               <div class="form-floating mb-3">
-                                <input
-                                  type="email"
-                                  class="form-control"
-                                  id="floatingInput1"
-                                  placeholder="name@example.com"
-                                  :value="
+                                <input type="email" class="form-control" id="floatingInput1"
+                                  placeholder="name@example.com" :value="
                                     null ? '' : userInfo.customerFirstName
-                                  "
-                                  readonly
-                                />
+                                  " readonly />
                                 <label for="floatingInput1">First Name</label>
                               </div>
                               <div class="form-floating mb-3">
-                                <input
-                                  type="email"
-                                  class="form-control"
-                                  id="floatingInput2"
-                                  placeholder="name@example.com"
-                                  :value="null ? '' : userInfo.customerLastName"
-                                  readonly
-                                />
+                                <input type="email" class="form-control" id="floatingInput2"
+                                  placeholder="name@example.com" :value="null ? '' : userInfo.customerLastName"
+                                  readonly />
                                 <label for="floatingInput2">Last Name</label>
                               </div>
                               <div class="form-floating mb-3">
-                                <input
-                                  type="tel"
-                                  class="form-control"
-                                  id="floatingInput3"
-                                  placeholder="name@example.com"
-                                  :value="null ? '' : userInfo.customerPhone"
-                                  readonly
-                                />
+                                <input type="tel" class="form-control" id="floatingInput3"
+                                  placeholder="name@example.com" :value="null ? '' : userInfo.customerPhone" readonly />
                                 <label for="floatingInput3">Phone Number</label>
                               </div>
                               <div class="form-floating mb-3">
-                                <input
-                                  type="email"
-                                  class="form-control"
-                                  id="floatingInput4"
-                                  placeholder="name@example.com"
-                                  :value="null ? '' : userInfo.customerEmail"
-                                  readonly
-                                />
+                                <input type="email" class="form-control" id="floatingInput4"
+                                  placeholder="name@example.com" :value="null ? '' : userInfo.customerEmail" readonly />
                                 <label for="floatingInput">Email</label>
                               </div>
                               <base-button title="Update" disabled>
@@ -116,17 +75,9 @@
 
                   <div no-body class="mb-1">
                     <div header-tag="header" class="p-1" role="tab">
-                      <div
-                        block
-                        v-b-toggle.accordion-2
-                        variant="none"
-                        class="p-3"
-                        style="color:black;"
-                      >
+                      <div block v-b-toggle.accordion-2 variant="none" class="p-3" style="color:black;">
                         <h3>
-                          <b-icon-check-circle
-                            style="font-size: 25px"
-                          ></b-icon-check-circle>
+                          <b-icon-check-circle style="font-size: 25px"></b-icon-check-circle>
                           Business Information
                         </h3>
                         <p>
@@ -136,25 +87,16 @@
                         </p>
                       </div>
                     </div>
-                    <b-collapse
-                      id="accordion-2"
-                      accordion="my-accordion"
-                      role="tabpanel"
-                    >
-                      <div
-                        style="
+                    <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+                      <div style="
                           width: 100%;
                           display: flex;
                           justify-content: center;
                           margin:10px;
 
-                        "
-                      >
-                        <form
-                          class="form-group"
-                          @submit.prevent="updateOrginasation()"
-                          style="width: 65%;padding:30px; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);color:black"
-                        >
+                        ">
+                        <form class="form-group" @submit.prevent="updateOrginasation()"
+                          style="width: 65%;padding:30px; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);color:black">
                           <!-- <h3 class="text-center">
                             <i class="fa fa-user-circle profile-settings"></i>
                           </h3>
@@ -165,40 +107,22 @@
                             <div class="row">
                               <div class="col mb-3">
                                 <label for="floatingInput2">Business Name</label>
-                                <input
-                                  type="text"
-                                  class="form-control"
-                                  id="floatingInput2"
-                                  placeholder="name@example.com"
-                                  v-model="organisation.organisationName"
-                                  readonly
-                                />
+                                <input type="text" class="form-control" id="floatingInput2"
+                                  placeholder="name@example.com" v-model="organisation.organisationName" readonly />
                               </div>
                               <div class="col mb-3">
-                               <label for="floatingInput">Company Email</label>
-                                <input
-                                  type="email"
-                                  class="form-control"
-                                  id="floatingInput"
-                                  placeholder="name@example.com"
-                                  v-model="organisation.organisationEmail"
-                                  readonly
-                                />
+                                <label for="floatingInput">Company Email</label>
+                                <input type="email" class="form-control" id="floatingInput"
+                                  placeholder="name@example.com" v-model="organisation.organisationEmail" readonly />
                               </div>
                             </div>
                             <div class="row">
                               <div class="col mb-3">
                                 <label for="floatingInput1">Company Phone</label>
-                                <input
-                                  type="tel"
-                                  class="form-control"
-                                  id="floatingInput1"
-                                  placeholder="Country"
-                                  v-model="organisation.organisationPhone"
-                                  readonly
-                                />
+                                <input type="tel" class="form-control" id="floatingInput1" placeholder="Country"
+                                  v-model="organisation.organisationPhone" readonly />
                               </div>
-                                <div class="col mb-3">
+                              <!-- <div class="col mb-3">
                                <label for="floatingInput1">Company Phone</label>
                                 <input
                                   type="tel"
@@ -208,296 +132,173 @@
                                   v-model="organisation.organisationPhone"
                                   readonly
                                 />
-                              </div>
+                              </div> -->
                               <b-tooltip target="tooltip-target-1" triggers="hover">
-                                      I am tooltip <b>component</b> content!
-                                    </b-tooltip>
-                                 <div class="col mb-3">
-                               <label for="floatingInput1">Director's BVN Number </label> <i class="fa fa-info-circle text-danger" style="font-size:15px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"  ></i>
-                              <input
-                                type="number"
-                                class="form-control"
-                                id="floatingInput1"
-                                placeholder="Director's BVN Number"
-                                v-model="organisation.organisationDirectorBvn"
-                                required  
-                              />
-                            </div>
+                                I am tooltip <b>component</b> content!
+                              </b-tooltip>
+                              <div class="col mb-3">
+                                <label for="floatingInput1">Director's BVN Number </label> <i
+                                  class="fa fa-info-circle text-danger" style="font-size:15px;" data-bs-toggle="tooltip"
+                                  data-bs-placement="top" title="Tooltip on top"></i>
+                                <input type="number" class="form-control" id="floatingInput1"
+                                  placeholder="Director's BVN Number" v-model="organisation.organisationDirectorBvn"
+                                  required />
+                              </div>
                             </div>
                           </div>
 
                           <!-- Second layer -->
                           <div class="">
                             <div class="row">
-                            <div class="col mb-3">
-                              <label for="floatingInput2">Address</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput2"
-                                placeholder="1004 Federal Housing Estate, Victoral Island"
-                                v-model="organisation.organisationAddress"
-                                required
-                              />
-                            </div>
-                            <div class="col mb-3">
-                              <label for="floatingInput1">City</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput1"
-                                placeholder="Ikeja"
-                                v-model="organisation.organisationCity"
-                                required
-                              />
-                            </div>
-                            <div class="col mb-3">
-                               <label for="floatingInput1">State</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput1"
-                                placeholder="Lagos"
-                                v-model="organisation.organisationState"
-                                required
-                              />
-                            </div>
+                              <div class="col mb-3">
+                                <label for="floatingInput2">Address</label>
+                                <input type="text" class="form-control" id="floatingInput2"
+                                  placeholder="1004 Federal Housing Estate, Victoral Island"
+                                  v-model="organisation.organisationAddress" required />
+                              </div>
+                              <div class="col mb-3">
+                                <label for="floatingInput1">City</label>
+                                <input type="text" class="form-control" id="floatingInput1" placeholder="Ikeja"
+                                  v-model="organisation.organisationCity" required />
+                              </div>
+                              <div class="col mb-3">
+                                <label for="floatingInput1">State</label>
+                                <input type="text" class="form-control" id="floatingInput1" placeholder="Lagos"
+                                  v-model="organisation.organisationState" required />
+                              </div>
                             </div>
                             <div class="row">
-                            <div class="col mb-3">
-                                  <label for="floatingInput3"
-                                >Organization Type</label
-                              > <i class="fa fa-info-circle text-danger" style="font-size:15px;" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top"  ></i>
-                              <select
-                                class="form-select form-control"
-                                aria-label="Default select example"
-                                required
-                                v-model="organisation.organisationType"
-                              >
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Agric produce"
-                                >
-                                  Agric produce
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Betting/Lottery"
-                                >
-                                  Betting / Lottery
-                                </option>
-                                <option data-v-00a70ddc="" value="Book Stores">
-                                  Book Stores
-                                </option>
-                                <option data-v-00a70ddc="" value="Bus Lines">
-                                  Bus Lines
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Cable/Satellite/Pay Television"
-                                >
-                                  Cable / Satellite / Pay Television
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Clothing and Accessories"
-                                >
-                                  Clothing and Accessories
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Commercial footware"
-                                >
-                                  Commercial footware
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Credit Lending Companies"
-                                >
-                                  Credit Lending Companies
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Cryptocurrency"
-                                >
-                                  Cryptocurrency
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Department Stores"
-                                >
-                                  Department Stores
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Digital Goods/Entertainment"
-                                >
-                                  Digital Goods / Entertainment
-                                </option>
-                                <option data-v-00a70ddc="" value="Education">
-                                  Education
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Electronics Stores"
-                                >
-                                  Electronics Stores
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Financial Institutions/Fund Manager/Investment"
-                                >
-                                  Financial Institutions / Fund Manager /
-                                  Investment
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="General Contractors"
-                                >
-                                  General Contractors
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="General Merchandise Stores"
-                                >
-                                  General Merchandise Stores
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Grocery Stores and Supermarkets"
-                                >
-                                  Grocery Stores and Supermarkets
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Hospitality/Lodging"
-                                >
-                                  Hospitality / Lodging
-                                </option>
-                                <option data-v-00a70ddc="" value="Insurance">
-                                  Insurance
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Money Transfer"
-                                >
-                                  Money Transfer
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Non-Financial Institution"
-                                >
-                                  Non-Financial Institution
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Professional Services"
-                                >
-                                  Professional Services
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Real Estate/Facility Management"
-                                >
-                                  Real Estate / Facility Management
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Religious Organizations"
-                                >
-                                  Religious Organizations
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Security Broker/Dealer_Custom"
-                                >
-                                  Security Broker / Dealer_Custom
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Security Brokers/Dealers"
-                                >
-                                  Security Brokers / Dealers
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Tax/Accounting/Audit"
-                                >
-                                  Tax / Accounting / Audit
-                                </option>
-                                <option data-v-00a70ddc="" value="Taxicabs">
-                                  Taxicabs
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Telecommunication"
-                                >
-                                  Telecommunication
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Ticketing/Events"
-                                >
-                                  Ticketing / Events
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Transportation Services"
-                                >
-                                  Transportation Services
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Travel/Airlines"
-                                >
-                                  Travel / Airlines
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Travel Agencies/Tour"
-                                >
-                                  Travel Agencies / Tour
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Utilities/Electric/Gas"
-                                >
-                                  Utilities / Electric / Gas
-                                </option>
-                                <option
-                                  data-v-00a70ddc=""
-                                  value="Video Game Arcades/Establishments"
-                                >
-                                  Video Game Arcades / Establishments
-                                </option>
-                              </select>
-                          
-                            </div>
-                            <div class="col mb-3">
-                               <label for="floatingInput1">Organisation Website</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput1"
-                                placeholder=" Website"
-                                v-model="organisation.organisationWebsite"
-                              />
-                            </div>
-                             <div class="col mb-3">
-                               <label for="floatingInput1">Organisation RC / BN Number</label>
-                              <input
-                                type="text"
-                                class="form-control"
-                                id="floatingInput1"
-                                placeholder="Organisation RC / BN Number"
-                                v-model="organisation.organisationRegistrationNo"
-                              />
-                            </div>
+                              <div class="col mb-3">
+                                <label for="floatingInput3">Organization Type</label> <i
+                                  class="fa fa-info-circle text-danger" style="font-size:15px;" data-bs-toggle="tooltip"
+                                  data-bs-placement="top" title="Tooltip on top"></i>
+                                <select class="form-select form-control" aria-label="Default select example" required
+                                  v-model="organisation.organisationType">
+                                  <option data-v-00a70ddc="" value="Agric produce">
+                                    Agric produce
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Betting/Lottery">
+                                    Betting / Lottery
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Book Stores">
+                                    Book Stores
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Bus Lines">
+                                    Bus Lines
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Cable/Satellite/Pay Television">
+                                    Cable / Satellite / Pay Television
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Clothing and Accessories">
+                                    Clothing and Accessories
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Commercial footware">
+                                    Commercial footware
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Credit Lending Companies">
+                                    Credit Lending Companies
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Cryptocurrency">
+                                    Cryptocurrency
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Department Stores">
+                                    Department Stores
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Digital Goods/Entertainment">
+                                    Digital Goods / Entertainment
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Education">
+                                    Education
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Electronics Stores">
+                                    Electronics Stores
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Financial Institutions/Fund Manager/Investment">
+                                    Financial Institutions / Fund Manager /
+                                    Investment
+                                  </option>
+                                  <option data-v-00a70ddc="" value="General Contractors">
+                                    General Contractors
+                                  </option>
+                                  <option data-v-00a70ddc="" value="General Merchandise Stores">
+                                    General Merchandise Stores
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Grocery Stores and Supermarkets">
+                                    Grocery Stores and Supermarkets
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Hospitality/Lodging">
+                                    Hospitality / Lodging
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Insurance">
+                                    Insurance
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Money Transfer">
+                                    Money Transfer
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Non-Financial Institution">
+                                    Non-Financial Institution
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Professional Services">
+                                    Professional Services
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Real Estate/Facility Management">
+                                    Real Estate / Facility Management
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Religious Organizations">
+                                    Religious Organizations
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Security Broker/Dealer_Custom">
+                                    Security Broker / Dealer_Custom
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Security Brokers/Dealers">
+                                    Security Brokers / Dealers
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Tax/Accounting/Audit">
+                                    Tax / Accounting / Audit
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Taxicabs">
+                                    Taxicabs
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Telecommunication">
+                                    Telecommunication
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Ticketing/Events">
+                                    Ticketing / Events
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Transportation Services">
+                                    Transportation Services
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Travel/Airlines">
+                                    Travel / Airlines
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Travel Agencies/Tour">
+                                    Travel Agencies / Tour
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Utilities/Electric/Gas">
+                                    Utilities / Electric / Gas
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Video Game Arcades/Establishments">
+                                    Video Game Arcades / Establishments
+                                  </option>
+                                </select>
+
+                              </div>
+                              <div class="col mb-3">
+                                <label for="floatingInput1">Organisation Website</label>
+                                <input type="text" class="form-control" id="floatingInput1" placeholder=" Website"
+                                  v-model="organisation.organisationWebsite" />
+                              </div>
+                              <div class="col mb-3">
+                                <label for="floatingInput1">RC / BN Number</label>
+                                <input type="text" class="form-control" id="floatingInput1"
+                                  placeholder="Organisation RC / BN Number"
+                                  v-model="organisation.organisationRegistrationNo" />
+                              </div>
                             </div>
 
                             <div class="mt-3">
-                              <base-button title="Update" :loading="loadingOtp" v-if="getStatus !== 'pactched'"></base-button>
-                              <base-button title="Update" v-else disabled></base-button>
+                              <base-button title="Update" :loading="loadingOtp"></base-button>
+                              <!-- <base-button title="Update" v-else disabled></base-button> -->
                               <!-- <b-button @click="nextStep()" title="" style="background-color:grey;border:none;color:white">Next</b-button> -->
                             </div>
                           </div>
@@ -508,18 +309,9 @@
                   <hr />
                   <div no-body class="mb-1">
                     <div header-tag="header" class="p-1" role="tab">
-                      <div
-                        block
-                        v-b-toggle.accordion-3
-                        variant="none"
-                        class="p-3"
-                        style="color:black;"
-
-                      >
+                      <div block v-b-toggle.accordion-3 variant="none" class="p-3" style="color:black;">
                         <h3>
-                          <b-icon-check-circle
-                            style="font-size: 25px"
-                          ></b-icon-check-circle>
+                          <b-icon-check-circle style="font-size: 25px"></b-icon-check-circle>
                           Document upload
                         </h3>
                         <p>
@@ -529,196 +321,130 @@
                         </p>
                       </div>
                     </div>
-                    <b-collapse
-                      id="accordion-3"
-                      accordion="my-accordion"
-                      role="tabpanel"
-                    >
+                    <b-collapse id="accordion-3" accordion="my-accordion" role="tabpanel">
                       <div>
-                        <div
-                          style="
+                        <div style="
                             width: 100%;
                             display: flex;
                             justify-content: center;
                             align-items: center;
                             color:black;
-                          "
-                        >
+                          ">
                           <div>
                             <div class="">
-                              <span
-                                :class="{ 'spinner-border': loadingDoc }"
-                              ></span>
+                              <span :class="{ 'spinner-border': loadingDoc }"></span>
                               <div>
                                 <div v-if="'data' in documents">
                                   <!-- Card body -->
 
-                                  <div
-                                    class=""
-                                    style="
+                                  <div class="" style="
                                       display: flex;
                                       align-items: center;
                                       flex-wrap: nowrap;
                                       color:black;
-                                    "
-                                  >
-                                    <div
-                                      class=""
-                                      v-for="(doc, index) in documents.data"
-                                      :key="index"
-                                    >
-                                      <div
-                                        v-if="
-                                          'documentStatus' in doc &&
-                                          'documentUrl' in doc
-                                        "
-                                      >
+                                    ">
+                                    <div class="" v-for="(doc, index) in documents.data" :key="index">
+                                      <div v-if="
+                                        'documentStatus' in doc &&
+                                        'documentUrl' in doc
+                                      ">
                                         <!--<span>{{progressBarArr[index].value}}</span>-->
                                         <div class="our-team">
-                                          <progress-bar
-                                            v-show="progressBarArr[index].value"
-                                          ></progress-bar>
+                                          <progress-bar v-show="progressBarArr[index].value"></progress-bar>
                                           <div class="picture">
-                                            <img
-                                              v-if="
-                                                doc.documentStatus == 'PENDING'
-                                              "
-                                              class="img-fluid img-size"
-                                              src="https://coregem-imgs.s3.amazonaws.com/document-amber.png"
-                                            />
-                                            <img
-                                              v-else-if="
-                                                doc.documentStatus == 'APPROVED'
-                                              "
-                                              class="img-fluid img-size"
-                                              src="https://coregem-imgs.s3.amazonaws.com/document-green.png"
-                                            />
-                                            <img
-                                              v-else-if="
-                                                doc.documentStatus == 'REJECTED'
-                                              "
-                                              class="img-fluid img-size"
-                                              src="https://coregem-imgs.s3.amazonaws.com/document-red.png"
-                                            />
+                                            <img v-if="
+                                              doc.documentStatus == 'PENDING'
+                                            " class="img-fluid img-size"
+                                              src="https://coregem-imgs.s3.amazonaws.com/document-amber.png" />
+                                            <img v-else-if="
+                                              doc.documentStatus == 'APPROVED'
+                                            " class="img-fluid img-size"
+                                              src="https://coregem-imgs.s3.amazonaws.com/document-green.png" />
+                                            <img v-else-if="
+                                              doc.documentStatus == 'REJECTED'
+                                            " class="img-fluid img-size"
+                                              src="https://coregem-imgs.s3.amazonaws.com/document-red.png" />
                                           </div>
                                           <div class="team-content">
                                             <h6 class="name">
                                               {{ doc.documentTypeName }}
                                             </h6>
-                                            <span
-                                              :class="{
-                                                'text-success':
-                                                  doc.documentStatus ===
-                                                  'APPROVED',
-                                                'text-warning':
-                                                  doc.documentStatus ===
-                                                  'PENDING',
-                                                'text-danger':
-                                                  doc.documentStatus ===
-                                                  'REJECTED',
-                                              }"
-                                              >●</span
-                                            >
+                                            <span :class="{
+                                              'text-success':
+                                                doc.documentStatus ===
+                                                'APPROVED',
+                                              'text-warning':
+                                                doc.documentStatus ===
+                                                'PENDING',
+                                              'text-danger':
+                                                doc.documentStatus ===
+                                                'REJECTED',
+                                            }">●</span>
                                             <small>{{
-                                              doc.documentStatus
+                                                doc.documentStatus
                                             }}</small>
                                           </div>
                                           <ul class="social">
                                             <li>
-                                              <a
-                                                :href="doc.documentUrl"
-                                                target="_blank"
-                                                class="
+                                              <a :href="doc.documentUrl" target="_blank" class="
                                                   pointer
                                                   fas
                                                   fa-cloud-download-alt
-                                                "
-                                                data-toggle="tooltip"
-                                                data-placement="top"
-                                                title="Download"
-                                                aria-hidden="true"
-                                              ></a>
+                                                " data-toggle="tooltip" data-placement="top" title="Download"
+                                                aria-hidden="true"></a>
                                             </li>
-                                            <li
-                                              v-show="
-                                                doc.documentStatus !==
-                                                'APPROVED'
-                                              "
-                                            >
-                                              <label
-                                                class="pointer"
-                                                data-toggle="tooltip"
-                                                data-placement="down"
-                                                title="Update"
-                                                aria-hidden="true"
-                                              >
-                                                <input
-                                                  type="file"
-                                                  :ref="'file-input' + index"
-                                                  accept="application/pdf, image/*"
-                                                  :id="'myfile' + index"
-                                                  style="
+                                            <li v-show="
+                                              doc.documentStatus !==
+                                              'APPROVED'
+                                            ">
+                                              <label class="pointer" data-toggle="tooltip" data-placement="down"
+                                                title="Update" aria-hidden="true"> </label>
+
+                                              <input type="file" :ref="'file-input' + index"
+                                                accept="application/pdf, image/*" :id="'myfile' + index" style="
                                                     display: none;
                                                     z-index: 1;
-                                                  "
-                                                  @change="
+                                                  " @change="
                                                     handleImages(
                                                       $event,
                                                       index,
                                                       doc,
                                                       'UPDATE'
                                                     )
-                                                  "
-                                                />
-                                                <i class="fas fa-edit"></i>
-                                              </label>
+                                                  " />
+                                              <i class="fas fa-edit"></i>
                                             </li>
                                           </ul>
                                         </div>
                                       </div>
                                       <div v-else>
-                                        <form
-                                          @submit.prevent="
-                                            submitDocument(index, doc)
-                                          "
-                                          :id="'form' + index"
-                                        >
+                                        <form @submit.prevent="
+                                          submitDocument(index, doc)
+                                        " :id="'form' + index">
                                           <!--<p v-show="progressBarArr[index]" class="form-error-message"> The File is required </p>-->
                                           <div class="our-team">
-                                            <progress-bar
-                                              v-show="
-                                                progressBarArr[index].value
-                                              "
-                                            ></progress-bar>
+                                            <progress-bar v-show="
+                                              progressBarArr[index].value
+                                            "></progress-bar>
                                             <div class="picture">
-                                              <label class="pointer">
-                                                <input
-                                                  type="file"
-                                                  :ref="'file-input' + index"
-                                                  style="display: none"
-                                                  accept="application/pdf, image/*"
-                                                  :id="'myfile' + index"
-                                                  @change="
-                                                    handleImages(
-                                                      $event,
-                                                      index,
-                                                      doc,
-                                                      'CREATE'
-                                                    )
-                                                  "
-                                                />
-                                                <img
-                                                  class="img-fluid img-size"
+                                              <label class="pointer"> <img class="img-fluid img-size"
                                                   src="https://coregem-imgs.s3.amazonaws.com/document-grey.png"
-                                                  alt=""
-                                                />
+                                                  alt="" />
                                               </label>
+                                              <input type="file" :ref="'file-input' + index" style="display: none"
+                                                accept="application/pdf, image/*" :id="'myfile' + index" @change="
+                                                  handleImages(
+                                                    $event,
+                                                    index,
+                                                    doc,
+                                                    'CREATE'
+                                                  )
+                                                " />
+
                                             </div>
                                             <div class="team-content mt--2">
-                                              <small class="name"
-                                                >Click &#x1F446; to upload
-                                                file</small
-                                              >
+                                              <small class="name">Click &#x1F446; to upload
+                                                file</small>
 
                                               <h6 class="name">
                                                 {{ doc.documentTypeName }}
@@ -740,26 +466,64 @@
                 </div>
               </el-tab-pane>
 
-              <el-tab-pane
-                id="tab-5"
-                :key="5"
-                name="five"
-                label=" API Keys and Webhooks"
-              >
+              <el-tab-pane id="tab-8" :key="8" name="eight" label="Change Password">
+                <div class="change-password">
+                  <b-form @submit.prevent="changePassword()" class="password-form">
+                    <b-form-group>
+                      <div>
+                        <label>Old Password</label>
+                        <b-input type="password" placeholder="Old Password" class="mb-3 form-control" required
+                          v-model="changePasswordModel.customerOldPassword"></b-input>
+                      </div>
+                      <div>
+                        <label>New Password</label>
+                        <b-input type="password" placeholder="New Password" class="mb-3 form-control" required
+                          v-model="changePasswordModel.customerPassword"></b-input>
+                      </div>
+                      <div>
+                        <label>Comfirm New Password</label>
+                        <b-input type="password" placeholder="Comfirm New Password" class="mb-3 form-control" required
+                          v-model="changePasswordModel.customerPasswordComfirmation"></b-input>
+                      </div>
+                    </b-form-group>
+                    <b-button type="submit" style="
+                                  background-color: var(--primary);
+                                  color: white;
+                                ">{{ loadingOtp ? 'Changing' : 'Change' }} <span
+                        :class="{ 'spinner-border': loadingOtp }"></span></b-button>
+                  </b-form>
+                </div>
+
+              </el-tab-pane>
+
+              <el-tab-pane id="tab-5" :key="5" name="five" label=" API Keys and Webhooks">
                 <b-card-group deck class="APIWebhooks">
                   <b-card header="featured" header-tag="header">
                     <template #header>
                       <b-container class="text-right">
-                        <b-button
-                          style="
+                        <b-button style="
                             background-color: var(--primary);
                             border: none;
                             color: white;
-                          "
-                          @click="regenerateApiKey()">Regenerate Api Key</b-button
-                        >
+                          " v-b-modal.modal-sm>Regenerate Api Key</b-button>
                       </b-container>
                     </template>
+                    <b-modal id="modal-sm" hide-backdrop size="sm" title="Regenerate Api key">
+                     You are about to regenerate new Api keys. Are you sure you want to proceed?
+
+
+                      <template #modal-footer="{ cancel }">
+                        <!-- Emulate built in modal footer ok and cancel button actions -->
+                        <b-button size="sm" variant="success" @click="regenerateApiKey()">
+                          Proceed
+                        </b-button>
+                        <b-button size="sm" variant="danger" @click="cancel()">
+                          Cancel
+                        </b-button>
+                        <!-- Button with custom close trigger value -->
+                      </template>
+                    </b-modal>
+
                     <div class="d-flex justify-content-center">
                       <api-key-display-form> </api-key-display-form>
                     </div>
@@ -767,341 +531,132 @@
                 </b-card-group>
               </el-tab-pane>
 
-              <el-tab-pane
-                id="tab-6"
-                :key="6"
-                name="six"
-                label=" Bank Account"
-                class="cardd"
-              >
-                <div
-                  class="text-center p-3"
-                  v-if="payoutloading"
-                  style="
+              <el-tab-pane id="tab-6" :key="6" name="six" label=" Bank Account" class="cardd">
+                <div class="text-center p-3" v-if="payoutloading" style="
                     display: flex;
                     width: 100%;
                     height: 60vh;
                     justify-content: center;
                     align-items: center;
-                  "
-                >
+                  ">
                   <div>
                     <h5>Please wait! Bizgem is checking your bank details.</h5>
                   </div>
                 </div>
 
-                <div
-                  v-if="!Object.values(payoutAccount).every((o) => o === null)"
-                >
+                <div v-if="!Object.values(payoutAccount).every((o) => o === null)">
                   <div class="p-3" v-if="!payoutloading">
                     <div>
                       <div class="text-center">
                         <i class="fa fa-university" style="font-size: 50px"></i>
-                        <h4>Update bank details</h4>
+                        <h4>Current bank details</h4>
                       </div>
                       <div v-if="edit == false">
                         <b-container class="">
-                          <div
-                            style="
+                          <div style="
                               width: 100%;
                               display: flex;
                               justify-content: center;
-                            "
-                          >
-                            <div
-                              class="container p-3 form-group"
-                              style="width: 400px"
-                            >
+                            ">
+                            <div class="container p-3 form-group" style="width: 400px">
                               <div class="form-floating mb-3">
-                                <input
-                                  type="email"
-                                  class="form-control"
-                                  id="floatingInput1"
-                                  placeholder="name@example.com"
-                                  :value="
+                                <input type="email" class="form-control" id="floatingInput1"
+                                  placeholder="name@example.com" :value="
                                     null ? '' : readonlybank.accountBankCode
-                                  "
-                                  readonly
-                                />
+                                  " readonly />
                                 <label for="floatingInput1">Bank Name</label>
                               </div>
                               <div class="form-floating mb-3">
-                                <input
-                                  type="email"
-                                  class="form-control"
-                                  id="floatingInput2"
-                                  placeholder="name@example.com"
-                                  :value="null ? '' : readonlybank.accountName"
-                                  readonly
-                                />
-                                <label for="floatingInput2"
-                                  >Bank Holder Name</label
-                                >
+                                <input type="email" class="form-control" id="floatingInput2"
+                                  placeholder="name@example.com" :value="null ? '' : readonlybank.accountName"
+                                  readonly />
+                                <label for="floatingInput2">Bank Holder Name</label>
                               </div>
                               <div class="form-floating mb-3">
-                                <input
-                                  type="tel"
-                                  class="form-control"
-                                  id="floatingInput3"
-                                  placeholder="name@example.com"
-                                  :value="
+                                <input type="tel" class="form-control" id="floatingInput3"
+                                  placeholder="name@example.com" :value="
                                     null ? '' : readonlybank.accountNumber
-                                  "
-                                  readonly
-                                />
-                                <label for="floatingInput3"
-                                  >Bank Account Number</label
-                                >
+                                  " readonly />
+                                <label for="floatingInput3">Bank Account Number</label>
                               </div>
-                              <b-button
-                                @click="showedit()"
-                                class="w-100"
-                                style="
+                              <b-button @click="showedit()" class="w-100" style="
                                   background-color: var(--primary);
                                   color: white;
-                                "
-                                >Update
+                                ">Update
                               </b-button>
                             </div>
                           </div>
                         </b-container>
                       </div>
 
-                      <b-form
-                        class="bformedit"
-                        @submit.prevent="editBank()"
-                        v-else
-                      >
-                        <b-form-group
-                          id="input-group-3"
-                          label="Bank Name"
-                          label-for="input-3"
-                        >
+                      <b-form class="bformedit" @submit.prevent="editBank()" v-else>
+                        <b-form-group id="input-group-3" label="Bank Name" label-for="input-3">
                           <base-input>
-                            <el-select
-                              class="select-danger"
-                              filterable
-                              placeholder="Bank Name"
-                              required
-                              v-model="createPayoutAccountModel.accountBankCode"
-                            >
-                              <el-option
-                                v-for="bank in banks"
-                                class="select-danger"
-                                :value="bank.value"
-                                :label="bank.label"
-                                :key="bank.value"
-                              >
+                            <el-select class="select-danger" filterable placeholder="Bank Name" required
+                              v-model="createPayoutAccountModel.accountBankCode">
+                              <el-option v-for="bank in banks" class="select-danger" :value="bank.value"
+                                :label="bank.label" :key="bank.value">
                               </el-option>
                             </el-select>
                           </base-input>
                         </b-form-group>
 
-                        <b-form-group
-                          id="input-group-4"
-                          label="Account Number"
-                          label-for="input-4"
-                        >
-                          <b-form-input
-                            id="input-4"
-                            type="text"
-                            placeholder="Account Number"
-                            v-model="createPayoutAccountModel.accountNumber"
-                            class="mr-2"
-                            required
-                          ></b-form-input>
+                        <b-form-group id="input-group-4" label="Account Number" label-for="input-4">
+                          <b-form-input id="input-4" type="text" placeholder="Account Number"
+                            v-model="createPayoutAccountModel.accountNumber" class="mr-2" required></b-form-input>
                         </b-form-group>
 
-                        <b-form-group
-                          id="input-group-5"
-                          label="Account Name"
-                          label-for="input-5"
-                        >
-                          <b-form-input
-                            id="input-5"
-                            type="text"
-                            placeholder="Account Name"
-                            v-model="createPayoutAccountModel.accountName"
-                            class="mr-2"
-                            required
-                          ></b-form-input>
+                        <b-form-group id="input-group-5" label="Account Name" label-for="input-5">
+                          <b-form-input id="input-5" type="text" placeholder="Account Name"
+                            v-model="createPayoutAccountModel.accountName" class="mr-2" required></b-form-input>
                         </b-form-group>
-                        <b-form-group
-                          id="input-group-5"
-                          label="Enter OTP"
-                          label-for="input-5"
-                        >
+                        <b-form-group id="input-group-5" label="Enter OTP" label-for="input-5">
                           <div class="d-flex">
-                            <b-form-input
-                              id="input-5"
-                              type="text"
-                              placeholder="OTP"
-                              class="mr-2"
-                              required
-                              v-model="createPayoutAccountModel.otp"
-                            ></b-form-input>
-                            <span
-                              v-if="timerCount > 0"
-                              class="m-2 small w-100 text-dark"
-                              >Resend OTP in {{ timerCount }}
+                            <b-form-input id="input-5" type="text" placeholder="OTP" class="mr-2" required
+                              v-model="createPayoutAccountModel.otp"></b-form-input>
+                            <span v-if="timerCount > 0" class="m-2 small w-100 text-dark">Resend OTP in {{ timerCount }}
                             </span>
                             <!-- <b-button class="w-50" v-if="timerCount > 0" disabled></b-button> -->
-                            <b-button class="w-100" @click="sendOtp()" v-else
-                              >{{ loadingOtp ? "Sending" : "Send OTP" }}
-                              <span
-                                :class="{ 'spinner-border': loadingOtp }"
-                              ></span
-                            ></b-button>
+                            <b-button class="w-100" @click="sendOtp()" v-else>{{ loadingOtp ? "Sending" : "Send OTP" }}
+                              <span :class="{ 'spinner-border': loadingOtp }"></span>
+                            </b-button>
                           </div>
                         </b-form-group>
-                        <b-button
-                          class="w-100 text-white"
-                          style="background-color: var(--primary)"
-                          type="submit"
-                          >{{ payoutloading ? "Updating" : "Update Bank" }}
-                          <span
-                            :class="{ 'spinner-border': payoutloading }"
-                          ></span
-                        ></b-button>
+                        <b-button class="w-100 text-white" style="background-color: var(--primary)" type="submit">{{
+                            createloader ? "Updating" : "Update Bank"
+                        }}
+                          <span :class="{ 'spinner-border': createloader }"></span>
+                        </b-button>
                       </b-form>
                     </div>
                   </div>
                 </div>
+
+
                 <div v-else>
-                  <div
-                    class="text-center p-3"
-                    v-if="!payoutloading"
-                    style="
+                  <div class="text-center p-3" v-if="!payoutloading" style="
                       display: flex;
                       width: 100%;
                       height: 60vh;
                       justify-content: center;
                       align-items: center;
-                    "
-                  >
+                    ">
+                    <add-bank @closeCreateBank="updateCreateBank" :showCreateBank="show"></add-bank>
+
                     <div>
-                      <i
-                        class="fa fa-ban"
-                        aria-hidden="true"
-                        style="font-size: 46px; margin: 10px"
-                      ></i>
+                      <i class="fa fa-ban" aria-hidden="true" style="font-size: 46px; margin: 10px"></i>
                       <h5>You seem to not have any bank account added.</h5>
-                      <b-button
-                        v-b-modal.modal-no-backdrop
-                        @click="openPayaccountmodal()"
-                        >Add Bank</b-button
-                      >
+                      <b-button @click="show = true">Add Bank</b-button>
                     </div>
                   </div>
                 </div>
               </el-tab-pane>
+
             </el-tabs>
+
           </div>
         </div>
       </div>
-
-      <b-modal
-        centered
-        title="Add Payout Account"
-        id="modal-no-backdrop"
-        hide-backdrop
-        content-class="shadow"
-        hide-footer
-      >
-        <div style="display: flex; justify-content: center" v-if="loading">
-          <p :class="{ 'spinner-border': loading }"></p>
-        </div>
-        <div class="form" v-if="!loading">
-          <b-form class="bform" @submit.prevent="addBank()">
-            <b-form-group
-              id="input-group-3"
-              label="Bank Name"
-              label-for="input-3"
-            >
-              <base-input>
-                <el-select
-                  class="select-danger"
-                  filterable
-                  placeholder="Bank Name"
-                  required
-                  v-model="createPayoutAccountModel.accountBankCode"
-                >
-                  <el-option
-                    v-for="bank in banks"
-                    class="select-danger"
-                    :value="bank.value"
-                    :label="bank.label"
-                    :key="bank.value"
-                  >
-                  </el-option>
-                  <el-option v-if="loading">loading... </el-option>
-                </el-select>
-              </base-input>
-            </b-form-group>
-
-            <b-form-group
-              id="input-group-4"
-              label="Account Number"
-              label-for="input-4"
-            >
-              <b-form-input
-                id="input-4"
-                type="text"
-                placeholder="Account Number"
-                v-model="createPayoutAccountModel.accountNumber"
-                class="mr-2"
-                required
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group
-              id="input-group-5"
-              label="Account Name"
-              label-for="input-5"
-            >
-              <b-form-input
-                id="input-5"
-                type="text"
-                placeholder="Account Name"
-                v-model="createPayoutAccountModel.accountName"
-                class="mr-2"
-                required
-              ></b-form-input>
-            </b-form-group>
-            <b-form-group
-              id="input-group-5"
-              label="Enter OTP"
-              label-for="input-5"
-            >
-              <div class="d-flex">
-                <b-form-input
-                  id="input-5"
-                  type="text"
-                  placeholder="OTP"
-                  class="mr-2"
-                  required
-                  v-model="createPayoutAccountModel.otp"
-                ></b-form-input>
-                <span v-if="timerCount > 0" class="m-2 small w-100 text-dark"
-                  >Resend OTP in {{ timerCount }}
-                </span>
-                <!-- <b-button class="w-50" v-if="timerCount > 0" disabled></b-button> -->
-                <b-button class="w-100" @click="sendOtp()" v-else
-                  >{{ loadingOtp ? "Sending" : "Send OTP" }}
-                  <span :class="{ 'spinner-border': loadingOtp }"></span
-                ></b-button>
-              </div>
-            </b-form-group>
-            <b-button
-              class="w-100 text-white"
-              style="background-color: var(--primary)"
-              type="submit"
-              >{{ payoutloading ? "Adding" : "Add Bank" }}
-              <span :class="{ 'spinner-border': payoutloading }"></span
-            ></b-button>
-          </b-form>
-        </div>
-      </b-modal>
     </div>
   </div>
 </template>
@@ -1120,6 +675,9 @@ import OrganisationRequest from "../../model/request/OrganisationRequest";
 import AuthenticationRequest from "../../model/request/AuthRequest";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest";
 import ProgressBar from "@/components/ProgressBar";
+import AddBank from "../../components/form/AddBankForm";
+import BlockerLoader from "../../components/BlockerLoader";
+
 
 const Toast = Swal.mixin({
   toast: true,
@@ -1142,14 +700,18 @@ export default {
     ApiKeyDisplayForm,
     BaseButton,
     ProgressBar,
+    AddBank,
+    BlockerLoader
   },
   data() {
     return {
+      show: false,
       updateOrganisationModel: OrganisationRequest.updateOrganisation,
       sendOtpModel: AuthenticationRequest.resendOtp,
       readbanklistModel: VirtualAccountRequest.getBankList,
       createPayoutAccountModel: AccountPayoutRequest.createAccountPayout,
       readPayoutAccountModel: AccountPayoutRequest.readAccountPayoutById,
+      changePasswordModel: AuthenticationRequest.changePassword,
       files: [],
       banks: [],
       progressBarArr: [],
@@ -1184,10 +746,12 @@ export default {
       payoutAccount: (state) => state.accountPayout.addedBanks,
       payoutloading: (state) => state.accountPayout.accloading,
       readonlybank: (state) => state.accountPayout.readOnlyAddedBanks,
+      createloader: (state) => state.accountPayout.addbankloading,
+
       //documents:(state) => state.document.document
     }),
-    getStatus(){
-      return localStorage.nanuhansungida
+    getStatus() {
+      return localStorage.taged
     },
     documents: () => {
       console.log("progressBarArr");
@@ -1285,44 +849,23 @@ export default {
     );
   },
   methods: {
+    updateCreateBank(value) {
+      this.show = value;
+    },
     showedit() {
       this.edit = !this.edit;
     },
-    openPayaccountmodal() {
-      StoreUtils.dispatch(
-        StoreUtils.actions.virtualAccount.updateReadBankList,
-        this.readbanklistModel
-      );
 
-      if (this.bankLists) {
-        let bankLists = this.bankList;
-        this.banks = bankLists.map((item) => {
-          return {
-            value: `${item.name} ${item.code}`,
-            label: `${item.name}`,
-          };
-        });
-      }
+
+    changePassword() {
+      this.changePasswordModel.customerEmail = this.userInfo.customerEmail
+      StoreUtils.dispatch(StoreUtils.actions.auth.changePassword, this.changePasswordModel)
+
+      console.log(this.changePasswordModel)
     },
 
-    addBank() {
-      let bankcode =
-        this.createPayoutAccountModel.accountBankCode.split(" ")[0];
-      let bankName =
-        this.createPayoutAccountModel.accountBankCode.split(" ")[1];
-      this.createPayoutAccountModel.accountCountry =
-        this.userInfo.customerCountry;
-      this.createPayoutAccountModel.accountOrganisationId =
-        this.organisation.customerOrganisationCustomerId;
-      this.createPayoutAccountModel.username =
-        this.organisation.organisationEmail;
-      this.createPayoutAccountModel.accountBankCode = bankcode;
-      this.createPayoutAccountModel.accountBankName = bankName;
-      StoreUtils.dispatch(
-        StoreUtils.actions.accountPayout.createAddedBanks,
-        this.createPayoutAccountModel
-      );
-    },
+
+
 
     editBank() {
       let bankcode =
@@ -1342,17 +885,24 @@ export default {
         this.createPayoutAccountModel
       ).then(() => {
         this.createPayoutAccountModel.otp = null;
+        this.readPayoutAccountModel.accountOrganisationId =
+          localStorage.organisationId;
+        StoreUtils.dispatch(
+          StoreUtils.actions.accountPayout.readAddedBanks,
+          this.readPayoutAccountModel
+        );
+        this.edit = false
       });
     },
 
     sendOtp() {
-      this.sendOtpModel.customerEmail = this.organisation.organisationEmail;
+      this.sendOtpModel.customerEmail = this.userInfo.customerEmail;
       StoreUtils.dispatch(
         StoreUtils.actions.auth.resendOtp,
         this.sendOtpModel
       ).then(() => {
         Toast.fire({
-          text: `Otp Sent to ${this.organisation.organisationEmail}`,
+          text: `Otp Sent to ${this.userInfo.customerEmail}`,
           icon: "success",
         });
         this.timerCount = 30;
@@ -1377,9 +927,8 @@ export default {
     },
     submitDocument(index, doc, action) {
       console.log("Testing" + index);
-      this.documentModel.fileUpload.username = `${
-        this.currentOrganisation.organisationName
-      }_${doc.documentTypeName.replace(/[^a-zA-Z ]/g, "")}_${Math.random()} `;
+      this.documentModel.fileUpload.username = `${this.currentOrganisation.organisationName
+        }_${doc.documentTypeName.replace(/[^a-zA-Z ]/g, "")}_${Math.random()} `;
       this.documentModel.fileUpload.base64 = this.files[index];
       this.documentModel.document.documentDocumentTypeId = doc.documentTypeId;
       if (action === "UPDATE") {
@@ -1423,7 +972,7 @@ export default {
         StoreUtils.actions.apiKey.regenerateApiKey,
         this.apikeyModel
       ).then(() => {
-        this.$bvModal.hide("modal-no-backdrop");
+        this.$bvModal.hide("modal-sm");
       });
     },
 
@@ -1439,9 +988,10 @@ export default {
         StoreUtils.actions.auth.updateOrganisation,
         this.organisation
       ).then(() => {
-        localStorage.taged = "YES";
+        const userToken = localStorage.getItem('token')
+        StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
+
       });
-      console.log(this.organisation);
     },
     file() {
       this.edit = "second";
@@ -1464,7 +1014,7 @@ export default {
     },
   },
 
-  created: function () {},
+  created: function () { },
 };
 </script>
 <style lang="css" scoped>
@@ -1473,10 +1023,16 @@ export default {
   justify-content: center;
   height: 100vh;
 }
+
+.body {
+  min-height: 100vh
+}
+
 .profile-settings {
   font-size: 100px;
   color: var(--primary);
 }
+
 .settings-profile-header {
   color: #919191;
   font-weight: 700;
@@ -1513,10 +1069,12 @@ export default {
     transform: rotate(360deg);
   }
 }
+
 .form {
   display: flex;
   justify-content: center;
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -1532,6 +1090,7 @@ input::-webkit-inner-spin-button {
   width: 100%;
   margin-top: 2%;
 }
+
 .our-team {
   padding: 40px;
   width: 100%;
@@ -1542,6 +1101,24 @@ input::-webkit-inner-spin-button {
   position: relative;
   border-radius: 5%;
   box-shadow: 0 0 1rem 0 rgb(136 152 170 / 15%);
+}
+
+.change-password {
+  width: 100%;
+  padding: 3%;
+  height: 65 vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+
+}
+
+.password-form {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
+  width: 40%;
+  height: 50vh;
+  padding: 20px;
+
 }
 
 .our-team .picture {
@@ -1626,12 +1203,14 @@ input::-webkit-inner-spin-button {
 .card-head:first-child {
   border-radius: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 0;
 }
+
 .card-head {
   padding: 0.25rem 0.5rem;
   margin-bottom: 0;
   background-color: #fff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
+
 .form-error-message {
   width: 100%;
   margin-top: 0.25rem;
@@ -1661,6 +1240,7 @@ input::-webkit-inner-spin-button {
 .pointer {
   cursor: pointer;
 }
+
 .img-size {
   width: 32px !important;
   height: 32px !important;
