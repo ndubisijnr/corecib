@@ -297,9 +297,9 @@ export default {
   },
   mounted() {
     if (this.module === "wallet") {
-        this.label = "Wallet Transaction Peroid"
+        this.label = "Wallet Creation Peroid"
     }else if(this.module === "virtualAccount"){
-        this.label = "Account Transaction Peroid"
+        this.label = "Account Creation Peroid"
     }
     else if(this.module === "payoutTransactions"){
         this.label = "Payout Transaction Peroid"

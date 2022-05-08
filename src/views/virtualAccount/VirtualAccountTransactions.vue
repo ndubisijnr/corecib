@@ -6,6 +6,11 @@
         <search-form :module="searchVirtualAccountTransactions"/>
       </div>
     </div>
+
+    <div class="pl-4 text-dark ml-4" v-if="!loading && virtualAccounttransactions.length > 0" style="width:20%;box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);padding: 5px;background-color: white;">
+      <h6>Account Number: {{virtualAccounttransactions[0].accountNumber}}</h6>
+      <h6>Wallet Account Name: {{virtualAccounttransactions[0].accountName}}</h6>
+    </div>
    <base-table
           :items="virtualAccounttransactions"
           :fields="fields"

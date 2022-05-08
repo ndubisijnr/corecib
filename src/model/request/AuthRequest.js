@@ -19,13 +19,7 @@ class AuthenticationRequest {
         customerReferralCode: null
 
     }
-    static changePassword = {
-        customerOldPassword: null,
-        customerPassword: null,
-        customerPasswordConfirmation: null,
-        customerEmail: null
 
-    }
     static initiatePasswordReset = {
         customerEmail: null,
         source: "WEB"

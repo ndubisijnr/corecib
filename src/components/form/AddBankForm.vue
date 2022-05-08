@@ -22,7 +22,7 @@
                         </b-form-group>
 
                         <b-form-group id="input-group-4" label="Account Number" label-for="input-4">
-                            <b-form-input id="input-4" type="text" placeholder="Account Number"
+                            <b-form-input id="input-4" type="number" placeholder="Account Number"
                                 v-model="createPayoutAccountModel.accountNumber" class="mr-2" required></b-form-input>
                         </b-form-group>
 

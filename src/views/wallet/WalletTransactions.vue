@@ -5,13 +5,15 @@
         <search-form :module="searchWALLET_TRANSACTION"/>
       </div>
     </div>
-        {{getParams}}
 
-    <div class="" v-if="wallettransactions== []">
-    hi
-      <!-- <h3>{{wallettransactions[0].accountNumber}}</h3>
-      <h3>{{wallettransactions[0].accountName}}</h3> -->
+    <div class="pl-4 text-dark ml-4" v-if="!loading && wallettransactions.length > 0" style="width:20%;box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);padding: 5px;background-color: white;">
+      <h6>Account Number: {{wallettransactions[0].accountNumber}}</h6>
+      <h6>Wallet Account Name: {{wallettransactions[0].accountName}}</h6>
     </div>
+    <!-- <div class="pl-4 text-dark ml-4" v-else style="width:20%;box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);padding: 5px;background-color: white;">
+      <h6>Nothing to show</h6>
+    </div> -->
+
    <base-table
           :items="wallettransactions"
           :fields="fields"
@@ -84,10 +86,6 @@ export default {
       loading: (state) => state.walletTransactions.loading,
       wallettransactions: (state) => state.walletTransactions.walletTransactions,
     }),
-
-    getParams(){
-      return JSON.parse(JSON.stringify(this.$route))
-    }
   },
 
   mounted(){

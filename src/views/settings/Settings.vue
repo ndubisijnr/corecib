@@ -419,19 +419,18 @@
                                       </div>
                                       <div v-else>
                                         <form @submit.prevent="
-                                          submitDocument(index, doc)
-                                        " :id="'form' + index">
+                                          submitDocument(index, doc)" :id="'form' + index">
                                           <!--<p v-show="progressBarArr[index]" class="form-error-message"> The File is required </p>-->
                                           <div class="our-team">
                                             <progress-bar v-show="
                                               progressBarArr[index].value
                                             "></progress-bar>
                                             <div class="picture">
-                                              <label class="pointer"> <img class="img-fluid img-size"
+                                              <!-- <label class="pointer"> <img class="img-fluid img-size"
                                                   src="https://coregem-imgs.s3.amazonaws.com/document-grey.png"
                                                   alt="" />
-                                              </label>
-                                              <input type="file" :ref="'file-input' + index" style="display: none"
+                                              </label> -->
+                                              <!-- <input type="file" :ref="'file-input' + index" style="display: none"
                                                 accept="application/pdf, image/*" :id="'myfile' + index" @change="
                                                   handleImages(
                                                     $event,
@@ -439,7 +438,15 @@
                                                     doc,
                                                     'CREATE'
                                                   )
-                                                " />
+                                                " /> -->
+                                                <input type="file" :ref="'file-input' + index"  accept="application/pdf, image/*" :id="'myfile' + index" @change="
+                                                  handleImages(
+                                                    $event,
+                                                    index,
+                                                    doc,
+                                                    'CREATE'
+                                                  )
+                                                "/>
 
                                             </div>
                                             <div class="team-content mt--2">
@@ -468,9 +475,22 @@
 
               <el-tab-pane id="tab-8" :key="8" name="eight" label="Change Password">
                 <div class="change-password">
-                  <b-form @submit.prevent="changePassword()" class="password-form">
-                    <b-form-group>
-                      <div>
+                  <form @submit.prevent="changePassword()" class="password-form">
+                    <div class="form-floating mb-3">
+                      <input class="form-control" placeholder="Old password">
+                      <label>Old Password</label>
+                    </div>
+                       <div class="form-floating mb-3">
+                      <input class="form-control" placeholder="Old password">
+                      <label>New Password</label>
+                    </div>  
+                     <div class="form-floating mb-3">
+                      <input class="form-control" placeholder="Old password">
+                      <label>Comfirm Password</label>
+
+                    </div>
+
+                      <!-- <div>
                         <label>Old Password</label>
                         <b-input type="password" placeholder="Old Password" class="mb-3 form-control" required
                           v-model="changePasswordModel.customerOldPassword"></b-input>
@@ -485,13 +505,15 @@
                         <b-input type="password" placeholder="Comfirm New Password" class="mb-3 form-control" required
                           v-model="changePasswordModel.customerPasswordComfirmation"></b-input>
                       </div>
-                    </b-form-group>
-                    <b-button type="submit" style="
+                    </b-form-group> -->
+                    <div class="text-right">
+                    <b-button type="submit" disabled style="
                                   background-color: var(--primary);
                                   color: white;
                                 ">{{ loadingOtp ? 'Changing' : 'Change' }} <span
                         :class="{ 'spinner-border': loadingOtp }"></span></b-button>
-                  </b-form>
+                        </div>
+                  </form>
                 </div>
 
               </el-tab-pane>
@@ -1106,7 +1128,7 @@ input::-webkit-inner-spin-button {
 .change-password {
   width: 100%;
   padding: 3%;
-  height: 65 vh;
+  height: 75vh;
   background-color: white;
   display: flex;
   justify-content: center;
@@ -1114,9 +1136,7 @@ input::-webkit-inner-spin-button {
 }
 
 .password-form {
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
   width: 40%;
-  height: 50vh;
   padding: 20px;
 
 }

@@ -214,8 +214,7 @@ export default {
 
 
     onInitiateEnrollment() {
-      console.log(this.$route);
-      //StoreUtils.dispatch(StoreUtils.actions.auth.initialEnrollment, this.initiateModel);
+      StoreUtils.dispatch(StoreUtils.actions.auth.initialEnrollment, this.initiateModel);
     },
     startTimer(duration) {
       let timer = duration,
