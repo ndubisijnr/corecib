@@ -2,7 +2,8 @@ class DocumentRequest {
     static createDocument = {
         document:{
             documentUrl: null,
-            documentDocumentTypeId: null
+            documentDocumentTypeId: null,
+            documentName: null
         },
         fileUpload:{
             username: null,
@@ -17,7 +18,8 @@ class DocumentRequest {
         document:{
             documentId:null,
             documentDocumentTypeId:null,
-            documentUrl: null
+            documentUrl: null,
+            documentName: null
         },
         fileUpload:{
             username: null,

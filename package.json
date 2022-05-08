@@ -14,7 +14,7 @@
         "@fullcalendar/interaction": "^4.4.2",
         "@fullcalendar/timegrid": "^4.4.2",
         "@fullcalendar/vue": "^4.4.2",
-        "animate.css": "^4.1.1",
+        "animate.css": "4.1.1",
         "axios": "^0.21.1",
         "babel-eslint": "^10.1.0",
         "bootstrap": "^4.5.0",

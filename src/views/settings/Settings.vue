@@ -398,7 +398,7 @@
                                               'APPROVED'
                                             ">
                                               <label class="pointer" data-toggle="tooltip" data-placement="down"
-                                                title="Update" aria-hidden="true"> </label>
+                                                title="Update" aria-hidden="true">
 
                                               <input type="file" :ref="'file-input' + index"
                                                 accept="application/pdf, image/*" :id="'myfile' + index" style="
@@ -413,6 +413,7 @@
                                                     )
                                                   " />
                                               <i class="fas fa-edit"></i>
+                                              </label>
                                             </li>
                                           </ul>
                                         </div>
@@ -426,7 +427,8 @@
                                               progressBarArr[index].value
                                             "></progress-bar>
                                             <div class="picture">
-                                              <!-- <label class="pointer"> <img class="img-fluid img-size"
+                                              <!-- <label class="pointer">
+                                              <img class="img-fluid img-size"
                                                   src="https://coregem-imgs.s3.amazonaws.com/document-grey.png"
                                                   alt="" />
                                               </label> -->
@@ -439,7 +441,8 @@
                                                     'CREATE'
                                                   )
                                                 " /> -->
-                                                <input type="file" :ref="'file-input' + index"  accept="application/pdf, image/*" :id="'myfile' + index" @change="
+                                              <label class="pointer">
+                                                <input type="file" :ref="'file-input' + index" style="display: none;"  accept="application/pdf, image/*" :id="'myfile' + index" @change="
                                                   handleImages(
                                                     $event,
                                                     index,
@@ -447,7 +450,8 @@
                                                     'CREATE'
                                                   )
                                                 "/>
-
+                                              <img class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-grey.png" alt=""/>
+                                            </label>
                                             </div>
                                             <div class="team-content mt--2">
                                               <small class="name">Click &#x1F446; to upload
@@ -953,6 +957,7 @@ export default {
         }_${doc.documentTypeName.replace(/[^a-zA-Z ]/g, "")}_${Math.random()} `;
       this.documentModel.fileUpload.base64 = this.files[index];
       this.documentModel.document.documentDocumentTypeId = doc.documentTypeId;
+      this.documentModel.document.documentName = doc.documentTypeName
       if (action === "UPDATE") {
         this.progressBarArr[index].value = true;
         console.log("Conditions>> ", this.progressBarArr[index].value);
