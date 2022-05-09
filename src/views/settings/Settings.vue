@@ -1,15 +1,15 @@
 <template>
   <div class="body">
-    <!-- <span :class="{ 'spinner-border': loading }" v-if="loading"></span>
+     <span :class="{ 'spinner-border': loading }" v-if="loading"></span>
       <span :class="{ 'spinner-border': payoutloading }" v-if="payoutloading"></span>
       <span :class="{ 'spinner-border': loadingDoc }" v-if="loadingDoc"></span>
-      <span :class="{ 'spinner-border': loadingOtp }" v-if="loadingOtp"></span> -->
-    <blocker-loader v-if="loading" :message="'Setting up Settings Environment'"></blocker-loader>
-    <blocker-loader v-if="loadingOtp" :message="'Please Wait'"></blocker-loader>
-    <blocker-loader v-if="payoutloading" :message="'Setting up Settings Environment'"></blocker-loader>
-    <blocker-loader v-if="loadingDoc" :message="'Setting up Settings Environment'"></blocker-loader>
+      <span :class="{ 'spinner-border': loadingOtp }" v-if="loadingOtp"></span>
+<!--    <blocker-loader v-if="loading" :message="'Setting up Settings Environment'"></blocker-loader>-->
+<!--    <blocker-loader v-if="loadingOtp" :message="'Please Wait'"></blocker-loader>-->
+<!--    <blocker-loader v-if="payoutloading" :message="'Setting up Settings Environment'"></blocker-loader>-->
+<!--    <blocker-loader v-if="loadingDoc" :message="'Setting up Settings Environment'"></blocker-loader>-->
 
-    <div class="container-fluid mt-0" v-else>
+    <div class="container-fluid mt-0">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
           <div>
@@ -81,9 +81,7 @@
                           Business Information
                         </h3>
                         <p>
-                          Update your merchant information here, so that your
-                          account can be verified while you gain access to our
-                          APIs.
+                          Update your business information here
                         </p>
                       </div>
                     </div>
@@ -315,9 +313,7 @@
                           Document upload
                         </h3>
                         <p>
-                          Upload the necessary documents here, so that your
-                          account can be verified while you gain access to our
-                          APIs.
+                          Submit important documents about your business. This will help us verify your business and have your account upgraded.
                         </p>
                       </div>
                     </div>
@@ -481,15 +477,15 @@
                 <div class="change-password">
                   <form @submit.prevent="changePassword()" class="password-form">
                     <div class="form-floating mb-3">
-                      <input class="form-control" placeholder="Old password">
+                      <input class="form-control" placeholder="Old password" v-model="changePasswordModel.customerOldPassword" required>
                       <label>Old Password</label>
                     </div>
                        <div class="form-floating mb-3">
-                      <input class="form-control" placeholder="Old password">
+                      <input class="form-control" placeholder="New password" v-model="changePasswordModel.customerPassword" required>
                       <label>New Password</label>
                     </div>  
                      <div class="form-floating mb-3">
-                      <input class="form-control" placeholder="Old password">
+                      <input class="form-control" placeholder="Comfirm password" v-model="changePasswordModel.customerPasswordConfirmation" required>
                       <label>Comfirm Password</label>
 
                     </div>
@@ -510,12 +506,12 @@
                           v-model="changePasswordModel.customerPasswordComfirmation"></b-input>
                       </div>
                     </b-form-group> -->
-                    <div class="text-right">
-                    <b-button type="submit" disabled style="
+                    <div class="">
+                    <base-button type="submit" title='Change' style="
                                   background-color: var(--primary);
                                   color: white;
-                                ">{{ loadingOtp ? 'Changing' : 'Change' }} <span
-                        :class="{ 'spinner-border': loadingOtp }"></span></b-button>
+                                  width: 100%;
+                                "></base-button>
                         </div>
                   </form>
                 </div>
@@ -535,7 +531,9 @@
                       </b-container>
                     </template>
                     <b-modal id="modal-sm" hide-backdrop size="sm" title="Regenerate Api key">
-                     You are about to regenerate new Api keys. Are you sure you want to proceed?
+                      You are about to regenerate new API keys.
+                      Proceeding with this action will invalidate your existing API keys and subsequent
+                      request headers must be passed with your newly generated keys
 
 
                       <template #modal-footer="{ cancel }">
@@ -703,6 +701,7 @@ import AccountPayoutRequest from "../../model/request/AccountPayoutRequest";
 import ProgressBar from "@/components/ProgressBar";
 import AddBank from "../../components/form/AddBankForm";
 import BlockerLoader from "../../components/BlockerLoader";
+import ChangePasswordRequest from "@/model/request/ChangePasswordRequest";
 
 
 const Toast = Swal.mixin({
@@ -737,7 +736,7 @@ export default {
       readbanklistModel: VirtualAccountRequest.getBankList,
       createPayoutAccountModel: AccountPayoutRequest.createAccountPayout,
       readPayoutAccountModel: AccountPayoutRequest.readAccountPayoutById,
-      changePasswordModel: AuthenticationRequest.changePassword,
+      changePasswordModel:ChangePasswordRequest.changePassword,
       files: [],
       banks: [],
       progressBarArr: [],
@@ -886,8 +885,6 @@ export default {
     changePassword() {
       this.changePasswordModel.customerEmail = this.userInfo.customerEmail
       StoreUtils.dispatch(StoreUtils.actions.auth.changePassword, this.changePasswordModel)
-
-      console.log(this.changePasswordModel)
     },
 
 

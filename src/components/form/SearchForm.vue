@@ -24,7 +24,7 @@
               <div class="ml-2">
                 <label class="form-control-label"> From</label>
                 <datetime v-model="model.startDate" input-class="form-control" class="theme-green"
-                  placeholder="Start Date" zone="Africa/Lagos" value-zone="Africa/Lagos"></datetime>
+                  placeholder="Start Date" zone="Africa/Lagos" value-zone="Africa/Lagos" :max-datetime="maxDatetime" :min-datetime="minDatetime"></datetime>
               </div>
               <div class="ml-2">
                 <label class="form-control-label"> To</label>
@@ -67,6 +67,8 @@ export default {
   },
   data() {
     return {
+      minDatetime: "2022-04-28",
+      maxDatetime: "2022-04-01",
       options: [
         { value: "today", label: "Today" },
         { value: "thismonth", label: "This Month" },

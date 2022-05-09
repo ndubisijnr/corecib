@@ -28,7 +28,7 @@
           </b-container>
           
         </div>
-         <div class="">
+         <div class="text-center">
         <base-table
           :items="refferalstats.referral"
           :fields="fields"
@@ -73,8 +73,6 @@ export default {
         { key: "organisationName", label: "businessName" },
         { key: "organisationStatus", label: "businessStatus" },
         { key: "organisationCreatedAt", label: "Date Joined" },
-
-        { key: "action", label: "Action" },
       ],
     };
   },

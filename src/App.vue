@@ -1,9 +1,7 @@
 <template>
   <div>
    <router-link to="/settings/settings"> <div class="myalert" v-if="layout === 'dashboard-layout' && currentOrganisation.organisationStatus == 'PENDING'" id="myalert">
-      <h3 class="text-white" > &nbsp; &nbsp; &nbsp; &nbsp; <b-icon-bell-fill/> &nbsp; Your account is currently limited to bills payment APIs
-            Kindly upgrade your account to
-           gain access to wallet and virtual account APIs  </h3>
+      <h3 class="text-white" > &nbsp; &nbsp; &nbsp; &nbsp; <b-icon-bell-fill/> &nbsp; You are currently only allowed bill payment APIs, kindly update your business information to access all our services.  </h3>
     </div> </router-link>
     <dashboard-layout v-if="layout === 'dashboard-layout'">
       

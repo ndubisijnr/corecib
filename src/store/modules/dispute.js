@@ -42,7 +42,7 @@ export const actions = {
       let responseData = response.data
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        commit("updateDisputes", responseData)
+        commit("updateDisputes", responseData.data)
       }
     }).catch(error => {
         console.log(error);

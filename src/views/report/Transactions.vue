@@ -37,7 +37,6 @@ export default {
       light: "light",
       type: "",
       items: [],
-      bitems: [],
       fields: [
         { key: "drCr", label: "drCr" },
         { key: "amount", label: "amount" },

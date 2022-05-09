@@ -6,7 +6,7 @@
         </b-button>
       </div>
       <base-table
-        :items="this.disputes.data"
+        :items="this.disputes"
         :fields="fields"
         filter-mode="default"
         :is-busy="loading"

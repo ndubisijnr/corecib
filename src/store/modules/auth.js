@@ -102,7 +102,6 @@ export const actions = {
           commit("updateLoading", false)
           localStorage.token = responseData.token;
           commit("updateToken", responseData.token);
-          console.log(state.token)
           if (!localStorage.organisationId) localStorage.organisationId = responseData.organisations[0].organisationId
           else {
             if (responseData.organisations.filter(it => it.organisationId === localStorage.organisationId).length < 1)

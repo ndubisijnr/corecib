@@ -1,7 +1,7 @@
 <template>
   <div>
-    <blocker-loader v-if="accloading" :message="'Please Wait'"></blocker-loader>
-        <blocker-loader v-if="loading" :message="'Please Wait'"></blocker-loader>
+<!--    <blocker-loader v-if="accloading" :message="'Please Wait'"></blocker-loader>-->
+<!--        <blocker-loader v-if="loading" :message="'Please Wait'"></blocker-loader>-->
 
     <base-header class="pb-6" type="">
     </base-header>
@@ -43,8 +43,7 @@
       </h3>
       <div>
         <h3>To fund your wallet</h3>
-        <span>Transfer the amount you want to fund to the account
-          details below and your balance will be funded.</span>
+        <span>Transfer desired amount to the account details below and have your balance funded</span>
         <div class="carddd" v-for="items in balances.walletBalance.virtualAccounts" :key="items">
           <h6 class="text-right rounded-3 p-1 text-white"
             style="position:absolute;right:50px;cursor:pointer;background:var(--primary)"
