@@ -40,8 +40,6 @@ export default {
   },
   data() {
     return {
-      minDatetime: "2022-04-28",
-      maxDatetime: "2022-04-01",
       startDate: "",
       endDate: "",
 

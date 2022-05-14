@@ -5,7 +5,7 @@
         <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(saveChanges)">
           <span :class="{ 'spinner-border': loading }"></span>
 
-          <div v-if="!loading">
+          <div>
             <label class="form-label mt-2 pr-4">{{ testLive }} Secret Key </label>
             <div class="form-floating">
 
@@ -26,26 +26,34 @@
 
             <label class="form-label mt-2 pr-4">{{ testLive }} Callback URL </label>
             <div class="form-floating">
-              <input type="text" class="form-control" v-model="callBackUrl" required />
+              <input type="text" class="form-control" v-model="callBackUrl" required  />
+              <p v-if="currentOrganisation.organisationStage === 'DEV'" class="small">{{testLive}} Callback URL: {{api.apikeyTestCallback}}</p>
+              <p v-else class="small">{{testLive}} Callback URL: {{api.apikeyLiveCallback}}</p>
             </div>
 
-            <label class="form-label mt-2 pr-4">{{ testLive }} Authorization Header </label>
+            <label class="form-label pr-4">{{ testLive }} Authorization Header </label>
             <div class="row">
               <div class="col-5">
                 <div class="form-floating">
                   <input type="text" class="form-control" v-model="headerKey" required />
+                  <p v-if="currentOrganisation.organisationStage === 'DEV'" class="small">{{testLive}} Key: {{api.apikeyTestHeaderKey}}</p>
+                  <p v-else class="small">{{testLive}} Key: {{api.apikeyTestHeaderKey}}</p>
                   <label>Key</label>
+
                 </div>
+
               </div>
               <div class="col-7">
                 <div class="form-floating">
                   <input type="text" class="form-control" v-model="headerValue" required />
                   <label>Value</label>
+                  <p v-if="currentOrganisation.organisationStage === 'DEV'" class="small">{{testLive}} Value: {{api.apikeyTestHeaderValue}}</p>
+                  <p v-else class="small">{{testLive}} Value: {{api.apikeyLiveHeaderValue}}</p>
                 </div>
               </div>
             </div>
-            <div class="text-start mt-3">
-              <base-button title="Save"></base-button>
+            <div class="text-start">
+              <base-button title="Save" :loading="loading"></base-button>
             </div>
           </div>
         </form>
@@ -123,7 +131,14 @@ export default {
       this.model[`apikey${this.testLive}Callback`] = this.callBackUrl
       //this.model[`apikey${this.testLive}Webhook`] = this.webHook
 
-      StoreUtils.dispatch(StoreUtils.actions.apiKey.updateWebhookCallback, this.model)
+      StoreUtils.dispatch(StoreUtils.actions.apiKey.updateWebhookCallback, this.model).then(()=>{
+        this.model.apikeyOrganisationId = localStorage.organisationId;
+        this.model.apikeyId = localStorage.organisationId;
+        StoreUtils.dispatch(
+            StoreUtils.actions.apiKey.updateApikey,
+            this.model
+        );
+      })
 
     }
   },

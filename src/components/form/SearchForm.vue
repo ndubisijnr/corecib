@@ -5,7 +5,6 @@
       <b-form @submit.prevent="fetchResult">
         <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3"> -->
         <div class="" style="display: flex;">
-
           <div class="">
 
             <base-input :label="label">
@@ -24,18 +23,18 @@
               <div class="ml-2">
                 <label class="form-control-label"> From</label>
                 <datetime v-model="model.startDate" input-class="form-control" class="theme-green"
-                  placeholder="Start Date" zone="Africa/Lagos" value-zone="Africa/Lagos" :max-datetime="maxDatetime" :min-datetime="minDatetime"></datetime>
+                  placeholder="Start Date" zone="Africa/Lagos" value-zone="Africa/Lagos" :min-datetime="minDatetime"></datetime>
               </div>
               <div class="ml-2">
                 <label class="form-control-label"> To</label>
-                <datetime v-model="model.endDate" input-class="form-control" class="theme-green" placeholder="End Date"
+                <datetime v-model="model.endDate" input-class="form-control" :max-datetime="maxDatetime" :min-datetime="minDatetime" class="theme-green" placeholder="End Date"
                   zone="Africa/Lagos" value-zone="Africa/Lagos"></datetime>
               </div>
             </div>
           </div>
-          <div class="d-flex align-items-end">
+          <div class="d-flex align-items-end" >
             <base-input label="Search" input-classes="form-control" name="Report Name" v-model="searchValue"
-              placeholder="Search Here" class="ml-2">
+              placeholder="Search Here" class="ml-2" v-if="module != 'payoutTransactions'">
             </base-input>&nbsp;
             <base-button :loading="loading" icon="b-icon-search" title="Search" />
           </div>
@@ -54,8 +53,11 @@ import BaseButton from "../../components/button/BaseButton";
 import BaseResponse from "../../model/reponse/BaseResponse";
 import SearchModuleUtil from "../../util/constant/SearchModuleutil"
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest"
+import AccountPayoutRequest from "@/model/request/AccountPayoutRequest";
 
 let module = ''
+
+let today = new Date()
 
 export default {
   name: "SearchForm",
@@ -67,8 +69,8 @@ export default {
   },
   data() {
     return {
-      minDatetime: "2022-04-28",
-      maxDatetime: "2022-04-01",
+      minDatetime: "2022-04-1",
+      maxDatetime: today.toLocaleDateString(),
       options: [
         { value: "today", label: "Today" },
         { value: "thismonth", label: "This Month" },
@@ -87,6 +89,7 @@ export default {
       searchValue: "",
       searchModel: WalletRequest.readWallet,
       virtualAccountsearchModel: VirtualAccountRequest.readVirtualAccountTransactions,
+      payoutSearchModel:AccountPayoutRequest.readPayout,
       label: "",
 
 
@@ -211,8 +214,9 @@ export default {
       this.searchModel.startDate = this.model.startDate.split("T")[0]
       this.virtualAccountsearchModel.endDate = this.model.endDate.split("T")[0]
       this.virtualAccountsearchModel.startDate = this.model.startDate.split("T")[0]
+      this.payoutSearchModel.endDate = this.model.endDate.split("T")[0]
+      this.payoutSearchModel.startDate = this.model.startDate.split("T")[0]
       if (this.module === SearchModuleUtil.ALL_TRANSACTION) {
-        this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
         console.log("hello ALL_TRANSACTION", this.searchModel)
@@ -240,10 +244,9 @@ export default {
         console.log("hello WALLET_TRANSACTION", this.virtualAccountsearchModel)
       }
        else if (this.module === SearchModuleUtil.PAYOUT_TRANSACTION) {
-        this.virtualAccountsearchModel.searchItem = this.searchValue
-        StoreUtils.commit(StoreUtils.mutations.virtualAccount.updateVirtualaccountTransactions, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualaccountTransactions, this.virtualAccountsearchModel);
-        console.log("hello PAYOUT_TRANSACTION", this.virtualAccountsearchModel)
+        StoreUtils.commit(StoreUtils.mutations.accountPayout.updateAllPayouts, BaseResponse.list)
+        StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutSearchModel);
+        console.log("hello PAYOUT_TRANSACTION", this.payoutSearchModel)
       }
       else {
         this.searchModel.searchItem = this.searchValue
@@ -254,6 +257,9 @@ export default {
     }
   },
   computed: {
+    getToday(){
+      return this.maxDatetime
+    },
     sortOptions() {
       // Create an options list from our fields
       return this.fields
@@ -308,7 +314,9 @@ export default {
     }else{
         this.label = "Transaction Peroid"
     }
+  console.log(this.maxDatetime)
   }
+
 
 }
 </script>

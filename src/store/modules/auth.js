@@ -100,16 +100,16 @@ export const actions = {
         let responseData = response.data;
         if (responseData.responseCode === "00") {
           commit("updateLoading", false)
-          localStorage.token = responseData.token;
-          commit("updateToken", responseData.token);
-          if (!localStorage.organisationId) localStorage.organisationId = responseData.organisations[0].organisationId
-          else {
-            if (responseData.organisations.filter(it => it.organisationId === localStorage.organisationId).length < 1)
-              localStorage.organisationId = responseData.organisations[0].organisationId
-          }
-          commit("updateUserInfo", responseData);
-          router.push({ name: "GetStarted" }).then(() => { 
-          })
+            localStorage.token = responseData.token;
+            commit("updateToken", responseData.token);
+            if (!localStorage.organisationId) localStorage.organisationId = responseData.organisations[0].organisationId
+            else {
+              if (responseData.organisations.filter(it => it.organisationId === localStorage.organisationId).length < 1)
+                localStorage.organisationId = responseData.organisations[0].organisationId
+            }
+            commit("updateUserInfo", responseData);
+            router.push({ name: "GetStarted" }).then(() => {
+            })
         }
         else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {
           commit("updateLoading", false)
@@ -267,7 +267,6 @@ export const actions = {
         commit("updateLoading", false)
         commit("updateBalance",responseData2)
         Toast.fire({text:"Dashboard Ready", icon:"success"})
-        console.log(state.balances)
       }
     })
   }

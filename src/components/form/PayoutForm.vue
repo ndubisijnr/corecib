@@ -17,7 +17,7 @@
                         <b-input-group size="md" prepend="NGN" class="mb-3">
                             <b-form-input id='withdrawInput' step="0.01" type="number" autofocus
                                 v-model="payoutModel.payoutAmount" style="font-size:16px;letter-spacing:.2rem;"
-                                placeholder="Enter Amount" required></b-form-input>
+                                placeholder="Enter Amount" required @keypress="isNumber($event)"></b-form-input>
                         </b-input-group>
                         <h4 id="error" class="text-danger text-center"></h4>
                         <b-button v-if="currentOrganisation.organisationStage == 'PROD'"
@@ -66,6 +66,19 @@ export default {
         }
     },
     methods: {
+      isNumber: function (evt) {
+        evt = evt ? evt : window.event;
+        const charCode = evt.which ? evt.which : evt.keyCode;
+        if (
+            charCode > 31 &&
+            (charCode < 48 || charCode > 57) &&
+            charCode !== 46
+        ) {
+          evt.preventDefault();
+        } else {
+          return true;
+        }
+      },
         closeModal() {
             //close modal form
             this.showModal = false;

@@ -211,4 +211,8 @@ export default {
   color: white !important;
   padding: 0;
 }
+
+.sidebar-menu-item .active{
+  background-color: black !important;
+}
 </style>

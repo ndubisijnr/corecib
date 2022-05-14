@@ -489,29 +489,12 @@
                       <label>Comfirm Password</label>
 
                     </div>
-
-                      <!-- <div>
-                        <label>Old Password</label>
-                        <b-input type="password" placeholder="Old Password" class="mb-3 form-control" required
-                          v-model="changePasswordModel.customerOldPassword"></b-input>
-                      </div>
-                      <div>
-                        <label>New Password</label>
-                        <b-input type="password" placeholder="New Password" class="mb-3 form-control" required
-                          v-model="changePasswordModel.customerPassword"></b-input>
-                      </div>
-                      <div>
-                        <label>Comfirm New Password</label>
-                        <b-input type="password" placeholder="Comfirm New Password" class="mb-3 form-control" required
-                          v-model="changePasswordModel.customerPasswordComfirmation"></b-input>
-                      </div>
-                    </b-form-group> -->
                     <div class="">
                     <base-button type="submit" title='Change' style="
                                   background-color: var(--primary);
                                   color: white;
                                   width: 100%;
-                                "></base-button>
+                                " :loading="loadingOtp"></base-button>
                         </div>
                   </form>
                 </div>
@@ -571,9 +554,13 @@
                 <div v-if="!Object.values(payoutAccount).every((o) => o === null)">
                   <div class="p-3" v-if="!payoutloading">
                     <div>
-                      <div class="text-center">
+                      <div class="text-center" v-if="edit == false">
                         <i class="fa fa-university" style="font-size: 50px"></i>
                         <h4>Current bank details</h4>
+                      </div>
+                      <div class="text-center" v-else>
+                        <i class="fa fa-university" style="font-size: 50px"></i>
+                        <h4>Edit bank details</h4>
                       </div>
                       <div v-if="edit == false">
                         <b-container class="">
@@ -582,7 +569,7 @@
                               display: flex;
                               justify-content: center;
                             ">
-                            <div class="container p-3 form-group" style="width: 400px">
+                            <div class="container p-3 form-group" style="width: 500px">
                               <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingInput1"
                                   placeholder="name@example.com" :value="
@@ -612,8 +599,11 @@
                           </div>
                         </b-container>
                       </div>
-
-                      <b-form class="bformedit" @submit.prevent="editBank()" v-else>
+                    <div style="width: 400px" v-else>
+                      <div style="position: absolute;top: 20px;left:20px">
+                        <b-button @click="edit = false">Cancel</b-button>
+                      </div>
+                      <b-form class="bformedit" @submit.prevent="editBank()">
                         <b-form-group id="input-group-3" label="Bank Name" label-for="input-3">
                           <base-input>
                             <el-select class="select-danger" filterable placeholder="Bank Name" required
@@ -631,7 +621,7 @@
                         </b-form-group>
 
                         <b-form-group id="input-group-5" label="Account Name" label-for="input-5">
-                          <b-form-input id="input-5" type="text" placeholder="Account Name"
+                          <b-form-input id="input-5" type="number" placeholder="Account Name"
                             v-model="createPayoutAccountModel.accountName" class="mr-2" required></b-form-input>
                         </b-form-group>
                         <b-form-group id="input-group-5" label="Enter OTP" label-for="input-5">
@@ -652,6 +642,7 @@
                           <span :class="{ 'spinner-border': createloader }"></span>
                         </b-button>
                       </b-form>
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -700,7 +691,7 @@ import AuthenticationRequest from "../../model/request/AuthRequest";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest";
 import ProgressBar from "@/components/ProgressBar";
 import AddBank from "../../components/form/AddBankForm";
-import BlockerLoader from "../../components/BlockerLoader";
+// import BlockerLoader from "../../components/BlockerLoader";
 import ChangePasswordRequest from "@/model/request/ChangePasswordRequest";
 
 
@@ -726,7 +717,7 @@ export default {
     BaseButton,
     ProgressBar,
     AddBank,
-    BlockerLoader
+    // BlockerLoader
   },
   data() {
     return {
@@ -853,6 +844,8 @@ export default {
   },
 
   mounted() {
+    //clear console
+    console.clear()
     //Call in read documents actions
     this.apikeyModel.organisationId = localStorage.organisationId;
     this.readDoc.readAll = "YES";
@@ -908,6 +901,11 @@ export default {
         this.createPayoutAccountModel
       ).then(() => {
         this.createPayoutAccountModel.otp = null;
+        this.createPayoutAccountModel.accountName = null;
+        this.createPayoutAccountModel.accountBankName = null;
+        this.createPayoutAccountModel.accountBankCode = null;
+        this.createPayoutAccountModel.accountNumber = null
+
         this.readPayoutAccountModel.accountOrganisationId =
           localStorage.organisationId;
         StoreUtils.dispatch(

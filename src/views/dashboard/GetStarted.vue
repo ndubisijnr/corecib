@@ -65,16 +65,12 @@
 <script>
 import { mapState } from "vuex";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
-import ApiForm from '../../components/form/ApiKeyDisplayForm.vue'
 import DashboardView from "../../components/dashboardComponent/DashboardCircle"
 import ApikeyRequest from "../../model/request/ApiKeyRequest";
 import Swal from "sweetalert2";
 import Transaction from "../report/Transactions.vue"
-import BaseButton from "../../components/button/BaseButton"
 import PayoutForm from "../../components/form/PayoutForm";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest"
-import BlockLoader from "../../components/BlockerLoader"
-import BlockerLoader from "../../components/BlockerLoader.vue";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -90,7 +86,7 @@ const Toast = Swal.mixin({
 
 export default {
   name: "GetStarted",
-  components: { ApiForm, "dashboard-card": DashboardView, Transaction, BaseButton, PayoutForm, BlockLoader, BlockerLoader },
+  components: {"dashboard-card": DashboardView, Transaction, PayoutForm},
 
   data: () => {
     return {
@@ -166,25 +162,6 @@ export default {
   margin-right: auto;
 }
 
-.onboarding-cards {
-  /*display: -webkit-box;
-    display: -ms-flexbox;*/
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.onboarding-card {
-  background: #fff;
-  border: solid 1px #f2f2f2;
-  border-radius: 3px;
-  display: block;
-  width: 300px;
-  margin: 10px;
-  padding: 50px;
-  text-align: center;
-}
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -197,21 +174,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.onboarding-card-icon {
-  height: 60px;
-  width: 60px;
 
-  display: flex;
-  -webkit-box-pack: center;
-
-  justify-content: center;
-  -webkit-box-align: center;
-  /*-ms-flex-align: center;*/
-  align-items: center;
-  border-radius: 50%;
-  background-color: #f1fbf4;
-  margin: 0 auto 30px;
-}
 
 svg:not(:root) {
   overflow: hidden;
@@ -219,13 +182,6 @@ svg:not(:root) {
 
 .badge {}
 
-.onboarding-card-description {
-  font-size: 14px;
-  line-height: 1.5;
-  font-weight: 400;
-  margin-bottom: 0;
-  color: #727366;
-}
 
 .onboarding-title {
   padding: 20px 0 0;

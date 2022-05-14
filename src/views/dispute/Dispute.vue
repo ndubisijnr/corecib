@@ -2,11 +2,11 @@
   <div class="">
     <div class="m-3">
       <div class="mr-4 text-right">
-        <b-button @click="show = true" style="background-color:var(--primary);border:none;color:white"><i class="fa fa-plus"></i> Create  dispute
+        <b-button @click="show = true" style="background-color:var(--primary);border:none;color:white"><i class="fa fa-plus"></i> Log dispute
         </b-button>
       </div>
       <base-table
-        :items="this.disputes"
+        :items="disputes"
         :fields="fields"
         filter-mode="default"
         :is-busy="loading"
@@ -26,15 +26,31 @@ import DisputeResquest from "../../model/request/DisputeRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BaseTable from "../../components/table/BaseTable";
 import DisputeForm from "../../components/form/DisputeForm";
-import BaseButton from "../../components/button/BaseButton";
+//import BaseButton from "../../components/button/BaseButton";
+const sort_by = (field, reverse, primer) => {
+    const key = primer ?
+    function(x) {
+      return primer(x[field])
+    } :
+    function(x) {
+      return x[field]
+    };
+
+    reverse = !reverse ? 1 : -1;
+
+    return function(a, b) {
+      return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+    }
+}
 
 export default {
   name: "Dispute",
-  components: { BaseTable, DisputeForm, BaseButton },
+  components: { BaseTable, DisputeForm },
   data() {
     return {
       show: false,
       disputeReadModel: DisputeResquest.disputeReadByOrg,
+      dis:null,
       fields: [
         { key: "disputeId", label: "Id", sortable: true, class: "text-left" },
         {
@@ -62,6 +78,7 @@ export default {
     updateCreateDispute(value) {
       this.show = value;
     },
+
   },
 
   mounted() {
@@ -76,8 +93,9 @@ export default {
     ...mapState({
       user: (state) => state.auth.userInfo,
       loading: (state) => state.dispute.loading,
-      disputes: (state) => state.dispute.disputes,
+      disputes: (state) => JSON.parse(JSON.stringify(state.dispute.disputes.data)).sort(sort_by('disputeId', true, parseInt)),
     }),
+
   },
 };
 </script>

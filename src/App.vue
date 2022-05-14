@@ -18,8 +18,17 @@ const default_layout = "default";
 export default {
   components: {AuthLayout, DashboardLayout},
   mounted() {
-    const userToken = localStorage.getItem('token')
-    StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
+    setTimeout(()=>{
+      let routeLayout = this.$route.meta.layout
+      if(routeLayout !== "auth"){
+        const userToken = localStorage.getItem('token')
+        StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
+        console.clear()
+      }else{
+        localStorage.clear()
+      }
+    },1000)
+
     this.stickyAlert()
     setTimeout(()=>{
       let params = this.$route.params

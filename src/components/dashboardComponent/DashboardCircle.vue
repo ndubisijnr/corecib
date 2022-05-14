@@ -13,7 +13,7 @@ export default {
   name: "DashboardView",
   props:{
       value:{
-          type:String
+          type:[String,Number]
       },
       title:{
           type:String

@@ -9,8 +9,7 @@ Vue.filter('capitalize', function (value) {
 Vue.filter('formatAmount', function (value) {
     if (value == null) return '0.00'
     value = parseFloat(value).toFixed(2);
-    console.log(value)
-    var parts = value.toString().split(".");
+    const parts = value.toString().split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
 })

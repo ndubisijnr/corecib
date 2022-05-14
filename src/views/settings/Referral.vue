@@ -33,7 +33,7 @@
           :items="refferalstats.referral"
           :fields="fields"
           filter-mode="default"
-          :is-busy="loading"
+          :is-busy="loadingRefferal"
         />
       </div>
       </b-card-body>

@@ -3,6 +3,17 @@ import ApiKeyRequest from "../../model/request/ApiKeyRequest"
 import ApiKeyReponse from "../../model/reponse/ApiKeyResponse";
 import Swal from "sweetalert2";
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 
 export const state = {
   loading:false,
@@ -40,9 +51,9 @@ export const actions = {
       let responseData = response.data
       commit("updateLoading",false)
       if(responseData.responseCode === "00"){
-        Swal.fire({ text:responseData.responseMessage, icon:'success'}).then(()=>{})
+        Toast.fire({text:responseData.responseMessage, icon:'success'})
       }else{
-        Swal.fire({ text:responseData.responseMessage, icon:'error'}).then(()=>{})
+        Toast.fire({text:responseData.responseMessage, icon:'error'})
       }
     }).catch(error => {
         console.log(error)
@@ -55,7 +66,7 @@ export const actions = {
       let responseData = response.data
       commit("updateLoading",false)
       if(responseData.responseCode === "00"){
-        Swal.fire({ text:responseData.responseMessage, icon:'success'}).then(()=>{
+        Toast.fire({ text:responseData.responseMessage, icon:'success'}).then(()=>{
           ApikeyService.callReadApiKeyOrgansation({
             apikeyOrganisationId:payload.organisationId
           }).then(response1 => {
@@ -69,7 +80,7 @@ export const actions = {
           })
         })
       }else{
-        Swal.fire({ text:responseData.responseMessage, icon:'error'}).then(()=>{})
+        Toast.fire({ text:responseData.responseMessage, icon:'error'}).then(()=>{})
       }
     }).catch(error => {
         console.log(error)
@@ -81,9 +92,9 @@ export const actions = {
     let responseData = response.data
     commit("updateLoading",false)
     if(responseData.responseCode === "00"){
-      Swal.fire({ text:responseData.responseMessage, icon:'success'}).then(()=>{})
+      Toast.fire({ text:responseData.responseMessage, icon:'success'}).then(()=>{})
     }else{
-      Swal.fire({ text:responseData.responseMessage, icon:'error'}).then(()=>{})
+      Toast.fire({ text:responseData.responseMessage, icon:'error'}).then(()=>{})
     }
   }).catch(error => {
     console.log(error)

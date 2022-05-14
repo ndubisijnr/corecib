@@ -10,7 +10,8 @@
               <span class="arrow ni ni-bold-down text-primary" id="arrow"></span>
               <div class="mt-3">
               <h4 class="text-white">{{currentOrganisation.organisationName}}</h4>
-              <h4 class="small text-white">{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
+              <h4 class="small text-white" id="id" v-if="currentOrganisation.organisationId" >{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
+              <h4 class="small text-white"  id="id" v-else >regenerating...</h4>
               </div>
             </div>
           </div>
