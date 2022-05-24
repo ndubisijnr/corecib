@@ -3,13 +3,13 @@
     :is="baseComponent"
     :to="link.path ? link.path : '/'"
     class="nav-item"
-    :class="{ active: isActive }"
+    :class="{ 'active': isActive }"
     tag="li"
   >
     <a
       v-if="isMenu"
-      class="sidebar-menu-item nav-link"
-      :class="{ active: isActive }"
+      class="sidebar-menu-item nav-link active"
+      :class="{ 'active': !isActive }"
       :aria-expanded="!collapsed"
       data-toggle="collapse"
       @click.prevent="collapseMenu"
@@ -31,7 +31,7 @@
         v-show="!collapsed"
         class="collapse show"
       >
-        <ul class="nav nav-sm flex-column">
+        <ul class="nav nav-sm flex-column" :class="{'active':!isActive}">
           <slot></slot>
         </ul>
       </div>
@@ -46,12 +46,12 @@
         @click.native="linkClick"
         :is="elementType(link, false)"
         class="nav-link"
-        :class="{ active: link.active }"
+        :class="{ 'active': link.active }"
         :target="link.target"
         :href="link.path"
       >
         <template v-if="addLink">
-          <span class="nav-link-text">{{ link.name }}</span>
+          <span class="nav-link-text" >{{ link.name }}</span>
         </template>
         <template v-else>
           <i :class="link.icon"></i>
@@ -123,14 +123,16 @@ export default {
       return this.children.length > 0 || this.menu === true;
     },
     isActive() {
+      let b;
       if (this.$route && this.$route.path) {
-        let matchingRoute = this.children.find(c =>
-          this.$route.path.startsWith(c.link.path)
-        );
+        let matchingRoute = this.children.find(c => this.$route.path.startsWith(c.link.path));
+        b=matchingRoute
         if (matchingRoute !== undefined) {
           return true;
         }
       }
+      console.log(b)
+
       return false;
     }
   },
@@ -192,14 +194,10 @@ export default {
   }
 };
 </script>
-<style>
-.navbar-vertical.navbar-expand-xs .navbar-nav > .nav-item > .nav-link.active{
-  background: black !important;
-}
+<style scoped>
 
-
-.nav-link-text .active{
-  color: black ;
+.active{
+  background-color: black !important;
 }
 
 .nav-link{
@@ -207,10 +205,9 @@ export default {
   font-size: 15px !important;
 }
 
-.nav-link-text{
-  color: white !important;
-  padding: 0;
-}
+/*.nav-link-text{*/
+/*  color: white;*/
+/*}*/
 
 .sidebar-menu-item .active{
   background-color: black !important;

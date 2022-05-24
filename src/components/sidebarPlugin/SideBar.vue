@@ -38,7 +38,7 @@
   
         </b-collapse>
       </div> -->
-      <div class="navbar-inner mt-3">
+      <div class="navbar-inner mt-4">
         <ul class="navbar-nav one">
           <slot name="links">
             <sidebar-item
@@ -182,7 +182,7 @@ export default {
   padding-top: 4px;
   width: 100%;
   /*background-color: #e7e7ef;*/
-  background: linear-gradient(to bottom,#3F88Cd,#3F88C5);
+  background: linear-gradient(to bottom,#3F88Cd, #236395);
   /* position: absolute; */
   left: 0;
   height: 90px;
@@ -280,7 +280,4 @@ export default {
   text-align: left;
 }
 
-.link-drop:hover {
-  color: #736f6f;
-}
 </style>

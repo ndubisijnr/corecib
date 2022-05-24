@@ -501,8 +501,8 @@
 
                       <template #modal-footer="{ cancel }">
                         <!-- Emulate built in modal footer ok and cancel button actions -->
-                        <b-button size="sm" variant="success" @click="regenerateApiKey()">
-                          Proceed
+                        <b-button size="sm" variant="success" @click="regenerateApiKey()" :disabled="apikeyloading">
+                          {{ apikeyloading ? 'Regenerating..' : 'Proceed'}}
                         </b-button>
                         <b-button size="sm" variant="danger" @click="cancel()">
                           Cancel
@@ -743,6 +743,8 @@ export default {
       payoutloading: (state) => state.accountPayout.accloading,
       readonlybank: (state) => state.accountPayout.readOnlyAddedBanks,
       createloader: (state) => state.accountPayout.addbankloading,
+      apikeyloading: (state) => state.apiKey.loading,
+
 
       //documents:(state) => state.document.document
     }),
