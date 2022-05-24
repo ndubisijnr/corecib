@@ -1,5 +1,5 @@
 <template>
-  <div class="sidenav  navbar-vertical fixed-left navbar-expand-xs"
+  <div class="sidenav navbar-vertical fixed-left navbar-expand-xs"
        @mouseenter="$sidebar.onMouseEnter()"
        @mouseleave="$sidebar.onMouseLeave()">
     <div class="scrollbar-inner" ref="sidebarScrollArea">
@@ -7,9 +7,9 @@
 
            <div class="add-business" @click="toogleD()">
             <div class="">
-              <span class="arrow ni ni-bold-down text-primary" id="arrow"></span>
+              <span class="arrow ni ni-bold-down" id="arrow"></span>
               <div class="mt-3">
-              <h4 class="text-white">{{currentOrganisation.organisationName}}</h4>
+              <h4 class="elispe text-white" id="orgname">{{currentOrganisation.organisationName}}</h4>
               <h4 class="small text-white" id="id" v-if="currentOrganisation.organisationId" >{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
               <h4 class="small text-white"  id="id" v-else >regenerating...</h4>
               </div>
@@ -182,13 +182,20 @@ export default {
   padding-top: 4px;
   width: 100%;
   /*background-color: #e7e7ef;*/
-  background-color: rgba(2, 32, 61, 0.99);
+  background: linear-gradient(to bottom,#3F88Cd,#3F88C5);
   /* position: absolute; */
   left: 0;
   height: 90px;
   cursor: pointer;
   transition: .2s ease-out;
 
+}
+
+.elispe{
+  width: 105px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 #k{
@@ -198,7 +205,8 @@ export default {
   top: 44px;
   left: 0;
   /*background-color: #e7e7ef;*/
-  background-color: rgba(2, 32, 61, 0.99);
+  background-color:var(--primary);
+  color: #ffffff !important;
   /*background-color: #91a0af;*/
   width: 100%;
   transition: 2s ease;
@@ -208,9 +216,10 @@ export default {
 .arrow{
   position: absolute;
   right: 20px;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 900;
   transform: rotate(0deg);
+  color: #ffffff;
 }
 
 .rotate90 {
@@ -229,7 +238,7 @@ export default {
  */
 
 .sidenav{
-  background-color: rgba(1,34,63,0.96);
+  background-color: var(--primary);
   border: none !important;
   overflow: hidden !important;
 } 

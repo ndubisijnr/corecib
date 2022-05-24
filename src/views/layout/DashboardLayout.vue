@@ -3,7 +3,7 @@
     <side-bar>
       <template slot="links">
         <span v-for="sidebar in sidebarItems" v-bind:key="sidebar.header">
-          <h6 class="navbar-heading pt-2 pb-0 text-muted">{{ sidebar.header }}</h6>
+          <h6 class="navbar-heading pt-2 pb-0 text-white">{{ sidebar.header }}</h6>
           <sidebar-item v-for="item in sidebar.items" :link="{
             name: item.name,
             icon: item.icon,

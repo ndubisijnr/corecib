@@ -74,16 +74,12 @@ export default {
     align-items: flex-end;
     justify-content:center;
     height: 46px;
-    /* padding-left: 200px; */
     width: 100%;
-    /* position: fixed; */
     z-index: 5;
 }
 
 .myalert h3{
       font-size: 13px;
-
-
 }
 
 </style>

@@ -32,12 +32,14 @@ const SidebarStore = {
       docClasses.remove('g-sidenav-pinned')
       docClasses.remove('g-sidenav-show')
       document.getElementById('id').style.display ="none"
+      document.getElementById('orgname').style.display ="none"
 
     } else {
       docClasses.add('g-sidenav-pinned')
       docClasses.add('g-sidenav-show')
       docClasses.remove('g-sidenav-hidden')
       document.getElementById('id').style.display ="block"
+      document.getElementById('orgname').style.display ="block"
 
     }
     if (this.hovered) {
@@ -52,6 +54,7 @@ const SidebarStore = {
       document.body.classList.add('g-sidenav-show')
       document.body.classList.remove('g-sidenav-hidden')
       document.getElementById('id').style.display ="block"
+      document.getElementById('orgname').style.display ="block"
 
     }
   },
@@ -65,6 +68,7 @@ const SidebarStore = {
         docClasses.remove('g-sidenav-hide')
         docClasses.add('g-sidenav-hidden')
         document.getElementById('id').style.display ="none"
+        document.getElementById('orgname').style.display ="none"
 
       }, 300)
     }

@@ -97,6 +97,7 @@
         <b-icon-file
           style="cursor: pointer; width: 25px; height: 15px"
           @click="getValueCallVAT(row.item.accountNumber)"
+          title="view virtual account transactions"
         />
         <b-icon-eye-slash
           style="cursor: pointer; width: 25px; height: 15px"

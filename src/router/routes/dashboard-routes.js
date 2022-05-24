@@ -1,5 +1,6 @@
 import GetStarted from '../../views/dashboard/GetStarted'
 import NewBusiness from '../../views/auth/NewBusiness'
+import Pricing from "@/views/dashboard/Pricing";
 
 
 export default [
@@ -16,5 +17,11 @@ export default [
         name: 'NewBusiness',
         meta: {layout: 'dashboard',authRequired:true},
         component: NewBusiness
+    },
+    {
+        path: '/dashboard/pricing',
+        name: 'Pricing',
+        meta: {layout: 'dashboard',authRequired:true},
+        component: Pricing
     },
 ];

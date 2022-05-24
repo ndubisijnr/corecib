@@ -28,13 +28,9 @@
                     </div>
                     <b-collapse id="accordion-1" accordion="my-accordion" role="tabpanel">
                       <div>
-                        <b-container class="p-3" v-if="!loading">
-                          <div style="
-                              width: 100%;
-                              display: flex;
-                              justify-content: center;
-                            ">
-                            <b-form class="container p-3 form-group" style="width: 50%">
+                        <div class="p-3" v-if="!loading">
+                          <div class="personal-profile">
+                            <b-form class="container p-3 form-group">
                               <!-- <h3 class="text-center">
                                 <i
                                   class="fa fa-user-circle profile-settings"
@@ -67,7 +63,7 @@
                               </base-button>
                             </b-form>
                           </div>
-                        </b-container>
+                        </div>
                       </div>
                     </b-collapse>
                   </div>
@@ -77,7 +73,7 @@
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-2 variant="none" class="p-3" style="color:black;">
                         <h3>
-                          <b-icon-check-circle style="font-size: 25px"></b-icon-check-circle>
+<!--                          <b-icon-check-circle style="font-size: 25px"></b-icon-check-circle>-->
                           Business Information
                         </h3>
                         <p>
@@ -86,15 +82,8 @@
                       </div>
                     </div>
                     <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
-                      <div style="
-                          width: 100%;
-                          display: flex;
-                          justify-content: center;
-                          margin:10px;
-
-                        ">
-                        <form class="form-group" @submit.prevent="updateOrginasation()"
-                          style="width: 65%;padding:30px; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);color:black">
+                      <div class="business-profile">
+                        <form class="form-group" @submit.prevent="updateOrginasation()">
                           <!-- <h3 class="text-center">
                             <i class="fa fa-user-circle profile-settings"></i>
                           </h3>
@@ -135,9 +124,7 @@
                                 I am tooltip <b>component</b> content!
                               </b-tooltip>
                               <div class="col mb-3">
-                                <label for="floatingInput1">Director's BVN Number </label> <i
-                                  class="fa fa-info-circle text-danger" style="font-size:15px;" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" title="Tooltip on top"></i>
+                                <label for="floatingInput1">Director's BVN Number </label>
                                 <input type="number" class="form-control" id="floatingInput1"
                                   placeholder="Director's BVN Number" v-model="organisation.organisationDirectorBvn"
                                   required />
@@ -167,9 +154,7 @@
                             </div>
                             <div class="row">
                               <div class="col mb-3">
-                                <label for="floatingInput3">Organization Type</label> <i
-                                  class="fa fa-info-circle text-danger" style="font-size:15px;" data-bs-toggle="tooltip"
-                                  data-bs-placement="top" title="Tooltip on top"></i>
+                                <label for="floatingInput3">Organization Type</label>
                                 <select class="form-select form-control" aria-label="Default select example" required
                                   v-model="organisation.organisationType">
                                   <option data-v-00a70ddc="" value="Agric produce">
@@ -329,16 +314,11 @@
                           <div>
                             <div class="">
                               <span :class="{ 'spinner-border': loadingDoc }"></span>
-                              <div>
+                              <div class="doc">
                                 <div v-if="'data' in documents">
                                   <!-- Card body -->
 
-                                  <div class="" style="
-                                      display: flex;
-                                      align-items: center;
-                                      flex-wrap: nowrap;
-                                      color:black;
-                                    ">
+                                  <div class="document">
                                     <div class="" v-for="(doc, index) in documents.data" :key="index">
                                       <div v-if="
                                         'documentStatus' in doc &&
@@ -569,7 +549,7 @@
                               display: flex;
                               justify-content: center;
                             ">
-                            <div class="container p-3 form-group" style="width: 500px">
+                            <div class="container p-3 form-group" style="width: 330px">
                               <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingInput1"
                                   placeholder="name@example.com" :value="
@@ -599,7 +579,7 @@
                           </div>
                         </b-container>
                       </div>
-                    <div style="width: 400px" v-else>
+                    <div style="width: 300px" v-else>
                       <div style="position: absolute;top: 20px;left:20px">
                         <b-button @click="edit = false">Cancel</b-button>
                       </div>
@@ -1040,6 +1020,10 @@ export default {
 };
 </script>
 <style lang="css" scoped>
+
+.form-group{
+  width: 50%;
+}
 .APIWebhooks {
   display: flex;
   justify-content: center;
@@ -1048,6 +1032,12 @@ export default {
 
 .body {
   min-height: 100vh
+}
+
+@media(max-width: 999px){
+  .form-group{
+    width: 100%;
+  }
 }
 
 .profile-settings {
@@ -1067,6 +1057,10 @@ export default {
 .carddd {
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
   background-color: white;
+}
+
+.doc{
+  overflow-x: scroll;
 }
 
 .cardd {
@@ -1108,9 +1102,34 @@ input::-webkit-inner-spin-button {
   margin: 20px;
 }
 
+.business-profile{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin:10px;
+    overflow-x: scroll;
+}
 .bformedit {
   width: 100%;
   margin-top: 2%;
+}
+
+.document{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  color:black;
+}
+
+@media (max-width:999px) {
+  .document{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    color:black;
+    width: 300px;
+  }
+
 }
 
 .our-team {
@@ -1139,6 +1158,22 @@ input::-webkit-inner-spin-button {
   width: 40%;
   padding: 20px;
 
+}
+
+.personal-profile{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+
+
+@media(max-width: 999px){
+  .password-form {
+    width: 100%;
+    padding: 20px;
+
+  }
 }
 
 .our-team .picture {

@@ -6,22 +6,24 @@
     <base-header class="pb-6" type="">
     </base-header>
     <div class="container-fluid mt--6">
-      <div class="cardd p-3 m-3">
+      <div class="cardd mt-2">
         <div>
           <h1 class="m-b- text-center"><b>Hello {{ user.customerFirstName }}, Welcome to BizGem</b></h1>
           <h2 class="text-center">Your business is in <span v-if="getStage === 'DEV'">Test</span><span
               v-else>Live</span> mode</h2>
+          <div class="mb">
           <div class="card-area">
-            <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false"
-              :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
-            <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'"
-              :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'">
-            </dashboard-card>
-            <dashboard-card :value="currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'">
-            </dashboard-card>
-            <dashboard-card :showBtn="false" :showBtn1="false"
-              :value="currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'">
-            </dashboard-card>
+              <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false"
+                :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
+              <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'"
+                :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'">
+              </dashboard-card>
+              <dashboard-card :value="currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'">
+              </dashboard-card>
+              <dashboard-card :showBtn="false" :showBtn1="false"
+                :value="currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'">
+              </dashboard-card>
+        </div>
           </div>
           <div class="mb-3 text-center">
             <b-button style="background-color:#3F88C5;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>
@@ -51,7 +53,7 @@
           <code>
                    <span class="mb-3 text-dark">Bank Name: {{ items.accountOtherBankName }}</span><br>
                     <span class="mb-3 text-dark">Account Name: {{ items.accountName }}</span><br>
-                    <span class="mb-3 text-dark" >Account Name: <span :id="items.accountNumber">{{ items.accountNumber }}</span></span>
+                    <span class="mb-3 text-dark" >Account Number: <span :id="items.accountNumber">{{ items.accountNumber }}</span></span>
                 </code>
         </div>
       </div>
@@ -183,10 +185,6 @@ svg:not(:root) {
 .badge {}
 
 
-.onboarding-title {
-  padding: 20px 0 0;
-}
-
 .spinner-border {
   display: inline-block;
   width: 1rem;
@@ -205,46 +203,10 @@ svg:not(:root) {
   }
 }
 
-.inner-card {
-  display: flex;
-  justify-content: space-around;
-  padding: 30px;
-  line-height: 3rem;
-  font-family: "Fibon Sans";
-}
-
-@media (max-width:999px) {
-  .inner-card {
-    display: flex;
-    justify-content: space-around;
-    padding: 5px;
-    flex-direction: column-reverse;
-    line-height: 3rem;
-    font-family: "Fibon Sans";
-  }
-
-  .itemabc123 {
-    width: auto;
-    display: flex;
-    /* align-items: center; */
-    justify-content: space-around;
-    flex-direction: column-reverse;
-
-  }
-}
-
-.itemabc123 {
-  width: 100%;
-  display: flex;
-  /* align-items: center; */
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
 
 .cardd {
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 10%);
   background-color: white;
-
 
 }
 
@@ -263,6 +225,27 @@ svg:not(:root) {
   /* border: solid yellow; */
   padding: 10px;
   width: 100%;
+}
+
+@media (max-width:999px){
+  .card-area{
+    display: flex;
+    width: 250%;
+  }
+
+
+  .cardd {
+    box-shadow: none;
+    background-color: transparent;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .mb{
+    width: 100%;
+    overflow: scroll;
+
+  }
 }
 
 .itemabc1234 {
