@@ -3020,6 +3020,11 @@ core-js@^3.14.0, core-js@^3.6.5:
   resolved "https://registry.npmjs.org/core-js/-/core-js-3.21.0.tgz"
   integrity sha512-YUdI3fFu4TF/2WykQ2xzSiTQdldLB4KVuL9WeAy5XONZYt5Cun/fpQvctoKbCgvPhmzADeesTk/j2Rdx77AcKQ==
 
+core-js@^3.6.4:
+  version "3.22.7"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.22.7.tgz#8d6c37f630f6139b8732d10f2c114c3f1d00024f"
+  integrity sha512-Jt8SReuDKVNZnZEzyEQT5eK6T2RRCXkfTq7Lo09kpm+fHjgGewSbNjV+Wt4yZMhPDdzz2x1ulI5z/w4nxpBseg==
+
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.2.tgz"
@@ -3285,6 +3290,11 @@ csso@^4.0.2:
   integrity sha512-kS7/oeNVXkHWxby5tHVxlhjizRCSv8QdU7hB2FpdAibDU8FjTAolhNjKNTiLzXtUrKT6HwClE81yXwEk1309wg==
   dependencies:
     css-tree "1.0.0-alpha.37"
+
+currency-flags@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/currency-flags/-/currency-flags-2.1.2.tgz#483bbc69fcc7f0de00ec3a781047767311feba9d"
+  integrity sha512-AZJd+8cq3Ikxfrp14bU8EDzdyogEOBhSJE7xqkYVYE1QYPq+EGs8sXKxXU9ik5AG18L0VEBRd6I+wl9tzefbFQ==
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -9552,6 +9562,16 @@ vue-country-code@^1.1.3:
   resolved "https://registry.npmjs.org/vue-country-code/-/vue-country-code-1.1.3.tgz"
   integrity sha512-tc3q8iDfTGNo8fVECD6tnyDXYERDdRrbF7v5dx5SywfQfabHn4JDgjDtxBKJxXwSHJULRzeQphcYNuHu0+sx2Q==
 
+vue-currency-select@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/vue-currency-select/-/vue-currency-select-0.2.1.tgz#5f3f733afc935286b33aa11a417e662198c03e9e"
+  integrity sha512-k6BoxFsvHQimQJushAjiyK2kKmOdET8JqBq5vMOaflw+zr8rifwG2mJBm8pS9zTAkBF4noSgivHgzvXygsi/tw==
+  dependencies:
+    core-js "^3.6.4"
+    currency-flags "^2.1.1"
+    vue "^2.6.11"
+    vue-select "^3.9.5"
+
 vue-datetime@^1.0.0-beta.14:
   version "1.0.0-beta.14"
   resolved "https://registry.npmjs.org/vue-datetime/-/vue-datetime-1.0.0-beta.14.tgz"
@@ -9672,6 +9692,11 @@ vue-select@^3.11.2:
   version "3.11.2"
   resolved "https://registry.npmjs.org/vue-select/-/vue-select-3.11.2.tgz"
   integrity sha512-pIOcY8ajWNSwg8Ns4eHVr5ZWwqKCSZeQRymTnlUI8i+3QiQXF6JIM4lylK6mVfbccs4S6vOyxB7zmJBpp7tDUg==
+
+vue-select@^3.9.5:
+  version "3.18.3"
+  resolved "https://registry.yarnpkg.com/vue-select/-/vue-select-3.18.3.tgz#31f188d7181a4a86d07b937303c457efe863c4bc"
+  integrity sha512-nKmwxEDO4RRoZ6lWkkVE2bpgne7IJSRzSh1pIawLI7dJLZbtJuSgA0xGaLrT0pUp+JYHBDul242PwOBDHi28vg==
 
 vue-step-progress@^0.3.7:
   version "0.3.7"

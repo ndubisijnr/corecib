@@ -9,7 +9,7 @@ class VirtualAccountRequest {
         phoneNumber: null,
         accountParent: null,
         bvn: null,
-        channelBankCode: null,
+        channelBankCode: "VFD MFB",
         dob: null
     }
 

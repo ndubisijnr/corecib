@@ -20,8 +20,7 @@
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-1 variant="none" class="p-3" style="color:black;">
                         <h3>
-                          <b-icon-check-circle style="font-size: 25px"></b-icon-check-circle>
-                          Personal Info
+                          Personal Info <span class="small text-success">(completed)</span>
                         </h3>
                         <p>You can update your personal info here.</p>
                       </div>
@@ -73,8 +72,9 @@
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-2 variant="none" class="p-3" style="color:black;">
                         <h3>
-<!--                          <b-icon-check-circle style="font-size: 25px"></b-icon-check-circle>-->
                           Business Information
+                          <span v-if='organisation.organisationDirectorBvn != null' class="small text-success">(completed)</span>
+                          <span v-else='organisation.organisationDirectorBvn == null' class="small text-danger">(not updated)</span>
                         </h3>
                         <p>
                           Update your business information here
@@ -294,7 +294,6 @@
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-3 variant="none" class="p-3" style="color:black;">
                         <h3>
-                          <b-icon-check-circle style="font-size: 25px"></b-icon-check-circle>
                           Document upload
                         </h3>
                         <p>
@@ -457,15 +456,15 @@
                 <div class="change-password">
                   <form @submit.prevent="changePassword()" class="password-form">
                     <div class="form-floating mb-3">
-                      <input class="form-control" placeholder="Old password" v-model="changePasswordModel.customerOldPassword" required>
+                      <input type="password" class="form-control" placeholder="Old password" v-model="changePasswordModel.customerOldPassword" required>
                       <label>Old Password</label>
                     </div>
                        <div class="form-floating mb-3">
-                      <input class="form-control" placeholder="New password" v-model="changePasswordModel.customerPassword" required>
+                      <input type="password" class="form-control" placeholder="New password" v-model="changePasswordModel.customerPassword" required>
                       <label>New Password</label>
                     </div>  
                      <div class="form-floating mb-3">
-                      <input class="form-control" placeholder="Comfirm password" v-model="changePasswordModel.customerPasswordConfirmation" required>
+                      <input type="password" class="form-control" placeholder="Comfirm password" v-model="changePasswordModel.customerPasswordConfirmation" required>
                       <label>Comfirm Password</label>
 
                     </div>
@@ -640,7 +639,7 @@
 
                     <div>
                       <i class="fa fa-ban" aria-hidden="true" style="font-size: 46px; margin: 10px"></i>
-                      <h5>You seem to not have any bank account added.</h5>
+                      <h5>You do not have any payout bank account added.</h5>
                       <b-button @click="show = true">Add Bank</b-button>
                     </div>
                   </div>

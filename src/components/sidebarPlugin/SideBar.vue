@@ -11,7 +11,12 @@
               <div class="mt-3">
               <h4 class="elispe text-white" id="orgname">{{currentOrganisation.organisationName}}</h4>
               <h4 class="small text-white" id="id" v-if="currentOrganisation.organisationId" >{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
-              <h4 class="small text-white"  id="id" v-else >regenerating...</h4>
+              <h4 class="small text-white " id="id"  v-else > regenerating ID... </h4>
+              </div>
+              <div class="mt-3 only-mobile">
+                <h4 class="elispe text-white">{{currentOrganisation.organisationName}}</h4>
+                <h4 class="small text-white" v-if="currentOrganisation.organisationId" >{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
+                <h4 class="small text-white" v-else >regenerating...</h4>
               </div>
             </div>
           </div>
@@ -38,8 +43,8 @@
   
         </b-collapse>
       </div> -->
-      <div class="navbar-inner mt-4">
-        <ul class="navbar-nav one">
+      <div class="navbar-inner mt-4 text-white">
+        <ul class="navbar-nav one text-white">
           <slot name="links">
             <sidebar-item
                 v-for="(link, index) in sidebarLinks"
@@ -241,6 +246,7 @@ export default {
   background-color: var(--primary);
   border: none !important;
   overflow: hidden !important;
+  color: white !important;
 } 
 
 .rotate90 {
@@ -258,6 +264,14 @@ export default {
   border-radius: 50%;
   -webkit-animation: spinner-border .75s linear infinite;
   animation: spinner-border .75s linear infinite;
+}
+.only-mobile{
+  display: none;
+}
+@media(max-width:999px){
+  .only-mobile{
+    display:block;
+  }
 }
 
 @keyframes spinner-border {

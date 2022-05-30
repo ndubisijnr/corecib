@@ -10,8 +10,8 @@
       stacked="md"
       style="font-size: 12px"
       striped
+      :busy="loading"
       :items="items"
-      :busy="isBusy"
       :fields="fields"
       :current-page="currentPage"
       :per-page="perPage"
@@ -115,6 +115,7 @@
 
       <template #cell(walletAction)="row">
         <h3 v-if="loading">Loading</h3>
+        <b-icon-plus-circle @click="show = true" title="Create Virtual Account"  style="cursor: pointer; width: 25px; height: 15px"></b-icon-plus-circle>
         <b-icon-file
           style="cursor: pointer; width: 25px; height: 15px"
           @click="getValue(row.item.accountNumber)"
@@ -183,6 +184,7 @@ import Swal from "sweetalert2";
 import WalletRequest from "../../model/request/WalletRequest";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
+import BIZ from "@/assets/BIZ.gif"
 export default {
   props: [
     "items",
@@ -199,6 +201,7 @@ export default {
   data() {
     return {
       show: false,
+      loaderImage:BIZ,
       walletTransactionmodel: WalletRequest.readWalletTransaction,
       virtualAccountTransactionmodel:
         VirtualAccountRequest.readVirtualAccountTransactions,
@@ -421,3 +424,23 @@ export default {
   },
 };
 </script>
+<style scoped>
+
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spinner-border 0.75s linear infinite;
+  animation: spinner-border 0.75s linear infinite;
+}
+</style>

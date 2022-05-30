@@ -23,7 +23,7 @@ export default {
       if(routeLayout !== "auth"){
         const userToken = localStorage.getItem('token')
         StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
-        console.clear()
+        // console.clear()
       }else{
         localStorage.clear()
       }

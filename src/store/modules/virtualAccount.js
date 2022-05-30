@@ -1,12 +1,15 @@
 import VirtualAccountService from "../../service/VirtualAccountService"
 import BaseResponse from "../../model/reponse/BaseResponse"
+import VirtualAccountResponse from "../../model/reponse/VirtualAccountResponse";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
+import swal from "sweetalert2";
 
 export const state = {
   loading: false,
   virtualAccount: BaseResponse.list,
   virtualaccounttransaction:{},
-  bankList:{}
+  bankList:{},
+  virtualAccountCreateResponse:VirtualAccountResponse.createVirtualAccount
 
 }
 
@@ -16,6 +19,9 @@ export const mutations = {
 
   updateLoading: (state, payload) => {
     state.loading = payload
+  },
+  updateVirtualAccountCreate:(state, payload) => {
+    state.virtualAccountCreateResponse = payload
   },
   updateVirtualAccount: (state, payload) => {
     state.virtualAccount = payload
@@ -43,6 +49,24 @@ export const actions = {
       .catch(error => {
         console.log(error)
       })
+
+  },
+
+  updateVirtualAccountCreate:({commit}, payload = VirtualAccountRequest.createVirtualAccount) => {
+    commit("updateLoading", true)
+    return VirtualAccountService.callCreateVirtualAccountApi(payload).then(response => {
+      let responseData = response.data
+      if (responseData.responseCode === "00") {
+        commit("updateLoading", false)
+        commit("updateVirtualAccountCreate", responseData)
+        swal.fire({text:responseData.responseMessage, icon:'success'})
+      }else{
+        commit("updateLoading", false)
+        swal.fire({text:responseData.responseMessage, icon:'error'})
+      }
+    }).catch(error => {
+      swal.fire({text:error, icon:'error'})
+    })
 
   },
 

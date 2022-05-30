@@ -1,6 +1,10 @@
 <template>
   <div>
     <div class="mt-4">
+      <div class="mr-4 text-right">
+        <b-button @click="show = true" style="background-color:var(--primary);border:none;color:white"><i class="fa fa-plus"></i> Create Wallet
+        </b-button>
+      </div>
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
         <search-form :module="searchWALLET"/>
       </div>
@@ -10,6 +14,7 @@
         filter-mode="default"
         :is-busy="loading" />
     </div>
+    <create-wallet-form @closeWalletForm="updateWalletForm" :showWalletForm="show"></create-wallet-form>
   </div>
 </template>
 <script>
@@ -18,6 +23,7 @@ import WalletRequest from "../../model/request/WalletRequest"
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BaseTable from "../../components/table/BaseTable";
 import SearchModuleutil from "../../util/constant/SearchModuleutil"
+import CreateWalletForm from "@/components/form/CreateWalletForm";
 
 
 
@@ -27,7 +33,8 @@ export default {
   name: "Wallet",
   components: {
     SearchForm,
-    BaseTable
+    BaseTable,
+    CreateWalletForm
   },
   data() {
     return {
@@ -35,6 +42,7 @@ export default {
       maxDatetime: "2022-04-01",
       startDate: "",
       endDate: "",
+      show: false,
 
       light: "light",
       allWalletModel: WalletRequest.readWallet,
@@ -71,6 +79,9 @@ export default {
     }
   },
   methods: {
+    updateWalletForm(value) {
+      this.show = value;
+    },
   },
   computed: {
     sortOptions() {
@@ -135,6 +146,13 @@ export default {
   border-radius: 50%;
   -webkit-animation: spinner-border 0.75s linear infinite;
   animation: spinner-border 0.75s linear infinite;
+}
+
+.wallet-button{
+  width: 12%;
+  position: absolute;
+  right: 30px;
+  z-index: 1;
 }
 
 .dispute-table {

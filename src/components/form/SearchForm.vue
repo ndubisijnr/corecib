@@ -1,14 +1,10 @@
 <template>
-  <b-breadcrumb>
 
-    <div class="row">
       <b-form @submit.prevent="fetchResult">
         <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3"> -->
-        <div class="" style="display: flex;">
-          <div class="">
-
+        <div class="form-area">
+          <div class="transaction-period pl-2">
             <base-input :label="label">
-
               <el-select class="select-danger" filterable placeholder="" @change="getStartEndDate()" v-model="type"
                 required>
                 <el-option v-for="option in options" class="select-danger" :value="option.value" :label="option.label"
@@ -32,16 +28,14 @@
               </div>
             </div>
           </div>
-          <div class="d-flex align-items-end" >
-            <base-input label="Search" input-classes="form-control" name="Report Name" v-model="searchValue"
-              placeholder="Search Here" class="ml-2" v-if="module != 'payoutTransactions'">
+          <div class="d-flex align-items-end">
+            <base-input input-classes="form-control" name="Report Name" v-model="searchValue"
+              placeholder="Search Here" class="ml-2 control" v-if="module != 'payoutTransactions'">
             </base-input>&nbsp;
-            <base-button :loading="loading" icon="b-icon-search" title="Search" />
+            <base-button :loading="loading" icon="b-icon-search" />
           </div>
         </div>
       </b-form>
-    </div>
-  </b-breadcrumb>
 </template>
 
 <script>
@@ -305,14 +299,14 @@ export default {
   },
   mounted() {
     if (this.module === "wallet") {
-        this.label = "Wallet Creation Peroid"
+        this.label = "Wallet Creation Period"
     }else if(this.module === "virtualAccount"){
-        this.label = "Account Creation Peroid"
+        this.label = "Account Creation Period"
     }
     else if(this.module === "payoutTransactions"){
-        this.label = "Payout Transaction Peroid"
+        this.label = "Payout Transaction Period"
     }else{
-        this.label = "Transaction Peroid"
+        this.label = "Transaction Period"
     }
   console.log(this.maxDatetime)
   }
@@ -328,7 +322,20 @@ export default {
   }
 }
 
-@media (max-width: 500px) {}
+.form-area{
+  display: flex;
+  width: 100%;
+}
+
+@media (max-width: 999px) {
+  .form-area{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .transaction-period{
+   margin-top: 5px;
+  }
+}
 
 /*input[type="text"] {
    display: flex;
@@ -357,6 +364,17 @@ span {
   vertical-align: middle;
   border-style: none;
 }
+
+.control{
+  width: 100%;
+}
+
+.transaction-period{
+  display: flex;
+  justify-content: start;
+}
+
+
 
 .card-profile-image span:hover {
   -webkit-transform: translate(-50%, -50%) scale(1.03);

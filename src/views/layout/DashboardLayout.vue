@@ -29,6 +29,7 @@ import DashboardSidebarItems from "../../util/sidebarUtils/DashboardSidebarItems
 import ReportSidebarItems from "../../util/sidebarUtils/ReportSidebarItems";
 import SettingsSidebarItems from "../../util/sidebarUtils/SettingsSidebarItems";
 import UserSidebarItems from "../../util/sidebarUtils/UserSidebarItems";
+import DocumentationSidebarItems from "@/util/sidebarUtils/DocumentationSidebarItems";
 
 function hasElement(className) {
   return document.getElementsByClassName(className).length > 0;
@@ -68,7 +69,7 @@ export default {
   },
   computed:{
     sidebarItems(){
-      return [DashboardSidebarItems,ReportSidebarItems,SettingsSidebarItems]
+      return [DashboardSidebarItems,DocumentationSidebarItems,ReportSidebarItems,SettingsSidebarItems]
     },
   },
   mounted() {

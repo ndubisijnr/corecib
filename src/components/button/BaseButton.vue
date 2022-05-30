@@ -2,7 +2,6 @@
     <span>
         <button v-if="loading === true" disabled  class="btn">
             <span  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-          {{(loader)?'':'loading' }}...
         </button>
       <button v-else :style="styles" class="btn" :disabled="disabled">{{title}} <component :is="icon" style="height: 15px;"/></button>
     </span>

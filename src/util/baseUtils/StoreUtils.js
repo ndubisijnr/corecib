@@ -36,7 +36,8 @@ class StoreUtils {
     virtualAccount: {
       updateVirtualAccount: "virtualAccount/updateVirtualAccount",
       updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions",
-      updateReadBankList:"virtualAccount/updateReadBankList"
+      updateReadBankList:"virtualAccount/updateReadBankList",
+      updateVirtualAccountCreate:"virtualAccount/updateVirtualAccountCreate"
     },
     walletTransactions: {
       updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions",
@@ -44,6 +45,7 @@ class StoreUtils {
       updateReadAllWallets: "walletTransactions/updateReadAllWallets",
       updateWalletTransactions: "walletTransactions/updateWalletTransactions",
       updateWallet: "walletTransactions/updateWallet",
+      updateCreatedWallet:"walletTransactions/updateCreatedWallet"
     },
     accountPayout:{
       readAddedBanks:"accountPayout/readAddedBanks",
@@ -86,7 +88,8 @@ class StoreUtils {
       updateLoading: "virtualAccount/updateLoading",
       updateVirtualAccount: "virtualAccount/updateVirtualAccount",
       updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions",
-      updateReadBankList:"virtualAccount/updateReadBankList"
+      updateReadBankList:"virtualAccount/updateReadBankList",
+      updateVirtualAccountCreate:"virtualAccount/updateVirtualAccountCreate"
     },
     walletTransactions: {
       updateLoading: "walletTransactions/updateLoading",
@@ -94,7 +97,10 @@ class StoreUtils {
       updateReadAllWallets: "walletTransactions/updateReadAllWallets",
       updateWalletTransactions: "walletTransactions/updateWalletTransactions",
       updateWallet: "walletTransactions/updateWallet",
-      updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions"
+      updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions",
+      updateCreatedWallet:"walletTransactions/updateCreatedWallet",
+      updateRetrieveLoading:"walletTransactions/updateRetrieveLoading",
+      updateWalletState:"walletTransactions/updateWalletState"
     },
     accountPayout:{
       updateAddedBanks:"accountPayout/updateAddedBanks",

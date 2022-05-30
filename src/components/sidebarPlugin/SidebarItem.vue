@@ -2,18 +2,16 @@
   <component
     :is="baseComponent"
     :to="link.path ? link.path : '/'"
-    class="nav-item"
-    :class="{ 'active': isActive }"
-    tag="li"
-  >
+    class="nav-item text-white"
+    :class="{ 'active-page': Active === link.path}"
+    tag="li">
     <a
       v-if="isMenu"
-      class="sidebar-menu-item nav-link active"
-      :class="{ 'active': !isActive }"
+      class="sidebar-menu-item nav-link"
+      :class="{ 'active': isActive }"
       :aria-expanded="!collapsed"
       data-toggle="collapse"
-      @click.prevent="collapseMenu"
-    >
+      @click.prevent="collapseMenu">
       <template v-if="addLink">
         <span class="nav-link-text">
           {{ link.name }} <b class="caret"></b>
@@ -29,27 +27,24 @@
       <div
         v-if="$slots.default || this.isMenu"
         v-show="!collapsed"
-        class="collapse show"
-      >
-        <ul class="nav nav-sm flex-column" :class="{'active':!isActive}">
-          <slot></slot>
-        </ul>
+        class="collapse show">
+<!--        <ul class="nav nav-sm flex-column" :class="{'active':isActive}">-->
+<!--          <slot></slot>-->
+<!--        </ul>-->
       </div>
     </collapse-transition>
 
     <slot
       name="title"
-      v-if="children.length === 0 && !$slots.default && link.path"
-    >
+      v-if="children.length === 0 && !$slots.default && link.path">
       <component
         :to="link.path"
         @click.native="linkClick"
         :is="elementType(link, false)"
         class="nav-link"
-        :class="{ 'active': link.active }"
+        :class="{ active: link.active }"
         :target="link.target"
-        :href="link.path"
-      >
+        :href="link.path">
         <template v-if="addLink">
           <span class="nav-link-text" >{{ link.name }}</span>
         </template>
@@ -59,10 +54,13 @@
         </template>
       </component>
     </slot>
+
   </component>
+
 </template>
 <script>
 import { CollapseTransition } from 'vue2-transitions';
+
 
 export default {
   name: 'sidebar-item',
@@ -122,17 +120,16 @@ export default {
     isMenu() {
       return this.children.length > 0 || this.menu === true;
     },
+    Active(){
+      return this.$route.path
+    },
     isActive() {
-      let b;
       if (this.$route && this.$route.path) {
         let matchingRoute = this.children.find(c => this.$route.path.startsWith(c.link.path));
-        b=matchingRoute
-        if (matchingRoute !== undefined) {
+         if (matchingRoute !== undefined) {
           return true;
         }
       }
-      console.log(b)
-
       return false;
     }
   },
@@ -196,20 +193,24 @@ export default {
 </script>
 <style scoped>
 
-.active{
-  background-color: black !important;
+.nav-link-text{
+  color: white;
 }
 
-.nav-link{
-  color: white !important;
-  font-size: 15px !important;
+.active-page{
+  background-color: #236395;
+  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
+
+
 }
 
-/*.nav-link-text{*/
-/*  color: white;*/
-/*}*/
-
-.sidebar-menu-item .active{
-  background-color: black !important;
+.fas{
+  color: white;
 }
+
+.fa{
+  color: white;
+}
+
+
 </style>

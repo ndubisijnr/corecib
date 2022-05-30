@@ -1,10 +1,16 @@
 <template>
   <div>
+
     <div class="mt-4">
+      <div class="mr-4 text-right">
+        <b-button @click="show = true" style="background-color:var(--primary);border:none;color:white"><i class="fa fa-plus"></i> Create Virtual Account
+        </b-button>
+      </div>
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
         <search-form :module="searchVirtualAccount"/>
       </div>
     </div>
+    <create-virtual-account @closeAccountForm="updateAccountForm"  :showAccountForm="show"></create-virtual-account>
      <base-table
           :items="accounts.data"
           filter-mode=""
@@ -26,6 +32,7 @@ import BaseTable from "../../components/table/BaseTable"
 import { mapState } from "vuex";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
 import SearchForm from "../../components/form/SearchForm";
+import CreateVirtualAccount from "../../components/form/CreateVirtualAccount";
 import SearchModuleutil from "../../util/constant/SearchModuleutil"
 
 export default {
@@ -33,6 +40,7 @@ export default {
   components: {
     SearchForm,
     BaseTable,
+    CreateVirtualAccount
   },
   data() {
     return {
@@ -40,6 +48,8 @@ export default {
       maxDatetime: "2022-04-01",
       startDate: "",
       endDate: "",
+      show: false,
+
 
       light: "light",
       virtualAccountModel: VirtualAccountRequest.readVirtualAccount,
@@ -71,6 +81,9 @@ export default {
     };
   },
   methods: {
+    updateAccountForm(value) {
+      this.show = value;
+    },
 
   },
 
@@ -103,6 +116,12 @@ export default {
 <style scoped>
 .form-body {
   height: 100%;
+}
+.account-button{
+  width: 18%;
+  position: absolute;
+  right: 30px;
+  z-index: 1;
 }
 
 .card-side {
