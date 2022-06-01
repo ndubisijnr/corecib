@@ -2,7 +2,7 @@
   <div>
 
     <div class="mt-4">
-      <div class="mr-4 text-right">
+      <div class="mr-4 text-right mb-2">
         <b-button @click="show = true" style="background-color:var(--primary);border:none;color:white"><i class="fa fa-plus"></i> Create Virtual Account
         </b-button>
       </div>
@@ -84,6 +84,10 @@ export default {
     updateAccountForm(value) {
       this.show = value;
     },
+
+    updateEvent(value){
+      this.show = value;
+    }
 
   },
 

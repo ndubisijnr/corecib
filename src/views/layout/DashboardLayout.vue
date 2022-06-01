@@ -4,10 +4,10 @@
       <template slot="links">
         <span v-for="sidebar in sidebarItems" v-bind:key="sidebar.header">
           <h6 class="navbar-heading pt-2 pb-0 text-white">{{ sidebar.header }}</h6>
-          <sidebar-item v-for="item in sidebar.items" :link="{
+          <sidebar-item v-for="item in sidebar.items" :target="item.target" :link="{
             name: item.name,
             icon: item.icon,
-            path: item.path }" v-bind:key="item.name"/>
+            path: item.path }" v-bind:key="item.name" />
         </span>
       </template>
     </side-bar>

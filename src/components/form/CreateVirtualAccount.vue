@@ -4,7 +4,8 @@
       <div class="card-head">
         <div class="d-flex justify-content-between">
           <div class="p-1">
-            <span class="small" v-if="sortType == false">The virtual Account can be used to receive funds via bank transfer from any financial institution.All funds sent via the created virtual account will be settled in the wallet address provided.</span>
+            <span class="small" v-if="sortType == false">The virtual account can be used to receive funds via bank transfer from any financial institution. All funds sent via the created virtual account will be settled in the wallet address provided.</span>
+            <span class="small" v-if="sortType == true">Your intended virtual account will be tied to the wallet address of the account number provided.</span>
           </div>
           <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Create Virtual Account"></button>
         </div>
@@ -30,80 +31,70 @@
           <div class="">
             <b-form class="" @submit.prevent="createAccount">
               <div class="input-group mb-3">
-                <div class="mr-4">
-                  <label>Wallet FullName</label>
-                  <input type="text" class="form-control w-100" placeholder="First Name"  :value="wallets.accountName" required disabled>
+                <div class="w-50">
+                  <label>Wallet Name</label>
+                  <input type="text" class="form-control" placeholder="First Name"  :value="wallets.accountName" required disabled>
                 </div>
-                <div class="ml-3 w-50">
-                  <label>Wallet Account Number</label>
-                  <input type="text" class="form-control w-100" placeholder="First Name"  :value="wallets.accountNumber" required disabled>
+                <div class="w-50">
+                  <label>Account Number</label>
+                  <input type="text" class="form-control" placeholder="First Name"  :value="wallets.accountNumber" required disabled>
                 </div>
               </div>
+              <div v-if="next==false">
               <div class="input-group mb-3">
-                <div class="mr-4">
+                <div class="w-100 mb-3">
                   <label>First Name <i class="fa fa-info-circle" title="Virtual Account First Name" @click="showinfo()" style="cursor:pointer"></i></label>
-                  <input type="text" class="form-control w-100" placeholder="First Name"  v-model="CreateVirtualAccountModel.firstName" required>
+                  <input type="text" class="form-control w-100" placeholder="First Name" id="fname" v-model="CreateVirtualAccountModel.firstName" required>
                 </div>
-                <div class="ml-3 w-50">
+                <div class="w-100">
                   <label>Last Name <i class="fa fa-info-circle" title="Virtual Account Last Name" @click="showinfo()" style="cursor:pointer"></i></label>
-                  <input type="text" class="form-control w-100" placeholder="First Name"  v-model="CreateVirtualAccountModel.lastName" required>
+                  <input type="text" class="form-control w-100" placeholder="Last Name" id="lname"  v-model="CreateVirtualAccountModel.lastName" required>
                 </div>
               </div>
               <div class="mb-3">
                 <div class="">
                   <label>BVN</label>
-                  <input type="text" class="form-control" placeholder="BVN"   v-model="CreateVirtualAccountModel.bvn">
+                  <input type="text" class="form-control" placeholder="BVN" id="bvn" v-model="CreateVirtualAccountModel.bvn">
                 </div>
               </div>
-<!--              <div class="mb-3">-->
-<!--                <div class="">-->
-<!--                  <label>Wallet Account Parent</label>-->
-<!--                  <input type="text" class="form-control" placeholder="Account Parent Number" required readonly :value="readWallet.accountNumber">-->
-<!--                </div>-->
-<!--              </div>-->
+              </div>
+
+              <div v-if="next==true">
               <div>
                 <div class="input-group mb-3">
                   <div class="w-100 mb-2">
                     <label>Date Of Birth</label>
-                    <input type="date"  class="form-control" placeholder="Date Of Birth" aria-label="Server">
+                    <input type="date"  class="form-control" v-model="CreateVirtualAccountModel.dob" placeholder="Date Of Birth" aria-label="Server">
                   </div>
                   <div class="w-100">
                     <label>Phone Number</label>
                     <div class="d-flex">
-                      <vue-country-code  @onSelect="onSelect" :preferredCountries="['ng', 'us', 'gb']" style="height: 45px" class="" required></vue-country-code>
+                      <vue-country-code  @onSelect="onSelect" :preferredCountries="['ng', 'us', 'gb']" style="height: 45px" class=""></vue-country-code>
                       <input type="tel"  class="form-control" placeholder="Phone Number" aria-label="Server" required v-model="CreateVirtualAccountModel.phoneNumber">
                     </div>
                   </div>
                 </div>
               </div>
-<!--              <div class="w-100 mb-3">-->
-<!--                <div class="">-->
-<!--                  <label>Select Bank</label>-->
-<!--                  <base-input>-->
-<!--                    <el-select class="select-danger" filterable placeholder="Bank Name" required-->
-<!--                               disabled style="width: 100%;" value="VFD MFB">-->
-<!--                      <el-option v-for="bank in banks" class="select-danger" :value="bank.value"-->
-<!--                                 :label="bank.code" :key="bank.value">-->
-<!--                      </el-option>-->
-<!--                    </el-select>-->
-<!--                  </base-input>-->
-<!--                </div>-->
-<!--              </div>-->
               <div class="input-group mb-3">
-                <div class="mr-4">
+                <div class="w-100 mb-2">
                   <label>Address</label>
                   <input type="text" placeholder="Address" class="form-control"  v-model="CreateVirtualAccountModel.address"/>
                 </div>
-                <div class="w-50 ml-3">
+                <div class="w-100">
                   <label>Gender</label>
-                  <select  class="form-control" v-model="CreateVirtualAccountModel.gender">
+                  <select  class="form-select" v-model="CreateVirtualAccountModel.gender">
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
                 </div>
               </div>
+              </div>
               <div>
-                <b-button type="submit" style="background-color: var(--primary);color: white;width: 100%"><span :class="{'spinner-border':loadingACC}"></span> {{loadingACC ? 'Creating': 'Create'}}</b-button>
+                <div class="d-flex">
+                  <b-button :disabled="loadingACC" @click="prev()" v-if="next==true" style="background-color: var(--primary);color: white;width: 100%">Previous</b-button>
+                  <b-button  v-if="next==true" type="submit"  :disabled="loadingACC" style="background-color: var(--primary);color: white;width: 100%"><span :class="{'spinner-border':loadingACC}"></span> {{loadingACC ? 'Creating': 'Create'}}</b-button>
+                </div>
+                <b-button  @click="nex()" v-if="next==false" style="background-color: var(--primary);color: white;width: 100%">Next</b-button>
               </div>
             </b-form>
           </div>
@@ -135,22 +126,38 @@ export default {
       banks: [],
       readBankListModel: VirtualAccountRequest.getBankList,
       CreateVirtualAccountModel:VirtualAccountRequest.createVirtualAccount,
-      readWallet:WalletRequest.retrieveWallet
+      readWallet:WalletRequest.retrieveWallet,
+      next: false
 
     }
   },
   props: {
     showAccountForm: Boolean,
+    walletAccountNumber:WalletRequest.retrieveWallet.accountNumber
   },
   methods: {
     closeModal() {
       //close modal form
       this.showModal = false;
       this.$emit("closeAccountForm", false);
+      Object.keys(this.readWallet).forEach(key => {
+        this.readWallet[key] = null
+      })
       this.showModal = true;
       this.sortType = true;
     },
 
+    nex(){
+      let fname = document.getElementById('fname')
+      let lname = document.getElementById('lname')
+      let bvn = document.getElementById('bvn')
+      if(fname.value.length == 0 || lname.value.length == 0)
+        return swal.fire({text:"please fill all required fields before proceeding", icon:"error"})
+      return this.next = true
+    },
+    prev(){
+      this.next = false
+    },
     showinfo(){
       swal.fire({text:"Please provide the first name and Last name of the intended virtual account bearer.", icon:"info"})
     },
@@ -171,6 +178,7 @@ export default {
       StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateWallet,this.readWallet).then(() => {
         console.log(this.wallets)
       })
+      this.next = false
     },
     createAccount(){
       this.CreateVirtualAccountModel.channelBankCode= "090110"

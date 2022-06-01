@@ -41,11 +41,11 @@ export default {
         { key: "drCr", label: "drCr" },
         { key: "amount", label: "amount" },
         { key: "accountNumber", label: "accountNumber" },
-        { key: "accountName", label: "accountName" },
         { key: "counterPartyAccountNumber", label: "C. AccountNumber"},
         { key: "counterPartyAccountName", label: "C. AccountName" },
         //{ key: "counterPartyBankCode", label: "counterPartyBankCode" },
         { key: "eventDate", label: "eventDate" },
+        { key: "narration", label: "narration" },
         { key: "TransactionAction", label: "actions" },
       ],
     };

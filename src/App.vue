@@ -66,6 +66,10 @@ export default {
   --primary: #3F88C5;
 }
 
+body{
+  font-family: 'Ubuntu', sans-serif;
+}
+
 
 .myalert{
     background-color: #EE9BA9 !important;

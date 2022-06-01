@@ -43,7 +43,7 @@
         :is="elementType(link, false)"
         class="nav-link"
         :class="{ active: link.active }"
-        :target="link.target"
+        target="_blank"
         :href="link.path">
         <template v-if="addLink">
           <span class="nav-link-text" >{{ link.name }}</span>

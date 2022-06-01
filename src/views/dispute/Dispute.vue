@@ -60,7 +60,7 @@ export default {
           class: "text-left",
         },
         //{ key: "disputeTrnType", label: "Trn Type", sortable: true, class: "text-left",},
-        //{ key: "disputeIssueType", label: "IssueType", sortable: true, class: "text-left",},
+        { key: "disputeAmount", label: "Amount", sortable: true, class: "text-left",},
         {
           key: "disputeComment",
           label: " Comment",

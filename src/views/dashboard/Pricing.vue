@@ -8,7 +8,7 @@
            This principle will apply to all your commission-based transactions.</span>
        </div>
        <div class="small container text-left">
-       <span>Fee:</span><br>
+       <span class="text-info">Fee:</span><br>
        <span>This is a fixed charge amount to be paid by the business for the intended service.
          EX: Your business will be charged N20 for any virtual account created.</span>
      </div>
@@ -25,7 +25,7 @@
            <tbody>
            <tr>
              <td>CREATE WALLET</td>
-             <td>₦0.00 Fee<br>
+             <td>₦10.00 Fee<br>
                For each wallet created
              </td>
            </tr>

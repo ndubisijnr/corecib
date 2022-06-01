@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mt-4">
-      <div class="mr-4 text-right">
+      <div class="mr-4 text-right mb-2">
         <b-button @click="show = true" style="background-color:var(--primary);border:none;color:white"><i class="fa fa-plus"></i> Create Wallet
         </b-button>
       </div>
@@ -14,7 +14,7 @@
         filter-mode="default"
         :is-busy="loading" />
     </div>
-    <create-wallet-form @closeWalletForm="updateWalletForm" :showWalletForm="show"></create-wallet-form>
+    <create-wallet-form @closeWalletForm="updateWalletForm"  :showWalletForm="show"></create-wallet-form>
   </div>
 </template>
 <script>
@@ -34,7 +34,7 @@ export default {
   components: {
     SearchForm,
     BaseTable,
-    CreateWalletForm
+    CreateWalletForm,
   },
   data() {
     return {
@@ -82,6 +82,7 @@ export default {
     updateWalletForm(value) {
       this.show = value;
     },
+
   },
   computed: {
     sortOptions() {

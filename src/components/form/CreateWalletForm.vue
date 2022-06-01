@@ -9,33 +9,22 @@
       <div class="card-body">
         <div class="container">
           <b-form class="" @submit.prevent="createWallet">
-<!--            <div class="input-group mb-2">-->
-<!--                <v-currency-select-->
-<!--                    label="Select currency:"-->
-<!--                    :options="customOptions.currency"-->
-<!--                    class="w-100">-->
-<!--                </v-currency-select>-->
-<!--            </div>-->
-            <div class="input-group mb-2">
-              <div class="mr-5">
+              <div class="w-100 mb-2">
                 <label>First Name</label>
                 <input type="text" v-model="createWalletModel.firstName" class="form-control" placeholder="First Name"  required>
               </div>
-              <div class="">
+              <div class="w-100 mb-2">
                 <label>Last Name</label>
                 <input type="text" v-model="createWalletModel.lastName" class="form-control" placeholder="Last Name" aria-label="Server" required>
               </div>
-            </div>
-            <div class="input-group mb-3">
-              <div class="mr-5">
+              <div class="w-100 mb-2">
                 <label>BVN</label>
                 <input type="text" v-model="createWalletModel.bvn" class="form-control" placeholder="BVN" required>
               </div>
-              <div class="">
+              <div class="w-100 mb-2">
                 <label>Email</label>
                 <input type="email" v-model="createWalletModel.email" class="form-control" placeholder="Email" required>
               </div>
-            </div>
             <div>
               <div class="input-group mb-3">
                 <div class="w-100 mb-2">
@@ -52,7 +41,7 @@
               </div>
               </div>
             <div>
-              <b-button type="submit" style="background-color: var(--primary);color: white;width: 100%"><span :class="{'spinner-border':loading}"></span> {{loading ? 'Creating' : 'Create'}}</b-button>
+              <b-button type="submit" style="background-color: var(--primary);color: white;width: 100%" :disabled="loading"><span :class="{'spinner-border':loading}"></span> {{loading ? 'Creating' : 'Create'}}</b-button>
             </div>
           </b-form>
         </div>

@@ -11,7 +11,7 @@ export default
         {
             name:'Pricing',
             icon:'fas fa-tag',
-            path:'/dashboard/pricing'
+            path:'/dashboard/pricing',
         },
     ]
 };

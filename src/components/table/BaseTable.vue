@@ -1,5 +1,7 @@
 <template>
   <b-container fluid>
+    <create-virtual-account @closeAccountForm="updateAccountForm" :walletAccountNumber="walletAccNum" :showAccountForm="show"></create-virtual-account>
+
     <b-row> </b-row>
     <br />
     <!-- Main table element -->
@@ -32,6 +34,9 @@
       <template v-slot:cell(bookBalance)="row">
         {{ row.item.amount | formatAmount }}
       </template>
+      <template v-slot:cell(amount)="row">
+        {{ row.item.amount | formatAmount }}
+      </template>
       <!-- / -->
       <!-- TODO DATE FORMATTING -->
       <template v-slot:cell(createdat)="row">
@@ -44,6 +49,12 @@
         v-slot:cell(contractDebitAccountName)="row"
       >
         {{ row.item.contractDebitAccountName | formatTextWithEllipsis }}
+      </template>
+      <template v-slot:cell(counterPartyAccountName)="row">
+        {{ row.item.counterPartyAccountName | formatTextWithEllipsis }}
+      </template>
+      <template v-slot:cell(narration)="row">
+        {{ row.item.narration | formatTextWithEllipsis }}
       </template>
       <!-- / -->
       <template v-slot:cell(serial)="row">
@@ -115,7 +126,7 @@
 
       <template #cell(walletAction)="row">
         <h3 v-if="loading">Loading</h3>
-        <b-icon-plus-circle @click="show = true" title="Create Virtual Account"  style="cursor: pointer; width: 25px; height: 15px"></b-icon-plus-circle>
+        <b-icon-plus-circle @click="show = true, getValueForVA(row.item.accountNumber)" title="Create Virtual Account"  style="cursor: pointer; width: 25px; height: 15px"></b-icon-plus-circle>
         <b-icon-file
           style="cursor: pointer; width: 25px; height: 15px"
           @click="getValue(row.item.accountNumber)"
@@ -183,8 +194,20 @@ import { mapGetters, mapState } from "vuex";
 import Swal from "sweetalert2";
 import WalletRequest from "../../model/request/WalletRequest";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
+import CreateVirtualAccount from "../../components/form/CreateVirtualAccount";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BIZ from "@/assets/BIZ.gif"
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 export default {
   props: [
     "items",
@@ -197,7 +220,9 @@ export default {
     "filterMode",
     "accounts",
   ],
-  components: {},
+  components: {
+    CreateVirtualAccount
+  },
   data() {
     return {
       show: false,
@@ -221,6 +246,7 @@ export default {
         title: "",
         content: "",
       },
+      walletAccNum:""
     };
   },
   computed: {
@@ -231,6 +257,17 @@ export default {
   },
   mounted() {},
   methods: {
+    updateAccountForm(value) {
+      this.show = value;
+    },
+    getValueForVA(payload) {
+      this.walletAccNum = payload
+      navigator.clipboard.writeText(payload).then(() => {
+        Toast.fire({ text: "Account number copied to clipboard", icon: "success" }).then(
+            () => {}
+        );
+      });
+    },
     getValue(payload) {
       this.walletTransactionmodel.accountNumber = payload;
       this.$router
