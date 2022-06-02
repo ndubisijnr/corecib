@@ -27,16 +27,23 @@
     >
       <template v-slot:table-busy>
         <div class="text-center text-danger my-2">
-          <b-spinner class="align-middle" type="grow"></b-spinner>
+          <span class="spinner-border"></span>
         </div>
       </template>
       <!-- TODO AMOUNT FORMATTING -->
-      <template v-slot:cell(bookBalance)="row">
-        {{ row.item.amount | formatAmount }}
-      </template>
       <template v-slot:cell(amount)="row">
         {{ row.item.amount | formatAmount }}
       </template>
+      <template v-slot:cell(accountBalance)="row">
+        {{ row.item.accountBalance | formatAmount }}
+      </template>
+      <template v-slot:cell(accountLedgerBalance)="row">
+        {{ row.item.accountLedgerBalance | formatAmount }}
+      </template>
+      <template v-slot:cell(disputeAmount)="row">
+        {{ row.item.disputeAmount | formatAmount }}
+      </template>
+
       <!-- / -->
       <!-- TODO DATE FORMATTING -->
       <template v-slot:cell(createdat)="row">
@@ -49,6 +56,12 @@
         v-slot:cell(contractDebitAccountName)="row"
       >
         {{ row.item.contractDebitAccountName | formatTextWithEllipsis }}
+      </template>
+      <template v-slot:cell(disputeComment)="row">
+        {{ row.item.disputeComment | formatTextWithEllipsis }}
+      </template>
+      <template v-slot:cell(disputeSessionId)="row">
+        {{ row.item.disputeSessionId | formatTextWithEllipsis }}
       </template>
       <template v-slot:cell(counterPartyAccountName)="row">
         {{ row.item.counterPartyAccountName | formatTextWithEllipsis }}

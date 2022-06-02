@@ -52,14 +52,14 @@ export default {
       disputeReadModel: DisputeResquest.disputeReadByOrg,
       dis:null,
       fields: [
-        { key: "disputeId", label: "Id", sortable: true, class: "text-left" },
+        // { key: "disputeId", label: "Id", sortable: true, class: "text-left" },
         {
           key: "disputeSessionId",
           label: "SessionId",
           sortable: true,
           class: "text-left",
         },
-        //{ key: "disputeTrnType", label: "Trn Type", sortable: true, class: "text-left",},
+        { key: "disputeTrnType", label: "Transaction Type", sortable: true, class: "text-left",},
         { key: "disputeAmount", label: "Amount", sortable: true, class: "text-left",},
         {
           key: "disputeComment",

@@ -3,17 +3,18 @@
     <modal-1 :show="showAccountForm && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
       <div class="card-head">
         <div class="d-flex justify-content-between">
-          <div class="p-1">
-            <span class="small" v-if="sortType == false">The virtual account can be used to receive funds via bank transfer from any financial institution. All funds sent via the created virtual account will be settled in the wallet address provided.</span>
-            <span class="small" v-if="sortType == true">Your intended virtual account will be tied to the wallet address of the account number provided.</span>
+          <div class="p-1" style="font-weight: bolder; font-size: 6px;">
+            <span style="font-weight: bolder; font-size: 14px;" v-if="!sortType" class="d-flex"><span style="font-size: 20px;">💡</span> <span>The virtual account can be used to receive funds via bank transfer from any financial institution. All funds sent via the created virtual account will be settled in the wallet address provided.</span></span>
+            <span style="font-weight: bolder; font-size: 14px;" v-if="sortType" class="d-flex"><span style="font-size: 20px;">💡</span>  Your intended virtual account will be tied to the wallet address of  the account number provided.</span>
           </div>
           <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Create Virtual Account"></button>
         </div>
       </div>
 
-      <div class="card-body w-100" v-if="sortType == true">
+      <div class="card-body w-100" v-if="sortType">
         <form @submit.prevent="readSingleWallet">
-          <label>Wallet Account Number <i class="fa fa-info-circle" title="Your intended virtual account will be tied to the wallet address of the account number provided."></i> </label>
+          <b-tooltip target="tooltip-target-1" triggers="hover">Your intended virtual account will be tied to the wallet address of the account number provided.</b-tooltip>
+          <label>Wallet Account Number</label>
           <input type="number" placeholder="Wallet Account Number" class="form-control" required v-model="readWallet.accountNumber"/>
           <div class="text-right p-2">
             <b-button type="submit" :disabled="loading" style="background-color:var(--primary);border:none;color:white">{{loading ? 'Checking' : 'Next'}} <span :class="{'spinner-border':loading}"></span> </b-button>
@@ -43,11 +44,11 @@
               <div v-if="next==false">
               <div class="input-group mb-3">
                 <div class="w-100 mb-3">
-                  <label>First Name <i class="fa fa-info-circle" title="Virtual Account First Name" @click="showinfo()" style="cursor:pointer"></i></label>
+                  <label>First Name<span style="font-size: 20px;cursor:pointer" @click="showinfo()">💡</span> </label>
                   <input type="text" class="form-control w-100" placeholder="First Name" id="fname" v-model="CreateVirtualAccountModel.firstName" required>
                 </div>
                 <div class="w-100">
-                  <label>Last Name <i class="fa fa-info-circle" title="Virtual Account Last Name" @click="showinfo()" style="cursor:pointer"></i></label>
+                  <label>Last Name <span style="font-size: 20px;cursor:pointer" @click="showinfo()">💡</span></label>
                   <input type="text" class="form-control w-100" placeholder="Last Name" id="lname"  v-model="CreateVirtualAccountModel.lastName" required>
                 </div>
               </div>
@@ -258,8 +259,12 @@ export default {
 }
 
 .card-head{
-  background-color: #3F88C5;
+  background-color: #D7E6F3;
   color: white;
+}
+
+.p-1{
+  color: #3F88C5;
 }
 
 </style>
