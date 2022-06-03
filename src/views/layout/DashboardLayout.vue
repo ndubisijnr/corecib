@@ -48,6 +48,7 @@ function initScrollbar(className) {
 import DashboardNavbar from './DashboardNavbar.vue';
 import ContentFooter from './ContentFooter.vue';
 import {FadeTransition} from 'vue2-transitions';
+import BillsSidebarItems from "../../util/sidebarUtils/BillsSidebarItems";
 
 export default {
   name: "DashboardLayout",
@@ -69,7 +70,7 @@ export default {
   },
   computed:{
     sidebarItems(){
-      return [DashboardSidebarItems,DocumentationSidebarItems,ReportSidebarItems,SettingsSidebarItems]
+      return [DashboardSidebarItems,DocumentationSidebarItems,ReportSidebarItems,BillsSidebarItems,SettingsSidebarItems]
     },
   },
   mounted() {

@@ -58,7 +58,7 @@
               >
               </sidebar-item>
             </sidebar-item>
-            
+
           </slot>
         </ul>
         <slot name="links-after"></slot>
@@ -217,6 +217,10 @@ export default {
   transition: 2s ease;
   padding: 12px;
 }
+
+/*.one{*/
+/*  border: solid red;*/
+/*}*/
 
 .arrow{
   position: absolute;

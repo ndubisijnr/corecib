@@ -1,6 +1,6 @@
 export default
 {
-    header: 'Reports',
+    header: 'Services',
     icon: '',
     items: [
         // {
@@ -11,7 +11,21 @@ export default
         {
             name:'Dispute',
             icon:'fas fa-sort',
-            path:'/reports/dispute'
+            path:'/reports/dispute',
+            children:[
+                {
+                    header: 'Bills Payment',
+                    icon: '',
+                    items: [
+                        {
+                            name:'Pay Bills',
+                            icon:'fas fa-money-bill-wave-alt',
+                            path:'/'
+                        },
+
+                    ]
+                }
+            ]
         },
         {
             name:'Transactions',
@@ -34,7 +48,8 @@ export default
                 icon:'fa fa-wallet',
                 path:'/user/wallet'
         },
-    
-        
-    ]
+       ]
+
+
+
 };

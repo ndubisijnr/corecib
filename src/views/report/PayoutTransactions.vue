@@ -46,7 +46,7 @@ export default {
       payoutTransactionsModel: AccountPayoutRequest.readPayout,
       payoutModel: AccountPayoutRequest.createPayout,
       searchALL_TRANSACTION: SearchModuleutil.PAYOUT_TRANSACTION,
-      readPayoutAccountModel: AccountPayoutRequest.readAccountPayoutById,
+      // readPayoutAccountModel: AccountPayoutRequest.readAccountPayoutById,
 
 
     };
@@ -78,12 +78,12 @@ export default {
       this.payoutTransactionsModel
     );
 
-    this.readPayoutAccountModel.accountOrganisationId =
-        localStorage.organisationId;
-    StoreUtils.dispatch(
-        StoreUtils.actions.accountPayout.readAddedBanks,
-        this.readPayoutAccountModel
-    );
+    // this.readPayoutAccountModel.accountOrganisationId =
+    //     localStorage.organisationId;
+    // StoreUtils.dispatch(
+    //     StoreUtils.actions.accountPayout.readAddedBanks,
+    //     this.readPayoutAccountModel
+    // );
   },
 
 };

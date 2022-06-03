@@ -177,9 +177,9 @@ export default {
 
         addBank() {
             let bankcode =
-                this.createPayoutAccountModel.accountBankCode.split(" ")[0];
-            let bankName =
                 this.createPayoutAccountModel.accountBankCode.split(" ")[1];
+            let bankName =
+                this.createPayoutAccountModel.accountBankCode.split(" ")[0];
             this.createPayoutAccountModel.accountCountry =
                 this.userInfo.customerCountry;
             this.createPayoutAccountModel.accountOrganisationId =

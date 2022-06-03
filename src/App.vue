@@ -14,9 +14,16 @@
 import DashboardLayout from "./views/layout/DashboardLayout";
 import AuthLayout from "./views/layout/AuthLayout";
 import StoreUtils from "./util/baseUtils/StoreUtils";
+import AccountPayoutRequest from "./model/request/AccountPayoutRequest";
 const default_layout = "default";
 export default {
   components: {AuthLayout, DashboardLayout},
+  data(){
+    return{
+      readPayoutAccountModel: AccountPayoutRequest.readAccountPayoutById,
+
+    }
+  },
   mounted() {
     setTimeout(()=>{
       let routeLayout = this.$route.meta.layout
@@ -28,6 +35,13 @@ export default {
         localStorage.clear()
       }
     },1000)
+
+    this.readPayoutAccountModel.accountOrganisationId =
+        localStorage.organisationId;
+    StoreUtils.dispatch(
+        StoreUtils.actions.accountPayout.readAddedBanks,
+        this.readPayoutAccountModel
+    );
 
     this.stickyAlert()
     setTimeout(()=>{

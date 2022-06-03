@@ -17,8 +17,8 @@ Example for Docker:
         stage: "dev"
     };
     window.__env.api = {
-        // baseUrl: "https://sandbox.bizgem.io",
-        baseUrl: "https://api.bizgem.io",
+        baseUrl: "https://sandbox.bizgem.io",
+        // baseUrl: "https://api.bizgem.io",
         timeout: 80000,
         imageUpload: "https://m2nz1o078e.execute-api.us-east-1.amazonaws.com/prod"
     };
