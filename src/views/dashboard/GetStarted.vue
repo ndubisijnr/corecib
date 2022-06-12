@@ -8,9 +8,9 @@
     <div class="container-fluid mt--6">
       <div class="cardd mt-2">
         <div>
-          <h1 class="m-b- text-center"><b>Hello {{ user.customerFirstName }}, Welcome to BizGem</b></h1>
-          <h2 class="text-center">Your business is in <span v-if="getStage === 'DEV'">Test</span><span
-              v-else>Live</span> mode</h2>
+<!--          <h1 class="m-b- text-center"><b>Hello {{ user.customerFirstName }}, Welcome to BizGem</b></h1>-->
+<!--          <h2 class="text-center">Your business is in <span v-if="getStage === 'DEV'">Test</span><span-->
+<!--              v-else>Live</span> mode</h2>-->
           <div class="mb">
           <div class="card-area">
               <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false"
@@ -18,11 +18,12 @@
               <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'"
                 :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'">
               </dashboard-card>
-              <dashboard-card :value="currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'">
+              <dashboard-card :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfWalletDev : currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'">
               </dashboard-card>
               <dashboard-card :showBtn="false" :showBtn1="false"
-                :value="currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'">
+                :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfVirtualAccountDev : currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'">
               </dashboard-card>
+
         </div>
           </div>
           <div class="mb-3 text-center">
@@ -30,7 +31,6 @@
             <b-button @click="show = true"> Withdraw</b-button>
           </div>
           <div>
-            <h4 class="badge"> All Transactions</h4>
             <transaction withSearch="YES"></transaction>
           </div>
         </div>
@@ -97,6 +97,7 @@ export default {
       payoutModel: AccountPayoutRequest.createPayout,
       payoutTransactionsModel: AccountPayoutRequest.readPayout,
       show: false,
+      data:[]
     }
   },
 

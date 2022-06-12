@@ -37,33 +37,29 @@ appClient.interceptors.response.use(response => {
       if (response.data != null) {
         if (response.data.responseCode === '115') {
           localStorage.clear();
-          let timerInterval
-          Swal.fire({
-            title: 'Session timed out',
-            html: 'Please re-authenticate',
-            icon:"info",
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: () => {
-              Swal.showLoading()
-              const b = Swal.getHtmlContainer().querySelector('b')
-              timerInterval = setInterval(() => {
-                b.textContent = Swal.getTimerLeft()
-              }, 100)
-            },
-            willClose: () => {
-              clearInterval(timerInterval)
-            }
-          }).then((result) => {
-            /* Read more about handling dismissals below */
-            // if (result.dismiss === Swal.DismissReason.timer) {
-            //   console.log('I was closed by the timer')
-            //   router.push({name:"Logon"}).then(()=> {
-            //     window.location.reload()
-            //   })
-            // }
-            StoreUtils.dispatch(StoreUtils.actions.auth.logOut,{customerEmail: StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).customerEmail})
-          })
+          // let timerInterval
+          if (router.currentRoute.meta.layout !== "auth")
+              Swal.fire({
+                title: 'Session timed out',
+                html: 'Please re-authenticate',
+                icon:"info",
+                // didOpen: () => {
+                //   Swal.showLoading()
+                //   const b = Swal.getHtmlContainer().querySelector('b')
+                //   timerInterval = setInterval(() => {
+                //     b.textContent = Swal.getTimerLeft()
+                //   }, 100)
+                // },
+              }).then((result) => {
+                /* Read more about handling dismissals below */
+                // if (result.dismiss === Swal.DismissReason.timer) {
+                //   console.log('I was closed by the timer')
+                //   router.push({name:"Logon"}).then(()=> {
+                //     window.location.reload()
+                //   })
+                // }
+                StoreUtils.dispatch(StoreUtils.actions.auth.logOut,{customerEmail: StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).customerEmail})
+              })
         }
       }
     }

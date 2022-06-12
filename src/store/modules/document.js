@@ -2,11 +2,15 @@ import DocumentService from "../../service/DocumentService";
 import DocumentRequest from "../../model/request/DocumentRequest";
 import DocumentResponse from "../../model/reponse/DocumentResponse";
 import Swal from "sweetalert2";
+import Toast from "../../../toastNotification";
 
 
 export const state = {
   loading:false,
-  document: DocumentResponse.readByOrganisationId
+  document: DocumentResponse.readByOrganisationId,
+  directorIdCard1: {},
+  directorIdCard2: {},
+  response: {}
 }
 
 export const getters = {
@@ -22,6 +26,15 @@ export const mutations = {
   },
   updateDocument: (state, payload) => {
     state.document = payload
+  },
+  updateResponse: (state, payload) => {
+    state.response = payload
+  },
+  updateDirectorIdCard1: (state, payload) => {
+    state.directorIdCard1 = payload
+  },
+  updateDirectorIdCard2: (state, payload) => {
+    state.directorIdCard2 = payload
   }
 
 }
@@ -38,6 +51,33 @@ export const actions = {
         commit("updateLoading",false)
         console.log("Documents ....")
         commit("updateDocument", responseData)
+      }
+    }).catch(error => {
+      console.log(error)
+    })
+  },
+
+  uploadDocument:({commit, dispatch, state}, payload = DocumentRequest.createDocument) => {
+    commit("updateLoading", true)
+    return DocumentService.callImageUploadApi(payload).then(response => {
+      let responseData = response.data
+      if (payload.directorType === 1){
+        if(responseData.responseCode == "00"){
+          commit("updateLoading", false)
+          commit("updateDirectorIdCard1", responseData)
+          Toast.fire({text:responseData.responseMessage, icon:"success"})
+          }
+      }else{
+        if(responseData.responseCode == "00"){
+          commit("updateLoading", false)
+          commit("updateDirectorIdCard2", responseData)
+          Toast.fire({text:responseData.responseMessage, icon:"success"})
+
+  }
+      }
+      if (responseData.responseCode !== "00"){
+        commit("updateLoading", false)
+        Toast.fire({text:"failed to upload file", icon:"error"})
       }
     }).catch(error => {
       console.log(error)
@@ -83,9 +123,10 @@ export const actions = {
       console.log(error)
     })
   },
+
   updateDocument:({commit, dispatch, state}, payload = DocumentRequest.updateDocument) =>{
     commit("updateLoading", true)
-    return DocumentService.callImageUploadApi(payload.fileUpload).then(response => {
+    return DocumentService.callImageUploadApi(payload.fileUpload?payload.fileUpload:payload).then(response => {
       let responseData = response.data
       if(responseData.responseCode === "00"){
         payload.document.documentUrl = responseData.url

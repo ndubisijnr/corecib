@@ -5,7 +5,14 @@
         <search-form :module="searchALL_TRANSACTION"></search-form>
       </div>
     </div>
-     <base-table
+    <div class="container">
+      <div class="container export-btn-area">
+        <b-button class="export-ex shadow-lg--hover small" @click="download">Download Statement</b-button>
+      </div>
+      <export-excel style="display: none" id="export" name="bizgemTransactions-excel" :data="allTransactions.data"></export-excel>
+
+    </div>
+    <base-table
           :items="JSON.parse(JSON.stringify(allTransactions.data))"
           :fields="fields"
           filter-mode="default"
@@ -20,6 +27,7 @@ import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BaseTable from "../../components/table/BaseTable";
 import SearchForm from "../../components/form/SearchForm";
 import SearchModuleutil from "../../util/constant/SearchModuleutil"
+import Toast from "../../../toastNotification";
 
 
 
@@ -51,6 +59,14 @@ export default {
     };
   },
   methods: {
+    download(){
+      if(this.allTransactions.data.length <= 0){
+        Toast.fire({text:"No data to download", icon:"error"})
+        console.log('empty')
+      }else{
+        document.getElementById('export').click()
+      }
+    }
 
   },
 
@@ -84,6 +100,23 @@ export default {
 <style scoped>
 .form-body {
   height: 100%;
+}
+.export-btn-area{
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+.export-ex{
+  background-color:#3F88C5;
+  color:white;
+  margin: 2px;
+  width:200px;
+  cursor: pointer;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
 }
 
 .card-side {

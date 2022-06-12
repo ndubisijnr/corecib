@@ -22,7 +22,17 @@ class OrganisationRequest{
         organisationFormCac: null,
         organisationCertificateIncorpation: null,
         organisationScumlCertificate: null,
-        organisationTin: null
+        organisationTin: null,
+        organisationDirectorBvn:null,
+        organisationDirectorName:null,
+        organisationDirectorDob:null,
+        organisationDirectorIdCard:null,
+        organisationDirectorIdCardType:null,
+        organisationDirectorName2:null,
+        organisationDirectorBvn2:null,
+        organisationDirectorDob2:null,
+        organisationDirectorIdCard2:null,
+        organisationDirectorIdCardType2:null
     }
 
     static transactionEnquiry={

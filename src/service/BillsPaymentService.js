@@ -8,11 +8,10 @@ export default {
         return apiClient.appClient.post("/vas/biller/read-by-category-code", payload);
     },
     callReadProductApi(payload){
-        return apiClient.appClient.post("/read-by-biller-code", payload)
+        return apiClient.appClient.post("/vas/product/read-by-biller-code", payload)
     },
     callProductPaymentApi(payload){
         return apiClient.appClient.post("/vas/service/purchase", payload)
-
     },
 
 

@@ -204,23 +204,24 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import WalletRequest from "../../model/request/WalletRequest";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
 import CreateVirtualAccount from "../../components/form/CreateVirtualAccount";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BIZ from "@/assets/BIZ.gif"
-const Toast = Swal.mixin({
-  toast: true,
-  position: 'top-end',
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener('mouseenter', Swal.stopTimer)
-    toast.addEventListener('mouseleave', Swal.resumeTimer)
-  }
-})
+import Toast from "../../../toastNotification";
+// const Toast = Swal.mixin({
+//   toast: true,
+//   position: 'top-end',
+//   showConfirmButton: false,
+//   timer: 3000,
+//   timerProgressBar: true,
+//   didOpen: (toast) => {
+//     toast.addEventListener('mouseenter', Swal.stopTimer)
+//     toast.addEventListener('mouseleave', Swal.resumeTimer)
+//   }
+// })
 export default {
   props: [
     "items",

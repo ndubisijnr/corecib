@@ -2,9 +2,9 @@
     <div class="loader">
         <div class="inner-loading">
             <div class="text-center">
-                <img src="../assets/biz.svg" class="animate__animated animate__shakeY"/>
+              <span class="spinner-border"></span>
             </div>
-            <p class="h5 mt-2 text-white">{{message}}</p>
+            <p class="h5 mt-2 text-dark">{{message}}</p>
         </div>
     </div>
 
@@ -16,15 +16,33 @@ export default {
         message:{
             type:String
         }
-    }
+  }
 
 }
 </script>
 <style scoped>
+@keyframes spinner-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-border {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spinner-border 0.75s linear infinite;
+  animation: spinner-border 0.75s linear infinite;
+}
 .loader {
     display: flex;
     justify-content: center;
-    /* align-items: center; */
+    /*align-items: center;*/
+     align-items: center;
     width: 100%;
     background-color: rgba(26, 25, 25, 0.412);
     position: absolute;
@@ -35,11 +53,4 @@ export default {
     z-index: 999;
 }
 
-.inner-loading{
-    margin-top: 30%;
-}
-
-.inner-loading img {
-    width: 50px;
-}
 </style>

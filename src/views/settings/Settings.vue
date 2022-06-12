@@ -1,15 +1,7 @@
 <template>
   <div class="body">
-     <span :class="{ 'spinner-border': loading }" v-if="loading"></span>
-      <span :class="{ 'spinner-border': payoutloading }" v-if="payoutloading"></span>
-      <span :class="{ 'spinner-border': loadingDoc }" v-if="loadingDoc"></span>
-      <span :class="{ 'spinner-border': loadingOtp }" v-if="loadingOtp"></span>
-<!--    <blocker-loader v-if="loading" :message="'Setting up Settings Environment'"></blocker-loader>-->
-<!--    <blocker-loader v-if="loadingOtp" :message="'Please Wait'"></blocker-loader>-->
-<!--    <blocker-loader v-if="payoutloading" :message="'Setting up Settings Environment'"></blocker-loader>-->
-<!--    <blocker-loader v-if="loadingDoc" :message="'Setting up Settings Environment'"></blocker-loader>-->
-
-    <div class="container-fluid mt-0">
+    <blocker-loader v-if="loading && loadingOtp && payoutloading && loadingDoc" :message="'Setting up Settings Environment'"></blocker-loader>
+    <div class="container-fluid mt-0" v-else>
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
           <div>
@@ -73,8 +65,8 @@
                       <div block v-b-toggle.accordion-2 variant="none" class="p-3" style="color:black;">
                         <h3>
                           Business Information
-                          <span v-if='organisation.organisationDirectorBvn != null' class="small text-success">(completed)</span>
-                          <span v-else='organisation.organisationDirectorBvn == null' class="small text-danger">(not updated)</span>
+                          <span v-if='organisation.organisationDirectorBvn !== null' class="small text-success">(completed)</span>
+                          <span v-else class="small text-danger">(not updated)</span>
                         </h3>
                         <p>
                           Update your business information here
@@ -84,50 +76,44 @@
                     <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
                       <div class="business-profile">
                         <form class="form-group" @submit.prevent="updateOrginasation()">
-                          <!-- <h3 class="text-center">
-                            <i class="fa fa-user-circle profile-settings"></i>
-                          </h3>
-                          <h4 class="text-center">
-                            <b>Your Business Information</b>
-                          </h4> -->
                           <div>
                             <div class="row">
                               <div class="col mb-3">
                                 <label for="floatingInput2">Business Name</label>
-                                <input type="text" class="form-control" id="floatingInput2"
+                                <input type="text" class="form-control"
                                   placeholder="name@example.com" v-model="organisation.organisationName" readonly />
                               </div>
                               <div class="col mb-3">
                                 <label for="floatingInput">Company Email</label>
                                 <input type="email" class="form-control" id="floatingInput"
-                                  placeholder="name@example.com" v-model="organisation.organisationEmail" readonly />
+                                       placeholder="name@example.com" v-model="organisation.organisationEmail" readonly />
+                              </div>
+                              <div class="col mb-3">
+                                <label for="floatingInput1">Company Phone</label>
+                                <input type="tel" class="form-control"  placeholder="Country"
+                                       v-model="organisation.organisationPhone" readonly />
                               </div>
                             </div>
                             <div class="row">
+
                               <div class="col mb-3">
-                                <label for="floatingInput1">Company Phone</label>
-                                <input type="tel" class="form-control" id="floatingInput1" placeholder="Country"
-                                  v-model="organisation.organisationPhone" readonly />
+                                <label for="floatingInput1">City</label>
+                                <input type="text" class="form-control"  placeholder="Ikeja"
+                                       v-model="organisation.organisationCity" required />
                               </div>
-                              <!-- <div class="col mb-3">
-                               <label for="floatingInput1">Company Phone</label>
-                                <input
-                                  type="tel"
-                                  class="form-control"
-                                  id="floatingInput1"
-                                  placeholder="Country"
-                                  v-model="organisation.organisationPhone"
-                                  readonly
-                                />
-                              </div> -->
                               <b-tooltip target="tooltip-target-1" triggers="hover">
                                 I am tooltip <b>component</b> content!
                               </b-tooltip>
                               <div class="col mb-3">
-                                <label for="floatingInput1">Director's BVN Number </label>
-                                <input type="number" class="form-control" id="floatingInput1"
-                                  placeholder="Director's BVN Number" v-model="organisation.organisationDirectorBvn"
-                                  required />
+                                <label for="floatingInput2">Address</label>
+                                <input type="text" class="form-control"
+                                       placeholder="1004 Federal Housing Estate, Victoral Island"
+                                       v-model="organisation.organisationAddress" required />
+                              </div>
+                              <div class="col mb-3">
+                                <label for="floatingInput1">State</label>
+                                <input type="text" class="form-control"  placeholder="Lagos"
+                                       v-model="organisation.organisationState" required />
                               </div>
                             </div>
                           </div>
@@ -135,28 +121,11 @@
                           <!-- Second layer -->
                           <div class="">
                             <div class="row">
-                              <div class="col mb-3">
-                                <label for="floatingInput2">Address</label>
-                                <input type="text" class="form-control" id="floatingInput2"
-                                  placeholder="1004 Federal Housing Estate, Victoral Island"
-                                  v-model="organisation.organisationAddress" required />
-                              </div>
-                              <div class="col mb-3">
-                                <label for="floatingInput1">City</label>
-                                <input type="text" class="form-control" id="floatingInput1" placeholder="Ikeja"
-                                  v-model="organisation.organisationCity" required />
-                              </div>
-                              <div class="col mb-3">
-                                <label for="floatingInput1">State</label>
-                                <input type="text" class="form-control" id="floatingInput1" placeholder="Lagos"
-                                  v-model="organisation.organisationState" required />
-                              </div>
-                            </div>
-                            <div class="row">
+
                               <div class="col mb-3">
                                 <label for="floatingInput3">Organization Type</label>
                                 <select class="form-select form-control" aria-label="Default select example" required
-                                  v-model="organisation.organisationType">
+                                        v-model="organisation.organisationType">
                                   <option data-v-00a70ddc="" value="Agric produce">
                                     Agric produce
                                   </option>
@@ -266,6 +235,8 @@
                                 </select>
 
                               </div>
+                            </div>
+                            <div class="row">
                               <div class="col mb-3">
                                 <label for="floatingInput1">Organisation Website</label>
                                 <input type="text" class="form-control" id="floatingInput1" placeholder=" Website"
@@ -276,6 +247,92 @@
                                 <input type="text" class="form-control" id="floatingInput1"
                                   placeholder="Organisation RC / BN Number"
                                   v-model="organisation.organisationRegistrationNo" />
+                              </div>
+                            </div>
+
+                            <div>
+                              <div class="text-center mt-3 mb-3">
+                                <h2 class="mt-2"><span>Director 1</span></h2>
+                              </div>
+                              <div class="row">
+                                <div class="col mb-3">
+                                  <label for="floatingInput2">Full Name <span style="color: red">*</span></label>
+                                  <input type="text" class="form-control"
+                                         placeholder="Directors Full name" v-model="organisation.organisationDirectorName" required />
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col mb-3">
+                                  <label for="floatingInput2">Dob <span style="color: red">*</span></label>
+                                  <input type="date" class="form-control"
+                                         v-model="organisation.organisationDirectorDob" required />
+                                </div>
+                                <div class="col mb-3">
+                                  <label for="floatingInput">BVN <span style="color: red">*</span></label>
+                                  <input type="number" class="form-control"
+                                         placeholder="Bank Verification Number" v-model="organisation.organisationDirectorBvn" required />
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col mb-3">
+                                  <label for="floatingInput2"> ID Card Type<span style="color: red">*</span></label>
+                                  <select class="form-select form-control" aria-label="Default select example" required
+                                          v-model="organisation.organisationDirectorIdCard">
+                                    <option value="national_id_card">National ID Card</option>
+                                    <option value="international_passport">International Passport</option>
+                                    <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
+                                    <option value="drivers_licence">Drivers Licence</option>
+                                  </select>
+                                </div>
+                                <div class="col mb-3">
+                                  <label for="floatingInput" v-if="director1 == null">Upload ID Card <span style="color: red">*</span></label><br v-if="director1 == null">
+                                  <label for="floatingInput" v-if="director1 != null">Uploaded ID Card</label><br  v-if="director1 != null">
+                                  <b-button @click="showModalDirector1 = !showModalDirector1" v-if="director1 == null" :disabled="!organisation.organisationDirectorIdCard">Upload file</b-button>
+                                  <img v-else :src="director1" width="100" />
+                                </div>
+                              </div>
+                            </div>
+
+                            <div>
+                              <div class="text-center mt-3 mb-3">
+                                <h2 class="mt-2"><span>Director 2</span></h2>
+                              </div>
+                              <div class="row">
+                                <div class="col mb-3">
+                                  <label for="floatingInput2">First Name </label>
+                                  <input type="text" class="form-control"
+                                         placeholder="Director's Full name" v-model="organisation.organisationDirectorName2" />
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col mb-3">
+                                  <label for="floatingInput2">Dob</label>
+                                  <input type="date" class="form-control"
+                                          v-model="organisation.organisationDirectorDob2"  />
+                                </div>
+                                <div class="col mb-3">
+                                  <label for="floatingInput">BVN </label>
+                                  <input type="number" class="form-control"
+                                         placeholder="Bank Verification Number" v-model="organisation.organisationDirectorBvn2"  />
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col mb-3">
+                                  <label for="floatingInput2"> ID Card Type</label>
+                                  <select class="form-select form-control" aria-label="Default select example"
+                                          v-model="organisation.organisationDirectorIdCardType2">
+                                    <option value="national_id_card">National ID Card</option>
+                                    <option value="international_passport">International Passport</option>
+                                    <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
+                                    <option value="drivers_licence">Drivers Licence</option>
+                                  </select>
+                                </div>
+                                <div class="col mb-3">
+                                  <label for="floatingInput" v-if="director2 == null">Upload ID Card </label><br v-if="director2 == null">
+                                  <label for="floatingInput" v-if="director2 != null">Uploaded ID Card</label><br  v-if="director2 != null">
+                                  <b-button @click="showModalDirector2 = !showModalDirector2"  v-if="director2 == null" :disabled="!organisation.organisationDirectorIdCardType2">Upload file</b-button>
+                                  <img v-else :src="director2" width="100" />
+                                </div>
                               </div>
                             </div>
 
@@ -466,7 +523,6 @@
                      <div class="form-floating mb-3">
                       <input type="password" class="form-control" placeholder="Comfirm password" v-model="changePasswordModel.customerPasswordConfirmation" required>
                       <label>Comfirm Password</label>
-
                     </div>
                     <div class="">
                     <base-button type="submit" title='Change' style="
@@ -496,8 +552,6 @@
                       You are about to regenerate new API keys.
                       Proceeding with this action will invalidate your existing API keys and subsequent
                       request headers must be passed with your newly generated keys
-
-
                       <template #modal-footer="{ cancel }">
                         <!-- Emulate built in modal footer ok and cancel button actions -->
                         <b-button size="sm" variant="success" @click="regenerateApiKey()" :disabled="apikeyloading">
@@ -552,7 +606,7 @@
                               <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingInput1"
                                   placeholder="name@example.com" :value="
-                                    null ? '' : readonlybank.accountBankCode
+                                    null ? '' : readonlybank.accountBankName
                                   " readonly />
                                 <label for="floatingInput1">Bank Name</label>
                               </div>
@@ -578,33 +632,27 @@
                           </div>
                         </b-container>
                       </div>
-                    <div style="width: 300px" v-else>
+                    <div  v-else>
                       <div style="position: absolute;top: 20px;left:20px">
                         <b-button @click="edit = false">Cancel</b-button>
                       </div>
-                      <b-form class="bformedit" @submit.prevent="editBank()">
-                        <b-form-group id="input-group-3" label="Bank Name" label-for="input-3">
-                          <base-input>
-                            <el-select class="select-danger" filterable placeholder="Bank Name" required
+                      <form class="bformedit" @submit.prevent="editBank()">
+                        <label class="">Select Payout Bank</label>
+                        <base-input >
+                            <el-select class="select-danger w-100" filterable placeholder="Bank Name" required
                               v-model="createPayoutAccountModel.accountBankCode">
                               <el-option v-for="bank in banks" class="select-danger" :value="bank.value"
                                 :label="bank.label" :key="bank.value">
                               </el-option>
                             </el-select>
                           </base-input>
-                        </b-form-group>
-
-                        <b-form-group id="input-group-4" label="Account Number" label-for="input-4">
-                          <b-form-input id="input-4" type="text" placeholder="Account Number"
-                            v-model="createPayoutAccountModel.accountNumber" class="mr-2" required></b-form-input>
-                        </b-form-group>
-
-                        <b-form-group id="input-group-5" label="Account Name" label-for="input-5">
+                        <label class="mt-3">Account Number</label>
+                          <b-form-input  id="input-4" type="text" placeholder="Account Number"
+                            v-model="createPayoutAccountModel.accountNumber" class="mr-2 mb-3" required></b-form-input>
+                          <label class="">Account Name</label>
                           <b-form-input id="input-5" type="number" placeholder="Account Name"
-                            v-model="createPayoutAccountModel.accountName" class="mr-2" required></b-form-input>
-                        </b-form-group>
-                        <b-form-group id="input-group-5" label="Enter OTP" label-for="input-5">
-                          <div class="d-flex">
+                            v-model="createPayoutAccountModel.accountName" class="mr-2 mb-3" required></b-form-input>
+                          <div class="d-flex mb-3">
                             <b-form-input id="input-5" type="text" placeholder="OTP" class="mr-2" required
                               v-model="createPayoutAccountModel.otp"></b-form-input>
                             <span v-if="timerCount > 0" class="m-2 small w-100 text-dark">Resend OTP in {{ timerCount }}
@@ -614,13 +662,12 @@
                               <span :class="{ 'spinner-border': loadingOtp }"></span>
                             </b-button>
                           </div>
-                        </b-form-group>
                         <b-button class="w-100 text-white" style="background-color: var(--primary)" type="submit">{{
                             createloader ? "Updating" : "Update Bank"
                         }}
                           <span :class="{ 'spinner-border': createloader }"></span>
                         </b-button>
-                      </b-form>
+                      </form>
                     </div>
                     </div>
                   </div>
@@ -650,42 +697,44 @@
 
           </div>
         </div>
+        <upload-image-modal
+            :show="showModalDirector1"
+            :is-loading="loadingDoc"
+            upload-type="document/uploadDocument"
+            :upload-data="this.files"
+            :file-name="organisation.organisationDirectorIdCardType"
+            :director-type="1"
+        ></upload-image-modal>
+        <upload-image-modal
+            :show="showModalDirector2"
+            :is-loading="loadingDoc"
+            upload-type="document/uploadDocument"
+            :upload-data="this.files"
+            :file-name="organisation.organisationDirectorIdCardType2"
+            :director-type="2"
+        ></upload-image-modal>
       </div>
     </div>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
+import UploadImageModal from "@/components/UploadImageModal";
 import ApiKeyDisplayForm from "../../components/form/ApiKeyDisplayForm";
 import { DropdownMenu, DropdownItem, Dropdown } from "element-ui";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import ApikeyRequest from "../../model/request/ApiKeyRequest";
 import DocumentRequest from "../../model/request/DocumentRequest";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
-import "vue-step-progress/dist/main.css";
-import Swal from "sweetalert2";
 import BaseButton from "../../components/button/BaseButton";
 import OrganisationRequest from "../../model/request/OrganisationRequest";
 import AuthenticationRequest from "../../model/request/AuthRequest";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest";
 import ProgressBar from "@/components/ProgressBar";
 import AddBank from "../../components/form/AddBankForm";
-// import BlockerLoader from "../../components/BlockerLoader";
+import BlockerLoader from "../../components/BlockerLoader";
 import ChangePasswordRequest from "@/model/request/ChangePasswordRequest";
-
-
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
-
+import Toast from "../../../toastNotification";
 export default {
   name: "Settings",
   components: {
@@ -696,11 +745,14 @@ export default {
     BaseButton,
     ProgressBar,
     AddBank,
-    // BlockerLoader
+    BlockerLoader,
+    UploadImageModal
   },
   data() {
     return {
       show: false,
+      showModalDirector1:false,
+      showModalDirector2:false,
       updateOrganisationModel: OrganisationRequest.updateOrganisation,
       sendOtpModel: AuthenticationRequest.resendOtp,
       readbanklistModel: VirtualAccountRequest.getBankList,
@@ -743,6 +795,8 @@ export default {
       readonlybank: (state) => state.accountPayout.readOnlyAddedBanks,
       createloader: (state) => state.accountPayout.addbankloading,
       apikeyloading: (state) => state.apiKey.loading,
+      director1:state => state.document.directorIdCard1.url,
+      director2:state => state.document.directorIdCard2.url
 
 
       //documents:(state) => state.document.document
@@ -825,8 +879,8 @@ export default {
   },
 
   mounted() {
+
     //clear console
-    console.clear()
     //Call in read documents actions
     this.apikeyModel.organisationId = localStorage.organisationId;
     this.readDoc.readAll = "YES";
@@ -847,6 +901,7 @@ export default {
       this.readbanklistModel
     );
   },
+
   methods: {
     updateCreateBank(value) {
       this.show = value;
@@ -854,7 +909,6 @@ export default {
     showedit() {
       this.edit = !this.edit;
     },
-
 
     changePassword() {
       this.changePasswordModel.customerEmail = this.userInfo.customerEmail
@@ -987,14 +1041,17 @@ export default {
     updateOrginasation() {
       this.organisation.organisationId = localStorage.organisationId;
       this.organisation.organisationLogo = "company Logo";
-      StoreUtils.dispatch(
-        StoreUtils.actions.auth.updateOrganisation,
-        this.organisation
-      ).then(() => {
-        const userToken = localStorage.getItem('token')
-        StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
-
-      });
+      this.organisation.organisationDirectorIdCard = this.director1;
+      this.organisation.organisationDirectorIdCard2 = this.director2;
+      console.log(this.organisation)
+      // StoreUtils.dispatch(
+      //   StoreUtils.actions.auth.updateOrganisation,
+      //   this.organisation
+      // ).then(() => {
+      //   const userToken = localStorage.getItem('token')
+      //   StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
+      //
+      // });
     },
     file() {
       this.edit = "second";
@@ -1015,13 +1072,32 @@ export default {
         { root: false }
       );
     },
+    showUploadModal(_director){
+      if (_director === 1){
+        this.showModal = !this.showModal
+      }else{
+        this.showModal = !this.showModal
+      }
+
+    }
   },
 
   created: function () { },
 };
 </script>
 <style lang="css" scoped>
+h2 {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+}
 
+h2 span {
+  background:#fff;
+  padding:0 10px;
+}
 .form-group{
   width: 50%;
 }
@@ -1032,7 +1108,7 @@ export default {
 }
 
 .body {
-  min-height: 100vh
+  min-height: 80vh
 }
 
 @media(max-width: 999px){
@@ -1113,6 +1189,17 @@ input::-webkit-inner-spin-button {
 .bformedit {
   width: 100%;
   margin-top: 2%;
+}
+
+@media (max-width:999px) {
+  .bformedit {
+    width: 100%;
+    margin: 2%;
+  }
+  form{
+    width: 100% !important;
+  }
+
 }
 
 .document{

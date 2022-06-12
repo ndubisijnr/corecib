@@ -1,6 +1,6 @@
 class AccountPayoutResponse{
     static readPayoutAccountByOrganisationId = {
-        
+
             accountId: null,
             accountName: null,
             accountNumber: null,
@@ -16,5 +16,4 @@ class AccountPayoutResponse{
         
     }
 }
-
 export default AccountPayoutResponse

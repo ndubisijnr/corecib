@@ -9,6 +9,8 @@ import WalletRequest from "../../model/request/WalletRequest";
 import WalletResponse from "../../model/reponse/WalletResponse";
 import WalletService from "../../service/WalletService";
 import OrganisationResponse from "../../model/reponse/OrganisationResponse";
+import StoreUtils from "@/util/baseUtils/StoreUtils";
+import BillsPaymentRequest from "@/model/request/BillsPaymentRequest";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -83,7 +85,7 @@ export const actions = {
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
         Swal.fire({ text: responseData.responseMessage, icon: 'success', })
-          .then(() => { router.push({ name: "GetStarted" }) })
+          .then(() => { router.push({ name: "Logon" }) })
       } else {
         Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
       }
@@ -93,7 +95,7 @@ export const actions = {
     });
   },
 
-  logon: ({ commit, state }, payload = AuthenticationRequest.login) => {
+  logon: ({ commit, state, dispatch }, payload = AuthenticationRequest.login) => {
     commit("updateLoading", true)
     return AuthService.callLogonApi(payload)
       .then(response => {
@@ -109,6 +111,8 @@ export const actions = {
             }
             commit("updateUserInfo", responseData);
             router.push({ name: "GetStarted" }).then(() => {
+              let model = BillsPaymentRequest.readCategories
+              StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories, model)
             })
         }
         else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {

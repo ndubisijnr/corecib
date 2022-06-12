@@ -5,7 +5,8 @@ class StoreUtils {
     document:{
       updateDocument:"document/updateDocument",
       readDocument:"document/readDocument",
-      createDocument:"document/createDocument"
+      createDocument:"document/createDocument",
+      uploadDocument:"document/uploadDocument"
     },
     apiKey: {
       updateApikey: "apiKey/updateApikey",
@@ -53,13 +54,20 @@ class StoreUtils {
       editAddedBanks:"accountPayout/editAddedBanks",
       requestPayout:"accountPayout/requestPayout",
       readPayout:"accountPayout/readPayout"
+    },
+    billspayment:{
+      updateCategories:"billspayment/updateCategories",
+      updateBillers:"billspayment/updateBillers",
+      updateProducts:"billspayment/updateProducts",
+      updatePayment:"billspayment/updatePayment",
     }
   };
 
   static mutations = {
     document:{
       updateLoading: "document/updateLoading",
-      updateADocument: "document/updateADocument"
+      updateADocument: "document/updateADocument",
+      uploadDocument: "document/uploadDocument"
     },
     apiKey: {
       updateLoading: "apiKey/updateLoading",
@@ -108,6 +116,17 @@ class StoreUtils {
       updatereadAddedBanks:"accountPayout/updatereadAddedBanks",
       updateAllPayouts:"accountPayout/updateAllPayouts",
       updateAddBankLoading:"accountPayout/updateAddBankLoading"
+    },
+    billspayment:{
+      updateCategories:"billspayment/updateCategories",
+      updateBillers:"billspayment/updateBillers",
+      updateBillersLoading:"billspayment/updateBillersLoading",
+      updateCategoriesLoading:"billspayment/updateCategoriesLoading",
+      updateProducts:"billspayment/updateProducts",
+      updateProductLoading:"billspayment/updateProductLoading",
+      updatePayment:"billspayment/updatePayment",
+      updatePaymentLoading:"billspayment/updatePaymentLoading",
+
     }
   };
 

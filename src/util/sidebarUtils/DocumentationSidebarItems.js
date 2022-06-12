@@ -1,3 +1,4 @@
+const url = 'https://documenter.getpostman.com/view/20549781/Uz5GoGMo'
 export default
 {
     header: 'Documentation',
@@ -6,8 +7,8 @@ export default
         {
             name:'Documentation',
             icon:'fas fa-book',
-            path:'https://documenter.getpostman.com/view/20549781/Uyr7HJuB',
-            target:"_blank"
+            path:url,
+            target:"_blank",
         },
     ]
 };

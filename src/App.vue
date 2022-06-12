@@ -1,7 +1,7 @@
 <template>
   <div>
    <router-link to="/settings/settings"> <div class="myalert" v-if="layout === 'dashboard-layout' && currentOrganisation.organisationStatus == 'PENDING'" id="myalert">
-      <h3 class="text-white" > &nbsp; &nbsp; &nbsp; &nbsp; <b-icon-bell-fill/> &nbsp; You are currently only allowed bill payment APIs, kindly update your business information to access all our services.  </h3>
+      <h3 class="text-white" > &nbsp; &nbsp; &nbsp; &nbsp; <b-icon-bell-fill/> &nbsp; You are currently only allowed to use bills payment APIs, kindly update your business information to access all our services.  </h3>
     </div> </router-link>
     <dashboard-layout v-if="layout === 'dashboard-layout'">
       
@@ -26,22 +26,20 @@ export default {
   },
   mounted() {
     setTimeout(()=>{
-      let routeLayout = this.$route.meta.layout
-      if(routeLayout !== "auth"){
+      // if(routeLayout !== "auth"){
         const userToken = localStorage.getItem('token')
         StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
         // console.clear()
-      }else{
-        localStorage.clear()
-      }
+      // }else{
+      //   localStorage.clear()
+      // }
     },1000)
 
-    this.readPayoutAccountModel.accountOrganisationId =
-        localStorage.organisationId;
-    StoreUtils.dispatch(
-        StoreUtils.actions.accountPayout.readAddedBanks,
-        this.readPayoutAccountModel
-    );
+    // this.readPayoutAccountModel.accountOrganisationId = localStorage.organisationId;
+    // StoreUtils.dispatch(
+    //     StoreUtils.actions.accountPayout.readAddedBanks,
+    //     this.readPayoutAccountModel
+    // );
 
     this.stickyAlert()
     setTimeout(()=>{

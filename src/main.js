@@ -13,6 +13,8 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import VueCountryCode from "vue-country-code";
 import App from './App.vue';
+import excel from 'vue-excel-export'
+
 import './filters'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 // Import Bootstrap and BootstrapVue CSS files (order is important)
@@ -39,6 +41,7 @@ Vue.use(Option);
 Vue.use(DatePicker);
 Vue.use(Tabs);
 Vue.use(TabPane);
+Vue.use(excel);
 
 const moment = require('moment')
 require('moment/locale/en-gb')

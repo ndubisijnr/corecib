@@ -22,6 +22,6 @@ export default [
         path: '/dashboard/pricing',
         name: 'Pricing',
         meta: {layout: 'dashboard',authRequired:true},
-        component: Pricing
+        component: Pricing,
     },
 ];
