@@ -17,6 +17,10 @@ class BillsPaymentRequest {
         productCode: null,
         amount: null
     }
+    static customerEnquiry = {
+        billerCode:null,
+        billerCustomerId:null,
+    }
 }
 
 

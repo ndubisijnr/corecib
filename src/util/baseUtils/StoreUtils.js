@@ -60,6 +60,7 @@ class StoreUtils {
       updateBillers:"billspayment/updateBillers",
       updateProducts:"billspayment/updateProducts",
       updatePayment:"billspayment/updatePayment",
+      updateCustomerEnq:"billspayment/updateCustomerEnq",
     }
   };
 
@@ -126,6 +127,10 @@ class StoreUtils {
       updateProductLoading:"billspayment/updateProductLoading",
       updatePayment:"billspayment/updatePayment",
       updatePaymentLoading:"billspayment/updatePaymentLoading",
+      updateCustomerEnq:"billspayment/updateCustomerEnq",
+      updateCustomerEnqLoading:"billspayment/updateCustomerEnqLoading",
+      updateSuccessMsg:"billspayment/updateSuccessMsg",
+      updateErrorMsg:"billspayment/updateErrorMsg",
 
     }
   };

@@ -3,9 +3,7 @@
    <router-link to="/settings/settings"> <div class="myalert" v-if="layout === 'dashboard-layout' && currentOrganisation.organisationStatus == 'PENDING'" id="myalert">
       <h3 class="text-white" > &nbsp; &nbsp; &nbsp; &nbsp; <b-icon-bell-fill/> &nbsp; You are currently only allowed to use bills payment APIs, kindly update your business information to access all our services.  </h3>
     </div> </router-link>
-    <dashboard-layout v-if="layout === 'dashboard-layout'">
-      
-    </dashboard-layout>
+    <dashboard-layout v-if="layout === 'dashboard-layout'"></dashboard-layout>
     <auth-layout v-else></auth-layout>
   </div>
 </template>

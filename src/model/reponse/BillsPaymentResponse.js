@@ -7,6 +7,18 @@ class BillsPaymentResponse{
         responseCode:null,
         responseMessage:null
     }
+    static customerEnq = {
+        customerId:null,
+        customerName:null,
+        address:null,
+        dueDate:null,
+        district:null,
+        outstandingBalance:null,
+        customerType:null,
+        billerCode:null,
+        responseCode:null,
+        responseMessage:null,
+    }
 }
 
 export default  BillsPaymentResponse

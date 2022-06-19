@@ -270,7 +270,6 @@ export const actions = {
       if (responseData2.responseCode == "00"){
         commit("updateLoading", false)
         commit("updateBalance",responseData2)
-        Toast.fire({text:"Dashboard Ready", icon:"success"})
       }
     })
   }

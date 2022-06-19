@@ -8,9 +8,13 @@ import swal from "sweetalert2";
 export const state = {
     categoriesloading:false,
     billersloading:false,
+    customerEnqloading:false,
     productloading:false,
     paymentloading:false,
     loading:false,
+    errorMsg:null,
+    successMsg:null,
+    customerEnq:BillsPaymentResponse.customerEnq,
     categories:{},
     billers:{},
     products:{},
@@ -21,8 +25,17 @@ export const mutations = {
     updateCategories:(state,payload) => {
         state.categories = payload
     } ,
+    updateErrorMsg:(state, payload) => {
+        state.errorMsg = payload
+    },
+    updateSuccessMsg:(state, payload) => {
+        state.successMsg = payload
+    },
     updateCategoriesLoading:(state,payload) => {
         state.productloading = payload
+    } ,
+    updateCustomerEnqLoading:(state,payload) => {
+        state.customerEnqloading = payload
     } ,
     updateProductLoading:(state,payload) => {
         state.categoriesloading = payload
@@ -32,6 +45,9 @@ export const mutations = {
     } ,
     updateProducts:(state,payload) => {
         state.products = payload
+    },
+    updateCustomerEnq:(state, payload) => {
+        state.customerEnq = payload
     },
     updateBillersLoading:(state,payload) => {
         state.billersloading = payload
@@ -101,6 +117,24 @@ export const actions = {
                 commit("updatePaymentLoading", false)
                 Toast.fire({text:responseData.responseMessage, icon:"error"})
             }
+        })
+    },
+    updateCustomerEnq:({commit}, payload=BillsPaymentRequest.customerEnquiry) => {
+        commit("updateCustomerEnqLoading", true)
+        return BillsPaymentService.callCustomerEnquiry(payload).then((response) => {
+            let responseData = response.data
+            if (responseData.responseCode == "00") {
+                commit("updateCustomerEnqLoading", false)
+                commit("updateErrorMsg", responseData.responseCode)
+                commit("updateCustomerEnq", responseData)
+            }else{
+                commit("updateCustomerEnqLoading", false)
+                commit("updateErrorMsg", responseData.responseCode)
+                // swal.fire({text:responseData.responseMessage, icon:"error"})
+            }
+        }).catch((e) => {
+            commit("updateCustomerEnqLoading", false)
+            // swal.fire({text:e, icon:"error"})
         })
     }
 }

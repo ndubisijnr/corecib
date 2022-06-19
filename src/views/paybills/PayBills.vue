@@ -2,80 +2,45 @@
   <div class="main">
     <div class="section-1">
       <div>
-        <div v-for="i in categories" :key="i" class="cag-sec" @click="readBillers(obj = i.categoryCode), billstate === 'product'">
-           <span>{{i.categoryName}}</span>
+        <div v-for="i in categories" :key="i" class="cag-sec" :class="{'active':activeC == i.categoryName}" @click="readBillers(obj = i.categoryCode, obj2 = i.categoryName), b(), billstate === 'product', activeC = i.categoryName">
+           <span >{{i.categoryName}}</span>
            <b-icon-arrow-right />
         </div>
       </div>
     </div>
     <div class="section-2">
-<!--      {{products}}-->
-<!--      {{products}}-->
-<!--      <div class="mb">-->
-<!--        <div class="card-area">-->
-<!--          <dashboard-card :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'" :currency="'₦'" :showBtn="false" :showBtn1="false"></dashboard-card>-->
-<!--          <dashboard-card :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'" :showBtn="false" :showBtn1="false" :currency="'₦'"></dashboard-card>-->
-<!--        </div>-->
-<!--      </div>-->
-      <b-button v-b-modal.modal-sm id="pro" hidden></b-button>
-      <b-modal id="modal-sm" hide-backdrop  class="w-100"  size="lg" title="Regenerate Api key">
-
-      </b-modal>
+      <div class="container pl-3 pr-5 p-3" style="display:flex;justify-content: space-between;align-items: center">
+            <span class="text-dark small" style="cursor: pointer" @click="billstate = true,b()" v-if=" billstate == false">
+              <b-icon-arrow-return-left  class="" style="font-size:10px"/> Back
+            </span>
+        <span class="small">{{activeC}}</span>
+      </div>
       <div v-if="billerloading ||categoryloading " style="width:100%;display: flex;justify-content: center;align-items: center">
          <span class="spinner-border mt-4" ></span>
       </div>
-        <div v-else class="biller-area">
-          <div v-if="billstate == true" v-for="i in billers" :key="i" class="biller-box" @click="readProduct(obj = i.billerCode)">
-            <img :src="i.billerImage" width="50">
-            <span>{{i.billerName}}</span>
+        <div v-else>
+          <div class="biller-area">
+          <div v-if="billstate == true" v-for="i in billers" :key="i" class="biller-box" @click="readProduct(obj = i.billerCode),billstate = !billstate, billerImage = i.billerImage">
+            <img :src="i.billerImage" width="40">
+            <span>{{i.billerName | titleCase}}</span>
             </div>
           <div v-if="billstate == false" class="data_bundle">
-            <div v-if="i.productBillerCode.includes('AIRTIME')"  v-for="i in products" :key="i" class="airtime-form airtime animate animate__animated animate__zoomIn">
-              <form @submit.prevent="payment(obj = i.productCode)" class="form">
-              <div class="card-header">
-                <h3>Buy({{ i.productBillerCode }})</h3>
+              <div class="airtime-form airtime animate animate__animated animate__zoomIn"  v-if="category.includes('DATA') || category.includes('CABLE_TV') || category.includes('AIRTIME') || category.includes('ELECTRICITY')">
+                <paybills-form
+                    :billerCustomerIdInputLabel="products[0].billerCustomerIdInputLabel | titleCase"
+                    :productBillerCode="products[0].productBillerCode.toLowerCase().replace('_',' ')"
+                    :productpaymentModdel="productpaymentModdel.amount"
+                    :billerImage="billerImage"
+                    :product-code="products[0].productCode">
+                </paybills-form>
               </div>
-              <div class="card-body">
-                 <label>{{i.billerCustomerIdInputLabel}}</label>
-                 <b-input type="tell" required class="mb-2" v-model="productpaymentModdel.billerCustomerId"></b-input>
-
-                 <label>Amount</label>
-                 <b-input type="number" required class="mb-2" v-model="productpaymentModdel.amount"></b-input>
-
-                 <label>How often do you want to recharge?</label>
-                 <b-select>
-                   <b-select-option value="just this once">just this once</b-select-option>
-                 </b-select>
-              </div>
-                <div class="card-footer">
-                  <b-button class="mt-2 w-100" type="submit" style="background-color:#3F88C5;color:white" :disabled="paymentLoading">{{paymentLoading ? 'Please Wait...' : 'Buy Airtime'}}</b-button>
-                </div>
-              </form>
-            </div>
-              <div v-else class="biller-box">
-                <span>{{ i.productBillerCode }}</span><br>
-                <span>{{i.productDescription}}</span>
               </div>
           </div>
         </div>
-      </div>
-
-    <div class="modal" tabindex="-1" id="myModel">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
         </div>
-      </div>
+    <div class="section-3">
+      <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false"
+                         :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
     </div>
   </div>
 </template>
@@ -83,51 +48,55 @@
 <script>
 import StoreUtils from "@/util/baseUtils/StoreUtils";
 import BillsPaymentRequest from "@/model/request/BillsPaymentRequest";
-// import DashboardView from "../../components/dashboardComponent/DashboardCircle"
+import DashboardView from "../../components/dashboardComponent/DashboardCircle"
+import PaybillsForm from "@/components/form/PaybillsForm";
+import banner from "@/assets/Banner.svg"
 import {mapState} from 'vuex'
 export default {
   name: "PayBills",
   components:{
-    // "dashboard-card": DashboardView,
+    "dashboard-card": DashboardView,
+    PaybillsForm
   },
 
   data: () => {
     return {
       billersModel:BillsPaymentRequest.readBiller,
+      category:null,
+      activeC:null,
       categoriesModel:BillsPaymentRequest.readCategories,
       productModel:BillsPaymentRequest.readProduct,
       productpaymentModdel:BillsPaymentRequest.productPayment,
-      billstate:true
+      productPrice:null,
+      productCode:null,
+      productName:null,
+      productreference:null,
+      biller:null,
+      billstate:true,
+      formData:false,
+      billerImage:null,
+      section3Bg:banner,
     }
   },
   methods:{
-    readBillers(obj){
+    b(){
+      Object.keys(this.customerEnquiryData).forEach(key => this.customerEnquiryData[key] = null)
+    },
+    readBillers(obj, obj2){
       this.billersModel.categoryCode = obj
       StoreUtils.dispatch(StoreUtils.actions.billspayment.updateBillers,this.billersModel).then(() =>{
         this.billstate = true
+        this.category = obj
+        console.log(this.category)
       })
     },
     readProduct(obj){
       this.productModel.billerCode = obj
       StoreUtils.dispatch(StoreUtils.actions.billspayment.updateProducts, this.productModel).then(() => {
         // document.getElementById('pro').click()
-        this.billstate = !this.billstate
       })
     },
-    reference(length) {
-      let result = ""
-      let characters = 'abcdefghijklmnopgrstuvwxyzABCDEFJHIJKLMNOPQRSTUVWXYZ0123456789';
-      let charactersLength = characters.length;
-      for (var i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-      }
-      return result;
-    },
-    payment(obj){
-      this.productpaymentModdel.reference = `BIZGEM-${this.reference(30)}`
-      this.productpaymentModdel.productCode = obj
-      StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel)
-    }
+
   },
 
   computed:{
@@ -138,13 +107,19 @@ export default {
       categoryloading:state => state.billspayment.categoriesloading,
       products:state => state.billspayment.products.data,
       paymentLoading:state => state.billspayment.paymentloading,
-
+      balances: state => state.auth.balances,
+      customerEnquiryData:state => state.billspayment.customerEnq,
 
     })
   },
 
   mounted() {
     StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories,this.categoriesModel)
+    StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
+    this.billstate = true
+    Object.keys(this.billers).forEach(key => {
+      this.billers[key] = null
+    })
   }
 
 }
@@ -158,15 +133,34 @@ export default {
   /*justify-content: center;*/
   height: 80vh;
 }
+.section-3{
+  width: 40%;
+  /*box-shadow: -1px 0 3px 1px rgb(77 77 77 / 12%);*/
+  background-color: #FFFFFF;
+  padding-top: 15px;
+  /*background-image:url("../../../public/Banner.svg");*/
+  /*background-size: cover;*/
+  /*background-repeat: no-repeat;*/
+  display: flex;
+  justify-content: center;
+}
+
 .biller-box{
   width: 40%;
-  height: 88px;
-  margin: 10px 10px;
-  padding: 10px 10px;
+  height: 60px;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
   background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   cursor: pointer;
   border-radius: 10px;
+}
+.biller-box:hover{
   box-shadow: -1px 0 3px 1px rgb(77 77 77 / 12%);
+  transition: .3s ease-in;
 }
 .card-area {
   display: flex;
@@ -176,14 +170,25 @@ export default {
   width: 100%;
 }
 
-@media (max-width:999px) {
-  .card-area {
-    display: flex;
-    width: 250%;
+
+@media (max-width: 999px){
+  .section-3{
+    display: none;
   }
-
+  .biller-box{
+    width: 90%;
+    height: 60px;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+  }
 }
-
 .biller-area{
   display: flex;
   height: auto;
@@ -244,10 +249,6 @@ export default {
   align-items: center;
 }
 
-.form{
-  height: 50vh;
-  background-color: #FFFFFF;
-}
 .cag-sec{
   display: flex;
   justify-content: space-between;
@@ -260,6 +261,11 @@ export default {
   color: white;
 }
 
+.active{
+  background-color: var(--primary);
+  color: white;
+}
+
 .cag-sec:hover{
   background-color: var(--primary);
   color: white;
@@ -268,7 +274,7 @@ export default {
 
 @media (max-width:999px) {
   .section-1{
-    width: 100%;
+    width: 35%;
     height: 100vh;
     /*background-color: white;*/
     color: black;
@@ -283,6 +289,19 @@ export default {
     font-size: 12px;
   }
 }
+@media (max-width:999px) {
+  .card-area {
+    display: flex;
+    width: 250%;
+  }
+  .biller-area{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
 
+}
 
 </style>

@@ -1043,15 +1043,14 @@ export default {
       this.organisation.organisationLogo = "company Logo";
       this.organisation.organisationDirectorIdCard = this.director1;
       this.organisation.organisationDirectorIdCard2 = this.director2;
-      console.log(this.organisation)
-      // StoreUtils.dispatch(
-      //   StoreUtils.actions.auth.updateOrganisation,
-      //   this.organisation
-      // ).then(() => {
-      //   const userToken = localStorage.getItem('token')
-      //   StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
-      //
-      // });
+      StoreUtils.dispatch(
+        StoreUtils.actions.auth.updateOrganisation,
+        this.organisation
+      ).then(() => {
+        const userToken = localStorage.getItem('token')
+        StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
+
+      });
     },
     file() {
       this.edit = "second";

@@ -13,8 +13,8 @@ export default {
     callProductPaymentApi(payload){
         return apiClient.appClient.post("/vas/service/purchase", payload)
     },
-
-
-
+    callCustomerEnquiry(payload){
+        return apiClient.appClient.post("/vas/service/customer-lookup", payload)
+    }
 };
 

@@ -19,7 +19,7 @@
               </div>
               <div class="w-100 mb-2">
                 <label>BVN</label>
-                <input type="text" v-model="createWalletModel.bvn" class="form-control" placeholder="BVN" required>
+                <input type="text" v-model="createWalletModel.bvn" class="form-control" placeholder="BVN">
               </div>
               <div class="w-100 mb-2">
                 <label>Email</label>

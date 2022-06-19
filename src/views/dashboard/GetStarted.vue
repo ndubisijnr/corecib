@@ -31,6 +31,9 @@
             <b-button @click="show = true"> Withdraw</b-button>
           </div>
           <div>
+<!--            <div class="m-3">-->
+<!--              <h4>Recent Transactions</h4>-->
+<!--            </div>-->
             <transaction withSearch="YES"></transaction>
           </div>
         </div>
@@ -38,7 +41,7 @@
     </div>
     <payout-form @closeCreatePayout="updateCreatePayout" :showCreatePayout="show"></payout-form>
 
-    <b-modal centered id="modal-scrollable" scrollable hide-backdrop content-class="shadow" hide-footer>
+    <b-modal centered id="modal-scrollable" scrollable hide-backdrop content-class="shadow" hide-footer title="Fund your wallet">
 
       <h3 style="text-align:center">
         Topup Balance
