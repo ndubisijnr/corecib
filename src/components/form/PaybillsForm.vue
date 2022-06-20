@@ -177,7 +177,9 @@ export default {
         }
 
       // console.log(this.productpaymentModdel)
-      StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel)
+      StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel).then(() => {
+        StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
+      })
       }
     },
     clearEnq(){

@@ -177,27 +177,8 @@ export const actions = {
             }
             else{
                 commit("updatePaymentLoading", false)
-                Swal.fire({
-                    title: 'Session timed out',
-                    html: 'Please re-authenticate',
-                    icon:"info",
-                    // didOpen: () => {
-                    //   Swal.showLoading()
-                    //   const b = Swal.getHtmlContainer().querySelector('b')
-                    //   timerInterval = setInterval(() => {
-                    //     b.textContent = Swal.getTimerLeft()
-                    //   }, 100)
-                    // },
-                }).then((result) => {
-                    /* Read more about handling dismissals below */
-                    // if (result.dismiss === Swal.DismissReason.timer) {
-                    //   console.log('I was closed by the timer')
-                    //   router.push({name:"Logon"}).then(()=> {
-                    //     window.location.reload()
-                    //   })
-                    // }
-                    StoreUtils.dispatch(StoreUtils.actions.auth.logOut,{customerEmail: StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).customerEmail})
-                })
+                Toast.fire({text:responseData.responseMessage, icon:"error"})
+
             }
         })
     },
