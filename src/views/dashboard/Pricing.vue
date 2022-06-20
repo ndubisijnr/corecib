@@ -119,31 +119,31 @@
            </tr>
            <tr>
              <td>Eko Electric</td>
-             <td>1.05% Commission </td>
+             <td>0.77% Commission </td>
            </tr>
            <tr>
              <td>AEDC (Abuja Electric)</td>
-             <td>0.79% Commission </td>
+             <td>0.70% Commission </td>
            </tr>
            <tr>
              <td>EEDC (Enugu Electric)</td>
-             <td>1.74% Commission </td>
+             <td>1.74% Commission <span class="text-info">(coming soon) </span></td>
            </tr>
            <tr>
              <td>PHEDC (Port Harcourt Electric)</td>
-             <td>1.26% Commission </td>
+             <td>0.84% Commission </td>
            </tr>
            <tr>
              <td>IBEDC (Ibadan Electric)</td>
-             <td>0.63% Commission </td>
+             <td>0.42% Commission </td>
            </tr>
            <tr>
              <td>KEDCO (Kano Electric)</td>
-             <td>1.33% Commission </td>
+             <td>0.84% Commission </td>
            </tr>
            <tr>
              <td>KAEDCO (Kaduna Electric)</td>
-             <td>1.05% Commission </td>
+             <td>0.84% Commission </td>
            </tr>
            <tr>
              <td>JEDC (Jos Electric)</td>

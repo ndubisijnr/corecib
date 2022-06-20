@@ -9,8 +9,8 @@
           <div class="card-body">
             <div>
                   <!-- Smart card number and meter number -->
-                  <label v-if="products[0].productBillerCode.includes('CABLE')">Smart Card Number</label>
-                  <label v-if="products[0].productBillerCode.includes('ELECTRIC')">Meter Number</label>
+                  <label v-if="products[0].productBillerCode.includes('CABLE')" class="small">Smart Card Number</label>
+                  <label v-if="products[0].productBillerCode.includes('ELECTRIC')" class="small">Meter Number</label>
                   <b-input v-if="products[0].productBillerCode.includes('CABLE')" type="number" placeholder="Enter your smart card number" id="smartcardInput" v-model="customerEnqModel.billerCustomerId" :disabled="!Object.values(customerEnquiryData).every((o) => o === null)" required></b-input>
                   <b-input v-if="products[0].productBillerCode.includes('ELECTRIC')" type="number" placeholder="Enter your meter number" id="smartcardInput" v-model="customerEnqModel.billerCustomerId" :disabled="!Object.values(customerEnquiryData).every((o) => o === null)" required></b-input>
                   <span class="small" v-if="!Object.values(customerEnquiryData).every((o) => o === null)"><span class="small">Customer:</span> <b>{{ customerEnquiryData.customerName }}</b> <br><span @click="clearEnq()"><span class="text-primary" style="cursor: pointer">Not me?</span></span></span>
@@ -18,25 +18,29 @@
             <p class="small text-danger" id="err"></p>
             <div v-if="!Object.values(customerEnquiryData).every((o) => o === null)">
               <div v-if="products[0].productPrice !== 'VARIABLE'">
-                <label>Select Plan</label>
+                <label class="small">Select Plan</label>
                 <b-select v-model="productpaymentModdel.productCode">
                   <b-select-option  v-for="i in products" :key="i" :value="i.productPrice + ' ' + i.productCode">{{i.productCode}} @ {{i.productPrice | formatAmount}}</b-select-option>
                 </b-select>
               </div>
               <div v-if="products[0].productPrice == 'VARIABLE'">
                 <div>
-                <label>Amount</label>
+                <label class="small">Amount</label>
                 <b-input type="number" required class="mb-2" v-model="productpaymentModdel.amount" />
                 </div>
                 <div>
-              <label>Select Option</label>
+              <label class="small">Select Option</label>
               <b-select v-model="productpaymentModdel.productCode">
                 <b-select-option  v-for="i in products" :key="i" :value="i.productCode">{{i.productCode.replace('_', ' ') | titleCase}}</b-select-option>
               </b-select>
                 </div>
               </div>
-
+              <div class="mt-2">
+                <label class="small">Email</label>
+                <b-input type="email" :value="currentOrganisation.organisationEmail" id="organisationEmail"></b-input>
+              </div>
             </div>
+
           </div>
             <div class="card-footer">
               <b-button class="mt-2 w-100" v-if="!Object.values(customerEnquiryData).every((o) => o === null)" type="submit" @click="action = 'pay'" style="background-color:#3F88C5;color:white" :disabled="paymentLoading">{{paymentLoading ? 'Please Wait...' : 'Pay'}}</b-button>
@@ -55,14 +59,14 @@
                   <!-- area for AIRTIME -->
                     <div v-for="i in products" :key="i">
                       <div>
-                        <label>{{billerCustomerIdInputLabel}}</label>
+                        <label class="small">{{billerCustomerIdInputLabel}}</label>
                         <b-input type="tell" required class="mb-2"
                                  v-model="productpaymentModdel.billerCustomerId" placeholder="Enter mobile number">
                         </b-input>
                       </div>
                       <div v-if="i.productPrice == 'VARIABLE'">
                         <div>
-                          <label>Amount</label>
+                          <label class="small">Amount</label>
                           <b-input type="number" required class="mb-2" v-model="productpaymentModdel.amount">
                           </b-input>
 
@@ -79,19 +83,24 @@
         <!-- Area for DATA BUNDLE -->
             <div v-if="products[0].productBillerCode.includes('DATA')">
               <div>
-                <label>{{billerCustomerIdInputLabel}}</label>
+                <label class="small">{{billerCustomerIdInputLabel}}</label>
                 <b-input type="tell" required class="mb-2"
                          v-model="productpaymentModdel.billerCustomerId" placeholder="Enter mobile number">
                 </b-input>
               </div>
               <div>
-                <label>Select Plan</label>
+                <label class="small">Select Plan</label>
                 <b-select v-model="productpaymentModdel.productCode">
                    <b-select-option  v-for="i in products" :key="i" :value="i.productPrice + ' ' + i.productCode">{{i.productDescription}} @ {{i.productPrice | formatAmount}}</b-select-option>
                 </b-select>
               </div>
           </div>
+          <div class="mt-2">
+            <label class="small">Email</label>
+            <b-input type="email" :value="currentOrganisation.organisationEmail" id="organisationEmail"></b-input>
+          </div>
         </div>
+
         <div class="card-footer">
           <b-button class="mt-2 w-100" type="submit" style="background-color:#3F88C5;color:white" :disabled="paymentLoading">{{paymentLoading ? 'Please Wait...' : 'Proceed'}}</b-button>
         </div>
@@ -104,7 +113,7 @@
 import {mapState} from "vuex";
 import StoreUtils from "@/util/baseUtils/StoreUtils";
 import BillsPaymentRequest from "@/model/request/BillsPaymentRequest";
-
+import AuthenticationResponse from "@/model/reponse/AuthenticationResponse";
 
 export default {
   name: "PaybillsForm",
@@ -114,6 +123,7 @@ export default {
       customerEnqModel:BillsPaymentRequest.customerEnquiry,
       action:null,
       code:this.productCode,
+      emailModel:AuthenticationResponse.organisation
     }
   },
 
@@ -159,12 +169,15 @@ export default {
           this.productpaymentModdel.productCode = code
           this.productpaymentModdel.billerCustomerId= this.customerEnqModel.billerCustomerId
           this.productpaymentModdel.reference = `BIZGEM-${this.reference(30)}`
+          this.productpaymentModdel.email = document.getElementById('organisationEmail').value
         }else{
+          this.productpaymentModdel.billerCustomerId= this.customerEnqModel.billerCustomerId
           this.productpaymentModdel.reference = `BIZGEM-${this.reference(30)}`
+          this.productpaymentModdel.email = document.getElementById('organisationEmail').value
         }
 
-      // console.log(this.productpaymentModdel)
-      StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel)
+      console.log(this.productpaymentModdel)
+      // StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel)
       }
     },
     clearEnq(){
@@ -176,13 +189,15 @@ export default {
         let code = this.productpaymentModdel.amount.split(" ")[1]
         this.productpaymentModdel.amount = price
         this.productpaymentModdel.productCode = code
+        this.productpaymentModdel.email = document.getElementById('organisationEmail').value
       }
       this.productpaymentModdel.productCode = this.productCode
       this.productpaymentModdel.reference = `BIZGEM-${this.reference(30)}`
-      // console.log(this.productpaymentModdel)
-      StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel).then(() => {
-        StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
-      })
+      this.productpaymentModdel.email = document.getElementById('organisationEmail').value
+      console.log(this.productpaymentModdel)
+      // StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel).then(() => {
+      //   StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
+      // })
     },
     reference(length) {
       let result = ""
@@ -205,7 +220,11 @@ export default {
       customerEnquiryData:state => state.billspayment.customerEnq,
       customerEnquiryLoading: state => state.billspayment.customerEnqloading,
       error_msg:state => state.billspayment.errorMsg,
-    })
+    }),
+
+    currentOrganisation(){
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
+    }
   },
 }
 </script>

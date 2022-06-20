@@ -174,16 +174,11 @@ export default {
         },
 
         addBank() {
-            let bankcode =
-                this.createPayoutAccountModel.accountBankCode.split(" ")[1];
-            let bankName =
-                this.createPayoutAccountModel.accountBankCode.split(" ")[0];
-            this.createPayoutAccountModel.accountCountry =
-                this.userInfo.customerCountry;
-            this.createPayoutAccountModel.accountOrganisationId =
-                this.userInfo.customerId;
-            this.createPayoutAccountModel.username =
-                this.userInfo.customerEmail;
+            let bankcode = this.createPayoutAccountModel.accountBankCode.split(" ")[1];
+            let bankName = this.createPayoutAccountModel.accountBankCode.split(" ")[0];
+            this.createPayoutAccountModel.accountCountry = this.userInfo.customerCountry;
+            this.createPayoutAccountModel.accountOrganisationId = this.userInfo.customerId;
+            this.createPayoutAccountModel.username = this.userInfo.customerEmail;
             this.createPayoutAccountModel.accountBankCode = bankcode;
             this.createPayoutAccountModel.accountBankName = bankName;
             StoreUtils.dispatch(

@@ -217,12 +217,18 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
+  height: 70vh;
 }
 
 .section-2{
   width: 100%;
   max-height: 100vh;
   overflow-y: scroll;
+}
+
+.section-2::-webkit-scrollbar {
+  display: none;
 }
 
 @keyframes spinner-border {

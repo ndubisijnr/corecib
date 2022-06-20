@@ -258,7 +258,6 @@ export const actions = {
       if(responseData.responseCode == "00"){
         commit("updateLoading", false)
         commit("updateRefferalStats", responseData)
-          Toast.fire({text:"Page ready", icon:"success"})
       }
     })
   },

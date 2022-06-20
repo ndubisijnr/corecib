@@ -10,29 +10,29 @@
         <div class="container">
           <b-form class="" @submit.prevent="createWallet">
               <div class="w-100 mb-2">
-                <label>First Name</label>
+                <label class="small">First Name</label>
                 <input type="text" v-model="createWalletModel.firstName" class="form-control" placeholder="First Name"  required>
               </div>
               <div class="w-100 mb-2">
-                <label>Last Name</label>
+                <label class="small">Last Name</label>
                 <input type="text" v-model="createWalletModel.lastName" class="form-control" placeholder="Last Name" aria-label="Server" required>
               </div>
               <div class="w-100 mb-2">
-                <label>BVN</label>
+                <label class="small">Bank Verification Number</label>
                 <input type="text" v-model="createWalletModel.bvn" class="form-control" placeholder="BVN">
               </div>
               <div class="w-100 mb-2">
-                <label>Email</label>
+                <label class="small">Email</label>
                 <input type="email" v-model="createWalletModel.email" class="form-control" placeholder="Email" required>
               </div>
             <div>
               <div class="input-group mb-3">
                 <div class="w-100 mb-2">
-                  <label>Date Of Birth</label>
+                  <label class="small">Date Of Birth</label>
                   <input type="date" v-model="createWalletModel.dob" class="form-control" placeholder="Date Of Birth" aria-label="Server" required>
                 </div>
                 <div class="w-100">
-                  <label>Phone Number</label>
+                  <label class="small">Phone Number</label>
                   <div class="d-flex">
                     <vue-country-code v-model="createWalletModel.countryCode" @onSelect="onSelect" :preferredCountries="['ng', 'us', 'gb']" style="height: 45px" class="" required></vue-country-code>
                     <input type="tel" v-model="createWalletModel.phoneNumber" class="form-control" placeholder="Phone Number" aria-label="Server" required>

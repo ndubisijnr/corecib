@@ -3,6 +3,8 @@ import BillsPaymentResponse from "../../model/reponse/BillsPaymentResponse";
 import BillsPaymentService from "../../service/BillsPaymentService";
 import Toast from "../../../toastNotification";
 import swal from "sweetalert2";
+import Swal from "sweetalert2";
+import StoreUtils from "@/util/baseUtils/StoreUtils";
 
 
 export const state = {
@@ -72,7 +74,27 @@ export const actions = {
              commit("updateCategories", responseData)
          }else{
              commit("updateCategoriesLoading", false)
-             Toast.fire({text:"Something went wrong please try again", icon:"error"})
+             Swal.fire({
+                 title: 'Session timed out',
+                 html: 'Please re-authenticate',
+                 icon:"info",
+                 // didOpen: () => {
+                 //   Swal.showLoading()
+                 //   const b = Swal.getHtmlContainer().querySelector('b')
+                 //   timerInterval = setInterval(() => {
+                 //     b.textContent = Swal.getTimerLeft()
+                 //   }, 100)
+                 // },
+             }).then((result) => {
+                 /* Read more about handling dismissals below */
+                 // if (result.dismiss === Swal.DismissReason.timer) {
+                 //   console.log('I was closed by the timer')
+                 //   router.push({name:"Logon"}).then(()=> {
+                 //     window.location.reload()
+                 //   })
+                 // }
+                 StoreUtils.dispatch(StoreUtils.actions.auth.logOut,{customerEmail: StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).customerEmail})
+             })
          }
      })
     },
@@ -86,11 +108,31 @@ export const actions = {
             }
             else{
                 commit("updateBillersLoading", false)
-                Toast.fire({text:"Something went wrong please try again", icon:"error"})
+                Swal.fire({
+                    title: 'Session timed out',
+                    html: 'Please re-authenticate',
+                    icon:"info",
+                    // didOpen: () => {
+                    //   Swal.showLoading()
+                    //   const b = Swal.getHtmlContainer().querySelector('b')
+                    //   timerInterval = setInterval(() => {
+                    //     b.textContent = Swal.getTimerLeft()
+                    //   }, 100)
+                    // },
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    // if (result.dismiss === Swal.DismissReason.timer) {
+                    //   console.log('I was closed by the timer')
+                    //   router.push({name:"Logon"}).then(()=> {
+                    //     window.location.reload()
+                    //   })
+                    // }
+                    StoreUtils.dispatch(StoreUtils.actions.auth.logOut,{customerEmail: StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).customerEmail})
+                })
             }
         })
     },
-    updateProducts:({commit}, payload = BillsPaymentRequest.readProduct) => {
+    updateProducts:({commit,dispatch}, payload = BillsPaymentRequest.readProduct) => {
         commit("updateProductLoading", true)
         return BillsPaymentService.callReadProductApi(payload).then((response) => {
             let responseData = response.data
@@ -100,7 +142,27 @@ export const actions = {
             }
             else{
                 commit("updateBillersLoading", false)
-                Toast.fire({text:"Something went wrong please try again", icon:"error"})
+                Swal.fire({
+                    title: 'Session timed out',
+                    html: 'Please re-authenticate',
+                    icon:"info",
+                    // didOpen: () => {
+                    //   Swal.showLoading()
+                    //   const b = Swal.getHtmlContainer().querySelector('b')
+                    //   timerInterval = setInterval(() => {
+                    //     b.textContent = Swal.getTimerLeft()
+                    //   }, 100)
+                    // },
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    // if (result.dismiss === Swal.DismissReason.timer) {
+                    //   console.log('I was closed by the timer')
+                    //   router.push({name:"Logon"}).then(()=> {
+                    //     window.location.reload()
+                    //   })
+                    // }
+                    StoreUtils.dispatch(StoreUtils.actions.auth.logOut,{customerEmail: StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).customerEmail})
+                })
             }
         })
     },
@@ -115,7 +177,27 @@ export const actions = {
             }
             else{
                 commit("updatePaymentLoading", false)
-                Toast.fire({text:responseData.responseMessage, icon:"error"})
+                Swal.fire({
+                    title: 'Session timed out',
+                    html: 'Please re-authenticate',
+                    icon:"info",
+                    // didOpen: () => {
+                    //   Swal.showLoading()
+                    //   const b = Swal.getHtmlContainer().querySelector('b')
+                    //   timerInterval = setInterval(() => {
+                    //     b.textContent = Swal.getTimerLeft()
+                    //   }, 100)
+                    // },
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    // if (result.dismiss === Swal.DismissReason.timer) {
+                    //   console.log('I was closed by the timer')
+                    //   router.push({name:"Logon"}).then(()=> {
+                    //     window.location.reload()
+                    //   })
+                    // }
+                    StoreUtils.dispatch(StoreUtils.actions.auth.logOut,{customerEmail: StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).customerEmail})
+                })
             }
         })
     },

@@ -71,6 +71,9 @@ export default {
   },
 
   computed: {
+    appendAppostropytoExcelData(){
+
+    },
     sortOptions() {
       // Create an options list from our fields
       return this.fields

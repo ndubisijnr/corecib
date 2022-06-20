@@ -513,16 +513,19 @@
                 <div class="change-password">
                   <form @submit.prevent="changePassword()" class="password-form">
                     <div class="form-floating mb-3">
-                      <input type="password" class="form-control" placeholder="Old password" v-model="changePasswordModel.customerOldPassword" required>
-                      <label>Old Password</label>
+                      <i class="fa fa-eye" style="position: absolute;right: 10px;top: 5px;cursor: pointer"></i>
+                      <input type="password" class="form-control"  v-model="changePasswordModel.customerOldPassword" required>
+                      <label>Old password</label>
                     </div>
                        <div class="form-floating mb-3">
-                      <input type="password" class="form-control" placeholder="New password" v-model="changePasswordModel.customerPassword" required>
-                      <label>New Password</label>
+                         <i class="fa fa-eye" style="position: absolute;right: 10px;top: 5px;cursor: pointer"></i>
+                         <input type="password" class="form-control"  v-model="changePasswordModel.customerPassword" required>
+                      <label>New password</label>
                     </div>  
                      <div class="form-floating mb-3">
-                      <input type="password" class="form-control" placeholder="Comfirm password" v-model="changePasswordModel.customerPasswordConfirmation" required>
-                      <label>Comfirm Password</label>
+                       <i class="fa fa-eye" style="position: absolute;right: 10px;top: 5px;cursor: pointer"></i>
+                       <input type="password" class="form-control"  v-model="changePasswordModel.customerPasswordConfirmation" required>
+                      <label>Confirm new password</label>
                     </div>
                     <div class="">
                     <base-button type="submit" title='Change' style="
@@ -1078,7 +1081,44 @@ export default {
         this.showModal = !this.showModal
       }
 
-    }
+    },
+    hide$show() {
+      let b = document.getElementById("pwd");
+      let eye = document.getElementById("eye");
+      let b2 = document.getElementById("pwd2");
+      let eye2 = document.getElementById("eye2");
+      if (b.type === "password") {
+        b.type = "text";
+        eye.classList.remove("fa-eye");
+        eye.classList.add("fa-eye-slash");
+      } else {
+        b.type = "password";
+        eye.classList.add("fa-eye");
+        eye.classList.remove("fa-eye-slash");
+      }
+      if (b2.type === "password") {
+        b2.type = "text";
+        eye2.classList.remove("fa-eye");
+        eye2.classList.add("fa-eye-slash");
+      } else {
+        b2.type = "password";
+        eye2.classList.add("fa-eye");
+        eye2.classList.remove("fa-eye-slash");
+      }
+    },
+    hide$show1() {
+      let b = document.getElementById("pwd1");
+      let eye = document.getElementById("eye1");
+      if (b.type === "password") {
+        b.type = "text";
+        eye.classList.remove("fa-eye");
+        eye.classList.add("fa-eye-slash");
+      } else {
+        b.type = "password";
+        eye.classList.add("fa-eye");
+        eye.classList.remove("fa-eye-slash");
+      }
+    },
   },
 
   created: function () { },

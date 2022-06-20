@@ -249,9 +249,17 @@ export default {
 .sidenav{
   background-color: var(--primary);
   border: none !important;
-  overflow: hidden !important;
+  overflow: scroll;
   color: white !important;
-} 
+}
+
+.sidenav::-webkit-scrollbar {
+  display: none;
+}
+
+.sidenav::-webkit-scrollbar:hover{
+  display: block;
+}
 
 .rotate90 {
   transform: rotate(-90deg);
