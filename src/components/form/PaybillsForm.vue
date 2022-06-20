@@ -176,8 +176,8 @@ export default {
           this.productpaymentModdel.email = document.getElementById('organisationEmail').value
         }
 
-      console.log(this.productpaymentModdel)
-      // StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel)
+      // console.log(this.productpaymentModdel)
+      StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel)
       }
     },
     clearEnq(){
@@ -194,10 +194,10 @@ export default {
       this.productpaymentModdel.productCode = this.productCode
       this.productpaymentModdel.reference = `BIZGEM-${this.reference(30)}`
       this.productpaymentModdel.email = document.getElementById('organisationEmail').value
-      console.log(this.productpaymentModdel)
-      // StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel).then(() => {
-      //   StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
-      // })
+      // console.log(this.productpaymentModdel)
+      StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel).then(() => {
+        StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
+      })
     },
     reference(length) {
       let result = ""
