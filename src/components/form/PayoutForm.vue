@@ -9,7 +9,6 @@
             </div>
             <div class="card-body">
                 <div class="container">
-                    <!-- <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="'100,000'" :title="'Wallet Balance'"></dashboard-card> -->
                     <b-form class="" @submit.prevent="requestPayout()">
                         <h4 class="text-left">Wallet Balance: ₦{{ balances.walletBalance.accountBalance | formatAmount
                         }}

@@ -124,6 +124,7 @@ export default {
     },
     watch: {
 
+      //watcher
         timerCount: {
             handler(value) {
                 if (value > 0) {
@@ -210,6 +211,7 @@ export default {
             });
         },
 
+      //method
         startTimer(duration) {
             let timer = duration,
                 minutes,

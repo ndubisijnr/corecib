@@ -1,17 +1,13 @@
 <template>
   <div>
-    <div v-if="withSearch != 'YES' " class="mt-4">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-        <search-form :module="searchALL_TRANSACTION"></search-form>
-      </div>
-    </div>
-    <div class="container">
-      <div class="container export-btn-area">
-        <b-button class="export-ex shadow-lg--hover small" @click="download">Download Statement</b-button>
+
+    <search-form v-if="withSearch != 'YES' " :module="searchALL_TRANSACTION" class="m-2"></search-form>
+
+      <div class="export-btn-area">
+        <b-button class="export-ex shadow-lg--hover small" @click="download">Download Transactions</b-button>
       </div>
       <export-excel style="display: none" id="export" name="bizgemTransactions-excel" :data="allTransactions.data"></export-excel>
 
-    </div>
     <base-table
           :items="JSON.parse(JSON.stringify(allTransactions.data))"
           :fields="fields"
@@ -108,6 +104,7 @@ export default {
   display: flex;
   justify-content: end;
   align-items: center;
+  margin: 30px;
 }
 .export-ex{
   background-color:#3F88C5;

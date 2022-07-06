@@ -1,31 +1,34 @@
 <template>
+  <div>
+  <div class="py-4 px-4">
+    <h4>Bills Payment</h4>
+    <span :class="{'spinner-loader':categoryloading}"></span>
+  </div>
   <div class="main">
     <div class="section-1">
-      <div>
-        <div v-for="i in categories" :key="i" class="cag-sec" :class="{'active':activeC == i.categoryName}" @click="readBillers(obj = i.categoryCode, obj2 = i.categoryName), b(), billstate === 'product', activeC = i.categoryName">
+      <div class="cag-sec">
+        <div v-for="i in categories" :key="i" class="biller-box" :class="{'active':activeC == i.categoryName}" @click="readBillers(obj = i.categoryCode, obj2 = i.categoryName), b(), billstate === 'product', activeC = i.categoryName,modal=true">
+          <img :src="i.categoryImage" width="30"/>
            <span >{{i.categoryName}}</span>
            <b-icon-arrow-right />
         </div>
       </div>
     </div>
     <div class="section-2">
-      <div class="container pl-3 pr-5 p-3" style="display:flex;justify-content: space-between;align-items: center">
-            <span class="text-dark small" style="cursor: pointer" @click="billstate = true,b()" v-if=" billstate == false">
-              <b-icon-arrow-return-left  class="" style="font-size:10px"/> Back
-            </span>
-        <span class="small">{{activeC}}</span>
-      </div>
-      <div v-if="billerloading ||categoryloading " style="width:100%;display: flex;justify-content: center;align-items: center">
+      <div v-if="billerloading || categoryloading " style="width:100%;display: flex;justify-content: center;align-items: center">
          <span class="spinner-border mt-4" ></span>
       </div>
         <div v-else>
+<!--           <span class="text-dark small" style="cursor: pointer" @click="billstate = true,b()">-->
+<!--              <b-icon-arrow-return-left  class="" style="font-size:10px"/> Back-->
+<!--            </span>-->
           <div class="biller-area">
           <div v-if="billstate == true" v-for="i in billers" :key="i" class="biller-box" @click="readProduct(obj = i.billerCode),billstate = !billstate, billerImage = i.billerImage">
             <img :src="i.billerImage" width="40">
             <span>{{i.billerName | titleCase}}</span>
             </div>
           <div v-if="billstate == false" class="data_bundle">
-              <div class="airtime-form airtime animate animate__animated animate__zoomIn"  v-if="category.includes('DATA') || category.includes('CABLE_TV') || category.includes('AIRTIME') || category.includes('ELECTRICITY')">
+              <div class="airtime-form airtime animate animate__animated animate__zoomIn"  v-if="category.includes('DATA') || category.includes('CABLE_TV') || category.includes('AIRTIME') || category.includes('ELECTRICITY') || category.includes('BET')">
                 <paybills-form
                     :billerCustomerIdInputLabel="products[0].billerCustomerIdInputLabel | titleCase"
                     :productBillerCode="products[0].productBillerCode.toLowerCase().replace('_',' ')"
@@ -39,9 +42,55 @@
         </div>
         </div>
     <div class="section-3">
-      <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false"
-                         :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
+      <div class="d-flex justify-content-center">
+      <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
+      </div>
     </div>
+  </div>
+  <div class="main-mb">
+    <div class="section-1" v-if="mobileMode">
+      <div class="cag-sec">
+        <div v-for="i in categories" :key="i" class="biller-box" :class="{'active':activeC == i.categoryName}" @click="readBillers(obj = i.categoryCode, obj2 = i.categoryName), b(), billstate === 'product',mobileMode=!mobileMode">
+          <img :src="i.categoryImage" width="30"/>
+           <span >{{i.categoryName}}</span>
+           <b-icon-arrow-right />
+        </div>
+      </div>
+    </div>
+    <div class="section-2" v-else>
+      <div v-if="billerloading || categoryloading " style="width:100%;display: flex;justify-content: center;align-items: center">
+         <span class="spinner-border mt-4" ></span>
+      </div>
+        <div v-else>
+          <div class="text-center" style="cursor: pointer;position: absolute;right: 30px;top: 108px">
+              <b-icon-arrow-left-circle   style="font-size:30px" @click="mobileMode = true,b()" v-if="billstate"/>
+              <b-icon-arrow-left-circle   style="font-size:30px"  @click="billstate = true,b()" v-if="!billstate"/>
+          </div>
+          <div class="biller-area">
+          <div v-if="billstate == true" v-for="i in billers" :key="i" class="biller-box" @click="readProduct(obj = i.billerCode),billstate = !billstate, billerImage = i.billerImage">
+            <img :src="i.billerImage" width="40">
+            <span>{{i.billerName | titleCase}}</span>
+            </div>
+          <div v-if="billstate == false" class="data_bundle">
+              <div class="airtime-form airtime animate animate__animated animate__zoomIn"  v-if="category.includes('DATA') || category.includes('CABLE_TV') || category.includes('AIRTIME') || category.includes('ELECTRICITY')  || category.includes('BET')">
+                <paybills-form
+                    :billerCustomerIdInputLabel="products[0].billerCustomerIdInputLabel | titleCase"
+                    :productBillerCode="products[0].productBillerCode.toLowerCase().replace('_',' ')"
+                    :productpaymentModdel="productpaymentModdel.amount"
+                    :billerImage="billerImage"
+                    :product-code="products[0].productCode">
+                </paybills-form>
+              </div>
+              </div>
+          </div>
+        </div>
+        </div>
+    <div class="section-3">
+      <div class="d-flex justify-content-center">
+      <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
+      </div>
+    </div>
+  </div>
   </div>
 </template>
 
@@ -73,9 +122,11 @@ export default {
       productreference:null,
       biller:null,
       billstate:true,
+      mobileMode:true,
       formData:false,
       billerImage:null,
       section3Bg:banner,
+      modal:false
     }
   },
   methods:{
@@ -94,6 +145,7 @@ export default {
       this.productModel.billerCode = obj
       StoreUtils.dispatch(StoreUtils.actions.billspayment.updateProducts, this.productModel).then(() => {
         // document.getElementById('pro').click()
+        console.log(this.products)
       })
     },
 
@@ -126,27 +178,30 @@ export default {
 </script>
 
 <style scoped>
+.main-mb{
+  display: none;
+}
 .main{
   width: 100%;
   display: flex;
   /*border: solid red;*/
-  /*justify-content: center;*/
+  justify-content: center;
   height: 80vh;
 }
 .section-3{
-  width: 40%;
+  width: 20%;
   /*box-shadow: -1px 0 3px 1px rgb(77 77 77 / 12%);*/
-  background-color: #FFFFFF;
+  /*background-color: #FFFFFF;*/
   padding-top: 15px;
   /*background-image:url("../../../public/Banner.svg");*/
   /*background-size: cover;*/
   /*background-repeat: no-repeat;*/
-  display: flex;
+  display: block;
   justify-content: center;
 }
 
 .biller-box{
-  width: 40%;
+  width: 100%;
   height: 60px;
   margin: 10px;
   padding: 10px;
@@ -158,8 +213,9 @@ export default {
   cursor: pointer;
   border-radius: 10px;
 }
+
 .biller-box:hover{
-  box-shadow: -1px 0 3px 1px rgb(77 77 77 / 12%);
+  box-shadow: -1px 0 3px 1px rgb(77 77 77 / 102%);
   transition: .3s ease-in;
 }
 .card-area {
@@ -170,25 +226,6 @@ export default {
   width: 100%;
 }
 
-
-@media (max-width: 999px){
-  .section-3{
-    display: none;
-  }
-  .biller-box{
-    width: 90%;
-    height: 60px;
-    margin: 10px;
-    padding: 10px;
-    text-align: center;
-    background: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 10px;
-  }
-}
 .biller-area{
   display: flex;
   height: auto;
@@ -208,21 +245,22 @@ export default {
 .section-1{
   width: 30%;
   height: 100vh;
-  background-color: #236395;
+  /*background-color: #236395;*/
   color: black;
 }
 
 .data_bundle{
-  width: 100%;
+  width: 70%;
   display: flex;
+  height: 58vh;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  margin-top: 2%;
 }
 
 .section-2{
-  width: 100%;
+  width: 60%;
   max-height: 100vh;
   overflow-y: scroll;
 }
@@ -230,12 +268,16 @@ export default {
 .section-2::-webkit-scrollbar {
   display: none;
 }
+.section-3{
+  width: 40%;
+}
 
 @keyframes spinner-border {
   to {
     transform: rotate(360deg);
   }
 }
+
 
 .spinner-border {
   display: inline-block;
@@ -256,15 +298,13 @@ export default {
 }
 
 .cag-sec{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 20px;
+  height: 100vh;
   cursor: pointer;
   border-bottom: solid #3F88C5;
   background-color: #236395;
   font-size: 12px;
-  color: white;
+  color: black;
 }
 
 .active{
@@ -273,29 +313,50 @@ export default {
 }
 
 .cag-sec:hover{
-  background-color: var(--primary);
-  color: white;
+  /*background-color: var(--primary);*/
+  /*color: white;*/
 
 }
 
 @media (max-width:999px) {
-  .section-1{
-    width: 35%;
-    height: 100vh;
-    /*background-color: white;*/
+  .main-mb{
+    display: block;
+  }
+
+  .section-2{
+    width: 100%;
+  }
+
+  .airtime-form{
+    width: 100%;
+    height: 70vh;
+  }
+
+  .data_bundle{
+    width: 90%;
+    height: 70vh;
+    margin-top: 2%;
+  }
+
+  .main{
+    display: none;
+  }
+  .section-3{
+    display: none;
+  }
+  .biller-box{
+    width: 90%;
+    height: 60px;
+    margin: 10px;
+    padding: 10px;
+    background: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
     color: black;
   }
-  .cag-sec{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    cursor: pointer;
-    border-bottom: solid #3F88C5;
-    font-size: 12px;
-  }
-}
-@media (max-width:999px) {
   .card-area {
     display: flex;
     width: 250%;
@@ -307,6 +368,31 @@ export default {
     flex-direction: column;
     align-items: center;
   }
+
+  .section-1{
+    width: 100% !important;
+    height: 100vh;
+    /*background-color: white;*/
+    color: black;
+  }
+  .cag-sec{
+    display: block;
+    width: 100%;
+    padding: 20px;
+    cursor: pointer;
+    border-bottom: solid #3F88C5;
+    font-size: 12px;
+  }
+
+}
+
+@media (max-height:600px) {
+  .data_bundle{
+    width: 90%;
+    height: 100vh;
+    margin-top: 2%;
+  }
+
 
 }
 

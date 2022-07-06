@@ -138,11 +138,21 @@ export default {
 .form-login {
   width: 450px;
   border-radius: 10px;
-  padding-top: 10px;
+  padding: 5%;
   font-size: 14px;
   line-height: 1.42857143;
-  padding-bottom: 20px;
   /* background: white;
   box-shadow: 0 1px 1px hsl(0deg 0% 0% / 5%); */
+}
+
+@media (max-width: 500px) {
+  .form-login {
+    width: 450px;
+    border-radius: 10px;
+    padding: 10%;
+    font-size: 12px;
+    /* background: white;
+    box-shadow: 0 1px 1px hsl(0deg 0% 0% / 5%); */
+  }
 }
 </style>

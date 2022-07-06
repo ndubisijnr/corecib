@@ -27,7 +27,8 @@ export const state = {
   balanceEnquiry: WalletResponse.balanceEnquiry,
   wallets: BaseResponse.list,
   wallet: WalletResponse.retrieveWallet,
-  createdWallet:createWalletResponse
+  createdWallet:createWalletResponse,
+  excelState:BaseResponse.list
 }
 
 export const getters = {}
@@ -48,6 +49,9 @@ export const mutations = {
   },
   updateAllWalletTransactions: (state, payload) => {
     state.allWalletTransactions = payload
+    for(let i =0;i < state.allWalletTransactions; i++){
+
+    }
   },
   updateBalanceEnquiry: (state, payload) => {
     state.balanceEnquiry = payload

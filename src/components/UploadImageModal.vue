@@ -96,7 +96,6 @@
                         this.model.base64 = e.target.result
                         this.model.directorType = this.directorType
                         this.model.username = this.fileName+"-"+StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization).organisationName.replace(" ","-").toLowerCase()
-                        console.log(this.model)
                         await this.$store.dispatch(this.uploadType, this.model);
                         this.loadData();
                         this.hide();

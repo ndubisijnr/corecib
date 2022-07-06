@@ -15,7 +15,6 @@
           </div>
           <div v-if="type === 'customperiod'" class="">
             <div style="display: flex">
-              <div></div>
               <div class="ml-2">
                 <label class="form-control-label"> From</label>
                 <datetime v-model="model.startDate" input-class="form-control" class="theme-green"
@@ -28,11 +27,11 @@
               </div>
             </div>
           </div>
-          <div class="d-flex align-items-end">
-            <base-input input-classes="form-control" name="Report Name" v-model="searchValue"
-              placeholder="Search Here" class="ml-2 control" v-if="module != 'payoutTransactions'">
-            </base-input>&nbsp;
-            <base-button :loading="loading" icon="b-icon-search" />
+          <div class="d-flex align-items-end justify-content-center">
+              <base-input input-classes="form-control" name="Report Name" v-model="searchValue"
+                placeholder="Search Here" class="ml-1" v-if="module != 'payoutTransactions'" @keyup="fetchResult">
+              </base-input>&nbsp;
+              <base-button :loading="loading" icon="b-icon-search" />
           </div>
         </div>
       </b-form>
@@ -90,6 +89,9 @@ export default {
     }
   },
   methods: {
+    logit(){
+      console.log("ha")
+    },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
@@ -98,7 +100,8 @@ export default {
     getMonday(d) {
       d = new Date(d);
       let day = d.getDay(),
-        diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+         diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+      console.log(day)
       return new Date(d.setDate(diff));
     },
     formatDates(dateOne, dateTwo) {
@@ -211,6 +214,7 @@ export default {
       this.payoutSearchModel.endDate = this.model.endDate.split("T")[0]
       this.payoutSearchModel.startDate = this.model.startDate.split("T")[0]
       if (this.module === SearchModuleUtil.ALL_TRANSACTION) {
+        this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
         console.log("hello ALL_TRANSACTION", this.searchModel)
@@ -309,6 +313,7 @@ export default {
         this.label = "Transaction Period"
     }
   console.log(this.maxDatetime)
+    this.getMonday()
   }
 
 

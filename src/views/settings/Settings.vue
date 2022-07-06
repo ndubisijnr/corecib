@@ -11,8 +11,8 @@
                   <div no-body class="mb-1 add-bank-form">
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-1 variant="none" class="p-3" style="color:black;">
-                        <h3>
-                          Personal Info <span class="small text-success">(completed)</span>
+                        <h3 class="underline">
+                          Personal Info 🎯
                         </h3>
                         <p>You can update your personal info here.</p>
                       </div>
@@ -63,10 +63,8 @@
                   <div no-body class="mb-1">
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-2 variant="none" class="p-3" style="color:black;">
-                        <h3>
-                          Business Information
-                          <span v-if='organisation.organisationDirectorBvn !== null' class="small text-success">(completed)</span>
-                          <span v-else class="small text-danger">(not updated)</span>
+                        <h3 class="underline">
+                          Business Information 🎯
                         </h3>
                         <p>
                           Update your business information here
@@ -350,8 +348,8 @@
                   <div no-body class="mb-1">
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-3 variant="none" class="p-3" style="color:black;">
-                        <h3>
-                          Document upload
+                        <h3 class="underline">
+                          Document upload 🎯
                         </h3>
                         <p>
                           Submit important documents about your business. This will help us verify your business and have your account upgraded.
@@ -513,18 +511,16 @@
                 <div class="change-password">
                   <form @submit.prevent="changePassword()" class="password-form">
                     <div class="form-floating mb-3">
-                      <i class="fa fa-eye" style="position: absolute;right: 10px;top: 5px;cursor: pointer"></i>
-                      <input type="password" class="form-control"  v-model="changePasswordModel.customerOldPassword" required>
+                      <i class="fa fa-eye" style="position: absolute;right: 10px;top: 5px;cursor: pointer" @click="hide$show"id="eye"></i>
+                      <input type="password" class="form-control"  id="pwd" v-model="changePasswordModel.customerOldPassword" required>
                       <label>Old password</label>
                     </div>
                        <div class="form-floating mb-3">
-                         <i class="fa fa-eye" style="position: absolute;right: 10px;top: 5px;cursor: pointer"></i>
-                         <input type="password" class="form-control"  v-model="changePasswordModel.customerPassword" required>
+                         <input type="password" class="form-control"  id="pwd2" v-model="changePasswordModel.customerPassword" required>
                       <label>New password</label>
                     </div>  
                      <div class="form-floating mb-3">
-                       <i class="fa fa-eye" style="position: absolute;right: 10px;top: 5px;cursor: pointer"></i>
-                       <input type="password" class="form-control"  v-model="changePasswordModel.customerPasswordConfirmation" required>
+                       <input type="password" class="form-control"  id="pwd3" v-model="changePasswordModel.customerPasswordConfirmation" required>
                       <label>Confirm new password</label>
                     </div>
                     <div class="">
@@ -799,10 +795,8 @@ export default {
       createloader: (state) => state.accountPayout.addbankloading,
       apikeyloading: (state) => state.apiKey.loading,
       director1:state => state.document.directorIdCard1.url,
-      director2:state => state.document.directorIdCard2.url
-
-
-      //documents:(state) => state.document.document
+      director2:state => state.document.directorIdCard2.url,
+      // documents:(state) => state.document.document
     }),
     getStatus() {
       return localStorage.taged
@@ -1086,7 +1080,7 @@ export default {
       let b = document.getElementById("pwd");
       let eye = document.getElementById("eye");
       let b2 = document.getElementById("pwd2");
-      let eye2 = document.getElementById("eye2");
+      let b3 = document.getElementById("pwd3");
       if (b.type === "password") {
         b.type = "text";
         eye.classList.remove("fa-eye");
@@ -1098,12 +1092,11 @@ export default {
       }
       if (b2.type === "password") {
         b2.type = "text";
-        eye2.classList.remove("fa-eye");
-        eye2.classList.add("fa-eye-slash");
+        b3.type = "text";
       } else {
         b2.type = "password";
-        eye2.classList.add("fa-eye");
-        eye2.classList.remove("fa-eye-slash");
+        b3.type = "password";
+
       }
     },
     hide$show1() {
@@ -1125,6 +1118,10 @@ export default {
 };
 </script>
 <style lang="css" scoped>
+
+.underline{
+  text-decoration: underline;
+}
 h2 {
   width: 100%;
   text-align: center;

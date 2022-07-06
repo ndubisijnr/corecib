@@ -8,6 +8,7 @@
     <div class="container-fluid mt--6">
       <div class="cardd mt-2">
         <div>
+<!--          {{currentOrganisation}}-->
 <!--          <h1 class="m-b- text-center"><b>Hello {{ user.customerFirstName }}, Welcome to BizGem</b></h1>-->
 <!--          <h2 class="text-center">Your business is in <span v-if="getStage === 'DEV'">Test</span><span-->
 <!--              v-else>Live</span> mode</h2>-->

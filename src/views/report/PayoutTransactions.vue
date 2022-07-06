@@ -87,6 +87,7 @@ export default {
 
   mounted() {
 
+    StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutTransactionsModel)
     // this.readPayoutAccountModel.accountOrganisationId =
     //     localStorage.organisationId;
     // StoreUtils.dispatch(

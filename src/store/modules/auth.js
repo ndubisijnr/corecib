@@ -95,7 +95,7 @@ export const actions = {
     });
   },
 
-  logon: ({ commit, state, dispatch }, payload = AuthenticationRequest.login) => {
+  logon: ({ commit, state, dispatch,getters }, payload = AuthenticationRequest.login) => {
     commit("updateLoading", true)
     return AuthService.callLogonApi(payload)
       .then(response => {
@@ -110,10 +110,17 @@ export const actions = {
                 localStorage.organisationId = responseData.organisations[0].organisationId
             }
             commit("updateUserInfo", responseData);
+          if(getters.getCurrentOrganization.organisationStatus == 'PENDING'){
+            router.push({name:"Settings"}).then(() => {
+              let model = BillsPaymentRequest.readCategories
+              StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories, model)
+            })
+          }else{
             router.push({ name: "GetStarted" }).then(() => {
               let model = BillsPaymentRequest.readCategories
               StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories, model)
             })
+          }
         }
         else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {
           commit("updateLoading", false)
