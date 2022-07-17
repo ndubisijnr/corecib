@@ -271,4 +271,11 @@ export default {
   /* background: white;
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 30%); */
 }
+
+@media (max-width: 400px) {
+  .form-login{
+    width: 100%;
+  }
+
+}
 </style>

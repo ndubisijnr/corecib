@@ -27,9 +27,19 @@ export default {
 .auth-wrap {
   display: flex;
   justify-content: center;
-  /* align-items: center; */
+   align-items: center;
   height: 100vh;
   /* background-color: white; */
+}
+
+@media (max-width: 500px) {
+  .auth-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    height: 100vh;
+    /* background-color: white; */
+  }
 }
 
 

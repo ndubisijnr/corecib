@@ -9,19 +9,19 @@
             <label class="form-label mt-2 pr-4">{{ testLive }} Secret Key </label>
             <div class="form-floating">
 
-              <input type="text" class="form-control" :value="api[`apikey${testLive}SK`]" id="content" disabled="true"
+              <input type="password" class="form-control" :value="api[`apikey${testLive}SK`]" id="content" disabled="true"
                 style="cursor:pointer" />
               <i class="fas fa-copy" style="position: absolute; right: 20px; top: 8px; cursor: pointer;z-index:99999"
-                id="eye" @click="copyToClipboard()"></i>
+                @click="copyToClipboard()"></i>
             </div>
 
 
             <label class="form-label mt-2 pr-4">{{ testLive }} Public Key </label>
             <div class="form-floating">
-              <input type="text" class="form-control" :value="api[`apikey${testLive}PK`]" disabled="true" id="pwd"
+              <input type="text" class="form-control" :value="api[`apikey${testLive}PK`]" disabled="true" id="content2"
                 style="cursor:pointer" />
               <i class="fas fa-copy" style="position: absolute; right: 20px; top: 8px; cursor: pointer;z-index:99999"
-                id="eye" @click="copyToClipboard2()"></i>
+                 @click="copyToClipboard2()"></i>
             </div>
 
             <div v-if="api.apikeyTestCallback == null && api.apikeyLiveCallback == null">
@@ -121,33 +121,16 @@ export default {
   },
 
   methods: {
-    hide$show() {
-      let b = document.getElementById("pwd");
-      let eye = document.getElementById("eye");
-      if (b.type === "password") {
-        b.type = "text";
-        eye.classList.remove("fa-eye");
-        eye.classList.add("fa-eye-slash");
-      } else {
-        b.type = "password";
-        eye.classList.add("fa-eye");
-        eye.classList.remove("fa-eye-slash");
-      }
-    },
     copyToClipboard() {
       let copyLink = document.getElementById("content").value;
       navigator.clipboard.writeText(copyLink).then(() => {
-        Toast.fire({ text: "Copied to clipboard", icon: "success" }).then(
-          () => { }
-        );
+        Toast.fire({ text: "Copied to clipboard", icon: "success" }).then(() => {});
       });
     },
     copyToClipboard2() {
-      let copyLink = document.getElementById("pwd").value;
-      navigator.clipboard.writeText(copyLink).then(() => {
-        Toast.fire({ text: "Copied to clipboard", icon: "success" }).then(
-          () => { }
-        );
+      let copyLink2 = document.getElementById("content2").value;
+      navigator.clipboard.writeText(copyLink2).then(() => {
+        Toast.fire({ text:"Copied to clipboard", icon: "success" }).then(() => {});
       });
     },
     saveChanges() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div class="py-4 px-4">
+  <div class="py-4 px-4 mobile-nav">
     <h4>Bills Payment</h4>
     <span :class="{'spinner-loader':categoryloading}"></span>
   </div>
@@ -200,6 +200,7 @@ export default {
   justify-content: center;
 }
 
+
 .biller-box{
   width: 100%;
   height: 60px;
@@ -218,6 +219,11 @@ export default {
   box-shadow: -1px 0 3px 1px rgb(77 77 77 / 102%);
   transition: .3s ease-in;
 }
+
+.mobile-nav{
+  display: none;
+}
+
 .card-area {
   display: flex;
   justify-content: space-around;
@@ -322,6 +328,11 @@ export default {
   .main-mb{
     display: block;
   }
+
+  .mobile-nav{
+    display: block;
+  }
+
 
   .section-2{
     width: 100%;

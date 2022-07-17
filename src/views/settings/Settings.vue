@@ -11,8 +11,8 @@
                   <div no-body class="mb-1 add-bank-form">
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-1 variant="none" class="p-3" style="color:black;">
-                        <h3 class="underline">
-                          Personal Info 🎯
+                        <h3>
+                          Personal Info 🔽
                         </h3>
                         <p>You can update your personal info here.</p>
                       </div>
@@ -63,8 +63,8 @@
                   <div no-body class="mb-1">
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-2 variant="none" class="p-3" style="color:black;">
-                        <h3 class="underline">
-                          Business Information 🎯
+                        <h3>
+                          Business Information 🔽
                         </h3>
                         <p>
                           Update your business information here
@@ -348,8 +348,8 @@
                   <div no-body class="mb-1">
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-3 variant="none" class="p-3" style="color:black;">
-                        <h3 class="underline">
-                          Document upload 🎯
+                        <h3>
+                          Document upload 🔽
                         </h3>
                         <p>
                           Submit important documents about your business. This will help us verify your business and have your account upgraded.

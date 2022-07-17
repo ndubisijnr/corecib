@@ -91,7 +91,7 @@
                 <div>
                   <label class="small">{{billerCustomerIdInputLabel ? billerCustomerIdInputLabel : 'Betting Wallet'}}</label>
                   <b-input type="tell" required class="mb-2"
-                           v-model="productpaymentModdel.billerCustomerId" :placeholder="billerCustomerIdInputLabel ? 'Enter mobile number': 'Betting Wallet'">
+                           v-model="productpaymentModdel.billerCustomerId" :placeholder="billerCustomerIdInputLabel ? `${billerCustomerIdInputLabel}`: 'Betting Wallet'">
                   </b-input>
                 </div>
                 <div>
@@ -115,10 +115,10 @@
                     </div>
                   </div>
                 </div>
-                <div class="mt-2">
-                <label class="small">Email</label>
-                <b-input type="email" :value="currentOrganisation.organisationEmail" id="organisationEmail"></b-input>
-              </div>
+<!--                <div class="mt-2">-->
+<!--                <label class="small">Email</label>-->
+<!--                <b-input type="email" :value="currentOrganisation.organisationEmail" id="organisationEmail"></b-input>-->
+<!--              </div>-->
             </div>
 
           </div>

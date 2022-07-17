@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
       <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(onInitiateEnrollment())"
         v-if="screen == 'register'">
@@ -287,7 +286,7 @@ export default {
 .login-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .btn-login {
@@ -328,12 +327,20 @@ export default {
 
 .form-login {
   width: 450px;
+  /*width: 100%;*/
   border-radius: 10px;
   padding-top: 10px;
   font-size: 14px;
   line-height: 1.42857143;
   padding-bottom: 20px;
+
   /* background: white;
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 30%); */
+}
+
+@media (max-width: 390px){
+  .form-login{
+    width: 100%;
+  }
 }
 </style>

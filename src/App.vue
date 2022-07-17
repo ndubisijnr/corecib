@@ -13,6 +13,7 @@ import DashboardLayout from "./views/layout/DashboardLayout";
 import AuthLayout from "./views/layout/AuthLayout";
 import StoreUtils from "./util/baseUtils/StoreUtils";
 import AccountPayoutRequest from "./model/request/AccountPayoutRequest";
+import router from "@/router";
 const default_layout = "default";
 export default {
   components: {AuthLayout, DashboardLayout},
@@ -24,13 +25,13 @@ export default {
   },
   mounted() {
     setTimeout(()=>{
-      // if(routeLayout !== "auth"){
+      if(router.currentRoute.meta.layout !== "auth"){
         const userToken = localStorage.getItem('token')
         StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
-        // console.clear()
-      // }else{
-      //   localStorage.clear()
-      // }
+        console.clear()
+      }else{
+        localStorage.clear()
+      }
     },1000)
 
     // this.readPayoutAccountModel.accountOrganisationId = localStorage.organisationId;
