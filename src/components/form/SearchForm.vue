@@ -1,40 +1,41 @@
 <template>
-
-      <b-form @submit.prevent="fetchResult">
-        <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3"> -->
-        <div class="form-area">
-          <div class="transaction-period pl-2">
-            <base-input :label="label">
-              <el-select class="select-danger" filterable placeholder="" @change="getStartEndDate()" v-model="type"
-                required>
-                <el-option v-for="option in options" class="select-danger" :value="option.value" :label="option.label"
-                  :key="option.value">
-                </el-option>
-              </el-select>
-            </base-input>
-          </div>
-          <div v-if="type === 'customperiod'" class="">
-            <div style="display: flex">
-              <div class="ml-2">
-                <label class="form-control-label"> From</label>
-                <datetime v-model="model.startDate" input-class="form-control" class="theme-green"
-                  placeholder="Start Date" zone="Africa/Lagos" value-zone="Africa/Lagos" :min-datetime="minDatetime"></datetime>
-              </div>
-              <div class="ml-2">
-                <label class="form-control-label"> To</label>
-                <datetime v-model="model.endDate" input-class="form-control" :max-datetime="maxDatetime" :min-datetime="minDatetime" class="theme-green" placeholder="End Date"
-                  zone="Africa/Lagos" value-zone="Africa/Lagos"></datetime>
+      <div class="form-area">
+        <div class="filter-search">
+         <h3 v-b-modal.modal-center><b-icon-funnel style="font-size: 23px"/>filter search</h3>
+        </div>
+        <input class="form-control" name="Report Name" v-model="searchValue" placeholder="Search Here"  v-if="module != 'payoutTransactions'" @keyup="fetchResult" />&nbsp;
+        <form @submit.prevent="fetchResult">
+         <b-modal id="modal-center" centered hide-backdrop  hide-footer :title="label">
+          <div>
+            <div class="transaction-period">
+              <base-input :label="label">
+                <el-select  style="width: 100%" class="" filterable placeholder="" @change="getStartEndDate()" v-model="type"
+                           required>
+                  <el-option v-for="option in options" class="" :value="option.value" :label="option.label"
+                             :key="option.value">
+                  </el-option>
+                </el-select>
+              </base-input>
+            <div v-if="type === 'customperiod'" class="">
+              <div style="display: flex; flex-direction: column">
+                <div class="">
+                  <label class="form-control-label"> From</label>
+                  <datetime v-model="model.startDate" input-class="form-control" class="theme-green"
+                            placeholder="Start Date" zone="Africa/Lagos" value-zone="Africa/Lagos" :min-datetime="minDatetime"></datetime>
+                </div>
+                <div class="">
+                  <label class="form-control-label"> To</label>
+                  <datetime v-model="model.endDate" input-class="form-control" :max-datetime="maxDatetime" :min-datetime="minDatetime" class="theme-green" placeholder="End Date"
+                            zone="Africa/Lagos" value-zone="Africa/Lagos"></datetime>
+                </div>
               </div>
             </div>
+            <b-button class="export-ex shadow-lg--hover small" :loading="loading"  type="submit" @click="fetchResult"> Search </b-button>
           </div>
-          <div class="d-flex align-items-end justify-content-center">
-              <base-input input-classes="form-control" name="Report Name" v-model="searchValue"
-                placeholder="Search Here" class="ml-1" v-if="module != 'payoutTransactions'" @keyup="fetchResult">
-              </base-input>&nbsp;
-              <base-button :loading="loading" icon="b-icon-search" />
           </div>
-        </div>
-      </b-form>
+        </b-modal>
+        </form>
+      </div>
 </template>
 
 <script>
@@ -252,6 +253,7 @@ export default {
         StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes, this.searchModel);
         console.log("hello Something else")
       }
+      document.getElementById("modal-center").click()
     }
   },
   computed: {
@@ -326,20 +328,71 @@ export default {
     transform: rotate(360deg);
   }
 }
+.filter-search{
+  width: 15%;
+  display: flex;
+  align-items: center;
+  border-right: solid black
+}
 
 .form-area{
   display: flex;
-  width: 100%;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+input{
+  width:90%;
+}
+
+.export-ex{
+  background-color:#3F88C5;
+  color:white;
+  margin: 2px;
+  width:200px;
+  cursor: pointer;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
 }
 
 @media (max-width: 999px) {
   .form-area{
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction:row;
+    justify-content: center;
+    width: 100%;
+
+  }
+
+  .filter-search{
+    width: 70%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .transaction-period{
-   margin-top: 5px;
+    display: flex;
+    gap: 20px;
   }
+  input{
+    width:100%;
+  }
+
+  .export-ex{
+    height: 5vh;
+    font-size: 12px;
+    width:200px;
+    border: solid red;
+    display: block !important;
+
+  }
+
 }
 
 /*input[type="text"] {
@@ -376,7 +429,8 @@ span {
 
 .transaction-period{
   display: flex;
-  justify-content: start;
+  gap: 20px;
+  flex-direction: column;
 }
 
 

@@ -1,19 +1,14 @@
 <template>
   <div>
-    <div class="mt-4">
-      <div class="mr-4 text-right mb-2">
-        <b-button @click="show = true" style="background-color:var(--primary);border:none;color:white"><i class="fa fa-plus"></i> Create Wallet
-        </b-button>
-      </div>
-      <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+      <div class="container export-btn-area">
         <search-form :module="searchWALLET"/>
+        <b-button @click="show = true" class="export-ex shadow-lg--hover small">Create Wallet</b-button>
       </div>
-       <base-table
+    <base-table
         :items="this.wallet.data"
         :fields="fields"
         filter-mode="default"
         :is-busy="loading" />
-    </div>
     <create-wallet-form @closeWalletForm="updateWalletForm"  :showWalletForm="show"></create-wallet-form>
   </div>
 </template>
@@ -110,33 +105,36 @@ export default {
 };
 </script>
 <style scoped>
-.form-body {
-  height: 100%;
+.export-btn-area{
+  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
+  gap: 10px;
+  padding: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.card-side {
-  margin-bottom: 30px;
-  -webkit-box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
-  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
-  height: 100%;
-  border: 0;
-}
-.card-side {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
+.export-ex{
+  background-color:#3F88C5;
+  color:white;
+  margin: 2px;
+  width:200px;
+  cursor: pointer;
+  height: 5vh;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  border-radius: 0.375rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
 }
+
+
+@media (max-width: 500px) {
+  .export-btn-area{
+    flex-direction: column;
+  }
+
+}
+
 .spinner-border {
   display: inline-block;
   width: 1rem;
@@ -149,142 +147,15 @@ export default {
   animation: spinner-border 0.75s linear infinite;
 }
 
-.wallet-button{
-  width: 12%;
-  position: absolute;
-  right: 30px;
-  z-index: 1;
-}
-
-.dispute-table {
-  margin-left: 10px;
-  margin-top: 0;
-  margin-right: 10px;
-  width: 98%;
-  overflow-x: scroll;
-}
-
 @keyframes spinner-border {
   to {
     transform: rotate(360deg);
   }
 }
-
-.dispute {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 60vh;
-}
-
-.date-container {
-  display: inline;
-  text-align: left;
-  padding: 0px 0px !important;
-}
-.date-flex {
-  flex: 50%;
-  margin-right: 2px;
-}
-@media (max-width: 500px) {
-  .date-flex {
-    flex: 100%;
-  }
-}
-
-/*input[type="text"] {
-   display: flex;
-   flex-wrap: wrap;
-}*/
-.table-section {
-  display: block;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  padding-bottom: 40px;
-  height: 99%;
-  /*max-width: 100%;*/
-}
 .table-section tbody {
   max-width: 500px;
   overflow-x: scroll;
 }
-.text-lg {
-  font-size: 18px;
-}
-.text-md {
-  font-size: 14px;
-}
-.text-sm {
-  font-size: 10px;
-}
-.bg-light {
-  border-color: #525f7f;
-}
-.bg-border {
-  border-bottom: 1px solid #dee5e7;
-}
-.view-header {
-  position: relative;
-  padding: 15px 30px;
-  /*background-color: #fff;*/
-  border-bottom: solid 1px rgba(0, 0, 0, 0.05);
-  height: 70px;
-  clear: both;
-}
-/* Solid border */
-hr.solid {
-  border-top: 3px solid #bbb;
-}
 
-.top-left {
-  position: absolute;
-  top: 8px;
-  left: 16px;
-  font-weight: 600;
-  color: white;
-}
-.top-right {
-  position: absolute;
-  top: 25%;
-  right: 16px;
-  font-weight: 600;
-  color: white;
-}
-.avatar-title {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: #556ee6;
-  color: #fff;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  font-weight: 500;
-  height: 100px;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  width: 100px;
-}
-.card-profile-image span {
-  max-width: 140px;
-  border-radius: 0.375rem;
-  border: 3px solid #fff;
-  -webkit-transform: translate(-50%, -50%) scale(1);
-  transform: translate(-50%, -50%) scale(1);
-  position: absolute;
-  left: 50%;
-  -webkit-transition: all 0.15s ease;
-  transition: all 0.15s ease;
-}
-span {
-  vertical-align: middle;
-  border-style: none;
-}
-.card-profile-image span:hover {
-  -webkit-transform: translate(-50%, -50%) scale(1.03);
-  transform: translate(-50%, -50%) scale(1.03);
-}
 </style>
 

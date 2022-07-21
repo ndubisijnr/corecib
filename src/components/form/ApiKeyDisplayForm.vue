@@ -3,7 +3,7 @@
     <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
       <div class="">
         <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(saveChanges)">
-          <span :class="{ 'spinner-border': loading }"></span>
+<!--          <span :class="{ 'spinner-border': loading }"></span>-->
 
           <div>
             <label class="form-label mt-2 pr-4">{{ testLive }} Secret Key </label>

@@ -100,6 +100,10 @@
                     <b-select v-model="productpaymentModdel.productCode" >
                        <b-select-option  v-for="i in products" :key="i" :value="i.productPrice + ' ' + i.productCode">{{i.productDescription}} @ {{i.productPrice | formatAmount}}</b-select-option>
                     </b-select>
+                    <div class="mt-2">
+                      <label class="small">Email</label>
+                      <b-input type="email" :value="currentOrganisation.organisationEmail" id="organisationEmail"></b-input>
+                    </div>
                   </div>
                   <div v-else>
                     <div>
@@ -112,6 +116,10 @@
                       <b-select v-model="productpaymentModdel.productCode" >
                         <b-select-option  v-for="i in products" :key="i" :value="i.productCode">{{i.productDescription}}</b-select-option>
                       </b-select>
+                    </div>
+                    <div class="mt-2">
+                      <label class="small">Email</label>
+                      <b-input type="email" :value="currentOrganisation.organisationEmail" id="organisationEmail"></b-input>
                     </div>
                   </div>
                 </div>
@@ -219,7 +227,7 @@ export default {
       }
       this.productpaymentModdel.reference = `BIZGEM-${this.reference(30)}`
       this.productpaymentModdel.email = document.getElementById('organisationEmail').value
-      // console.log(this.productpaymentModdel)
+      console.log(this.productpaymentModdel)
       StoreUtils.dispatch(StoreUtils.actions.billspayment.updatePayment, this.productpaymentModdel).then(() => {
         StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
       })

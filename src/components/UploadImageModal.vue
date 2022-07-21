@@ -100,7 +100,8 @@
                         this.loadData();
                         this.hide();
                     };
-                    reader.readAsDataURL(file);
+                  console.log(this.model.base64)
+                  reader.readAsDataURL(file);
                     this.$emit('input', file);
                 } catch (e) {
                     console.warn(e.message)

@@ -1,15 +1,10 @@
 <template>
   <div>
-    <div class="m-4 text-right">
-      <b-button v-if="!loading && Object.values(payoutAccount).every((o) => o === null)" @click="showPayout = true" style="background-color: var(--primary); border: none; color: white"><i class="fa fa-plus"></i> Add Payout Bank</b-button>
-      <b-button style="background-color: var(--primary); border: none; color: white" @click="show = true">Request Payout</b-button>
+    <div class="container export-btn-area">
+      <search-form :module="searchALL_TRANSACTION" />
+      <b-button class="export-ex" v-if="!loading && Object.values(payoutAccount).every((o) => o === null)" @click="showPayout = true" >Payout Bank</b-button>
+      <b-button class="export-ex" @click="show = true">Request Payout</b-button>
     </div>
-    <div class="mt-4">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
-        <search-form :module="searchALL_TRANSACTION"></search-form>
-      </div>
-    </div>
-
     <payout-form @closeCreatePayout="updateCreatePayout" :showCreatePayout="show"></payout-form>
     <add-bank-form @closeCreateBank="updateCreateBank" :showCreateBank="showPayout"></add-bank-form>
 
@@ -99,4 +94,52 @@ export default {
 };
 </script>
 <style scoped>
+
+.export-btn-area{
+  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
+  gap: 10px;
+  padding: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.export-ex{
+  background-color:#3F88C5;
+  color:white;
+  margin: 2px;
+  width: 200px;
+  border: none;
+  cursor: pointer;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+.export-ex:hover{
+  color: #FFFFFF;
+  background-color: rgb(63, 136, 197);
+}
+
+@media (max-width: 500px) {
+  .export-ex{
+    background-color:#3F88C5;
+    color:white;
+    margin: 2px;
+    width: 200px;
+    border: none;
+    cursor: pointer;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+  }
+  .export-ex:hover{
+    color: #FFFFFF;
+    background-color: rgb(63, 136, 197);
+  }
+
+}
 </style>

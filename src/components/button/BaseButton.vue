@@ -1,25 +1,18 @@
 <template>
     <span>
-        <button v-if="loading === true" disabled  class="btn">
+        <b-button v-if="loading === true" disabled class="button shadow-lg--hover small">
             <span  class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        </button>
-      <button v-else :style="styles" class="btn" :disabled="disabled">{{title}} <component :is="icon" style="height: 15px;"/></button>
+        </b-button>
+      <b-button v-else :style="styles" :disabled="disabled" class="button shadow-lg--hover small"> <i :class="iconClass" /> {{title}}</b-button>
     </span>
 </template>
 <script>
     export default {
-        props:['loading','title','loader','styles', 'icon','disabled'],
+        props:['loading','title','loader','styles', 'iconClass','disabled'],
         name: "BaseButton"
     }
 </script>
 
 <style scoped>
-  button{
-    background-color: #3F88C5;
-    color: white;
-    width: 100%;
-  }
-  button:hover{
-    color: white;
-  }
+
 </style>

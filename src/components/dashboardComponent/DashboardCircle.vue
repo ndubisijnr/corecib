@@ -42,6 +42,15 @@ export default {
     color: black;
 }
 
+@media (max-width: 500px) {
+  .value{
+    font-size: 20px;
+  }
+  .title{
+    font-size: 14px !important;
+  }
+}
+
 .currency{
     font-size: 20px
 }

@@ -50,8 +50,7 @@
                                   placeholder="name@example.com" :value="null ? '' : userInfo.customerEmail" readonly />
                                 <label for="floatingInput">Email</label>
                               </div>
-                              <base-button title="Update" disabled>
-                              </base-button>
+                              <base-button title="Update" disabled></base-button>
                             </b-form>
                           </div>
                         </div>
@@ -237,12 +236,12 @@
                             <div class="row">
                               <div class="col mb-3">
                                 <label for="floatingInput1">Organisation Website</label>
-                                <input type="text" class="form-control" id="floatingInput1" placeholder=" Website"
+                                <input type="text" class="form-control"  placeholder=" Website"
                                   v-model="organisation.organisationWebsite" />
                               </div>
                               <div class="col mb-3">
                                 <label for="floatingInput1">RC / BN Number</label>
-                                <input type="text" class="form-control" id="floatingInput1"
+                                <input type="text" class="form-control"
                                   placeholder="Organisation RC / BN Number"
                                   v-model="organisation.organisationRegistrationNo" />
                               </div>
@@ -524,11 +523,7 @@
                       <label>Confirm new password</label>
                     </div>
                     <div class="">
-                    <base-button type="submit" title='Change' style="
-                                  background-color: var(--primary);
-                                  color: white;
-                                  width: 100%;
-                                " :loading="loadingOtp"></base-button>
+                    <base-button type="submit" title='Change':loading="loadingOtp"></base-button>
                         </div>
                   </form>
                 </div>

@@ -1,7 +1,7 @@
 <template>
   <div>
    <router-link to="/settings/settings"> <div class="myalert" v-if="layout === 'dashboard-layout' && currentOrganisation.organisationStatus == 'PENDING'" id="myalert">
-      <h3 class="text-white" > &nbsp; &nbsp; &nbsp; &nbsp; <b-icon-bell-fill/> &nbsp; You are currently only allowed to use bills payment APIs, kindly update your business information to access all our services.  </h3>
+      <h3 class="text-white" > <b-icon-bell-fill/> &nbsp; You are currently only allowed to use bills payment APIs, kindly update your business information to access all our services.  </h3>
     </div> </router-link>
     <dashboard-layout v-if="layout === 'dashboard-layout'"></dashboard-layout>
     <auth-layout v-else></auth-layout>
@@ -81,7 +81,6 @@ body{
   font-family: 'Ubuntu', sans-serif;
 }
 
-
 .myalert{
     background-color: #EE9BA9 !important;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
@@ -94,7 +93,29 @@ body{
 }
 
 .myalert h3{
-      font-size: 13px;
+  font-size: 13px;
+}
+
+@media (max-width: 500px) {
+  .myalert{
+    background-color: #EE9BA9 !important;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
+    height: 46px;
+    width: 100%;
+    z-index: 5;
+    text-align: center;
+    padding: 5px;
+  }
+
+  .myalert h3{
+    font-size: 10px;
+  }
+
+  body{
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 14px;
+  }
+
 }
 
 </style>
