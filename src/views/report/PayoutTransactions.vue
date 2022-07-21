@@ -127,7 +127,7 @@ export default {
     background-color:#3F88C5;
     color:white;
     margin: 2px;
-    width: 200px;
+    width: 230px;
     border: none;
     cursor: pointer;
     height: 7vh;

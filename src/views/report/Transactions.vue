@@ -140,6 +140,18 @@ export default {
   .export-btn-area{
     flex-direction: column;
   }
+  .export-ex{
+    background-color:#3F88C5;
+    color:white;
+    margin: 2px;
+    width:200px;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+  }
 }
 
 .table-section tbody {
