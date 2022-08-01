@@ -2,7 +2,8 @@
   <div>
     <div class="container export-btn-area">
       <search-form :module="searchVirtualAccount"></search-form>
-      <b-button @click="show = true" class="export-ex shadow-lg--hover small">Create Virtual Account</b-button>
+      <b-button @click="show = true" class="export-ex shadow-lg--hover small desktop">Create Virtual Account</b-button>
+      <b-icon-plus-circle class="mobile" @click="show = true"  />
     </div>
     <base-table
         :items="accounts.data"
@@ -114,8 +115,11 @@ export default {
 };
 </script>
 <style scoped>
+.mobile{
+  display: none;
+}
 .export-btn-area{
-  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
+  /*box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);*/
   gap: 10px;
   padding: 1%;
   display: flex;
@@ -125,7 +129,16 @@ export default {
 
 @media (max-width: 500px) {
   .export-btn-area{
-    flex-direction: column;
+    flex-direction: row;
+  }
+
+  .desktop{
+    display: none !important;
+  }
+
+  .mobile{
+    font-size: 25px;
+    display: block;
   }
 
 }

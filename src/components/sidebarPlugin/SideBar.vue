@@ -20,10 +20,10 @@
               </div>
             </div>
           </div>
-        <div id="k">
+        <div id="k" style="background-color:#3F88C5;">
           <hr style="margin:5px;border: 1px solid;color: #91a0af">
             <h4 v-for="(org, index) in organisationList" :key="index" class="link-drop" @click="getId(org)"> {{org.organisationName}}</h4>
-               <base-button size="md" outline @click="addbiz()" style="color:white; border:solid white;"> Sign Out</base-button>
+<!--               <base-button size="md" outline @click="addbiz()" style="color:white; border:solid white;"> Sign Out</base-button>-->
           <!-- <button class="btn btn-primary w-100 mt-2" >Add a Bussiness</button> -->
         </div>
             </div>

@@ -14,7 +14,7 @@
         </span>
       </template>
     </side-bar>
-    <div class="main-content">
+    <div class="main-content animate__fadeIn animate__animated">
       <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>
       <div @click="$sidebar.displaySidebar(false)">
         <fade-transition :duration="200" origin="center top" mode="out-in">
@@ -82,6 +82,5 @@ export default {
 };
 </script>
 <style scoped>
-
 
 </style>

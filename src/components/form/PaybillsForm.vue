@@ -3,18 +3,26 @@
       <div class="card-header">
         <img :src="billerImage" width="40" />
       </div>
-      <!-- handle Cable TV payment -->
-        <div v-if="products[0].productBillerCode.includes('CABLE') || products[0].productBillerCode.includes('ELECTRIC')">
+      <!-- handle Cable TV, Electricity and Betting payment  -->
+        <div v-if="products[0].productBillerCode.includes('CABLE') || products[0].productBillerCode.includes('ELECTRIC') || products[0].productBillerCode.includes('BET')">
+
+          <!-- handles customer enquiry  -->
           <form @submit.prevent="customerEnq(product_code = products[0].productBillerCode)">
           <div class="card-body">
             <div>
                   <!-- Smart card number and meter number -->
-                  <label v-if="products[0].productBillerCode.includes('CABLE')" class="small">{{products[0].productBillerCode.includes('CABLE') ? 'Smart Card Number' : 'Meter Number' }}</label>
+                  <label v-if="products[0].productBillerCode.includes('CABLE') || products[0].productBillerCode.includes('ELECTRIC')" class="small">{{products[0].productBillerCode.includes('CABLE') ? 'Smart Card Number' : 'Meter Number' }}</label>
+                  <label v-else class="small">Account ID</label>
                   <b-input v-if="products[0].productBillerCode.includes('CABLE') || products[0].productBillerCode.includes('ELECTRIC')" type="number" :placeholder="products[0].productBillerCode.includes('ELECTRIC') ? 'Enter your meter number' :'Enter your smart card number'" id="smartcardInput" v-model="customerEnqModel.billerCustomerId" :disabled="!Object.values(customerEnquiryData).every((o) => o === null)" required></b-input>
+                  <b-input v-else type="number" placeholder="Enter your Account Id number" id="smartcardInput" v-model="customerEnqModel.billerCustomerId" :disabled="!Object.values(customerEnquiryData).every((o) => o === null)" required></b-input>
                   <span class="small" v-if="!Object.values(customerEnquiryData).every((o) => o === null)"><span class="small">Customer:</span> <b>{{ customerEnquiryData.customerName }}</b> <br><span @click="clearEnq()"><span class="text-primary" style="cursor: pointer">Not me?</span></span></span>
             </div>
-            <p class="small text-danger" id="err"></p>
+            <p class="small text-danger" id="err"></p> <!-- shows customer enquiry error -->
+            <!-- end of customer enquiry area -->
+
+
             <div v-if="!Object.values(customerEnquiryData).every((o) => o === null)">
+              <div v-if="products[0].productBillerCode.includes('CABLE') || products[0].productBillerCode.includes('ELECTRIC')">
               <div v-if="products[0].productPrice !== 'VARIABLE'">
                 <label class="small">Select Plan</label>
                 <b-select v-if="products[0].productBillerCode.includes('CABLE') || products[0].productBillerCode.includes('DATA')" v-model="productpaymentModdel.productCode" required>
@@ -40,9 +48,30 @@
                 <label class="small">Email</label>
                 <b-input type="email" :value="currentOrganisation.organisationEmail" id="organisationEmail"></b-input>
               </div>
-              <h6 class="small" v-if="products[0].productBillerCode.includes('ELECTRIC')">Token will be sent to your email on successful purchase</h6>
+              <h6 class="small m-1" v-if="products[0].productBillerCode.includes('ELECTRIC')">Token will be sent to your email on successful purchase</h6>
             </div>
 
+              <!-- Betting -->
+              <div v-if="products[0].productBillerCode.includes('BET')">
+                <div>
+                  <label class="small">Amount</label>
+                  <b-input type="number" required class="mb-2" v-model="productpaymentModdel.amount">
+                  </b-input>
+                </div>
+                <div>
+                  <label class="small">Select Plan</label>
+                  <b-select v-model="productpaymentModdel.productCode" >
+                    <b-select-option  v-for="i in products" :key="i" :value="i.productCode">{{i.productDescription}}</b-select-option>
+                  </b-select>
+                </div>
+                <div class="mt-2">
+                  <label class="small">Email</label>
+                  <b-input type="email" :value="currentOrganisation.organisationEmail" id="organisationEmail"></b-input>
+                </div>
+              </div>
+              <!-- end of betting -->
+
+            </div>
           </div>
             <div class="card-footer">
               <b-button class="mt-2 w-100" v-if="!Object.values(customerEnquiryData).every((o) => o === null)" type="submit" @click="action = 'pay'" style="background-color:#3F88C5;color:white" :disabled="paymentLoading">{{paymentLoading ? 'Please Wait...' : 'Pay'}}</b-button>
@@ -50,10 +79,10 @@
                 </div>
           </form>
         </div>
-      <!-- end handle Cable TV payment -->
+      <!-- end handle Cable TV, Electricity and Betting payment -->
 
       <!-- handle AIRTIME and DATA purchase -->
-        <form @submit.prevent="payment(obj = productCode)" v-if="products[0].productBillerCode.includes('AIRTIME') || products[0].productBillerCode.includes('DATA') || products[0].productBillerCode.includes('BET')">
+        <form @submit.prevent="payment(obj = productCode)" v-if="products[0].productBillerCode.includes('AIRTIME') || products[0].productBillerCode.includes('DATA')">
           <div class="card-body">
                 <div class="mb-2"  v-for="i in products" :key="i">
                   <div v-if="i.productBillerCode.includes('AIRTIME')">
@@ -71,8 +100,6 @@
                             <label class="small">Amount</label>
                             <b-input type="number" required class="mb-2" v-model="productpaymentModdel.amount">
                             </b-input>
-
-  <!--                          <b-input :value="i.productCode" v-model="productpaymentModdel.productCode" ></b-input>-->
                           </div>
                         </div>
                         <div class="mt-2">
@@ -87,7 +114,7 @@
           <!-- end area for AIRTIME -->
 
           <!-- Area for DATA BUNDLE -->
-              <div v-if="products[0].productBillerCode.includes('DATA') || products[0].productBillerCode.includes('BET')">
+              <div v-if="products[0].productBillerCode.includes('DATA')">
                 <div>
                   <label class="small">{{billerCustomerIdInputLabel ? billerCustomerIdInputLabel : 'Betting Wallet'}}</label>
                   <b-input type="tell" required class="mb-2"
@@ -105,28 +132,7 @@
                       <b-input type="email" :value="currentOrganisation.organisationEmail" id="organisationEmail"></b-input>
                     </div>
                   </div>
-                  <div v-else>
-                    <div>
-                      <label class="small">Amount</label>
-                      <b-input type="number" required class="mb-2" v-model="productpaymentModdel.amount">
-                      </b-input>
-                    </div>
-                    <div>
-                      <label class="small">Select Plan</label>
-                      <b-select v-model="productpaymentModdel.productCode" >
-                        <b-select-option  v-for="i in products" :key="i" :value="i.productCode">{{i.productDescription}}</b-select-option>
-                      </b-select>
-                    </div>
-                    <div class="mt-2">
-                      <label class="small">Email</label>
-                      <b-input type="email" :value="currentOrganisation.organisationEmail" id="organisationEmail"></b-input>
-                    </div>
-                  </div>
                 </div>
-<!--                <div class="mt-2">-->
-<!--                <label class="small">Email</label>-->
-<!--                <b-input type="email" :value="currentOrganisation.organisationEmail" id="organisationEmail"></b-input>-->
-<!--              </div>-->
             </div>
 
           </div>
@@ -163,7 +169,6 @@ export default {
     productCode:String,
     productPrice:String,
     billerImage:String,
-    // payment:Function
 
   },
   methods:{
@@ -175,12 +180,15 @@ export default {
           if(this.error_msg == '00'){
               document.getElementById("smartcardInput").style.border = "solid green"
           }else{
-            //checks to know what error to display either smart card or meter number
+            //checks to know what error to display either smart card or meter number or bet number error
             if(product_code.includes('ELECTRIC')) {
               document.getElementById("err").innerHTML = "Invalid meter number"
               document.getElementById("smartcardInput").style.border = "solid red"
-            }else{
+            }else if(product_code.includes('CABLE')){
               document.getElementById("err").innerHTML = "Invalid smart card number"
+              document.getElementById("smartcardInput").style.border = "solid red"
+            }else{
+              document.getElementById("err").innerHTML = "Could not validate number"
               document.getElementById("smartcardInput").style.border = "solid red"
             }
             //clears error text makes it disappear

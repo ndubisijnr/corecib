@@ -1,13 +1,11 @@
 <template>
   <modal-1 :show="showWalletForm && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
     <div>
-      <div class="card-head">
-        <div class="text-end">
+        <div class="modal-header">
+          <h3>Create Wallet</h3>
           <button type="button" class="btn-close p-2 m-2" @click="closeModal()"></button>
         </div>
-      </div>
-      <div class="card-body">
-        <div class="container">
+      <div class="modal-body">
           <b-form class="" @submit.prevent="createWallet">
               <div class="w-100 mb-2">
                 <label class="small">First Name</label>
@@ -44,7 +42,6 @@
               <b-button type="submit" style="background-color: var(--primary);color: white;width: 100%" :disabled="loading"><span :class="{'spinner-border':loading}"></span> {{loading ? 'Creating' : 'Create'}}</b-button>
             </div>
           </b-form>
-        </div>
       </div>
     </div>
 

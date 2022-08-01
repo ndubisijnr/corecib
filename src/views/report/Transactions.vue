@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="">
 
       <div class="container export-btn-area">
         <search-form :module="searchALL_TRANSACTION"></search-form>
-        <b-button class="export-ex shadow-lg--hover small" @click="download">Download Transactions</b-button>
+        <b-button class="export-ex shadow-lg--hover small desktop" @click="download">Download Transactions</b-button>
+        <b-icon-download  class="mobile" @click="download" />
       </div>
       <export-excel style="display: none" id="export" name="bizgemTransactions-excel" :data="allTransactions.data"></export-excel>
 
@@ -96,13 +97,23 @@ export default {
 };
 </script>
 <style scoped>
+
+.mobile{
+  display: none;
+}
+
 .export-btn-area{
-  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
+  /*box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);*/
   gap: 10px;
   padding: 1%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.cardd {
+  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 10%);
+  background-color: white;
+
 }
 .export-ex{
   background-color:#3F88C5;
@@ -138,7 +149,9 @@ export default {
 
 @media (max-width: 500px) {
   .export-btn-area{
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-evenly;
+    /*border: solid red;*/
   }
   .export-ex{
     background-color:#3F88C5;
@@ -152,9 +165,17 @@ export default {
     justify-content: center;
     border-radius: 5px;
   }
+  .desktop{
+    display: none;
+  }
+
+  .mobile{
+    font-size: 25px;
+    display: block;
+  }
 }
 
-.table-section tbody {
+  .table-section tbody {
   max-width: 500px;
   overflow-x: scroll;
 }

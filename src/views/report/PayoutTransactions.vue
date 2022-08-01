@@ -2,7 +2,7 @@
   <div>
     <div class="container export-btn-area">
       <search-form :module="searchALL_TRANSACTION" />
-      <b-button class="export-ex" v-if="!loading && Object.values(payoutAccount).every((o) => o === null)" @click="showPayout = true" >Payout Bank</b-button>
+      <b-button class="export-ex desktop" v-if="!loading && Object.values(payoutAccount).every((o) => o === null)" @click="showPayout = true" >Payout Bank</b-button>
       <b-button class="export-ex" @click="show = true">Request Payout</b-button>
     </div>
     <payout-form @closeCreatePayout="updateCreatePayout" :showCreatePayout="show"></payout-form>
@@ -122,19 +122,32 @@ export default {
   background-color: rgb(63, 136, 197);
 }
 
+.mobile{
+  display: none;
+}
+
 @media (max-width: 500px) {
   .export-ex{
     background-color:#3F88C5;
     color:white;
     margin: 2px;
-    width: 230px;
+    width: 220px;
     border: none;
     cursor: pointer;
-    height: 7vh;
+    height: 5vh;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 5px;
+  }
+
+  .desktop{
+    display: none !important;
+  }
+
+  .mobile{
+    font-size: 25px !important;
+    display: block;
   }
   .export-ex:hover{
     color: #FFFFFF;

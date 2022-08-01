@@ -28,6 +28,13 @@ export default {
       if(router.currentRoute.meta.layout !== "auth"){
         const userToken = localStorage.getItem('token')
         StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
+
+        this.readPayoutAccountModel.accountOrganisationId =
+            localStorage.organisationId;
+        StoreUtils.dispatch(
+            StoreUtils.actions.accountPayout.readAddedBanks,
+            this.readPayoutAccountModel
+        );
         console.clear()
       }else{
         localStorage.clear()
@@ -113,7 +120,7 @@ body{
 
   body{
     font-family: 'Ubuntu', sans-serif;
-    font-size: 14px;
+    font-size: 14px !important;
   }
 
 }

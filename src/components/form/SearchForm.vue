@@ -1,7 +1,7 @@
 <template>
       <div class="form-area">
         <div class="filter-search">
-         <h1 class="small" v-b-modal.modal-center><b-icon-funnel style="font-size: 23px"/> filter search</h1>
+         <h1 class="small" v-b-modal.modal-center><b-icon-funnel style="font-size: 23px"/> filter</h1>
         </div>
         <input class="form-control" name="Report Name" v-model="searchValue" placeholder="Search Here"  v-if="module != 'payoutTransactions'" @keyup="fetchResult" />&nbsp;
         <form @submit.prevent="fetchResult">
@@ -366,12 +366,12 @@ input{
     display: flex;
     flex-direction:row;
     justify-content: center;
-    width: 100%;
+    width: 80%;
 
   }
 
   .filter-search{
-    width: 70%;
+    width: 20%;
     text-align: center;
     display: flex;
     justify-content: center;

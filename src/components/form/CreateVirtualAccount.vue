@@ -28,8 +28,7 @@
 <!--        </base-input>-->
       </div>
       <div v-if="sortType == false">
-        <div class="card-body">
-          <div class="">
+        <div class="modal-body">
             <b-form class="" @submit.prevent="createAccount">
               <div class="input-group mb-3">
                 <div class="w-50">
@@ -100,7 +99,6 @@
             </b-form>
           </div>
         </div>
-      </div>
 
     </modal-1>
   </div>

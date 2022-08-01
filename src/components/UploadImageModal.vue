@@ -60,13 +60,7 @@
                 },
             }
         },
-        components: {
-            // BaseButton,
-            // BaseTable,
-            // BaseTopCards,
-            // PrinterIcon,
-            // PlusIcon,
-        },
+        components: {},
         computed: {
             grades(){
                 return  this.grade.grades

@@ -155,6 +155,7 @@ export default {
 
   mounted() {
     StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
+
   },
 };
 </script>
