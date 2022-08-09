@@ -1,13 +1,43 @@
 <template>
   <div class="body">
     <blocker-loader v-if="loading && loadingOtp && payoutloading && loadingDoc" :message="'Setting up Settings Environment'"></blocker-loader>
-    <div class="container-fluid mt-0" v-else>
+    <div class="container mt-0" v-else>
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
           <div>
             <el-tabs type="card" @tab-click="handleClick">
-              <el-tab-pane id="tab-0" :key="1" label="Profile" class="card">
-                <div class="accordion" role="tablist">
+              <el-tab-pane id="tab-0" :key="1" label="Profile" :class="!loading ? 'card': ''">
+                <div v-if="loading" class="accordion skeletonLoader" role="tablist" style="background-color:#f8f9fe; transition: all 200ms ease-in-out;">
+                  <div no-body class="mb-1 add-bank-form">
+                    <div header-tag="header" class="p-1" role="tab">
+                      <div block v-b-toggle.accordion-1 variant="none" class="p-3" style="color:black;">
+                        <h3 class="animateSkeleton"></h3>
+                        <p  class="animateSkeleton"></p>
+                      </div>
+                    </div>
+                  </div>
+                  <hr />
+
+                  <div no-body class="mb-1">
+                    <div header-tag="header" class="p-1" role="tab">
+                      <div block v-b-toggle.accordion-2 variant="none" class="p-3" style="color:black;">
+                        <h3 class="animateSkeleton"></h3>
+                        <p  class="animateSkeleton"></p>
+                      </div>
+                    </div>
+                  </div>
+                  <hr />
+                  <div no-body class="mb-1">
+                    <div header-tag="header" class="p-1" role="tab">
+                      <div block v-b-toggle.accordion-3 variant="none" class="p-3" style="color:black;">
+                        <h3 class="animateSkeleton"></h3>
+                        <p  class="animateSkeleton"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion" role="tablist" v-else>
                   <div no-body class="mb-1 add-bank-form">
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-1 variant="none" class="p-3" style="color:black;">
@@ -22,31 +52,26 @@
                         <div class="p-3" v-if="!loading">
                           <div class="personal-profile">
                             <b-form class="container p-3 form-group">
-                              <!-- <h3 class="text-center">
-                                <i
-                                  class="fa fa-user-circle profile-settings"
-                                ></i>
-                              </h3> -->
                               <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput1"
+                                <input type="email" class="form-control"
                                   placeholder="name@example.com" :value="
                                     null ? '' : userInfo.customerFirstName
                                   " readonly />
                                 <label for="floatingInput1">First Name</label>
                               </div>
                               <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput2"
+                                <input type="email" class="form-control"
                                   placeholder="name@example.com" :value="null ? '' : userInfo.customerLastName"
                                   readonly />
                                 <label for="floatingInput2">Last Name</label>
                               </div>
                               <div class="form-floating mb-3">
-                                <input type="tel" class="form-control" id="floatingInput3"
+                                <input type="tel" class="form-control"
                                   placeholder="name@example.com" :value="null ? '' : userInfo.customerPhone" readonly />
                                 <label for="floatingInput3">Phone Number</label>
                               </div>
                               <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput4"
+                                <input type="email" class="form-control"
                                   placeholder="name@example.com" :value="null ? '' : userInfo.customerEmail" readonly />
                                 <label for="floatingInput">Email</label>
                               </div>
@@ -58,7 +83,6 @@
                     </b-collapse>
                   </div>
                   <hr />
-
                   <div no-body class="mb-1">
                     <div header-tag="header" class="p-1" role="tab">
                       <div block v-b-toggle.accordion-2 variant="none" class="p-3" style="color:black;">
@@ -70,59 +94,49 @@
                         </p>
                       </div>
                     </div>
-                    <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+                    <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel" >
                       <div class="business-profile">
                         <form class="form-group" @submit.prevent="updateOrginasation()">
                           <div>
                             <div class="row">
                               <div class="col mb-3">
                                 <label for="floatingInput2">Business Name</label>
-                                <input type="text" class="form-control"
-                                  placeholder="name@example.com" v-model="organisation.organisationName" readonly />
+                                <input type="text" class="form-control" id="organisationName"  :value="organisationRes.organisationName" :readonly="organisationRes.organisationName" />
                               </div>
                               <div class="col mb-3">
                                 <label for="floatingInput">Company Email</label>
-                                <input type="email" class="form-control" id="floatingInput"
-                                       placeholder="name@example.com" v-model="organisation.organisationEmail" readonly />
+                                <input type="email" class="form-control" id="organisationEmail"  :value="organisationRes.organisationEmail" :readonly="organisationRes.organisationEmail" />
                               </div>
                               <div class="col mb-3">
                                 <label for="floatingInput1">Company Phone</label>
-                                <input type="tel" class="form-control"  placeholder="Country"
-                                       v-model="organisation.organisationPhone" readonly />
+                                <input type="tel" class="form-control" id="organisationPhone" :value="organisationRes.organisationPhone" :readonly="organisationRes.organisationPhone" />
                               </div>
                             </div>
                             <div class="row">
 
                               <div class="col mb-3">
                                 <label for="floatingInput1">City</label>
-                                <input type="text" class="form-control"  placeholder="Ikeja"
-                                       v-model="organisation.organisationCity" required />
+                                <input type="text" class="form-control"  placeholder="Ikeja" id="organisationCity" :value="organisationRes.organisationCity" required  :readonly="organisationRes.organisationCity"/>
                               </div>
-                              <b-tooltip target="tooltip-target-1" triggers="hover">
-                                I am tooltip <b>component</b> content!
-                              </b-tooltip>
                               <div class="col mb-3">
                                 <label for="floatingInput2">Address</label>
                                 <input type="text" class="form-control"
-                                       placeholder="1004 Federal Housing Estate, Victoral Island"
-                                       v-model="organisation.organisationAddress" required />
+                                       placeholder="1004 Federal Housing Estate, Victoral Island" id="organisationAddress" :value="organisationRes.organisationAddress" required  :readonly="organisationRes.organisationAddress"/>
                               </div>
                               <div class="col mb-3">
                                 <label for="floatingInput1">State</label>
                                 <input type="text" class="form-control"  placeholder="Lagos"
-                                       v-model="organisation.organisationState" required />
+                                       :value="organisationRes.organisationState" id="organisationState" required :readonly="organisationRes.organisationState" />
                               </div>
                             </div>
                           </div>
-
-                          <!-- Second layer -->
+    <!---------------------------------------------  Second layer ------------------------------------------------------>
                           <div class="">
                             <div class="row">
-
                               <div class="col mb-3">
                                 <label for="floatingInput3">Organization Type</label>
                                 <select class="form-select form-control" aria-label="Default select example" required
-                                        v-model="organisation.organisationType">
+                                        :value="organisationRes.organisationType" :readonly="organisationRes.organisationType" id="organisationType">
                                   <option data-v-00a70ddc="" value="Agric produce">
                                     Agric produce
                                   </option>
@@ -230,20 +244,16 @@
                                     Video Game Arcades / Establishments
                                   </option>
                                 </select>
-
                               </div>
                             </div>
                             <div class="row">
                               <div class="col mb-3">
                                 <label for="floatingInput1">Organisation Website</label>
-                                <input type="text" class="form-control"  placeholder=" Website"
-                                  v-model="organisation.organisationWebsite" />
+                                <input type="text" class="form-control"  placeholder=" Website" :value="organisationRes.organisationWebsite" id="organisationWebsite"  :readonly="organisationRes.organisationWebsite"/>
                               </div>
                               <div class="col mb-3">
                                 <label for="floatingInput1">RC / BN Number</label>
-                                <input type="text" class="form-control"
-                                  placeholder="Organisation RC / BN Number"
-                                  v-model="organisation.organisationRegistrationNo" />
+                                <input type="text" class="form-control" placeholder="Organisation RC / BN Number" id="organisationRegistrationNo" :value="organisationRes.organisationRegistrationNo" :readponly="organisationRes.organisationRegistrationNo" />
                               </div>
                             </div>
 
@@ -254,27 +264,23 @@
                               <div class="row">
                                 <div class="col mb-3">
                                   <label for="floatingInput2">Full Name <span style="color: red">*</span></label>
-                                  <input type="text" class="form-control"
-                                         placeholder="Directors Full name" v-model="organisation.organisationDirectorName" required />
+                                  <input type="text" class="form-control" id="organisationDirectorName" placeholder="Directors Full name" :value="organisationRes.organisationDirectorName" required :readonly="organisationRes.organisationDirectorName"/>
                                 </div>
                               </div>
                               <div class="row">
                                 <div class="col mb-3">
                                   <label for="floatingInput2">Dob <span style="color: red">*</span></label>
-                                  <input type="date" class="form-control"
-                                         v-model="organisation.organisationDirectorDob" required />
+                                  <input type="date" class="form-control" id="organisationDirectorDob" :value="organisationRes.organisationDirectorDob" required :readonly="organisationRes.organisationDirectorDob"/>
                                 </div>
                                 <div class="col mb-3">
                                   <label for="floatingInput">BVN <span style="color: red">*</span></label>
-                                  <input type="number" class="form-control"
-                                         placeholder="Bank Verification Number" v-model="organisation.organisationDirectorBvn" required />
+                                  <input type="number" class="form-control" id="organisationDirectorBvn" placeholder="Bank Verification Number" :value="organisationRes.organisationDirectorBvn" required :readonly="organisationRes.organisationDirectorBvn"/>
                                 </div>
                               </div>
                               <div class="row">
                                 <div class="col mb-3">
                                   <label for="floatingInput2"> ID Card Type<span style="color: red">*</span></label>
-                                  <select class="form-select form-control" aria-label="Default select example" required
-                                          v-model="organisation.organisationDirectorIdCard">
+                                  <select class="form-select form-control" aria-label="Default select example" required id="organisationDirectorIdCardType" :value="organisationRes.organisationDirectorIdCardType" :readonly="organisationRes.organisationDirectorIdCard">
                                     <option value="national_id_card">National ID Card</option>
                                     <option value="international_passport">International Passport</option>
                                     <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
@@ -284,7 +290,7 @@
                                 <div class="col mb-3">
                                   <label for="floatingInput" v-if="director1 == null">Upload ID Card <span style="color: red">*</span></label><br v-if="director1 == null">
                                   <label for="floatingInput" v-if="director1 != null">Uploaded ID Card</label><br  v-if="director1 != null">
-                                  <b-button @click="showModalDirector1 = !showModalDirector1" v-if="director1 == null" :disabled="!organisation.organisationDirectorIdCard">Upload file</b-button>
+                                  <b-button @click="showModalDirector1 = !showModalDirector1" v-if="director1 == null" :disabled="organisationRes.organisationDirectorIdCard">Upload file</b-button>
                                   <img v-else :src="director1" width="100" />
                                 </div>
                               </div>
@@ -297,27 +303,24 @@
                               <div class="row">
                                 <div class="col mb-3">
                                   <label for="floatingInput2">First Name </label>
-                                  <input type="text" class="form-control"
-                                         placeholder="Director's Full name" v-model="organisation.organisationDirectorName2" />
+                                  <input type="text" class="form-control" id="organisationDirectorName2" placeholder="Director's Full name" :value="organisationRes.organisationDirectorName2" :readonly="organisationRes.organisationDirectorName2" />
                                 </div>
                               </div>
                               <div class="row">
                                 <div class="col mb-3">
                                   <label for="floatingInput2">Dob</label>
-                                  <input type="date" class="form-control"
-                                          v-model="organisation.organisationDirectorDob2"  />
+                                  <input type="date" class="form-control" id="organisationDirectorDob2" :value="organisationRes.organisationDirectorDob2"  :readonly="organisationRes.organisationDirectorDob2"/>
                                 </div>
                                 <div class="col mb-3">
                                   <label for="floatingInput">BVN </label>
-                                  <input type="number" class="form-control"
-                                         placeholder="Bank Verification Number" v-model="organisation.organisationDirectorBvn2"  />
+                                  <input type="number" class="form-control" id="organisationDirectorBvn2" placeholder="Bank Verification Number" :value="organisationRes.organisationDirectorBvn2" :readonly="organisationRes.organisationDirectorBvn2"  />
                                 </div>
                               </div>
                               <div class="row">
                                 <div class="col mb-3">
                                   <label for="floatingInput2"> ID Card Type</label>
-                                  <select class="form-select form-control" aria-label="Default select example"
-                                          v-model="organisation.organisationDirectorIdCardType2">
+                                  <select class="form-select form-control" aria-label="Default select example" id="organisationDirectorIdCardType2"
+                                          :value="organisationRes.organisationDirectorIdCardType2" :readonly="organisationRes.organisationDirectorIdCardType2">
                                     <option value="national_id_card">National ID Card</option>
                                     <option value="international_passport">International Passport</option>
                                     <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
@@ -327,7 +330,7 @@
                                 <div class="col mb-3">
                                   <label for="floatingInput" v-if="director2 == null">Upload ID Card </label><br v-if="director2 == null">
                                   <label for="floatingInput" v-if="director2 != null">Uploaded ID Card</label><br  v-if="director2 != null">
-                                  <b-button @click="showModalDirector2 = !showModalDirector2"  v-if="director2 == null" :disabled="!organisation.organisationDirectorIdCardType2">Upload file</b-button>
+                                  <b-button @click="showModalDirector2 = !showModalDirector2"  v-if="director2 == null" :disabled="!organisationRes.organisationDirectorIdCardType2">Upload file</b-button>
                                   <img v-else :src="director2" width="100" />
                                 </div>
                               </div>
@@ -339,6 +342,7 @@
                               <!-- <b-button @click="nextStep()" title="" style="background-color:grey;border:none;color:white">Next</b-button> -->
                             </div>
                           </div>
+
                         </form>
                       </div>
                     </b-collapse>
@@ -507,181 +511,180 @@
               </el-tab-pane>
 
               <el-tab-pane id="tab-8" :key="8" name="eight" label="Change Password">
-                <div class="change-password">
-                  <form @submit.prevent="changePassword()" class="password-form">
-                    <div class="form-floating mb-3">
-                      <i class="fa fa-eye" style="position: absolute;right: 10px;top: 5px;cursor: pointer" @click="hide$show"id="eye"></i>
-                      <input type="password" class="form-control"  id="pwd" v-model="changePasswordModel.customerOldPassword" required>
-                      <label>Old password</label>
-                    </div>
-                       <div class="form-floating mb-3">
-                         <input type="password" class="form-control"  id="pwd2" v-model="changePasswordModel.customerPassword" required>
-                      <label>New password</label>
-                    </div>  
-                     <div class="form-floating mb-3">
-                       <input type="password" class="form-control"  id="pwd3" v-model="changePasswordModel.customerPasswordConfirmation" required>
-                      <label>Confirm new password</label>
-                    </div>
-                    <div class="">
-                    <base-button type="submit" title='Change':loading="loadingOtp"></base-button>
-                        </div>
-                  </form>
+                <div class="settings-wrap">
+                <div>
+                  <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_msdmfngy.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop  autoplay></lottie-player>
                 </div>
-
+                  <div class="settings-wrap-2nd">
+                    <form @submit.prevent="changePassword()" class="password-form">
+                      <div class="form-floating mb-3">
+                        <i class="fa fa-eye" style="position: absolute;right: 10px;top: 5px;cursor: pointer" @click="hide$show"id="eye"></i>
+                        <input type="password" class="form-control"  id="pwd" v-model="changePasswordModel.customerOldPassword" required>
+                        <label>Old password</label>
+                      </div>
+                         <div class="form-floating mb-3">
+                           <input type="password" class="form-control"  id="pwd2" v-model="changePasswordModel.customerPassword" required>
+                        <label>New password</label>
+                      </div>
+                       <div class="form-floating mb-3">
+                         <input type="password" class="form-control"  id="pwd3" v-model="changePasswordModel.customerPasswordConfirmation" required>
+                        <label>Confirm new password</label>
+                      </div>
+                      <div class="">
+                      <base-button type="submit" title='Change':loading="loadingOtp"></base-button>
+                          </div>
+                    </form>
+                    </div>
+                </div>
               </el-tab-pane>
 
               <el-tab-pane id="tab-5" :key="5" name="five" label=" API Keys and Webhooks">
-                <b-card-group deck class="APIWebhooks">
-                  <b-card header="featured" header-tag="header">
-                    <template #header>
-                      <b-container class="text-right">
-                        <b-button style="
-                            background-color: var(--primary);
-                            border: none;
-                            color: white;
-                          " v-b-modal.modal-sm>Regenerate Api Key</b-button>
-                      </b-container>
-                    </template>
-                    <b-modal id="modal-sm" hide-backdrop size="sm" title="Regenerate Api key">
-                      You are about to regenerate new API keys.
-                      Proceeding with this action will invalidate your existing API keys and subsequent
-                      request headers must be passed with your newly generated keys
-                      <template #modal-footer="{ cancel }">
-                        <!-- Emulate built in modal footer ok and cancel button actions -->
-                        <b-button size="sm" variant="success" @click="regenerateApiKey()" :disabled="apikeyloading">
-                          {{ apikeyloading ? 'Regenerating..' : 'Proceed'}}
-                        </b-button>
-                        <b-button size="sm" variant="danger" @click="cancel()">
-                          Cancel
-                        </b-button>
-                        <!-- Button with custom close trigger value -->
-                      </template>
-                    </b-modal>
-
-                    <div class="d-flex justify-content-center">
+                <div style="display: flex;justify-content: flex-end;margin-bottom: 2%">
+                  <b-button :style="{
+                            backgroundColor:primaryColor,
+                            border: 'none',
+                            color: '#fff'}"
+                            v-b-modal.modal-sm>Regenerate Api Key
+                  </b-button>
+                </div>
+                <div class="settings-wrap">
+                  <div>
+                  <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_z3pnisgt.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop  autoplay></lottie-player>
+                  </div>
+                  <div class="settings-wrap-2nd">
+                    <div>
                       <api-key-display-form> </api-key-display-form>
                     </div>
-                  </b-card>
-                </b-card-group>
+                  </div>
+                  <b-modal id="modal-sm" hide-backdrop size="sm" title="Regenerate Api key">
+                    You are about to regenerate new API keys.
+                    Proceeding with this action will invalidate your existing API keys and subsequent
+                    request headers must be passed with your newly generated keys
+                    <template #modal-footer="{ cancel }">
+                      <!-- Emulate built in modal footer ok and cancel button actions -->
+                      <b-button size="sm" variant="success" @click="regenerateApiKey()" :disabled="apikeyloading">
+                        {{ apikeyloading ? 'Regenerating..' : 'Proceed'}}
+                      </b-button>
+                      <b-button size="sm" variant="danger" @click="cancel()">
+                        Cancel
+                      </b-button>
+                      <!-- Button with custom close trigger value -->
+                    </template>
+                  </b-modal>
+
+                </div>
               </el-tab-pane>
 
-              <el-tab-pane id="tab-6" :key="6" name="six" label=" Bank Account" class="cardd">
-                <div class="text-center p-3" v-if="payoutloading" style="
-                    display: flex;
-                    width: 100%;
-                    height: 60vh;
-                    justify-content: center;
-                    align-items: center;
-                  ">
+              <el-tab-pane id="tab-6" :key="6" name="six" label=" Bank Account">
+                <div style="display: flex;justify-content: flex-end;margin-bottom: 2%" v-if="!Object.values(payoutAccount).every((o) => o === null)">
+                  <b-button @click="showedit()" :style="{backgroundColor:primaryColor,color:'#fff'}"> {{!edit ? 'Update' : 'Cancel' }}</b-button>
+                </div>
+                <div class="settings-wrap">
                   <div>
-                    <h5>Please wait! Bizgem is checking your bank details.</h5>
+                    <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_kK73MQ.json"  background="transparent"  speed="1"  style="width: 500px; height: 500px;"  loop  autoplay></lottie-player>
                   </div>
-                </div>
+                  <div class="settings-wrap-2nd">
+                    <div class="text-center p-3" v-if="payoutloading" style="
+                        display: flex;
+                        width: 100%;
+                        height: 60vh;
+                        justify-content: center;
+                        align-items: center;
+                      ">
+                      <div>
+                        <h5>Please wait! Bizgem is checking your bank details.</h5>
+                      </div>
+                    </div>
 
-                <div v-if="!Object.values(payoutAccount).every((o) => o === null)">
-                  <div class="p-3" v-if="!payoutloading">
-                    <div>
-                      <div class="text-center" v-if="edit == false">
-                        <i class="fa fa-university" style="font-size: 50px"></i>
-                        <h4>Current bank details</h4>
-                      </div>
-                      <div class="text-center" v-else>
-                        <i class="fa fa-university" style="font-size: 50px"></i>
-                        <h4>Edit bank details</h4>
-                      </div>
-                      <div v-if="edit == false">
-                        <b-container class="">
-                          <div style="
-                              width: 100%;
-                              display: flex;
-                              justify-content: center;
-                            ">
-                            <div class="container p-3 form-group" style="width: 330px">
-                              <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput1"
-                                  placeholder="name@example.com" :value="
-                                    null ? '' : readonlybank.accountBankName
-                                  " readonly />
-                                <label for="floatingInput1">Bank Name</label>
-                              </div>
-                              <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput2"
-                                  placeholder="name@example.com" :value="null ? '' : readonlybank.accountName"
-                                  readonly />
-                                <label for="floatingInput2">Bank Holder Name</label>
-                              </div>
-                              <div class="form-floating mb-3">
-                                <input type="tel" class="form-control" id="floatingInput3"
-                                  placeholder="name@example.com" :value="
-                                    null ? '' : readonlybank.accountNumber
-                                  " readonly />
-                                <label for="floatingInput3">Bank Account Number</label>
-                              </div>
-                              <b-button @click="showedit()" class="w-100" style="
-                                  background-color: var(--primary);
-                                  color: white;
-                                ">Update
-                              </b-button>
-                            </div>
+                    <div v-if="!Object.values(payoutAccount).every((o) => o === null)">
+                      <div class="p-3" v-if="!payoutloading">
+                        <div>
+                          <div class="text-center" v-if="edit == false">
+                            <i class="fa fa-university" style="font-size: 50px"></i>
+                            <h4>Current bank details</h4>
                           </div>
-                        </b-container>
-                      </div>
-                    <div  v-else>
-                      <div style="position: absolute;top: 20px;left:20px">
-                        <b-button @click="edit = false">Cancel</b-button>
-                      </div>
-                      <form class="bformedit" @submit.prevent="editBank()">
-                        <label class="">Select Payout Bank</label>
-                        <base-input >
-                            <el-select class="select-danger w-100" filterable placeholder="Bank Name" required
-                              v-model="createPayoutAccountModel.accountBankCode">
-                              <el-option v-for="bank in banks" class="select-danger" :value="bank.value"
-                                :label="bank.label" :key="bank.value">
-                              </el-option>
-                            </el-select>
-                          </base-input>
-                        <label class="mt-3">Account Number</label>
-                          <b-form-input  id="input-4" type="text" placeholder="Account Number"
-                            v-model="createPayoutAccountModel.accountNumber" class="mr-2 mb-3" required></b-form-input>
-                          <label class="">Account Name</label>
-                          <b-form-input id="input-5" type="number" placeholder="Account Name"
-                            v-model="createPayoutAccountModel.accountName" class="mr-2 mb-3" required></b-form-input>
-                          <div class="d-flex mb-3">
-                            <b-form-input id="input-5" type="text" placeholder="OTP" class="mr-2" required
-                              v-model="createPayoutAccountModel.otp"></b-form-input>
-                            <span v-if="timerCount > 0" class="m-2 small w-100 text-dark">Resend OTP in {{ timerCount }}
-                            </span>
-                            <!-- <b-button class="w-50" v-if="timerCount > 0" disabled></b-button> -->
-                            <b-button class="w-100" @click="sendOtp()" v-else>{{ loadingOtp ? "Sending" : "Send OTP" }}
-                              <span :class="{ 'spinner-border': loadingOtp }"></span>
+                          <div class="text-center" v-else>
+                            <i class="fa fa-university" style="font-size: 50px"></i>
+                            <h4>Edit bank details</h4>
+                          </div>
+                          <div v-if="edit == false">
+                              <div style="width: 100%;">
+                                  <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="floatingInput1"
+                                      placeholder="name@example.com" :value="
+                                        null ? '' : readonlybank.accountBankName
+                                      " readonly />
+                                    <label for="floatingInput1">Bank Name</label>
+                                  </div>
+                                  <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="floatingInput2"
+                                      placeholder="name@example.com" :value="null ? '' : readonlybank.accountName"
+                                      readonly />
+                                    <label for="floatingInput2">Bank Holder Name</label>
+                                  </div>
+                                  <div class="form-floating mb-3">
+                                    <input type="tel" class="form-control" id="floatingInput3"
+                                      placeholder="name@example.com" :value="
+                                        null ? '' : readonlybank.accountNumber
+                                      " readonly />
+                                    <label for="floatingInput3">Bank Account Number</label>
+                                  </div>
+                              </div>
+                          </div>
+                        <div  v-else>
+                          <form class="bformedit" @submit.prevent="editBank()">
+                            <label class="">Select Payout Bank</label>
+                            <base-input >
+                                <el-select class="select-danger w-100" filterable placeholder="Bank Name" required
+                                  v-model="createPayoutAccountModel.accountBankCode">
+                                  <el-option v-for="bank in banks" class="select-danger" :value="bank.value"
+                                    :label="bank.label" :key="bank.value">
+                                  </el-option>
+                                </el-select>
+                              </base-input>
+                            <label class="mt-3">Account Number</label>
+                              <b-form-input  id="input-4" type="text" placeholder="Account Number"
+                                v-model="createPayoutAccountModel.accountNumber" class="mr-2 mb-3" required></b-form-input>
+                              <label class="">Account Name</label>
+                              <b-form-input id="input-5" type="number" placeholder="Account Name"
+                                v-model="createPayoutAccountModel.accountName" class="mr-2 mb-3" required>
+                              </b-form-input>
+                              <div class="d-flex mb-3">
+                                <b-form-input id="input-5" type="text" placeholder="OTP" class="mr-2" required
+                                  v-model="createPayoutAccountModel.otp"></b-form-input>
+                                <span v-if="timerCount > 0" class="m-2 small text-dark" style="width: 30%">Resend OTP in {{ timerCount }}</span>
+                                <b-button @click="sendOtp()" v-else style="width: 30%">{{ loadingOtp ? "Sending" : "Send OTP" }}
+                                  <span :class="{ 'spinner-border': loadingOtp }"></span>
+                                </b-button>
+                              </div>
+                            <b-button class="w-100 text-white" style="background-color: var(--primary)" type="submit">{{
+                                createloader ? "Updating" : "Update Bank"
+                            }}
+                              <span :class="{ 'spinner-border': createloader }"></span>
                             </b-button>
-                          </div>
-                        <b-button class="w-100 text-white" style="background-color: var(--primary)" type="submit">{{
-                            createloader ? "Updating" : "Update Bank"
-                        }}
-                          <span :class="{ 'spinner-border': createloader }"></span>
-                        </b-button>
-                      </form>
+                          </form>
+                        </div>
+                        </div>
+                      </div>
                     </div>
-                    </div>
-                  </div>
-                </div>
 
 
-                <div v-else>
-                  <div class="text-center p-3" v-if="!payoutloading" style="
-                      display: flex;
-                      width: 100%;
-                      height: 60vh;
-                      justify-content: center;
-                      align-items: center;
-                    ">
-                    <add-bank @closeCreateBank="updateCreateBank" :showCreateBank="show"></add-bank>
+                    <div v-else>
+                      <div class="text-center p-3" v-if="!payoutloading" style="
+                          display: flex;
+                          width: 100%;
+                          height: 60vh;
+                          justify-content: center;
+                          align-items: center;
+                        ">
+                        <add-bank @closeCreateBank="updateCreateBank" :showCreateBank="show"></add-bank>
 
-                    <div>
-                      <i class="fa fa-ban" aria-hidden="true" style="font-size: 46px; margin: 10px"></i>
-                      <h5>You do not have any payout bank account added.</h5>
-                      <b-button @click="show = true">Add Bank</b-button>
+                        <div>
+                          <i class="fa fa-ban" aria-hidden="true" style="font-size: 46px; margin: 10px"></i>
+                          <h5>You do not have any payout bank account added.</h5>
+                          <b-button @click="show = true">Add Bank</b-button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -745,9 +748,9 @@ export default {
   data() {
     return {
       show: false,
+      primaryColor:window.__env.app.primaryColor,
       showModalDirector1:false,
       showModalDirector2:false,
-      updateOrganisationModel: OrganisationRequest.updateOrganisation,
       sendOtpModel: AuthenticationRequest.resendOtp,
       readbanklistModel: VirtualAccountRequest.getBankList,
       createPayoutAccountModel: AccountPayoutRequest.createAccountPayout,
@@ -756,11 +759,7 @@ export default {
       files: [],
       banks: [],
       progressBarArr: [],
-      organisation: JSON.parse(
-        JSON.stringify(
-          StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
-        )
-      ),
+      organisation: OrganisationRequest.updateOrganisation,
       apikeyModel: ApikeyRequest.regenerateApiKey,
       documentModel: DocumentRequest.createDocument,
       readDoc: DocumentRequest.readDocument,
@@ -791,6 +790,7 @@ export default {
       apikeyloading: (state) => state.apiKey.loading,
       director1:state => state.document.directorIdCard1.url,
       director2:state => state.document.directorIdCard2.url,
+      organisationRes:state => state.auth.readOrganisation
       // documents:(state) => state.document.document
     }),
     getStatus() {
@@ -818,9 +818,7 @@ export default {
       return organization;
     },
     currentOrganisation() {
-      return StoreUtils.rootGetters(
-        StoreUtils.getters.auth.getCurrentOrganization
-      );
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
     },
   },
   watch: {
@@ -892,6 +890,8 @@ export default {
       StoreUtils.actions.virtualAccount.updateReadBankList,
       this.readbanklistModel
     );
+
+    StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
   },
 
   methods: {
@@ -906,8 +906,6 @@ export default {
       this.changePasswordModel.customerEmail = this.userInfo.customerEmail
       StoreUtils.dispatch(StoreUtils.actions.auth.changePassword, this.changePasswordModel)
     },
-
-
 
 
     editBank() {
@@ -1031,17 +1029,54 @@ export default {
     },
 
     updateOrginasation() {
+      let organisationName = document.getElementById('organisationName').value
+      let organisationEmail = document.getElementById('organisationEmail').value
+      let organisationPhone = document.getElementById('organisationPhone').value
+      let organisationCity  = document.getElementById('organisationCity').value
+      let organisationAddress =  document.getElementById('organisationAddress').value
+      let organisationState =  document.getElementById('organisationState').value
+      let organisationWebsite =  document.getElementById('organisationWebsite').value
+      let organisationType = document.getElementById('organisationType').value
+      let organisationRegistrationNumber = document.getElementById('organisationRegistrationNo').value
+      let organisationDirectorName = document.getElementById('organisationDirectorName').value
+      let organisationDirectorDob = document.getElementById('organisationDirectorDob').value
+      let organisationDirectorIdCardType = document.getElementById('organisationDirectorIdCardType').value
+      let organisationDirectorName2 = document.getElementById('organisationDirectorName2').value
+      let organisationDirectorDob2 = document.getElementById('organisationDirectorDob2').value
+      let organisationDirectorIdCard2 = document.getElementById('organisationDirectorIdCardType2').value
+      let organisationDirectorBvn = document.getElementById('organisationDirectorBvn').value
+      let organisationDirectorBvn2 = document.getElementById('organisationDirectorBvn2').value
+
+      this.organisation.organisationName = organisationName;
+      this.organisation.organisationEmail =  organisationEmail;
+      this.organisation.organisationPhone = organisationPhone;
+      this.organisation.organisationCity = organisationCity;
+      this.organisation.organisationAddress = organisationAddress;
+      this.organisation.organisationState = organisationState;
+      this.organisation.organisationWebsite = organisationWebsite;
+      this.organisation.organisationType = organisationType;
+      this.organisation.organisationRegistrationNumber = organisationRegistrationNumber;
+      this.organisation.organisationDirectorName = organisationDirectorName;
+      this.organisation.organisationDirectorDob = organisationDirectorDob;
+      this.organisation.organisationDirectorIdCardType = organisationDirectorIdCardType;
+      this.organisation.organisationDirectorName2 = organisationDirectorName2;
+      this.organisation.organisationDirectorDob2 = organisationDirectorDob2;
+      this.organisation.organisationDirectorIdCard2 = organisationDirectorIdCard2;
+      this.organisation.organisationDirectorBvn = organisationDirectorBvn;
+      this.organisation.organisationDirectorBvn2 = organisationDirectorBvn2;
       this.organisation.organisationId = localStorage.organisationId;
       this.organisation.organisationLogo = "company Logo";
       this.organisation.organisationDirectorIdCard = this.director1;
       this.organisation.organisationDirectorIdCard2 = this.director2;
+
+      // console.log(this.organisation)
       StoreUtils.dispatch(
         StoreUtils.actions.auth.updateOrganisation,
         this.organisation
       ).then(() => {
         const userToken = localStorage.getItem('token')
         StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
-
+        StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
       });
     },
     file() {
@@ -1129,64 +1164,44 @@ h2 span {
   background:#fff;
   padding:0 10px;
 }
-.form-group{
-  width: 50%;
-}
-.APIWebhooks {
+
+.settings-wrap {
   display: flex;
   justify-content: center;
-  height: 100vh;
+  align-items: center;
+  background-color: rgb(255,255,255);
 }
 
 .body {
   min-height: 80vh
 }
 
-@media(max-width: 999px){
-  .form-group{
-    width: 100%;
+.skeletonLoader{}
+
+.animateSkeleton{
+  width:50%;
+  height: 30px;
+  /*background-color: gray;*/
+  background:linear-gradient(90deg, rgba(55, 255, 255, 0.01) 0, rgba(255, 255, 255, 0.16) 20%, rgba(248, 247, 247, 0.5) 60%, rgb(255, 255, 255));
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  100% {
+    transform: translateX(100%);
   }
 }
 
-.profile-settings {
-  font-size: 100px;
-  color: var(--primary);
-}
-
-.settings-profile-header {
-  color: #919191;
-  font-weight: 700;
-}
-
-.not-allowed {
-  cursor: not-allowed;
-}
-
-.carddd {
-  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
-  background-color: white;
+@media screen and (prefers-reduced-motion: reduce) {
+  .animateSkeleton::after {
+    animation: none;
+  }
 }
 
 .doc{
   overflow-x: scroll;
 }
 
-.cardd {
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 20%);
-  background-color: white;
-  height: 80vh;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-.center-block {
-  width: 600px;
-  height: 560px;
-  max-width: 90%;
-  margin: 30px auto;
-}
 
 @keyframes spinner-border {
   to {
@@ -1194,21 +1209,12 @@ h2 span {
   }
 }
 
-.form {
-  display: flex;
-  justify-content: center;
-}
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.bform {
-  width: 100%;
-  margin: 20px;
-}
+/*input::-webkit-outer-spin-button,*/
+/*input::-webkit-inner-spin-button {*/
+/*  -webkit-appearance: none;*/
+/*  margin: 0;*/
+/*}*/
 
 .business-profile{
     width: 100%;
@@ -1222,33 +1228,11 @@ input::-webkit-inner-spin-button {
   margin-top: 2%;
 }
 
-@media (max-width:999px) {
-  .bformedit {
-    width: 100%;
-    margin: 2%;
-  }
-  form{
-    width: 100% !important;
-  }
-
-}
-
 .document{
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
   color:black;
-}
-
-@media (max-width:999px) {
-  .document{
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-    color:black;
-    width: 300px;
-  }
-
 }
 
 .our-team {
@@ -1260,21 +1244,12 @@ input::-webkit-inner-spin-button {
   overflow: hidden;
   position: relative;
   border-radius: 5%;
-  box-shadow: 0 0 1rem 0 rgb(136 152 170 / 15%);
+  /*box-shadow: 0 0 1rem 0 rgb(136 152 170 / 15%);*/
 }
 
-.change-password {
-  width: 100%;
-  padding: 3%;
-  height: 75vh;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-
-}
 
 .password-form {
-  width: 40%;
+  width: 100%;
   padding: 20px;
 
 }
@@ -1283,16 +1258,6 @@ input::-webkit-inner-spin-button {
   width: 100%;
   display: flex;
   justify-content: center;
-}
-
-
-
-@media(max-width: 999px){
-  .password-form {
-    width: 100%;
-    padding: 20px;
-
-  }
 }
 
 .our-team .picture {
@@ -1341,6 +1306,10 @@ input::-webkit-inner-spin-button {
   text-transform: capitalize;
 }
 
+.form-group{
+  width: 90%;
+}
+
 .our-team .social {
   width: 100%;
   padding: 0;
@@ -1374,30 +1343,6 @@ input::-webkit-inner-spin-button {
   background-color: #f7f5ec;
 }
 
-.card-head:first-child {
-  border-radius: calc(0.375rem - 1px) calc(0.375rem - 1px) 0 0;
-}
-
-.card-head {
-  padding: 0.25rem 0.5rem;
-  margin-bottom: 0;
-  background-color: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.form-error-message {
-  width: 100%;
-  margin-top: 0.25rem;
-  font-size: 80%;
-  color: #fb6340;
-}
-
-.top-area {
-  display: flex;
-  margin-top: 0px !important;
-  justify-content: space-between;
-  align-items: center;
-}
 
 .spinner-border {
   display: inline-block;
@@ -1419,4 +1364,41 @@ input::-webkit-inner-spin-button {
   width: 32px !important;
   height: 32px !important;
 }
+.settings-wrap-2nd{
+  width: 60%;
+}
+
+
+@media (max-width:999px) {
+  .settings-wrap-2nd{
+    width: 100%;
+  }
+  .document{
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    color:black;
+    width: 300px;
+  }
+
+  .bformedit {
+    width: 100%;
+    margin: 2%;
+  }
+  form{
+    width: 100% !important;
+  }
+  .form-group{
+    width: 100%;
+  }
+  .password-form {
+    width: 100%;
+    padding: 20px;
+
+  }
+  .settings-wrap {
+    flex-direction: column-reverse;
+  }
+}
+
 </style>

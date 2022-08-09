@@ -27,7 +27,8 @@ class StoreUtils {
       updateOrganisation:"auth/updateOrganisation",
       readRefferalState:"auth/readRefferalState",
       readDashboardStats:"auth/readDashboardStats",
-      changePassword:"auth/changePassword"
+      changePassword:"auth/changePassword",
+      readOrganisationById:"auth/readOrganisationById"
     },
     dispute: {
       updateDisputes: "dispute/updateDisputes",

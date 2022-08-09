@@ -1,45 +1,37 @@
 <template>
   <div>
-<!--    <blocker-loader v-if="accloading" :message="'Please Wait'"></blocker-loader>-->
-<!--        <blocker-loader v-if="loading" :message="'Please Wait'"></blocker-loader>-->
 
     <base-header class="pb-6" type="">
     </base-header>
     <div class="container-fluid mt--6">
       <div class="cardd mt-2">
-        <div>
-<!--          {{currentOrganisation}}-->
-<!--          <h1 class="m-b- text-center"><b>Hello {{ user.customerFirstName }}, Welcome to BizGem</b></h1>-->
-<!--          <h2 class="text-center">Your business is in <span v-if="getStage === 'DEV'">Test</span><span-->
-<!--              v-else>Live</span> mode</h2>-->
-          <div class="mb">
-          <div class="card-area">
-              <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false"
-                :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
-              <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'"
-                :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'">
-              </dashboard-card>
-              <dashboard-card :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfWalletDev : currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'">
-              </dashboard-card>
-              <dashboard-card :showBtn="false" :showBtn1="false"
-                :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfVirtualAccountDev : currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'">
-              </dashboard-card>
-
-        </div>
+          <div class="mb card-holder">
+            <div class="card-area">
+                <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
+                <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'" :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'"></dashboard-card>
+                <dashboard-card :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfWalletDev : currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'"></dashboard-card>
+                <dashboard-card :showBtn="false" :showBtn1="false" :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfVirtualAccountDev : currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'"></dashboard-card>
+  <!--            <dashboard-card :showBtn="false" :showBtn1="false" :value="getStage === 'DEV' ? allTransactionsTotal : allTransactionsTotal" :title="'Number of Transactions'"></dashboard-card>-->
+            </div>
           </div>
           <div class="mb-3 text-center">
             <b-button style="background-color:#3F88C5;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>
             <b-button @click="show = true"> Withdraw</b-button>
           </div>
           <div>
-<!--            <div class="m-3">-->
-<!--              <h4>Recent Transactions</h4>-->
+<!--            <div style="display: flex; width:100%;justify-content: space-evenly;align-items: center">-->
+<!--              <div class="transaction-chart">-->
+<!--                <canvas id="wallet"></canvas>-->
+<!--              </div>-->
+
+<!--              <div class="transaction-chart">-->
+<!--                 <canvas id="myChart"></canvas>-->
+<!--              </div>-->
 <!--            </div>-->
             <transaction withSearch="YES"></transaction>
           </div>
         </div>
       </div>
-    </div>
     <payout-form @closeCreatePayout="updateCreatePayout" :showCreatePayout="show"></payout-form>
 
     <b-modal centered id="modal-scrollable" scrollable hide-backdrop content-class="shadow" hide-footer title="Fund your wallet">
@@ -77,6 +69,9 @@ import Swal from "sweetalert2";
 import Transaction from "../report/Transactions.vue"
 import PayoutForm from "../../components/form/PayoutForm";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest"
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
+import { getRelativePosition } from 'chart.js/helpers';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -106,6 +101,84 @@ export default {
   },
 
   methods: {
+    fxTransactions(){
+      const ctx = document.getElementById('myChart').getContext('2d');
+
+      const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+          datasets: [{
+            label: '# of Votes',
+            data: [39, 0],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+      return myChart
+    },
+    fxWallet(){
+      const ctx = document.getElementById('wallet1').getContext('2d');
+
+      const myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['jan', 'feb', 'mar'],
+          datasets: [{
+            label: '# of Transactions',
+            data: [1000900, 8000, 3000],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          // scales: {
+          //   y: {
+          //     beginAtZero: true
+          //   }
+          // }
+        }
+      });
+      return myChart
+    },
 
     regenerateApiKey() {
       StoreUtils.dispatch(StoreUtils.actions.apiKey.regenerateApiKey, this.apikeyModel).then(() => {
@@ -134,7 +207,9 @@ export default {
       api: (state) => state.apiKey.apiKey,
       stage: (state) => state.auth.stage,
       accLoading: state => state.accountPayout.accloading,
-      balances: state => state.auth.balances
+      balances: state => state.auth.balances,
+      allTransactionsTotal: (state) => state.walletTransactions.allWalletTransactions.data.length,
+
 
     }),
     currentOrganisation() {
@@ -145,8 +220,6 @@ export default {
       return StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
     },
 
-
-
   },
 
   watch: {
@@ -155,6 +228,8 @@ export default {
 
   mounted() {
     StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
+    this.fxTransactions()
+    this.fxWallet()
 
   },
 };
@@ -164,10 +239,46 @@ export default {
   float: none;
 }
 
+.card-holder{
+  display: flex;
+  width: 100%;
+}
+
 .center-block {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.transaction-chart{
+  width: 50%;
+  cursor: pointer;
+  display: flex;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  justify-content: flex-end;
+  overflow-x: scroll;
+
+
+
+}
+
+/*#myChart:hover > .transaction-chart{*/
+/*  width: 100%;*/
+
+/*}*/
+#myChart{
+  transition: ease-out .7s;
+}
+
+
+#myChart:hover{
+  transform: scale(1.4);
+  z-index: 999999999999999999999999999999999999999999;
+  transition: .7s ease-in;
+  background-color: black;
+  /*margin-left: 50%;*/
+
 }
 
 
@@ -213,30 +324,40 @@ svg:not(:root) {
 .cardd {
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 10%);
   background-color: white;
-
+  width: 100%;
 }
+
 
 .carddd {
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
   background-color: white;
   margin-top: 20px;
   padding: 10px;
+}
 
-
+.wrapper{
+  display: flex;
+  justify-content: center;
 }
 
 .card-area {
   display: flex;
   justify-content: space-around;
-  /* border: solid yellow; */
+   /*border: solid yellow;*/
   padding: 10px;
-  width: 100%;
+  width: 90%;
 }
 
 @media (max-width:999px){
   .card-area{
     display: flex;
-    width: 250%;
+    width: 1500px;
+    justify-content: center;
+  }
+
+  .card-holder{
+    display: flex;
+    width: 120%;
   }
 
 

@@ -12,6 +12,7 @@ Example for Docker:
         title: "FBNDirect Portal",
         description: "FBNDirect Portal",
         primaryColor: "#3F88C5",
+        primaryColorGradient:"linear-gradient(to bottom,#3F88Cd, #236395)",
         publicPath: "/home/",
         url: "https://dashboard.bizgem.io",
         stage: "dev"

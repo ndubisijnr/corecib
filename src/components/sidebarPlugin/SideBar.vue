@@ -1,7 +1,7 @@
 <template>
   <div class="sidenav navbar-vertical fixed-left navbar-expand-xs"
        @mouseenter="$sidebar.onMouseEnter()"
-       @mouseleave="$sidebar.onMouseLeave()">
+       @mouseleave="$sidebar.onMouseLeave()" :style="{backgroundColor:primaryColor}">
     <div class="scrollbar-inner" ref="sidebarScrollArea">
             <div class="sidenav-header">
 
@@ -20,29 +20,12 @@
               </div>
             </div>
           </div>
-        <div id="k" style="background-color:#3F88C5;">
+        <div id="k" :style="{background:primaryColorGradient}">
           <hr style="margin:5px;border: 1px solid;color: #91a0af">
             <h4 v-for="(org, index) in organisationList" :key="index" class="link-drop" @click="getId(org)"> {{org.organisationName}}</h4>
-<!--               <base-button size="md" outline @click="addbiz()" style="color:white; border:solid white;"> Sign Out</base-button>-->
-          <!-- <button class="btn btn-primary w-100 mt-2" >Add a Bussiness</button> -->
         </div>
             </div>
       <slot></slot>
-      <!-- <b-icon-arrows-collapse block v-b-toggle.collapse-a style="position:absolute;right:30px;top:40px;color:black;cursor:pointer"/> -->
-      <!-- <div class="account-details" v-b-toggle.collapse-a>
-         <span :class="{'spinner-border': loading}"></span> 
-        <h3>{{ currentOrganisation.organisationName }}</h3>
-        <h4 class="small">{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
-        <div>
-        </div>
-         <b-collapse id="collapse-a">
-        
-             <b-list-group>
-            <b-list-group-item button  @click="adminLogOut()" style="font-size:12px">Sign Out</b-list-group-item>
-          </b-list-group>
-  
-        </b-collapse>
-      </div> -->
       <div class="navbar-inner mt-4 text-white">
         <ul class="navbar-nav one text-white">
           <slot name="links">
@@ -76,7 +59,8 @@ export default {
   name: 'sidebar',
   data() {
     return {
-
+      primaryColor:window.__env.app.primaryColor,
+      primaryColorGradient: window.__env.app.primaryColorGradient
     }
   },
   props: {
@@ -178,17 +162,10 @@ export default {
 
 <style scoped>
 .add-business{
-  /* z-index: 9999999; */
-  /*display: flex;*/
-  /*flex-direction: column;*/
-  /*justify-content: center;*/
-  /*align-items: flex-start;*/
   padding-left: 18px;
   padding-top: 4px;
   width: 100%;
-  /*background-color: #e7e7ef;*/
   background: linear-gradient(to bottom,#3F88Cd, #236395);
-  /* position: absolute; */
   left: 0;
   height: 90px;
   cursor: pointer;
@@ -210,17 +187,12 @@ export default {
   top: 44px;
   left: 0;
   /*background-color: #e7e7ef;*/
-  background-color:var(--primary);
   color: #ffffff !important;
   /*background-color: #91a0af;*/
   width: 100%;
   transition: 2s ease;
   padding: 12px;
 }
-
-/*.one{*/
-/*  border: solid red;*/
-/*}*/
 
 .arrow{
   position: absolute;
@@ -231,23 +203,8 @@ export default {
   color: #ffffff;
 }
 
-.rotate90 {
-  transform: rotate(-90deg);
-  transition: ease 0.4s;
-}
-
-/* .account-details{
-   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 10%);
-      background-color: white;
-      text-align: center;
-      margin:10%;
-      padding: 5%;
-      color: #0000;
-}
- */
 
 .sidenav{
-  background-color: var(--primary);
   border: none !important;
   overflow: scroll;
   color: white !important;
@@ -259,11 +216,6 @@ export default {
 
 .sidenav::-webkit-scrollbar:hover{
   display: block;
-}
-
-.rotate90 {
-  transform: rotate(-90deg);
-  transition: ease 0.4s;
 }
 
 .spinner-border {
@@ -290,11 +242,6 @@ export default {
   to {
     transform: rotate(360deg);
   }
-}
-
-.rotate-90 {
-  transform: rotate(90deg);
-  transition: ease 0.4s;
 }
 
 .link-drop {

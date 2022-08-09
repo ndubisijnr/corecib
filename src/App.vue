@@ -1,6 +1,6 @@
 <template>
   <div>
-   <router-link to="/settings/settings"> <div class="myalert" v-if="layout === 'dashboard-layout' && currentOrganisation.organisationStatus == 'PENDING'" id="myalert">
+   <router-link to="/settings/settings"> <div class="myalert" v-if="layout === 'dashboard-layout' && currentOrganisation.organisationStatus == 'PENDING'">
       <h3 class="text-white" > <b-icon-bell-fill/> &nbsp; You are currently only allowed to use bills payment APIs, kindly update your business information to access all our services.  </h3>
     </div> </router-link>
     <dashboard-layout v-if="layout === 'dashboard-layout'"></dashboard-layout>
@@ -35,7 +35,7 @@ export default {
             StoreUtils.actions.accountPayout.readAddedBanks,
             this.readPayoutAccountModel
         );
-        console.clear()
+        // console.clear()
       }else{
         localStorage.clear()
       }
@@ -97,6 +97,8 @@ body{
     height: 46px;
     width: 100%;
     z-index: 5;
+    position: sticky;
+    top: 0;
 }
 
 .myalert h3{

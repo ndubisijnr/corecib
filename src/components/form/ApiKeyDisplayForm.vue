@@ -140,6 +140,8 @@ export default {
         this.model[`apikey${this.testLive}Callback`] = this.callBackUrl
         //this.model[`apikey${this.testLive}Webhook`] = this.webHook
 
+        console.log(this.model)
+
         StoreUtils.dispatch(StoreUtils.actions.apiKey.updateWebhookCallback, this.model).then(() => {
           this.model.apikeyOrganisationId = localStorage.organisationId;
           this.model.apikeyId = localStorage.organisationId;

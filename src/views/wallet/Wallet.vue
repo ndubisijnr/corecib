@@ -111,12 +111,14 @@ export default {
 }
 
 .export-btn-area{
-  /*box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);*/
+  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
   gap: 10px;
   padding: 1%;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #ffffff;
+
 }
 
 .export-ex{

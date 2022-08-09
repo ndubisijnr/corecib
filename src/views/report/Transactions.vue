@@ -7,7 +7,9 @@
         <b-icon-download  class="mobile" @click="download" />
       </div>
       <export-excel style="display: none" id="export" name="bizgemTransactions-excel" :data="allTransactions.data"></export-excel>
-
+<!--    {{lll}}-->
+<!--    <hr/>-->
+<!--    {{jjj}}-->
     <base-table
           :items="JSON.parse(JSON.stringify(allTransactions.data))"
           :fields="fields"
@@ -87,12 +89,23 @@ export default {
     myStyles() {
       return { height: "150px" };
     },
+
+    lll(){
+      return this.allTransactions.data.map((item) => [item.transactionDate,item.amount])
+    },
+
+    jjj(){
+      return this.lll.filter(date => {
+        switch (date){}
+      })
+    }
   },
   mounted() {
     StoreUtils.dispatch(
       StoreUtils.actions.walletTransactions.updateAllWalletTransactions,
       this.allWalletTransactions
     );
+
   },
 };
 </script>
@@ -103,12 +116,14 @@ export default {
 }
 
 .export-btn-area{
-  /*box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);*/
+  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
   gap: 10px;
   padding: 1%;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #ffffff;
+
 }
 .cardd {
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 10%);

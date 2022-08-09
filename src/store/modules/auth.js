@@ -29,7 +29,7 @@ export const state = {
   userInfo: AuthenticationResponse.login,
   screen: "register",
   passwordResetScreen: "email",
-  orginisation: {},
+  readOrganisation: OrganisationResponse.readOrganisationById,
   balances:WalletResponse.readBalanceWallet,
   refferalstats:OrganisationResponse.refferalStatsResponse
 }
@@ -57,7 +57,7 @@ export const mutations = {
   updateUserInfo: (state, payload) => { state.userInfo = payload; },
   updateScreen: (state, payload) => { state.screen = payload; },
   updatePasswordResetScreen: (state, payload) => { state.passwordResetScreen = payload; },
-  updateOrganisation: (state, payload) => { state.organisation = payload },
+  updateOrganisation: (state, payload) => { state.readOrganisation = payload },
   updateBalance:(state, payload) => {state.balances = payload},
   updateRefferalStats:(state, payload) => {state.refferalstats = payload}
 }
@@ -277,6 +277,22 @@ export const actions = {
         commit("updateLoading", false)
         commit("updateBalance",responseData2)
       }
+    })
+  },
+
+  readOrganisationById:({commit}, payload={organisationId:localStorage.organisationId}) => {
+    commit("updateLoading", true)
+    return OrganizationService.callReadOrganisationByIdApi(payload).then((response) => {
+      let responseData = response.data
+      if(responseData.responseCode === "00"){
+        commit("updateLoading", false)
+        commit("updateOrganisation", responseData)
+        console.log(responseData)
+      }else{
+         commit("updateLoading", false)
+      }
+    }).catch(() => {
+       commit("updateLoading", false)
     })
   }
 }
