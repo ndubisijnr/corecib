@@ -242,6 +242,7 @@ export default {
 .card-holder{
   display: flex;
   width: 100%;
+  justify-content: center;
 }
 
 .center-block {
@@ -357,7 +358,8 @@ svg:not(:root) {
 
   .card-holder{
     display: flex;
-    width: 120%;
+    width: 150%;
+    justify-content: left;
   }
 
 

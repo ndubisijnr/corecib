@@ -280,7 +280,7 @@
                               <div class="row">
                                 <div class="col mb-3">
                                   <label for="floatingInput2"> ID Card Type<span style="color: red">*</span></label>
-                                  <select class="form-select form-control" aria-label="Default select example" required id="organisationDirectorIdCardType" :value="organisationRes.organisationDirectorIdCardType" :readonly="organisationRes.organisationDirectorIdCard">
+                                  <select class="form-select form-control" aria-label="Default select example" required id="organisationDirectorIdCardType" v-model="organisation.organisationDirectorIdCardType" :readonly="organisationRes.organisationDirectorIdCard">
                                     <option value="national_id_card">National ID Card</option>
                                     <option value="international_passport">International Passport</option>
                                     <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
@@ -288,10 +288,15 @@
                                   </select>
                                 </div>
                                 <div class="col mb-3">
-                                  <label for="floatingInput" v-if="director1 == null">Upload ID Card <span style="color: red">*</span></label><br v-if="director1 == null">
-                                  <label for="floatingInput" v-if="director1 != null">Uploaded ID Card</label><br  v-if="director1 != null">
-                                  <b-button @click="showModalDirector1 = !showModalDirector1" v-if="director1 == null" :disabled="organisationRes.organisationDirectorIdCard">Upload file</b-button>
-                                  <img v-else :src="director1" width="100" />
+                                  <div v-if="director1 == null">
+                                    <label for="floatingInput" v-if="director1 == null">Upload ID Card <span style="color: red">*</span></label><br v-if="director1 == null">
+                                    <b-button @click="showModalDirector1 = !showModalDirector1" :disabled="!organisation.organisationDirectorIdCardType">Upload file</b-button>
+                                  </div>
+                                  <div v-else style="height: 100%;width: 100%;">
+                                    <img :src="director1" width="100" :alt="director1"/> <br />
+                                    <h3 class="text-success">Your {{organisation.organisationDirectorIdCardType}} was uploaded..</h3>
+                                  </div>
+
                                 </div>
                               </div>
                             </div>
@@ -320,7 +325,7 @@
                                 <div class="col mb-3">
                                   <label for="floatingInput2"> ID Card Type</label>
                                   <select class="form-select form-control" aria-label="Default select example" id="organisationDirectorIdCardType2"
-                                          :value="organisationRes.organisationDirectorIdCardType2" :readonly="organisationRes.organisationDirectorIdCardType2">
+                                          v-model="organisation.organisationDirectorIdCardType2" :readonly="organisationRes.organisationDirectorIdCardType2">
                                     <option value="national_id_card">National ID Card</option>
                                     <option value="international_passport">International Passport</option>
                                     <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
@@ -330,7 +335,7 @@
                                 <div class="col mb-3">
                                   <label for="floatingInput" v-if="director2 == null">Upload ID Card </label><br v-if="director2 == null">
                                   <label for="floatingInput" v-if="director2 != null">Uploaded ID Card</label><br  v-if="director2 != null">
-                                  <b-button @click="showModalDirector2 = !showModalDirector2"  v-if="director2 == null" :disabled="!organisationRes.organisationDirectorIdCardType2">Upload file</b-button>
+                                  <b-button @click="showModalDirector2 = !showModalDirector2"  v-if="director2 == null" :disabled="!organisation.organisationDirectorIdCardType2">Upload file</b-button>
                                   <img v-else :src="director2" width="100" />
                                 </div>
                               </div>
@@ -1068,7 +1073,6 @@ export default {
       this.organisation.organisationLogo = "company Logo";
       this.organisation.organisationDirectorIdCard = this.director1;
       this.organisation.organisationDirectorIdCard2 = this.director2;
-
       // console.log(this.organisation)
       StoreUtils.dispatch(
         StoreUtils.actions.auth.updateOrganisation,

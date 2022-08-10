@@ -35,7 +35,7 @@ export default {
             StoreUtils.actions.accountPayout.readAddedBanks,
             this.readPayoutAccountModel
         );
-        // console.clear()
+        console.clear()
       }else{
         localStorage.clear()
       }
@@ -54,6 +54,8 @@ export default {
          if(params.referralCode != null) localStorage.referralCode = params.referralCode
         }
     },2000)
+    console.clear()
+
   },
   methods:{
     stickyAlert(){

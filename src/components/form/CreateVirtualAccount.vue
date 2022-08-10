@@ -27,7 +27,7 @@
 <!--          </el-select>-->
 <!--        </base-input>-->
       </div>
-      <div v-if="sortType == false">
+      <div v-else>
         <div class="modal-body">
             <b-form class="" @submit.prevent="createAccount">
               <div class="input-group mb-3">
@@ -144,6 +144,9 @@ export default {
       })
       this.showModal = true;
       this.sortType = true;
+      StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateWalletState, 'first')
+
+
     },
 
     nex(){
@@ -174,9 +177,7 @@ export default {
       document.getElementById('fhdfd').innerHTML
     },
     readSingleWallet(){
-      StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateWallet,this.readWallet).then(() => {
-        console.log(this.wallets)
-      })
+      StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateWallet,this.readWallet)
       this.next = false
     },
     createAccount(){
@@ -224,13 +225,13 @@ export default {
       }
     },
 
-    walletSta(oldValue, newValue) {
-      if(newValue){
+    walletSta() {
+      if(this.walletSta == 'second'){
         this.sortType = false
-        StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateWalletState, 'first')
       }else{
         this.sortType = true
         this.closeModal()
+        StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateWalletState, 'first')
       }
     }
   }
