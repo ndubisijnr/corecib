@@ -44,7 +44,7 @@
                                 </b-button>
                             </div>
                         </b-form-group>
-                        <b-button class="w-100 text-white" style="background-color: var(--primary)" type="submit">{{
+                        <b-button class="w-100 text-white" :style="{backgroundColor:primaryColor}" type="submit">{{
                                 createloader ? "Adding" : "Add Bank"
                         }}
                             <span :class="{ 'spinner-border': createloader }"></span>
@@ -88,10 +88,11 @@ export default {
             sendOtpModel: AuthenticationRequest.resendOtp,
             createPayoutAccountModel: AccountPayoutRequest.createAccountPayout,
             readPayoutAccountModel: AccountPayoutRequest.readAccountPayoutById,
-
             banks: [],
             showModal: true,
             timerCount: 0,
+            primaryColor: window.__env.app.primaryColor
+
         };
     },
     computed: {

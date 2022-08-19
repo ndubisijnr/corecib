@@ -5,8 +5,8 @@
         <a href="https://bizgem.io/"> 
         <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>  
       </div>
-      <div class="p-3">
-      <h4 class="text-center">Sign in to continue to BizGem</h4>
+      <div class="">
+      <h4 class="login-h4">Sign in to continue to BizGem</h4>
       <div class="form-floating mb-3">
         <input type="email" class="form-control" name="email" placeholder="businessname@gmail.com" v-model="model.username" required/>
         <label >Email address</label>
@@ -18,10 +18,8 @@
       </div>
       <div class="login-footer">
           <div class="text-center">
-          <a class="forgot-password" @click="forgotPassword()">
-            Forgot Your Password?
-          </a><br/>
-          <span class="text-dark mt-1">New To BizGem?<a class="join-now-text" @click="signUp()" > Create Account</a></span>
+          <h5 @click="forgotPassword()" style="cursor: pointer;text-decoration: underline">Forgot Your Password?</h5>
+          <h5 class="text-dark mt-1" @click="signUp()" style="cursor: pointer;text-decoration: underline">New To BizGem? Create Account</h5>
         </div>
         <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
           {{loading ? "Loging in" : 'Login'}} <span :class="{ 'spinner-border': loading }"></span>
@@ -87,6 +85,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.login-h4{
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+  margin:2%;
 }
 
 

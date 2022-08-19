@@ -39,7 +39,7 @@
               </div>
               </div>
             <div>
-              <b-button type="submit" style="background-color: var(--primary);color: white;width: 100%" :disabled="loading"><span :class="{'spinner-border':loading}"></span> {{loading ? 'Creating' : 'Create'}}</b-button>
+              <b-button type="submit" :style="{backgroundColor:primaryColor,color: 'white',width: '100%'}" :disabled="loading"><span :class="{'spinner-border':loading}"></span> {{loading ? 'Creating' : 'Create'}}</b-button>
             </div>
           </b-form>
       </div>
@@ -72,6 +72,7 @@ export default {
       showModal: true,
       createWalletModel:createWalletRequest.createWallet,
       readWallet: WalletRequest.readWallet,
+      primaryColor:window.__env.app.primaryColor,
       customOptions:
         {
           currency: 'NGN',

@@ -15,7 +15,7 @@
             <label>Session ID or Transaction Refrenence</label>
           </div>
           <b-button type="submit" v-if="status == 'false'"
-            style="background-color:var(--primary);border:none;color:white;">
+            :style="{backgroundColor:primaryColor,border:'none',color:'white'}">
             <span v-if="!loading2">Proceed</span>
             <span :class="{ 'spinner-border': loading2 }" :disabled="loading2"></span>
           </b-button>
@@ -95,7 +95,7 @@
           </div>
 
           <b-button type="submit" v-if="status != 'false'"
-            style="background-color:var(--primary);border:none;color:white;"><span v-if="!loading2">Proceed</span>
+                    :style="{backgroundColor:primaryColor,border:'none',color:'white'}"><span v-if="!loading2">Proceed</span>
             <span :class="{ 'spinner-border': loading2 }" :disabled="loading2"></span>
           </b-button>
         </form>
@@ -119,7 +119,9 @@ export default {
       showModal: true,
       createDisputemodel: DisputeRequest.disputeCreate,
       transactionsQuerymodel: DisputeRequest.transactionStatusQuery,
-      disputeReadModel: DisputeRequest.disputeRead
+      disputeReadModel: DisputeRequest.disputeRead,
+      primaryColor:window.__env.app.primaryColor,
+
     };
   },
 

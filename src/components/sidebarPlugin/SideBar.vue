@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       primaryColor:window.__env.app.primaryColor,
-      primaryColorGradient: window.__env.app.primaryColorGradient
+      primaryColorGradient: window.__env.app.primaryColorGradient,
     }
   },
   props: {

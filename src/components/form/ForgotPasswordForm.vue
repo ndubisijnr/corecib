@@ -1,42 +1,38 @@
 <!--suppress ALL -->
 <template>
   <div>
-    <form v-if="passwordResetScreen === 'email'" class="container form-group form-login" role="form"
+
+    <div class="check-for-email" v-if="passwordResetScreen === 'email'">
+      <form  class="form-login" role="form"
       @submit.prevent="initiatePassword" style="margin-top:0px">
       <div class="text-center">
         <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
       </div>
-      <div class="p-3">
-        <h4 class="text-center">Password Reset</h4>
-        <div>
+      <div class="">
+        <h4 class="forgot-password-h4">Password Reset</h4>
           <div class="form-floating mb-3">
             <input type="email" class="form-control" name="email" placeholder="businessEmail@gmail.com"
               v-model="initiateModel.customerEmail" required />
             <label>Email address</label>
           </div>
           <div class="login-footer">
-            <div class="alter-links text-center">
-              <span class="text-dark">
-                Remembered your password?</span><br>
-              <a @click="login()" class="join-now-text">
-                Login</a>
-
-            </div>
-            <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-              {{ loading ? "checking" : 'Check' }} <span :class="{ 'spinner-border': loading }"></span>
+            <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading" :style="{background:primaryColor}">
+              {{ loading ? "Checking" : 'Check' }} <span :class="{ 'spinner-border': loading }"></span>
             </button>
           </div>
-        </div>
+          <div class="m-3 text-center">
+            <h5 class="text-dark" style="cursor:pointer;text-decoration: underline" @click="login()">Remembered your password?</h5>
+          </div>
       </div>
     </form>
-
+    </div>
     <form v-if="passwordResetScreen === 'otp'" class="container form-group form-login" role="form"
       @submit.prevent="completePassword">
       <div class="text-center">
         <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
       </div>
       <div class="p-3">
-        <h4 class="text-center">Almost Done!</h4>
+        <h4 class="forgot-password-h4">Almost Done!</h4>
         <div class="form-floating mb-3">
           <input type="tel" class="form-control" maxlength="6"
             style="font-size:30px; padding-left:10px;letter-spacing:7px;" name="email"
@@ -62,8 +58,8 @@
         </div>
 
         <div class="login-footer">
-          <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-            {{ loading ? "reseting" : 'Reset' }} <span :class="{ 'spinner-border': loading }"></span>
+          <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading" :style="{background:primaryColor}">
+            {{ loading ? "Reseting" : 'Reset' }} <span :class="{ 'spinner-border': loading }"></span>
           </button>
         </div>
       </div>
@@ -89,6 +85,7 @@ export default {
       completeModel: AuthenticationRequest.completePasswordReset,
       resendOtpModel: AuthenticationRequest.resendOtp,
       timerCount: 0,
+      primaryColor:window.__env.app.primaryColor
     };
   },
   computed: {
@@ -207,7 +204,7 @@ export default {
 }
 
 .btn-login {
-  width: 132px;
+  width: 100%;
   background-color: var(--primary);
   border-radius: 5px;
   border: none;
@@ -224,6 +221,13 @@ export default {
   cursor: pointer;
   color: var(--primary);
 
+}
+
+.forgot-password-h4{
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+  margin:2%;
 }
 
 .spinner-border {
@@ -275,6 +279,14 @@ export default {
 @media (max-width: 400px) {
   .form-login{
     width: 100%;
+  }
+
+  .check-for-email{
+    width: 100%;
+    display: flex;
+    height: 100vh;
+    align-items:center;
+    padding: 2%;
   }
 
 }

@@ -2,6 +2,15 @@ import store from "../../store/store";
 
 class StoreUtils {
   static actions = {
+    kycVerification: {
+      UpdateCorporateAffairs:"kycVerification/UpdateCorporateAffairs",
+      UpdateNationalIdentity:"kycVerification/UpdateNationalIdentity",
+      UpdateVoterCard:"kycVerification/UpdateVoterCard",
+      UpdateTax:"kycVerification/UpdateTax",
+      UpdateDriversLicense:"kycVerification/UpdateDriversLicense",
+      UpdateBvn:"kycVerification/UpdateBvn"
+    },
+
     document:{
       updateDocument:"document/updateDocument",
       readDocument:"document/readDocument",
@@ -66,6 +75,16 @@ class StoreUtils {
   };
 
   static mutations = {
+    kycVerification:{
+      UpdateKycType:"kycVerification/UpdateKycType",
+      UpdateLoading:"kycVerification/UpdateLoading",
+      UpdateCorporateAffairs:"kycVerification/UpdateCorporateAffairs",
+      UpdateNationalIdentity:"kycVerification/UpdateNationalIdentity",
+      UpdateVoterCard:"kycVerification/UpdateVoterCard",
+      UpdateTax:"kycVerification/UpdateTax",
+      UpdateDriversLicense:"kycVerification/UpdateDriversLicense",
+      UpdateBvn:"kycVerification/UpdateBvn"
+    },
     document:{
       updateLoading: "document/updateLoading",
       updateADocument: "document/updateADocument",

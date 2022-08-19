@@ -23,6 +23,8 @@ const Toast = Swal.mixin({
     toast.addEventListener("mouseleave", Swal.resumeTimer);
   },
 });
+
+
 export const state = {
   token: null,
   loading: false,
@@ -33,6 +35,7 @@ export const state = {
   balances:WalletResponse.readBalanceWallet,
   refferalstats:OrganisationResponse.refferalStatsResponse
 }
+
 export const getters = {
   getUserInfo: state => { return state.userInfo },
   getToken: state => { return state.token },
@@ -51,6 +54,7 @@ export const getters = {
     return getters.getCurrentOrganization.organisationStage
   }
 }
+
 export const mutations = {
   updateLoading: (state, payload) => { state.loading = payload },
   updateToken: (state, payload) => { state.token = payload },
@@ -61,6 +65,7 @@ export const mutations = {
   updateBalance:(state, payload) => {state.balances = payload},
   updateRefferalStats:(state, payload) => {state.refferalstats = payload}
 }
+
 export const actions = {
   initialEnrollment: ({ commit }, payload = AuthenticationRequest.initiateEnrollment) => {
     commit("updateLoading", true)

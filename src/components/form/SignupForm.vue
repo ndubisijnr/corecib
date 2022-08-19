@@ -1,16 +1,19 @@
 <template>
   <div>
     <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
-      <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(onInitiateEnrollment())"
+
+      <!--------- initiate enrolment ------->
+      <div class="initiate-enrollment">
+        <form class="form-login" role="form" @submit.prevent="handleSubmit(onInitiateEnrollment())"
         v-if="screen == 'register'">
         <div class="text-center">
           <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
         </div>
-        <div class="p-3">
-          <h4 class="text-center">Create A Business Account</h4>
-          <div class="form-floating mt-3 mb-3">
+        <div class="">
+          <h4 class="complete-enrollment-h4">Create A Business Account</h4>
+          <div class="form-floating mb-3">
             <base-input label="Country">
-              <el-select class="select-danger" filterable placeholder="Country" v-model="initiateModel.customerCountry"
+              <el-select class="select-danger w-100" filterable placeholder="Country" v-model="initiateModel.customerCountry"
                 required>
                 <el-option v-for="option in option_country" class="select-danger" :value="option.value"
                   :label="option.label" :key="option.value">
@@ -54,26 +57,32 @@
               v-model="initiateModel.customerPhone" required style="width: 100%">
             </base-input>
           </div>
+
           <div class="login-footer">
-            <div class="text-center">
-              <span class="text-dark"> I already have an account.</span>
-              <br />
-              <a class="forgot-password" @click="login()" style="cursor:pointer"> Login</a>
-            </div>
-            <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-              {{ loading ? "working" : 'Proceed' }} <span :class="{ 'spinner-border': loading }"></span>
+            <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading" :style="{background:primaryColor}">
+              {{ loading ? "Working" : 'Continue' }} <span :class="{ 'spinner-border': loading }"></span>
             </button>
+          </div>
+
+          <div class="text-center m-3">
+            <h5 @click="login()" style="cursor:pointer;text-decoration: underline"> I already have an account.</h5>
           </div>
 
         </div>
       </form>
-      <form class="p-3 form-group form-login" role="form" v-if="screen == 'otp'"
+      </div>
+      <!--------- end initiate enrolment ------->
+
+
+      <!--------- complete enrolment ------->
+      <div class="complete-enrollment">
+        <form class="form-login" role="form" v-if="screen == 'otp'"
         @submit.prevent="handleSubmit(onCompleteEnrollment())">
         <div class="text-center">
           <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
         </div>
-        <div class="p-3">
-          <h4 class="text-center">Complete Registration!</h4>
+        <div>
+          <h4 class="complete-enrollment-h4">Complete Registration.</h4>
           <div class="form-floating mb-3">
             <input type="tel" class="form-control" maxlength="6"
               style="font-size:30px; padding-left:10px;letter-spacing:7px;" name="email"
@@ -98,20 +107,18 @@
               @click="hide$show()"></i>
           </div>
         </div>
-
+            <h5 class="text-center">By clicking the “Proceed” button, you agree to BizGem’s</h5>
+             <h5 class="text-center"> Terms of acceptable use.</h5>
         <div class="login-footer">
-          <div class="">
-            <a class="forgot-password text-dark">
-              By clicking the “Proceed” button, you agree to BizGem’s
-              <a class="text-primary" style="cursor:pointer">terms of acceptable use</a>.
-            </a><br />
-          </div>
-          <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-            {{ loading ? "working." : 'Create' }} <span :class="{ 'spinner-border': loading }"></span>
+          <button class="btn-login" native-type="submit" :disabled="loading" :style="{background:primaryColor}">
+            {{ loading ? "Working." : 'Proceed' }} <span :class="{ 'spinner-border': loading }"></span>
           </button>
         </div>
 
       </form>
+      </div>
+      <!--------- end of  complete enrolment ------->
+
     </validation-observer>
   </div>
 </template>
@@ -136,7 +143,7 @@ export default {
       completeModel: AuthenticationRequest.completeEnrollment,
       resendOtpModel: AuthenticationRequest.resendOtp,
       timerCount: 0,
-
+      primaryColor:window.__env.app.primaryColor,
       notifications: {
         topCenter: false,
       },
@@ -284,17 +291,41 @@ export default {
 </script>
 <style scoped>
 .login-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  width: 100%;
+}
+
+.initiate-enrollment{
+  margin: 30px auto;
+}
+
+.complete-enrollment{
+  width: 450px;
+  padding: 0;
+  margin: 100px auto;
+}
+
+.complete-enrollment-h4{
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+  margin:2%;
+}
+
+.form-login {
+  width: 100%;
+  font-size: 14px;
+  padding: 2%;
+  line-height: 1.42857143;
+  /*box-shadow: 0 1px 2px hsl(0deg 0% 0% / 30%);*/
 }
 
 .btn-login {
-  width: 132px;
-  background-color: var(--primary);
+  width: 100%;
   border-radius: 5px;
   border: none;
   color: white;
+  /*background-color: #3F88C5;*/
+
 }
 
 ::placeholder {
@@ -325,22 +356,24 @@ export default {
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 30%);
 }
 
-.form-login {
-  width: 450px;
-  /*width: 100%;*/
-  border-radius: 10px;
-  padding-top: 10px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  padding-bottom: 20px;
 
-  /* background: white;
-  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 30%); */
-}
-
-@media (max-width: 390px){
+@media (max-width: 590px){
   .form-login{
     width: 100%;
+  }
+
+  .complete-enrollment{
+    width: 100%;
+    padding: 2%;
+    margin: 0;
+  }
+
+  .initiate-enrollment{
+    margin: 0;
+    width: 100%;
+    padding: 2%;
+
+
   }
 }
 </style>

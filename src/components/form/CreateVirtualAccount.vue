@@ -3,7 +3,7 @@
     <modal-1 :show="showAccountForm && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
       <div class="card-head">
         <div class="d-flex justify-content-between">
-          <div class="p-1" style="font-weight: bolder; font-size: 6px;">
+          <div class="p-1" style="font-weight: lighter; font-size: 5px;">
             <span style="font-weight: bolder; font-size: 14px;" v-if="!sortType" class="d-flex"><span style="font-size: 20px;">💡</span> <span>The virtual account can be used to receive funds via bank transfer from any financial institution. All funds sent via the created virtual account will be settled in the wallet address provided.</span></span>
             <span style="font-weight: bolder; font-size: 14px;" v-if="sortType" class="d-flex"><span style="font-size: 20px;">💡</span>  Your intended virtual account will be tied to the wallet address of  the account number provided.</span>
           </div>
@@ -17,7 +17,7 @@
           <label>Wallet Account Number</label>
           <input type="number" placeholder="Wallet Account Number" class="form-control" required v-model="readWallet.accountNumber"/>
           <div class="text-right p-2">
-            <b-button type="submit" :disabled="loading" style="background-color:var(--primary);border:none;color:white">{{loading ? 'Checking' : 'Next'}} <span :class="{'spinner-border':loading}"></span> </b-button>
+            <b-button type="submit" :disabled="loading" :style="{backgroundColor:primaryColor,border:'none',color:'white'}">{{loading ? 'Checking' : 'Next'}} <span :class="{'spinner-border':loading}"></span> </b-button>
           </div>
         </form>
 <!--        <base-input label="Select Wallet">-->
@@ -91,10 +91,10 @@
               </div>
               <div>
                 <div class="d-flex">
-                  <b-button :disabled="loadingACC" @click="prev()" v-if="next==true" style="background-color: var(--primary);color: white;width: 100%">Previous</b-button>
-                  <b-button  v-if="next==true" type="submit"  :disabled="loadingACC" style="background-color: var(--primary);color: white;width: 100%"><span :class="{'spinner-border':loadingACC}"></span> {{loadingACC ? 'Creating': 'Create'}}</b-button>
+                  <b-button :disabled="loadingACC" @click="prev()" v-if="next==true" :style="{backgroundColor:primaryColor,color: 'white',width: '100%'}">Previous</b-button>
+                  <b-button  v-if="next==true" type="submit"  :disabled="loadingACC" :style="{backgroundColor:primaryColor,color: 'white',width: '100%'}"><span :class="{'spinner-border':loadingACC}"></span> {{loadingACC ? 'Creating': 'Create'}}</b-button>
                 </div>
-                <b-button  @click="nex()" v-if="next==false" style="background-color: var(--primary);color: white;width: 100%">Next</b-button>
+                <b-button  @click="nex()" v-if="next==false"  :style="{backgroundColor:primaryColor,color: 'white', width: '100%'}">Next</b-button>
               </div>
             </b-form>
           </div>
@@ -126,7 +126,9 @@ export default {
       readBankListModel: VirtualAccountRequest.getBankList,
       CreateVirtualAccountModel:VirtualAccountRequest.createVirtualAccount,
       readWallet:WalletRequest.retrieveWallet,
-      next: false
+      next: false,
+      primaryColor:window.__env.app.primaryColor,
+
 
     }
   },

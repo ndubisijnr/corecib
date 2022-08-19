@@ -1,5 +1,5 @@
 <template>
-  <div class="total-referrals card">
+  <div class="total-referrals card" :style="{borderColor:primaryColor}">
     <span class="currency">{{currency}}<span class="value"> {{value}}</span></span>
     <p class="title">{{title}}</p>
     <div class="display-btn">
@@ -11,6 +11,11 @@
 <script>
 export default {
   name: "DashboardView",
+  data(){
+    return{
+      primaryColor:window.__env.app.primaryColor
+    }
+  },
   props:{
       value:{
           type:[String,Number]
@@ -80,7 +85,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border:var(--primary) solid 2px ;
+  border:solid 2px ;
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 110%);
 
 }

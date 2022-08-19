@@ -2,7 +2,7 @@
   <div class="">
     <div class="m-3">
       <div class="mr-4 text-right">
-        <b-button @click="show = true" style="background-color:var(--primary);border:none;color:white"><i class="fa fa-plus"></i> Log dispute
+        <b-button @click="show = true" :style="{backgroundColor:primaryColor,border:'none',color:'white'}"><i class="fa fa-plus"></i> Log dispute
         </b-button>
       </div>
       <base-table
@@ -50,6 +50,7 @@ export default {
     return {
       show: false,
       disputeReadModel: DisputeResquest.disputeReadByOrg,
+      primaryColor:window.__env.app.primaryColor,
       dis:null,
       fields: [
         // { key: "disputeId", label: "Id", sortable: true, class: "text-left" },

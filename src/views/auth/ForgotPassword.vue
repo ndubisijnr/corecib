@@ -138,7 +138,18 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100%;
   /* background-color: white; */
+}
+
+
+@media (max-width: 500px) {
+  .auth-wrap {
+    width: 100%;
+    display: block;
+    height: 100vh;
+
+  }
 }
 
 

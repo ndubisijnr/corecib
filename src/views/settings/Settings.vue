@@ -116,17 +116,18 @@
 
                               <div class="col mb-3">
                                 <label for="floatingInput1">City</label>
-                                <input type="text" class="form-control"  placeholder="Ikeja" id="organisationCity" :value="organisationRes.organisationCity" required  :readonly="organisationRes.organisationCity"/>
+                                <input type="text" class="form-control"  v-if="organisationRes.organisationCity" disabled :value="organisationRes.organisationCity"/>
+                                <input type="text" class="form-control"  v-else placeholder="Ikeja" v-model="organisation.organisationCity" required />
                               </div>
                               <div class="col mb-3">
                                 <label for="floatingInput2">Address</label>
-                                <input type="text" class="form-control"
-                                       placeholder="1004 Federal Housing Estate, Victoral Island" id="organisationAddress" :value="organisationRes.organisationAddress" required  :readonly="organisationRes.organisationAddress"/>
+                                <input type="text" class="form-control" placeholder="1004 Federal Housing Estate, Victoral Island" v-if="organisationRes.organisationAddress" disabled :value="organisationRes.organisationAddress" />
+                                <input type="text" class="form-control" placeholder="1004 Federal Housing Estate, Victoral Island"  v-else id="organisationAddress" v-model="organisation.organisationAddress" required />
                               </div>
                               <div class="col mb-3">
                                 <label for="floatingInput1">State</label>
-                                <input type="text" class="form-control"  placeholder="Lagos"
-                                       :value="organisationRes.organisationState" id="organisationState" required :readonly="organisationRes.organisationState" />
+                                <input type="text" class="form-control"  placeholder="Lagos" v-if="organisationRes.organisationState" disabled :value="organisationRes.organisationState" />
+                                <input type="text" class="form-control"  placeholder="Lagos"  v-else v-model="organisation.organisationState" id="organisationState" required />
                               </div>
                             </div>
                           </div>
@@ -135,8 +136,117 @@
                             <div class="row">
                               <div class="col mb-3">
                                 <label for="floatingInput3">Organization Type</label>
-                                <select class="form-select form-control" aria-label="Default select example" required
-                                        :value="organisationRes.organisationType" :readonly="organisationRes.organisationType" id="organisationType">
+                                <select class="form-select form-control" aria-label="Default select example" disabled
+                                        v-if="organisationRes.organisationType" :value="organisationRes.organisationType">
+                                  <option data-v-00a70ddc="" value="Agric produce">
+                                    Agric produce
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Betting/Lottery">
+                                    Betting / Lottery
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Book Stores">
+                                    Book Stores
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Bus Lines">
+                                    Bus Lines
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Cable/Satellite/Pay Television">
+                                    Cable / Satellite / Pay Television
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Clothing and Accessories">
+                                    Clothing and Accessories
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Commercial footware">
+                                    Commercial footware
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Credit Lending Companies">
+                                    Credit Lending Companies
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Cryptocurrency">
+                                    Cryptocurrency
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Department Stores">
+                                    Department Stores
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Digital Goods/Entertainment">
+                                    Digital Goods / Entertainment
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Education">
+                                    Education
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Electronics Stores">
+                                    Electronics Stores
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Financial Institutions/Fund Manager/Investment">
+                                    Financial Institutions / Fund Manager /
+                                    Investment
+                                  </option>
+                                  <option data-v-00a70ddc="" value="General Contractors">
+                                    General Contractors
+                                  </option>
+                                  <option data-v-00a70ddc="" value="General Merchandise Stores">
+                                    General Merchandise Stores
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Grocery Stores and Supermarkets">
+                                    Grocery Stores and Supermarkets
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Hospitality/Lodging">
+                                    Hospitality / Lodging
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Insurance">
+                                    Insurance
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Money Transfer">
+                                    Money Transfer
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Non-Financial Institution">
+                                    Non-Financial Institution
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Professional Services">
+                                    Professional Services
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Real Estate/Facility Management">
+                                    Real Estate / Facility Management
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Religious Organizations">
+                                    Religious Organizations
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Security Broker/Dealer_Custom">
+                                    Security Broker / Dealer_Custom
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Security Brokers/Dealers">
+                                    Security Brokers / Dealers
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Tax/Accounting/Audit">
+                                    Tax / Accounting / Audit
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Taxicabs">
+                                    Taxicabs
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Telecommunication">
+                                    Telecommunication
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Ticketing/Events">
+                                    Ticketing / Events
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Transportation Services">
+                                    Transportation Services
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Travel/Airlines">
+                                    Travel / Airlines
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Travel Agencies/Tour">
+                                    Travel Agencies / Tour
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Utilities/Electric/Gas">
+                                    Utilities / Electric / Gas
+                                  </option>
+                                  <option data-v-00a70ddc="" value="Video Game Arcades/Establishments">
+                                    Video Game Arcades / Establishments
+                                  </option>
+                                </select>
+                                <select class="form-select form-control" aria-label="Default select example"
+                                        v-else v-model="organisation.organisationType">
                                   <option data-v-00a70ddc="" value="Agric produce">
                                     Agric produce
                                   </option>
@@ -249,11 +359,13 @@
                             <div class="row">
                               <div class="col mb-3">
                                 <label for="floatingInput1">Organisation Website</label>
-                                <input type="text" class="form-control"  placeholder=" Website" :value="organisationRes.organisationWebsite" id="organisationWebsite"  :readonly="organisationRes.organisationWebsite"/>
+                                <input type="text" class="form-control" v-if="organisationRes.organisationWebsite" disabled :value="organisationRes.organisationWebsite"/>
+                                <input type="text" class="form-control"  placeholder=" Website" v-else v-model="organisation.organisationWebsite"  id="organisationWebsite"/>
                               </div>
                               <div class="col mb-3">
                                 <label for="floatingInput1">RC / BN Number</label>
-                                <input type="text" class="form-control" placeholder="Organisation RC / BN Number" id="organisationRegistrationNo" :value="organisationRes.organisationRegistrationNo" :readponly="organisationRes.organisationRegistrationNo" />
+                                <input type="text" class="form-control" placeholder="Organisation RC / BN Number" v-if="organisationRes.organisationRegistrationNo" :value="organisationRes.organisationRegistrationNo"  disabled/>
+                                <input type="text" class="form-control" placeholder="Organisation RC / BN Number" v-else id="organisationRegistrationNo" v-model="organisation.organisationRegistrationNo"  />
                               </div>
                             </div>
 
@@ -264,23 +376,35 @@
                               <div class="row">
                                 <div class="col mb-3">
                                   <label for="floatingInput2">Full Name <span style="color: red">*</span></label>
-                                  <input type="text" class="form-control" id="organisationDirectorName" placeholder="Directors Full name" :value="organisationRes.organisationDirectorName" required :readonly="organisationRes.organisationDirectorName"/>
+                                  <input type="text" class="form-control"  placeholder="Directors Full name"  required v-if="organisationRes.organisationDirectorName" disabled :value="organisationRes.organisationDirectorName" />
+                                  <input type="text" class="form-control" id="organisationDirectorName" placeholder="Directors Full name"  required  v-else v-model="organisation.organisationDirectorName" />
                                 </div>
                               </div>
                               <div class="row">
                                 <div class="col mb-3">
                                   <label for="floatingInput2">Dob <span style="color: red">*</span></label>
-                                  <input type="date" class="form-control" id="organisationDirectorDob" :value="organisationRes.organisationDirectorDob" required :readonly="organisationRes.organisationDirectorDob"/>
+                                  <input type="date" class="form-control"   required v-if="organisationRes.organisationDirectorDob" disabled :value="organisationRes.organisationDirectorDob"/>
+                                  <input type="date" class="form-control" id="organisationDirectorDob" v-else  required v-model="organisation.organisationDirectorDob"/>
                                 </div>
                                 <div class="col mb-3">
                                   <label for="floatingInput">BVN <span style="color: red">*</span></label>
-                                  <input type="number" class="form-control" id="organisationDirectorBvn" placeholder="Bank Verification Number" :value="organisationRes.organisationDirectorBvn" required :readonly="organisationRes.organisationDirectorBvn"/>
+                                  <input type="number" class="form-control"  disabled   v-if="organisationRes.organisationDirectorBvn" :value="organisationRes.organisationDirectorBvn"/>
+                                  <input type="number" class="form-control" id="organisationDirectorBvn" placeholder="Bank Verification Number"  v-else required v-model="organisation.organisationDirectorBvn"/>
                                 </div>
                               </div>
                               <div class="row">
-                                <div class="col mb-3">
+                                <div class="col mb-3" v-if="organisationRes.organisationDirectorIdCardType" >
                                   <label for="floatingInput2"> ID Card Type<span style="color: red">*</span></label>
-                                  <select class="form-select form-control" aria-label="Default select example" required id="organisationDirectorIdCardType" v-model="organisation.organisationDirectorIdCardType" :readonly="organisationRes.organisationDirectorIdCard">
+                                  <select class="form-select form-control" aria-label="Default select example" disabled :value="organisationRed.organisationDirectorIdCardType">
+                                    <option value="national_id_card">National ID Card</option>
+                                    <option value="international_passport">International Passport</option>
+                                    <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
+                                    <option value="drivers_licence">Drivers Licence</option>
+                                  </select>
+                                </div>
+                                <div class="col mb-3" v-else>
+                                  <label for="floatingInput2"> ID Card Type<span style="color: red">*</span></label>
+                                  <select class="form-select form-control" aria-label="Default select example" required id="organisationDirectorIdCardType" v-model="organisation.organisationDirectorIdCardType">
                                     <option value="national_id_card">National ID Card</option>
                                     <option value="international_passport">International Passport</option>
                                     <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
@@ -292,8 +416,8 @@
                                     <label for="floatingInput" v-if="director1 == null">Upload ID Card <span style="color: red">*</span></label><br v-if="director1 == null">
                                     <b-button @click="showModalDirector1 = !showModalDirector1" :disabled="!organisation.organisationDirectorIdCardType">Upload file</b-button>
                                   </div>
-                                  <div v-else style="height: 100%;width: 100%;">
-                                    <img :src="director1" width="100" :alt="director1"/> <br />
+                                  <div v-else style="height: 100%;width: 100%; display: flex; justify-content: center; align-items: center">
+<!--                                    <img :src="director1" width="100" :alt="director1"/> <br />-->
                                     <h3 class="text-success">Your {{organisation.organisationDirectorIdCardType}} was uploaded..</h3>
                                   </div>
 
@@ -308,24 +432,37 @@
                               <div class="row">
                                 <div class="col mb-3">
                                   <label for="floatingInput2">First Name </label>
-                                  <input type="text" class="form-control" id="organisationDirectorName2" placeholder="Director's Full name" :value="organisationRes.organisationDirectorName2" :readonly="organisationRes.organisationDirectorName2" />
+                                  <input type="text" class="form-control"  placeholder="Director's Full name" v-if="organisationRes.organisationDirectorName2" disabled :value="organisationRes.organisationDirectorName2" />
+                                  <input type="text" class="form-control"  placeholder="Director's Full name" v-model="organisation.organisationDirectorName2" />
                                 </div>
                               </div>
                               <div class="row">
                                 <div class="col mb-3">
                                   <label for="floatingInput2">Dob</label>
-                                  <input type="date" class="form-control" id="organisationDirectorDob2" :value="organisationRes.organisationDirectorDob2"  :readonly="organisationRes.organisationDirectorDob2"/>
+                                  <input type="date" class="form-control" disabled v-if="organisationRes.organisationDirectorDob2" :value="organisationRes.organisationDirectorDob2"   />
+                                  <input type="date" class="form-control" id="organisationDirectorDob2" v-else v-model="organisation.organisationDirectorDob2" />
                                 </div>
                                 <div class="col mb-3">
                                   <label for="floatingInput">BVN </label>
-                                  <input type="number" class="form-control" id="organisationDirectorBvn2" placeholder="Bank Verification Number" :value="organisationRes.organisationDirectorBvn2" :readonly="organisationRes.organisationDirectorBvn2"  />
+                                  <input type="number" class="form-control" disabled v-if="organisationRes.organisationDirectorBvn2"  :value="organisationRes.organisationDirectorBvn2"  />
+                                  <input type="number" class="form-control" id="organisationDirectorBvn2"  v-else placeholder="Bank Verification Number" v-model="organisationRes.organisationDirectorBvn2"   />
                                 </div>
                               </div>
                               <div class="row">
-                                <div class="col mb-3">
+                                <div class="col mb-3" v-if="organisationRes.organisationDirectorIdCardType2">
+                                  <label for="floatingInput2"> ID Card Type</label>
+                                  <select class="form-select form-control" aria-label="Default select example"
+                                          :value="organisation.organisationDirectorIdCardType2" disabled>
+                                    <option value="national_id_card">National ID Card</option>
+                                    <option value="international_passport">International Passport</option>
+                                    <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
+                                    <option value="drivers_licence">Drivers Licence</option>
+                                  </select>
+                                </div>
+                                <div class="col mb-3" v-else>
                                   <label for="floatingInput2"> ID Card Type</label>
                                   <select class="form-select form-control" aria-label="Default select example" id="organisationDirectorIdCardType2"
-                                          v-model="organisation.organisationDirectorIdCardType2" :readonly="organisationRes.organisationDirectorIdCardType2">
+                                          v-model="organisation.organisationDirectorIdCardType2">
                                     <option value="national_id_card">National ID Card</option>
                                     <option value="international_passport">International Passport</option>
                                     <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
@@ -342,7 +479,8 @@
                             </div>
 
                             <div class="mt-3">
-                              <base-button title="Update" :loading="loadingOtp"></base-button>
+                              <base-button title="Update" :loading="loadingOtp" v-if="!organisationRes.organisationDirectorBvn"></base-button>
+                              <base-button title="Update" :loading="loadingOtp" v-else disabled></base-button>
                               <!-- <base-button title="Update" v-else disabled></base-button> -->
                               <!-- <b-button @click="nextStep()" title="" style="background-color:grey;border:none;color:white">Next</b-button> -->
                             </div>
@@ -875,6 +1013,10 @@ export default {
 
   mounted() {
 
+    const userToken = localStorage.getItem('token')
+    StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
+    StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
+
     //clear console
     //Call in read documents actions
     this.apikeyModel.organisationId = localStorage.organisationId;
@@ -910,6 +1052,13 @@ export default {
     changePassword() {
       this.changePasswordModel.customerEmail = this.userInfo.customerEmail
       StoreUtils.dispatch(StoreUtils.actions.auth.changePassword, this.changePasswordModel)
+    },
+
+    assign(){
+      let organisationIdCardType = document.getElementById('organisationDirectorIdCardType').value
+     this.organisation.organisationDirectorIdCardType = organisationIdCardType;
+      console.log(organisationIdCardType)
+
     },
 
 
@@ -1034,46 +1183,10 @@ export default {
     },
 
     updateOrginasation() {
-      let organisationName = document.getElementById('organisationName').value
-      let organisationEmail = document.getElementById('organisationEmail').value
-      let organisationPhone = document.getElementById('organisationPhone').value
-      let organisationCity  = document.getElementById('organisationCity').value
-      let organisationAddress =  document.getElementById('organisationAddress').value
-      let organisationState =  document.getElementById('organisationState').value
-      let organisationWebsite =  document.getElementById('organisationWebsite').value
-      let organisationType = document.getElementById('organisationType').value
-      let organisationRegistrationNumber = document.getElementById('organisationRegistrationNo').value
-      let organisationDirectorName = document.getElementById('organisationDirectorName').value
-      let organisationDirectorDob = document.getElementById('organisationDirectorDob').value
-      let organisationDirectorIdCardType = document.getElementById('organisationDirectorIdCardType').value
-      let organisationDirectorName2 = document.getElementById('organisationDirectorName2').value
-      let organisationDirectorDob2 = document.getElementById('organisationDirectorDob2').value
-      let organisationDirectorIdCard2 = document.getElementById('organisationDirectorIdCardType2').value
-      let organisationDirectorBvn = document.getElementById('organisationDirectorBvn').value
-      let organisationDirectorBvn2 = document.getElementById('organisationDirectorBvn2').value
-
-      this.organisation.organisationName = organisationName;
-      this.organisation.organisationEmail =  organisationEmail;
-      this.organisation.organisationPhone = organisationPhone;
-      this.organisation.organisationCity = organisationCity;
-      this.organisation.organisationAddress = organisationAddress;
-      this.organisation.organisationState = organisationState;
-      this.organisation.organisationWebsite = organisationWebsite;
-      this.organisation.organisationType = organisationType;
-      this.organisation.organisationRegistrationNumber = organisationRegistrationNumber;
-      this.organisation.organisationDirectorName = organisationDirectorName;
-      this.organisation.organisationDirectorDob = organisationDirectorDob;
-      this.organisation.organisationDirectorIdCardType = organisationDirectorIdCardType;
-      this.organisation.organisationDirectorName2 = organisationDirectorName2;
-      this.organisation.organisationDirectorDob2 = organisationDirectorDob2;
-      this.organisation.organisationDirectorIdCard2 = organisationDirectorIdCard2;
-      this.organisation.organisationDirectorBvn = organisationDirectorBvn;
-      this.organisation.organisationDirectorBvn2 = organisationDirectorBvn2;
-      this.organisation.organisationId = localStorage.organisationId;
-      this.organisation.organisationLogo = "company Logo";
-      this.organisation.organisationDirectorIdCard = this.director1;
-      this.organisation.organisationDirectorIdCard2 = this.director2;
-      // console.log(this.organisation)
+      this.organisation.organisationDirectorIdCard = this.director1
+      this.organisation.organisationName = this.organisationRes.organisationName
+      this.organisation.organisationPhone = this.organisationRes.organisationPhone
+      this.organisation.organisationEmail = this.organisationRes.organisationEmail
       StoreUtils.dispatch(
         StoreUtils.actions.auth.updateOrganisation,
         this.organisation

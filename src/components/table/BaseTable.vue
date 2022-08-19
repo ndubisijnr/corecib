@@ -30,6 +30,16 @@
           <span class="spinner-border"></span>
         </div>
       </template>
+      <!-- cell coloring -->
+      <template v-slot:cell(drCr)="row">
+       <h5 :style="row.item.drCr === 'DR' ? {color: 'red'} : {color: 'green'}"> {{row.item.drCr}}</h5>
+      </template>
+
+      <template v-slot:cell(payoutStatus)="row">
+       <h5 :style="row.item.payoutStatus === 'FAILED' ? {color: 'red'} : {color: 'green'}"> {{row.item.payoutStatus}}</h5>
+      </template>
+
+
       <!-- TODO AMOUNT FORMATTING -->
       <template v-slot:cell(amount)="row">
         {{ row.item.amount | formatAmount }}
@@ -42,6 +52,9 @@
       </template>
       <template v-slot:cell(disputeAmount)="row">
         {{ row.item.disputeAmount | formatAmount }}
+      </template>
+      <template v-slot:cell(payoutAmount)="row">
+        {{ row.item.payoutAmount | formatAmount }}
       </template>
 
       <!-- / -->
@@ -196,6 +209,7 @@
           :total-rows="items == null ? 0 : items.length"
           :per-page="perPage"
           pills
+          :style="{color:primaryColor}"
         ></b-pagination>
       </b-col>
     </b-row>
@@ -240,6 +254,7 @@ export default {
   data() {
     return {
       show: false,
+      primaryColor:window.__env.app.primaryColor,
       loaderImage:BIZ,
       walletTransactionmodel: WalletRequest.readWalletTransaction,
       virtualAccountTransactionmodel:

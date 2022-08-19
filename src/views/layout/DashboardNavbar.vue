@@ -62,13 +62,14 @@
       >
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <div class="media align-items-center">
-            <i class="fa fa-user-circle nav-profile"></i>
+            <i class="fa fa-user-circle nav-profile" :style="{color:primaryColor}"></i>
           </div>
         </a>
         <div>
-          <h3 class="text-dark text-center m-1">{{ user.customerFirstName }} {{ user.customerLastName }} </h3>
-          <b-list-group class="m-3 text-left">
-            <b-list-group-item button>{{user.customerEmail}}</b-list-group-item>
+          <h3 class="text-dark text-center m-1 small">{{ user.customerFirstName }} {{ user.customerLastName }} </h3>
+          <b-list-group class="m-3 text-left small">
+            <b-list-group-item button disabled>{{user.customerEmail}}</b-list-group-item>
+           <b-list-group-item button>KYC Verification <span class="small text-info">Coming soon</span></b-list-group-item>
            <a href="https://bizgem.io/contact-us.html" target="_blank"> <b-list-group-item button>Support</b-list-group-item></a>
            <a href="https://documenter.getpostman.com/view/20549781/Uz5GoGMo" target="blank"> <b-list-group-item button>Documentation</b-list-group-item></a>
            <router-link to="/settings/settings"> <b-list-group-item button>Settings</b-list-group-item></router-link>
@@ -108,6 +109,7 @@ export default {
       showMenu: false,
       searchModalVisible: false,
       searchQuery: "",
+      primaryColor: window.__env.app.primaryColor
     };
   },
   computed: {
@@ -182,7 +184,6 @@ export default {
 }
 
 .nav-profile{
-  color:var(--primary);
   font-size:40px;
 }
 .profile-drop-down li{

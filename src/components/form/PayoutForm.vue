@@ -20,11 +20,11 @@
                         </b-input-group>
                         <h4 id="error" class="text-danger text-center"></h4>
                         <b-button v-if="currentOrganisation.organisationStage == 'PROD'"
-                            class="w-100 text-white" type="submit" style="background-color:var(--primary)">{{ accLoading
+                            class="w-100 text-white" type="submit" :style="{backgroundColor:primaryColor}">{{ accLoading
                                     ? 'please wait..' : 'withdraw'
                             }} <span :class="{ 'spinner-border': accLoading }"></span>
                         </b-button>
-                        <b-button v-else disabled style="background-color:var(--primary);width:100%;color:white">
+                        <b-button v-else disabled :style="{backgroundColor:primaryColor,color:'white'}">
                             You are in Test Mode</b-button>
                     </b-form>
                 </div>
@@ -59,7 +59,8 @@ export default {
         return {
             showModal: true,
             payoutModel: AccountPayoutRequest.createPayout,
-            amount:null
+            amount:null,
+            primaryColor:window.__env.app.primaryColor
 
 
         }
