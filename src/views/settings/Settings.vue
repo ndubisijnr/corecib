@@ -940,12 +940,12 @@ export default {
       return localStorage.taged
     },
     documents: () => {
-      console.log("progressBarArr");
+      // console.log("progressBarArr");
       let vm = this;
       let doc = StoreUtils.rootGetters(
         StoreUtils.getters.document.getDocuments
       );
-      console.log("progressBarArr", doc.data.length);
+      // console.log("progressBarArr", doc.data.length);
       //vm.progressBarArr = [...Array(doc.data.length)].fill(false)
       /*for(let i = 0; i < doc.data.length; i++){
         vm.progressBarArr[i] = false
@@ -966,7 +966,7 @@ export default {
   },
   watch: {
     documents(newValue) {
-      console.log("progressBarArrNew", newValue.data.length);
+      // console.log("progressBarArrNew", newValue.data.length);
       this.progressBarArr = [];
       //this.progressBarArr = [...Array(newValue.data.length)].fill(false)
       for (let i = 0; i < newValue.data.length; i++) {
@@ -1057,7 +1057,7 @@ export default {
     assign(){
       let organisationIdCardType = document.getElementById('organisationDirectorIdCardType').value
      this.organisation.organisationDirectorIdCardType = organisationIdCardType;
-      console.log(organisationIdCardType)
+      // console.log(organisationIdCardType)
 
     },
 
@@ -1147,7 +1147,7 @@ export default {
           this.documentModel
         );
 
-        console.log(this.files[index]);
+        // console.log(this.files[index]);
       }
     },
 
@@ -1155,7 +1155,7 @@ export default {
       const vm = this;
       const selectedImage = e.target.files[0];
       this.createBase64Images(selectedImage, index, doc, action);
-      console.log("Submit");
+      // console.log("Submit");
     },
     createBase64Images(fileObject, index, doc, action) {
       const img_reader = new FileReader();
@@ -1202,7 +1202,7 @@ export default {
 
     handleClick(tab, event) {
       //console.log(tab.$vnode.key);
-      console.log(tab.label);
+      // console.log(tab.label);
       //console.log(tab, event);
     },
 

@@ -314,7 +314,7 @@ export default {
 }
 
 .active{
-  background-color: var(--primary);
+  background-color:#3F88C5;
   color: white;
 }
 

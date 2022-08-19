@@ -15,9 +15,8 @@
 
      </div>
 
-     <div class="container">
-       <div class="table-div m-3">
-         <table class="table table-bordered mr-2">
+     <div class="container table-parent">
+         <table class="table table-bordered">
            <thead>
            <th>Services</th>
            <th>Prices</th>
@@ -30,26 +29,26 @@
              </td>
            </tr>
            <tr>
-             <td>VIRTUAL ACCOUNT CREATION</td>
+             <td>VIRTUAL ACCOUNT <br />CREATION</td>
              <td>₦20.00 Fee<br>
                For each virtual account created
              </td>
            </tr>
            <tr>
-             <td>FUNDS TRANSFER (PAYOUT)</td>
+             <td>FUNDS TRANSFER <br />(PAYOUT)</td>
              <td>₦20.00 Fee<br>
                For each successful FT outwards.
              </td>
            </tr>
            <tr>
-             <td>RECEIVE FUNDS (INWARDS)</td>
+             <td>RECEIVE FUNDS <br />(INWARDS)</td>
              <td>₦0.00 Fee<br>
                For each successful RF inwards.
              </td>
            </tr>
            </tbody>
          </table>
-         <table class="table table-bordered mr-2">
+         <table class="table table-bordered">
            <thead>
            <th style="width:100px">Airtime & Data</th>
            <th>#</th>
@@ -105,53 +104,7 @@
            </tr>
            </tbody>
          </table>
-       </div>
-       <div class="table-div m-3">
-         <table class="table table-bordered mr-2">
-           <thead>
-           <th style="width:100px">Electricity</th>
-           <th >#</th>
-           </thead>
-           <tbody>
-           <tr>
-             <td>Ikeja Electric</td>
-             <td>0.84% Commission </td>
-           </tr>
-           <tr>
-             <td>Eko Electric</td>
-             <td>0.77% Commission </td>
-           </tr>
-           <tr>
-             <td>AEDC (Abuja Electric)</td>
-             <td>0.70% Commission </td>
-           </tr>
-           <tr>
-             <td>EEDC (Enugu Electric)</td>
-             <td>1.74% Commission <span class="text-info">(coming soon) </span></td>
-           </tr>
-           <tr>
-             <td>PHEDC (Port Harcourt Electric)</td>
-             <td>0.84% Commission </td>
-           </tr>
-           <tr>
-             <td>IBEDC (Ibadan Electric)</td>
-             <td>0.42% Commission </td>
-           </tr>
-           <tr>
-             <td>KEDCO (Kano Electric)</td>
-             <td>0.84% Commission </td>
-           </tr>
-           <tr>
-             <td>KAEDCO (Kaduna Electric)</td>
-             <td>0.84% Commission </td>
-           </tr>
-           <tr>
-             <td>JEDC (Jos Electric)</td>
-             <td>0.70% Commission </td>
-           </tr>
-           </tbody>
-         </table>
-         <table class="table table-bordered border-primary">
+         <table class="table table-bordered">
            <thead>
            <th style="width:100px">KYC</th>
            <th >#</th>
@@ -159,7 +112,7 @@
            <tbody>
            <tr>
              <td>BVN verification for wallet users</td>
-             <td>Suspended</td>
+             <td>₦20 Fee</td>
            </tr>
            <tr>
              <td>NIN verification for wallet users</td>
@@ -173,23 +126,158 @@
              <td>Voters card verification</td>
              <td>₦100 Fee</td>
            </tr>
-           </tbody>
-         </table>
-       </div>
-       <div class="table-div m-3">
-
-         <table class="table table-bordered border-primary">
-           <thead>
-           <th style="width:100px;text-align: center">Betting</th>
-           </thead>
-           <tbody>
-           <tr class="text-center">
-             <td>Coming soon</td>
+           <tr>
+             <td>Corporate affairs commission</td>
+             <td>₦100 Fee</td>
+           </tr>
+           <tr>
+             <td>Tax identification number</td>
+             <td>₦100 Fee</td>
            </tr>
            </tbody>
          </table>
-       </div>
+       <table class="table table-bordered">
+         <thead>
+         <th style="width:100px">Electricity</th>
+         <th >#</th>
+         </thead>
+         <tbody>
+         <tr>
+           <td>Ikeja Electric</td>
+           <td>0.84% Commission </td>
+         </tr>
+         <tr>
+           <td>Eko Electric</td>
+           <td>0.77% Commission </td>
+         </tr>
+         <tr>
+           <td>AEDC (Abuja Electric)</td>
+           <td>0.70% Commission </td>
+         </tr>
+         <tr>
+           <td>EEDC (Enugu Electric)</td>
+           <td>1.74% Commission <br /><span class="text-info">(coming soon) </span></td>
+         </tr>
+         <tr>
+           <td>PHEDC (Port Harcourt Electric)</td>
+           <td>0.84% Commission </td>
+         </tr>
+         <tr>
+           <td>IBEDC (Ibadan Electric)</td>
+           <td>0.42% Commission </td>
+         </tr>
+         <tr>
+           <td>KEDCO (Kano Electric)</td>
+           <td>0.84% Commission </td>
+         </tr>
+         <tr>
+           <td>KAEDCO (Kaduna Electric)</td>
+           <td>0.84% Commission </td>
+         </tr>
+         <tr>
+           <td>JEDC (Jos Electric)</td>
+           <td>0.70% Commission </td>
+         </tr>
+         </tbody>
+       </table>
+       <table class="table table-bordered">
+           <thead>
+           <th style="width:100px;text-align: center">Betting</th>
+           <th style="width:100px;text-align: center">#</th>
+           </thead>
+           <tbody>
+           <tr>
+             <td>BET9JA</td>
+             <td>₦30 Fee</td>
+           </tr>
+           <tr>
+             <td>ZOOMLIFESTYLE</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>WINNER GOLDEN CHANCE</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>CASHTOKEN</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>MLOTTO</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>WESTERN LOTTO</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>ALLCITYBET</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>BANGBET</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>NAIRABET</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>SUPABET</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>BETKING</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>WINNERS GOLDEN BET</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>BETWAY</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>LIVESCOREBET</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>NAIJABET</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>1XBET</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>MERRYBET</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>BETLAND</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>CLOUDBET</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>B9</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>GREENLOTTO</td>
+             <td>₦20 Fee</td>
+           </tr>
+           <tr>
+             <td>ELIESTLOTTO</td>
+             <td>₦20 Fee</td>
+           </tr>
+           </tbody>
+         </table>
      </div>
+
     </div>
 </template>
 
@@ -218,73 +306,30 @@ export default {
 
 }
 
-.subpage-header{
-  height: 50vh;
-  margin-top: 5px;
-  text-align: center;
-  padding: 3%;
+.table-parent{
+  display: grid;
+  grid-template-columns: repeat(2,2fr);
+  gap: 10px;
 }
 
-.card{
-  width: 40%;
-  margin: 3%;
-  height: 30vh;
-}
-
-.card-footer{
-  background-color: #3F88C5;
-  color: white;
-}
-
-.card-header{
-  background-color: #3F88C5;
-  color: white;
-}
-
-.table-div{
-  display: flex;
-}
-
-.pricing{
-  display: flex;
-  justify-content: space-around;
-}
 
 @media (max-width: 999px) {
-  .pricing{
-    display: flex;
-    justify-content: start;
-    height: auto;
-    width: 300%;
-  }
-  .card{
-    width: 100%;
-    margin: 3%;
-    height: 30vh;
-  }
   .mb{
     width: 100%;
     overflow-x: scroll;
   }
+  .table-parent{
+    display: grid;
+    grid-template-columns: repeat(1,2fr);
+    gap: 10px;
+    max-width:100%
+  }
+
+  table{
+    width: 100%;
+  }
 }
 
-/*.curve-banner{*/
-/*  background-color: #3F88C5;*/
-/*  width: 300px;*/
-/*  height: 300px;*/
-/*  position: fixed;*/
-/*  right: 0;*/
-/*  top: 40%;*/
-/*  letter-spacing: .7rem;*/
-/*  z-index: -1;*/
-/*  font-size: 50px;*/
-/*  border-bottom-left-radius: 60px;*/
-/*  border-top-left-radius: 60px;*/
-/*  border: 12px solid white;*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*}*/
 
 .curve-banner h1{
   color: white !important;

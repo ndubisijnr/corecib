@@ -79,7 +79,6 @@ export const actions = {
       }
     }).catch((error) => {
       commit("updateLoading", false);
-      console.log(error)
     });
   },
 
@@ -96,7 +95,6 @@ export const actions = {
       }
     }).catch((error) => {
       commit("updateLoading", false);
-      console.log(error)
     });
   },
 
@@ -132,7 +130,6 @@ export const actions = {
         })
       }).catch((error) => {
         commit("updateLoading", false);
-        console.log(error)
       });
   },
 
@@ -142,7 +139,6 @@ export const actions = {
       commit("updateLoading", false)
     }).catch((error) => {
       commit("updateLoading", false);
-      console.log(error)
     });
   },
 
@@ -187,7 +183,6 @@ export const actions = {
       })
       .catch((error) => {
         commit("updateLoading", false);
-        console.log(error)
       });
   },
 
@@ -202,7 +197,6 @@ export const actions = {
       else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
     }).catch((error) => {
       commit("updateLoading", false);
-      console.log(error);
     });
   },
 
@@ -220,7 +214,7 @@ export const actions = {
       }
     }).catch((error) => {
       commit("updateLoading", false);
-      console.log(error)
+      // console.log(error)
     });
   },
 
@@ -238,7 +232,7 @@ export const actions = {
     })
       .catch((error) => {
         commit("updateLoading", false);
-        console.log(error)
+        // console.log(error)
       });
 
   },
@@ -292,7 +286,7 @@ export const actions = {
       if(responseData.responseCode === "00"){
         commit("updateLoading", false)
         commit("updateOrganisation", responseData)
-        console.log(responseData)
+        // console.log(responseData)
       }else{
          commit("updateLoading", false)
       }
