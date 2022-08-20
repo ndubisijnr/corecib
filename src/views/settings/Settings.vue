@@ -417,7 +417,7 @@
                                     <b-button @click="showModalDirector1 = !showModalDirector1" :disabled="!organisation.organisationDirectorIdCardType">Upload file</b-button>
                                   </div>
                                   <div v-else style="height: 100%;width: 100%; display: flex; justify-content: center; align-items: center">
-<!--                                    <img :src="director1" width="100" :alt="director1"/> <br />-->
+                                    <img :src="director1" width="100" :alt="director1"/> <br />
                                     <h3 class="text-success">Your {{organisation.organisationDirectorIdCardType}} was uploaded..</h3>
                                   </div>
 

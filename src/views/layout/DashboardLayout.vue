@@ -9,7 +9,9 @@
               name: item.name,
               icon: item.icon,
               path: item.path }"/>
-            <a v-else :href="item.path" target="_blank" class="nav-link pt-2 pb-0 text-white"><i :class="item.icon"></i> Documentation</a>
+
+            <a v-else :href="item.path" target="_blank" class="nav-link pt-2 pb-0 text-white"><i :class="item.icon"></i> {{item.name}}</a>
+
           </span>
         </span>
       </template>

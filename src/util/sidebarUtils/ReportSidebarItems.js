@@ -48,6 +48,11 @@ export default
                 icon:'fa fa-wallet',
                 path:'/user/wallet'
         },
+        // {
+        //         name:'KYC Verification (coming soon)',
+        //         icon:'fa fa-wallet',
+        //         path:'#'
+        // },
        ]
 
 
