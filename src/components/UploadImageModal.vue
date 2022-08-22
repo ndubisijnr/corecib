@@ -10,16 +10,17 @@
 <!--                <p class="tx-color-03">Upload file for processing</p>-->
                 <b-form @submit.prevent="" enctype="multipart/form-data">
                     <b-form-group>
-                        <div class="dropbox">
+                        <div class="dropbox" :style="{backgroundColor:primaryColor, color:'white'}">
                             <input multiple type="file" class="input-file" id="files" accept="image/*" :name="file.uploadFieldName"
                                    :disabled="isLoading"
                                    @change="uploadFile" ref="file">
                             <p v-if="!isLoading">
                                 Drag your file(s) here to begin<br> or click to browse
                             </p>
-                            <p v-if="isLoading">
-                                Uploading files...
-                            </p>
+                          <div v-if="isLoading" style="height:30vh;display: flex;align-items: center;justify-content: center;flex-direction: column">
+                            <span>Uploading files...</span>
+                            <span class="spinner-border spinner-border-sm"></span>
+                          </div>
 
                         </div>
                     </b-form-group>
@@ -39,6 +40,7 @@
         props:['uploadType','readType','isLoading','uploadData','readData','fileName','directorType','show'],
         data() {
             return {
+                primaryColor:window.__env.app.primaryColor,
                 model:{
                     base64: '',
                     username: '',
@@ -77,9 +79,8 @@
           })
         },
         methods: {
-            uploadFile(event) {
-                console.log(event)
-                this.handleUpload(event)
+           uploadFile(event) {
+               this.handleUpload(event)
             },
 
             async handleUpload(event) {
@@ -91,10 +92,9 @@
                         this.model.directorType = this.directorType
                         this.model.username = this.fileName+"-"+StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization).organisationName.replace(" ","-").toLowerCase()
                         await this.$store.dispatch(this.uploadType, this.model);
-                        this.loadData();
                         this.hide();
+                        this.loadData();
                     };
-                  console.log(this.model.base64)
                   reader.readAsDataURL(file);
                     this.$emit('input', file);
                 } catch (e) {
@@ -110,7 +110,6 @@
             },
             onSelect({name, iso2, dialCode}) {
                 this.model.employeeCountryCode =  dialCode
-                console.log(name, iso2, dialCode);
             },
             numberWithCommas(x) {
                 let parts = x.toString().split(".");
@@ -141,9 +140,8 @@
 
 <style scoped>
     .dropbox {
-        outline: 2px dashed grey; /* the dash box */
-        outline-offset: -10px;
-        background: lightcyan;
+        /*outline: 2px dashed grey; !* the dash box *!*/
+        /*outline-offset: -10px;*/
         color: dimgray;
         padding: 10px 10px;
         min-height: 200px; /* minimum height */
@@ -168,4 +166,23 @@
         text-align: center;
         padding: 50px 0;
     }
+    .spinner-border {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      vertical-align: text-bottom;
+      border: 0.25em solid currentColor;
+      border-right-color: transparent;
+      border-radius: 50%;
+      -webkit-animation: spinner-border 0.75s linear infinite;
+      animation: spinner-border 0.75s linear infinite;
+    }
+
+
+    @keyframes spinner-border {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
 </style>

@@ -95,399 +95,7 @@
                       </div>
                     </div>
                     <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel" >
-                      <div class="business-profile">
-                        <form class="form-group" @submit.prevent="updateOrginasation()">
-                          <div>
-                            <div class="row">
-                              <div class="col mb-3">
-                                <label for="floatingInput2">Business Name</label>
-                                <input type="text" class="form-control" id="organisationName"  :value="organisationRes.organisationName" :readonly="organisationRes.organisationName" />
-                              </div>
-                              <div class="col mb-3">
-                                <label for="floatingInput">Company Email</label>
-                                <input type="email" class="form-control" id="organisationEmail"  :value="organisationRes.organisationEmail" :readonly="organisationRes.organisationEmail" />
-                              </div>
-                              <div class="col mb-3">
-                                <label for="floatingInput1">Company Phone</label>
-                                <input type="tel" class="form-control" id="organisationPhone" :value="organisationRes.organisationPhone" :readonly="organisationRes.organisationPhone" />
-                              </div>
-                            </div>
-                            <div class="row">
-
-                              <div class="col mb-3">
-                                <label for="floatingInput1">City</label>
-                                <input type="text" class="form-control"  v-if="organisationRes.organisationCity" disabled :value="organisationRes.organisationCity"/>
-                                <input type="text" class="form-control"  v-else placeholder="Ikeja" v-model="organisation.organisationCity" required />
-                              </div>
-                              <div class="col mb-3">
-                                <label for="floatingInput2">Address</label>
-                                <input type="text" class="form-control" placeholder="1004 Federal Housing Estate, Victoral Island" v-if="organisationRes.organisationAddress" disabled :value="organisationRes.organisationAddress" />
-                                <input type="text" class="form-control" placeholder="1004 Federal Housing Estate, Victoral Island"  v-else id="organisationAddress" v-model="organisation.organisationAddress" required />
-                              </div>
-                              <div class="col mb-3">
-                                <label for="floatingInput1">State</label>
-                                <input type="text" class="form-control"  placeholder="Lagos" v-if="organisationRes.organisationState" disabled :value="organisationRes.organisationState" />
-                                <input type="text" class="form-control"  placeholder="Lagos"  v-else v-model="organisation.organisationState" id="organisationState" required />
-                              </div>
-                            </div>
-                          </div>
-    <!---------------------------------------------  Second layer ------------------------------------------------------>
-                          <div class="">
-                            <div class="row">
-                              <div class="col mb-3">
-                                <label for="floatingInput3">Organization Type</label>
-                                <select class="form-select form-control" aria-label="Default select example" disabled
-                                        v-if="organisationRes.organisationType" :value="organisationRes.organisationType">
-                                  <option data-v-00a70ddc="" value="Agric produce">
-                                    Agric produce
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Betting/Lottery">
-                                    Betting / Lottery
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Book Stores">
-                                    Book Stores
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Bus Lines">
-                                    Bus Lines
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Cable/Satellite/Pay Television">
-                                    Cable / Satellite / Pay Television
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Clothing and Accessories">
-                                    Clothing and Accessories
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Commercial footware">
-                                    Commercial footware
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Credit Lending Companies">
-                                    Credit Lending Companies
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Cryptocurrency">
-                                    Cryptocurrency
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Department Stores">
-                                    Department Stores
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Digital Goods/Entertainment">
-                                    Digital Goods / Entertainment
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Education">
-                                    Education
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Electronics Stores">
-                                    Electronics Stores
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Financial Institutions/Fund Manager/Investment">
-                                    Financial Institutions / Fund Manager /
-                                    Investment
-                                  </option>
-                                  <option data-v-00a70ddc="" value="General Contractors">
-                                    General Contractors
-                                  </option>
-                                  <option data-v-00a70ddc="" value="General Merchandise Stores">
-                                    General Merchandise Stores
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Grocery Stores and Supermarkets">
-                                    Grocery Stores and Supermarkets
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Hospitality/Lodging">
-                                    Hospitality / Lodging
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Insurance">
-                                    Insurance
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Money Transfer">
-                                    Money Transfer
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Non-Financial Institution">
-                                    Non-Financial Institution
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Professional Services">
-                                    Professional Services
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Real Estate/Facility Management">
-                                    Real Estate / Facility Management
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Religious Organizations">
-                                    Religious Organizations
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Security Broker/Dealer_Custom">
-                                    Security Broker / Dealer_Custom
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Security Brokers/Dealers">
-                                    Security Brokers / Dealers
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Tax/Accounting/Audit">
-                                    Tax / Accounting / Audit
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Taxicabs">
-                                    Taxicabs
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Telecommunication">
-                                    Telecommunication
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Ticketing/Events">
-                                    Ticketing / Events
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Transportation Services">
-                                    Transportation Services
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Travel/Airlines">
-                                    Travel / Airlines
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Travel Agencies/Tour">
-                                    Travel Agencies / Tour
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Utilities/Electric/Gas">
-                                    Utilities / Electric / Gas
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Video Game Arcades/Establishments">
-                                    Video Game Arcades / Establishments
-                                  </option>
-                                </select>
-                                <select class="form-select form-control" aria-label="Default select example"
-                                        v-else v-model="organisation.organisationType">
-                                  <option data-v-00a70ddc="" value="Agric produce">
-                                    Agric produce
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Betting/Lottery">
-                                    Betting / Lottery
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Book Stores">
-                                    Book Stores
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Bus Lines">
-                                    Bus Lines
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Cable/Satellite/Pay Television">
-                                    Cable / Satellite / Pay Television
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Clothing and Accessories">
-                                    Clothing and Accessories
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Commercial footware">
-                                    Commercial footware
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Credit Lending Companies">
-                                    Credit Lending Companies
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Cryptocurrency">
-                                    Cryptocurrency
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Department Stores">
-                                    Department Stores
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Digital Goods/Entertainment">
-                                    Digital Goods / Entertainment
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Education">
-                                    Education
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Electronics Stores">
-                                    Electronics Stores
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Financial Institutions/Fund Manager/Investment">
-                                    Financial Institutions / Fund Manager /
-                                    Investment
-                                  </option>
-                                  <option data-v-00a70ddc="" value="General Contractors">
-                                    General Contractors
-                                  </option>
-                                  <option data-v-00a70ddc="" value="General Merchandise Stores">
-                                    General Merchandise Stores
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Grocery Stores and Supermarkets">
-                                    Grocery Stores and Supermarkets
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Hospitality/Lodging">
-                                    Hospitality / Lodging
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Insurance">
-                                    Insurance
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Money Transfer">
-                                    Money Transfer
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Non-Financial Institution">
-                                    Non-Financial Institution
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Professional Services">
-                                    Professional Services
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Real Estate/Facility Management">
-                                    Real Estate / Facility Management
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Religious Organizations">
-                                    Religious Organizations
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Security Broker/Dealer_Custom">
-                                    Security Broker / Dealer_Custom
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Security Brokers/Dealers">
-                                    Security Brokers / Dealers
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Tax/Accounting/Audit">
-                                    Tax / Accounting / Audit
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Taxicabs">
-                                    Taxicabs
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Telecommunication">
-                                    Telecommunication
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Ticketing/Events">
-                                    Ticketing / Events
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Transportation Services">
-                                    Transportation Services
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Travel/Airlines">
-                                    Travel / Airlines
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Travel Agencies/Tour">
-                                    Travel Agencies / Tour
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Utilities/Electric/Gas">
-                                    Utilities / Electric / Gas
-                                  </option>
-                                  <option data-v-00a70ddc="" value="Video Game Arcades/Establishments">
-                                    Video Game Arcades / Establishments
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col mb-3">
-                                <label for="floatingInput1">Organisation Website</label>
-                                <input type="text" class="form-control" v-if="organisationRes.organisationWebsite" disabled :value="organisationRes.organisationWebsite"/>
-                                <input type="text" class="form-control"  placeholder=" Website" v-else v-model="organisation.organisationWebsite"  id="organisationWebsite"/>
-                              </div>
-                              <div class="col mb-3">
-                                <label for="floatingInput1">RC / BN Number</label>
-                                <input type="text" class="form-control" placeholder="Organisation RC / BN Number" v-if="organisationRes.organisationRegistrationNo" :value="organisationRes.organisationRegistrationNo"  disabled/>
-                                <input type="text" class="form-control" placeholder="Organisation RC / BN Number" v-else id="organisationRegistrationNo" v-model="organisation.organisationRegistrationNo"  />
-                              </div>
-                            </div>
-
-                            <div>
-                              <div class="text-center mt-3 mb-3">
-                                <h2 class="mt-2"><span>Director 1</span></h2>
-                              </div>
-                              <div class="row">
-                                <div class="col mb-3">
-                                  <label for="floatingInput2">Full Name <span style="color: red">*</span></label>
-                                  <input type="text" class="form-control"  placeholder="Directors Full name"  required v-if="organisationRes.organisationDirectorName" disabled :value="organisationRes.organisationDirectorName" />
-                                  <input type="text" class="form-control" id="organisationDirectorName" placeholder="Directors Full name"  required  v-else v-model="organisation.organisationDirectorName" />
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col mb-3">
-                                  <label for="floatingInput2">Dob <span style="color: red">*</span></label>
-                                  <input type="date" class="form-control"   required v-if="organisationRes.organisationDirectorDob" disabled :value="organisationRes.organisationDirectorDob"/>
-                                  <input type="date" class="form-control" id="organisationDirectorDob" v-else  required v-model="organisation.organisationDirectorDob"/>
-                                </div>
-                                <div class="col mb-3">
-                                  <label for="floatingInput">BVN <span style="color: red">*</span></label>
-                                  <input type="number" class="form-control"  disabled   v-if="organisationRes.organisationDirectorBvn" :value="organisationRes.organisationDirectorBvn"/>
-                                  <input type="number" class="form-control" id="organisationDirectorBvn" placeholder="Bank Verification Number"  v-else required v-model="organisation.organisationDirectorBvn"/>
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col mb-3" v-if="organisationRes.organisationDirectorIdCardType" >
-                                  <label for="floatingInput2"> ID Card Type<span style="color: red">*</span></label>
-                                  <select class="form-select form-control" aria-label="Default select example" disabled :value="organisationRed.organisationDirectorIdCardType">
-                                    <option value="national_id_card">National ID Card</option>
-                                    <option value="international_passport">International Passport</option>
-                                    <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
-                                    <option value="drivers_licence">Drivers Licence</option>
-                                  </select>
-                                </div>
-                                <div class="col mb-3" v-else>
-                                  <label for="floatingInput2"> ID Card Type<span style="color: red">*</span></label>
-                                  <select class="form-select form-control" aria-label="Default select example" required id="organisationDirectorIdCardType" v-model="organisation.organisationDirectorIdCardType">
-                                    <option value="national_id_card">National ID Card</option>
-                                    <option value="international_passport">International Passport</option>
-                                    <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
-                                    <option value="drivers_licence">Drivers Licence</option>
-                                  </select>
-                                </div>
-                                <div class="col mb-3">
-                                  <div v-if="director1 == null">
-                                    <label for="floatingInput" v-if="director1 == null">Upload ID Card <span style="color: red">*</span></label><br v-if="director1 == null">
-                                    <b-button @click="showModalDirector1 = !showModalDirector1" :disabled="!organisation.organisationDirectorIdCardType">Upload file</b-button>
-                                  </div>
-                                  <div v-else style="height: 100%;width: 100%; display: flex; justify-content: center; align-items: center">
-                                    <img :src="director1" width="100" :alt="director1"/> <br />
-                                    <h3 class="text-success">Your {{organisation.organisationDirectorIdCardType}} was uploaded..</h3>
-                                  </div>
-
-                                </div>
-                              </div>
-                            </div>
-
-                            <div>
-                              <div class="text-center mt-3 mb-3">
-                                <h2 class="mt-2"><span>Director 2</span></h2>
-                              </div>
-                              <div class="row">
-                                <div class="col mb-3">
-                                  <label for="floatingInput2">First Name </label>
-                                  <input type="text" class="form-control"  placeholder="Director's Full name" v-if="organisationRes.organisationDirectorName2" disabled :value="organisationRes.organisationDirectorName2" />
-                                  <input type="text" class="form-control"  placeholder="Director's Full name" v-model="organisation.organisationDirectorName2" />
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col mb-3">
-                                  <label for="floatingInput2">Dob</label>
-                                  <input type="date" class="form-control" disabled v-if="organisationRes.organisationDirectorDob2" :value="organisationRes.organisationDirectorDob2"   />
-                                  <input type="date" class="form-control" id="organisationDirectorDob2" v-else v-model="organisation.organisationDirectorDob2" />
-                                </div>
-                                <div class="col mb-3">
-                                  <label for="floatingInput">BVN </label>
-                                  <input type="number" class="form-control" disabled v-if="organisationRes.organisationDirectorBvn2"  :value="organisationRes.organisationDirectorBvn2"  />
-                                  <input type="number" class="form-control" id="organisationDirectorBvn2"  v-else placeholder="Bank Verification Number" v-model="organisationRes.organisationDirectorBvn2"   />
-                                </div>
-                              </div>
-                              <div class="row">
-                                <div class="col mb-3" v-if="organisationRes.organisationDirectorIdCardType2">
-                                  <label for="floatingInput2"> ID Card Type</label>
-                                  <select class="form-select form-control" aria-label="Default select example"
-                                          :value="organisation.organisationDirectorIdCardType2" disabled>
-                                    <option value="national_id_card">National ID Card</option>
-                                    <option value="international_passport">International Passport</option>
-                                    <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
-                                    <option value="drivers_licence">Drivers Licence</option>
-                                  </select>
-                                </div>
-                                <div class="col mb-3" v-else>
-                                  <label for="floatingInput2"> ID Card Type</label>
-                                  <select class="form-select form-control" aria-label="Default select example" id="organisationDirectorIdCardType2"
-                                          v-model="organisation.organisationDirectorIdCardType2">
-                                    <option value="national_id_card">National ID Card</option>
-                                    <option value="international_passport">International Passport</option>
-                                    <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
-                                    <option value="drivers_licence">Drivers Licence</option>
-                                  </select>
-                                </div>
-                                <div class="col mb-3">
-                                  <label for="floatingInput" v-if="director2 == null">Upload ID Card </label><br v-if="director2 == null">
-                                  <label for="floatingInput" v-if="director2 != null">Uploaded ID Card</label><br  v-if="director2 != null">
-                                  <b-button @click="showModalDirector2 = !showModalDirector2"  v-if="director2 == null" :disabled="!organisation.organisationDirectorIdCardType2">Upload file</b-button>
-                                  <img v-else :src="director2" width="100" />
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="mt-3">
-                              <base-button title="Update" :loading="loadingOtp" v-if="!organisationRes.organisationDirectorBvn"></base-button>
-                              <base-button title="Update" :loading="loadingOtp" v-else disabled></base-button>
-                              <!-- <base-button title="Update" v-else disabled></base-button> -->
-                              <!-- <b-button @click="nextStep()" title="" style="background-color:grey;border:none;color:white">Next</b-button> -->
-                            </div>
-                          </div>
-
-                        </form>
-                      </div>
+                        <UpdateBusinessProfile></UpdateBusinessProfile>
                     </b-collapse>
                   </div>
                   <hr />
@@ -595,8 +203,7 @@
                                         </div>
                                       </div>
                                       <div v-else>
-                                        <form @submit.prevent="
-                                          submitDocument(index, doc)" :id="'form' + index">
+                                        <form @submit.prevent="submitDocument(index, doc)" :id="'form' + index">
                                           <!--<p v-show="progressBarArr[index]" class="form-error-message"> The File is required </p>-->
                                           <div class="our-team">
                                             <progress-bar v-show="
@@ -800,7 +407,7 @@
                                   <span :class="{ 'spinner-border': loadingOtp }"></span>
                                 </b-button>
                               </div>
-                            <b-button class="w-100 text-white" style="background-color: var(--primary)" type="submit">{{
+                            <b-button class="w-100 text-white" :style="{backgroundColor:primaryColor,color:'#fff'}" type="submit">{{
                                 createloader ? "Updating" : "Update Bank"
                             }}
                               <span :class="{ 'spinner-border': createloader }"></span>
@@ -837,29 +444,12 @@
 
           </div>
         </div>
-        <upload-image-modal
-            :show="showModalDirector1"
-            :is-loading="loadingDoc"
-            upload-type="document/uploadDocument"
-            :upload-data="this.files"
-            :file-name="organisation.organisationDirectorIdCardType"
-            :director-type="1"
-        ></upload-image-modal>
-        <upload-image-modal
-            :show="showModalDirector2"
-            :is-loading="loadingDoc"
-            upload-type="document/uploadDocument"
-            :upload-data="this.files"
-            :file-name="organisation.organisationDirectorIdCardType2"
-            :director-type="2"
-        ></upload-image-modal>
       </div>
     </div>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import UploadImageModal from "@/components/UploadImageModal";
 import ApiKeyDisplayForm from "../../components/form/ApiKeyDisplayForm";
 import { DropdownMenu, DropdownItem, Dropdown } from "element-ui";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
@@ -867,7 +457,6 @@ import ApikeyRequest from "../../model/request/ApiKeyRequest";
 import DocumentRequest from "../../model/request/DocumentRequest";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
 import BaseButton from "../../components/button/BaseButton";
-import OrganisationRequest from "../../model/request/OrganisationRequest";
 import AuthenticationRequest from "../../model/request/AuthRequest";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest";
 import ProgressBar from "@/components/ProgressBar";
@@ -875,6 +464,7 @@ import AddBank from "../../components/form/AddBankForm";
 import BlockerLoader from "../../components/BlockerLoader";
 import ChangePasswordRequest from "@/model/request/ChangePasswordRequest";
 import Toast from "../../../toastNotification";
+import UpdateBusinessProfile from "../../components/UpdateBusinessProfile";
 export default {
   name: "Settings",
   components: {
@@ -886,7 +476,7 @@ export default {
     ProgressBar,
     AddBank,
     BlockerLoader,
-    UploadImageModal
+    UpdateBusinessProfile
   },
   data() {
     return {
@@ -902,7 +492,6 @@ export default {
       files: [],
       banks: [],
       progressBarArr: [],
-      organisation: OrganisationRequest.updateOrganisation,
       apikeyModel: ApikeyRequest.regenerateApiKey,
       documentModel: DocumentRequest.createDocument,
       readDoc: DocumentRequest.readDocument,
@@ -931,9 +520,6 @@ export default {
       readonlybank: (state) => state.accountPayout.readOnlyAddedBanks,
       createloader: (state) => state.accountPayout.addbankloading,
       apikeyloading: (state) => state.apiKey.loading,
-      director1:state => state.document.directorIdCard1.url,
-      director2:state => state.document.directorIdCard2.url,
-      organisationRes:state => state.auth.readOrganisation
       // documents:(state) => state.document.document
     }),
     getStatus() {
@@ -1054,13 +640,23 @@ export default {
       StoreUtils.dispatch(StoreUtils.actions.auth.changePassword, this.changePasswordModel)
     },
 
-    assign(){
-      let organisationIdCardType = document.getElementById('organisationDirectorIdCardType').value
-     this.organisation.organisationDirectorIdCardType = organisationIdCardType;
-      // console.log(organisationIdCardType)
-
+    handleImages(e, index, doc, action) {
+      const vm = this;
+      const selectedImage = e.target.files[0];
+      this.createBase64Images(selectedImage, index, doc, action);
+      // console.log("Submit");
     },
-
+    createBase64Images(fileObject, index, doc, action) {
+      const img_reader = new FileReader();
+      const vm = this;
+      img_reader.onload = (e) => {
+        vm.files[index] = e.target.result;
+        // console.log(this.files[index]);
+        vm.submitDocument(index, doc, action);
+        //vm.notifyVue("success","Click on Submit");
+      };
+      img_reader.readAsDataURL(fileObject);
+    },
 
     editBank() {
       let bankcode =
@@ -1126,7 +722,7 @@ export default {
       }, 1000);
     },
     submitDocument(index, doc, action) {
-      console.log("Testing" + index);
+      // console.log("Testing" + index);
       this.documentModel.fileUpload.username = `${this.currentOrganisation.organisationName
         }_${doc.documentTypeName.replace(/[^a-zA-Z ]/g, "")}_${Math.random()} `;
       this.documentModel.fileUpload.base64 = this.files[index];
@@ -1134,7 +730,7 @@ export default {
       this.documentModel.document.documentName = doc.documentTypeName
       if (action === "UPDATE") {
         this.progressBarArr[index].value = true;
-        console.log("Conditions>> ", this.progressBarArr[index].value);
+        // console.log("Conditions>> ", this.progressBarArr[index].value);
         this.documentModel.document.documentId = doc.documentId;
         StoreUtils.dispatch(
           StoreUtils.actions.document.updateDocument,
@@ -1151,23 +747,7 @@ export default {
       }
     },
 
-    handleImages(e, index, doc, action) {
-      const vm = this;
-      const selectedImage = e.target.files[0];
-      this.createBase64Images(selectedImage, index, doc, action);
-      // console.log("Submit");
-    },
-    createBase64Images(fileObject, index, doc, action) {
-      const img_reader = new FileReader();
-      const vm = this;
-      img_reader.onload = (e) => {
-        vm.files[index] = e.target.result;
-        console.log(this.files[index]);
-        vm.submitDocument(index, doc, action);
-        //vm.notifyVue("success","Click on Submit");
-      };
-      img_reader.readAsDataURL(fileObject);
-    },
+
     regenerateApiKey() {
       StoreUtils.dispatch(
         StoreUtils.actions.apiKey.regenerateApiKey,
@@ -1182,20 +762,6 @@ export default {
       this.blacklist = false;
     },
 
-    updateOrginasation() {
-      this.organisation.organisationDirectorIdCard = this.director1
-      this.organisation.organisationName = this.organisationRes.organisationName
-      this.organisation.organisationPhone = this.organisationRes.organisationPhone
-      this.organisation.organisationEmail = this.organisationRes.organisationEmail
-      StoreUtils.dispatch(
-        StoreUtils.actions.auth.updateOrganisation,
-        this.organisation
-      ).then(() => {
-        const userToken = localStorage.getItem('token')
-        StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
-        StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
-      });
-    },
     file() {
       this.edit = "second";
     },
@@ -1246,19 +812,19 @@ export default {
 
       }
     },
-    hide$show1() {
-      let b = document.getElementById("pwd1");
-      let eye = document.getElementById("eye1");
-      if (b.type === "password") {
-        b.type = "text";
-        eye.classList.remove("fa-eye");
-        eye.classList.add("fa-eye-slash");
-      } else {
-        b.type = "password";
-        eye.classList.add("fa-eye");
-        eye.classList.remove("fa-eye-slash");
-      }
-    },
+    // hide$show1() {
+    //   let b = document.getElementById("pwd1");
+    //   let eye = document.getElementById("eye1");
+    //   if (b.type === "password") {
+    //     b.type = "text";
+    //     eye.classList.remove("fa-eye");
+    //     eye.classList.add("fa-eye-slash");
+    //   } else {
+    //     b.type = "password";
+    //     eye.classList.add("fa-eye");
+    //     eye.classList.remove("fa-eye-slash");
+    //   }
+    // },
   },
 
   created: function () { },
@@ -1266,9 +832,6 @@ export default {
 </script>
 <style lang="css" scoped>
 
-.underline{
-  text-decoration: underline;
-}
 h2 {
   width: 100%;
   text-align: center;
@@ -1333,13 +896,7 @@ h2 span {
 /*  margin: 0;*/
 /*}*/
 
-.business-profile{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin:10px;
-    overflow-x: scroll;
-}
+
 .bformedit {
   width: 100%;
   margin-top: 2%;

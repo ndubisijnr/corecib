@@ -26,7 +26,7 @@
               <div v-if="products[0].productPrice !== 'VARIABLE'">
                 <label class="small">Select Plan</label>
                 <b-select v-if="products[0].productBillerCode.includes('CABLE') || products[0].productBillerCode.includes('DATA')" v-model="productpaymentModdel.productCode" required>
-                  <b-select-option  v-for="i in products" :key="i" :value="i.productPrice + ' ' + i.productCode">{{i.productCode}} @ {{i.productPrice | formatAmount}}</b-select-option>
+                  <b-select-option  v-for="i in products" :key="i" :value="i.productPrice + ' ' + i.productCode">{{i.productDescription}} @ {{i.productPrice | formatAmount}}</b-select-option>
                 </b-select>
                 <b-select v-else v-model="productpaymentModdel.productCode">
                   <b-select-option  v-for="i in products" :key="i" :value="i.productCode">{{i.productCode}} @ {{i.productPrice | formatAmount}}</b-select-option>

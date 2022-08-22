@@ -69,9 +69,6 @@ export default {
         initScrollbar('sidenav');
       }
     },
-    call() {
-      console.log("heollllldfdfdfd");
-    }
   },
   computed:{
     sidebarItems(){
@@ -79,7 +76,7 @@ export default {
     },
   },
   mounted() {
-    this.initScrollbar()
+    // this.initScrollbar()
   }
 };
 </script>

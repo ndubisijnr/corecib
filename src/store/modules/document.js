@@ -81,6 +81,8 @@ export const actions = {
       }
     }).catch(error => {
       console.log(error)
+      commit("updateLoading", false)
+      Toast.fire({text:error, icon:"error"})
     })
   },
 

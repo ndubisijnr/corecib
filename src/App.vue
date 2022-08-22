@@ -57,17 +57,8 @@ export default {
     console.clear()
 
   },
-  methods:{
-    stickyAlert(){
-      window.addEventListener('scroll', (e)=>{
-        if(scrollY){
-           document.getElementById('myalert').style.position = "fixed"
-        }else{
-          document.getElementById('myalert').style.position = "relative"
-        }
-      })
-    }
-  },
+  methods:{},
+
   computed:{
     layout() {
       return (this.$route.meta.layout || default_layout) + '-layout';

@@ -47,10 +47,16 @@ class OrganisationResponse {
         organisationPhone: null,
         organisationMemorandumAndArticleOfAssociation: null,
         organisationEmail: null,
+        organisationDirectorBvn:null,
         organisationDirectorName:null,
         organisationDirectorDob:null,
         organisationDirectorIdCard:null,
         organisationDirectorIdCardType:null,
+        organisationDirectorName2:null,
+        organisationDirectorBvn2:null,
+        organisationDirectorDob2:null,
+        organisationDirectorIdCard2:null,
+        organisationDirectorIdCardType2:null,
         organisationType: null,
         organisationStatus: null,
         organisationCreatedAt: null,
@@ -74,8 +80,6 @@ class OrganisationResponse {
         customerOrganisationCreatedAt: null,
         customerOrganisationUpdatedAt: null,
         privileges: null,
-        responseCode: null,
-        responseMessage: null
     }
 
     static readUsersByOrganisationId = {
@@ -115,8 +119,6 @@ class OrganisationResponse {
         customerOrganisationCreatedAt: null,
         customerOrganisationUpdatedAt: null,
         privileges: null,
-        responseCode: null,
-        responseMessage: null
     }
 
     static refferalStatsResponse = {
