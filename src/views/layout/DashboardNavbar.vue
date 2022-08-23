@@ -69,7 +69,7 @@
           <h3 class="text-dark text-center m-1 small">{{ user.customerFirstName }} {{ user.customerLastName }} </h3>
           <b-list-group class="m-3 text-left small">
             <b-list-group-item button disabled>{{user.customerEmail}}</b-list-group-item>
-           <b-list-group-item button>KYC Verification <span class="small text-info">Coming soon</span></b-list-group-item>
+<!--            <router-link to="/kyc-verifications"><b-list-group-item button>KYC Verification </b-list-group-item></router-link>-->
            <a href="https://bizgem.io/contact-us.html" target="_blank"> <b-list-group-item button>Support</b-list-group-item></a>
            <a href="https://documenter.getpostman.com/view/20549781/Uz5GoGMo" target="blank"> <b-list-group-item button>Documentation</b-list-group-item></a>
            <router-link to="/settings/settings"> <b-list-group-item button>Settings</b-list-group-item></router-link>

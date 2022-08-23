@@ -237,7 +237,7 @@ export const actions = {
 
   },
 
-  updateOrganisation: ({ commit }, payload = OrganisationRequest.updateOrganisation) => {
+  updateOrganisation: ({ commit }, payload) => {
     commit('updateLoading', true)
     return OrganizationService.callUpdateOrganisationApi(payload).then(response => {
       let responseData = response.data

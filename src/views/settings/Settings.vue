@@ -497,6 +497,7 @@ export default {
       readDoc: DocumentRequest.readDocument,
       timerCount: 0,
       edit: false,
+      isEditing:true
     };
   },
 
@@ -627,7 +628,31 @@ export default {
     StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
   },
 
+
+  // beforeMount() {
+  //   window.addEventListener("beforeunload", this.preventNav)
+  // },
+  //
+  // beforeUnmount() {
+  //   window.removeEventListener("beforeunload", this.preventNav);
+  // },
+
+  // beforeRouteLeave(to, from, next) {
+  //   if (this.isEditing == 'true') {
+  //     if (!window.confirm("")) {
+  //       return;
+  //     }
+  //   }
+  //   next();
+  // },
+
   methods: {
+
+    preventNav(event) {
+      if (!this.isEditing) return
+      event.preventDefault()
+      event.returnValue = ""
+    },
     updateCreateBank(value) {
       this.show = value;
     },
@@ -637,7 +662,9 @@ export default {
 
     changePassword() {
       this.changePasswordModel.customerEmail = this.userInfo.customerEmail
-      StoreUtils.dispatch(StoreUtils.actions.auth.changePassword, this.changePasswordModel)
+      StoreUtils.dispatch(StoreUtils.actions.auth.changePassword, this.changePasswordModel).then(() => {
+        this.changePasswordModel = ""
+      })
     },
 
     handleImages(e, index, doc, action) {

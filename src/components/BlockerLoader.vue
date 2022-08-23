@@ -44,7 +44,8 @@ export default {
     /*align-items: center;*/
      align-items: center;
     width: 100%;
-    background-color: rgba(26, 25, 25, 0.412);
+    height: 100vh;
+    background-color: transparent;
     position: absolute;
     top:0;
     left: 0;

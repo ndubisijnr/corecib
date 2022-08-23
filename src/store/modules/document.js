@@ -8,6 +8,8 @@ import Toast from "../../../toastNotification";
 export const state = {
   loading:false,
   document: DocumentResponse.readByOrganisationId,
+  upload1:null,
+  upload2:null,
   directorIdCard1: {},
   directorIdCard2: {},
   response: {}
@@ -23,6 +25,12 @@ export const getters = {
 export const mutations = {
   updateLoading: (state, payload) => {
     state.loading = payload
+  },
+  uploadStateDirectorIdCard1: (state, payload) => {
+    state.upload1 = payload
+  },
+  uploadStateDirectorIdCard2: (state, payload) => {
+    state.upload2 = payload
   },
   updateDocument: (state, payload) => {
     state.document = payload
@@ -65,12 +73,14 @@ export const actions = {
         if(responseData.responseCode == "00"){
           commit("updateLoading", false)
           commit("updateDirectorIdCard1", responseData)
+          commit("uploadStateDirectorIdCard1", 'success')
           Toast.fire({text:responseData.responseMessage, icon:"success"})
           }
       }else{
         if(responseData.responseCode == "00"){
           commit("updateLoading", false)
           commit("updateDirectorIdCard2", responseData)
+          commit("uploadStateDirectorIdCard2", 'success')
           Toast.fire({text:responseData.responseMessage, icon:"success"})
 
   }

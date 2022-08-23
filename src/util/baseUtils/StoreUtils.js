@@ -88,8 +88,10 @@ class StoreUtils {
     document:{
       updateLoading: "document/updateLoading",
       updateADocument: "document/updateADocument",
-      uploadDocument: "document/uploadDocument"
-    },
+      uploadDocument: "document/uploadDocument",
+      uploadStateDirectorIdCard1:"document/uploadStateDirectorIdCard1",
+      uploadStateDirectorIdCard2:"document/uploadStateDirectorIdCard2"
+},
     apiKey: {
       updateLoading: "apiKey/updateLoading",
       updateApikey: "apiKey/updateApikey"

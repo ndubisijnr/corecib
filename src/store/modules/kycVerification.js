@@ -2,6 +2,7 @@ import KycRequest from "../../model/request/KycRequest";
 import KycResponse from "../../model/reponse/KycResponse";
 import KycVerificationService from "../../service/KycVerificationService";
 import Swal from "sweetalert2";
+import router from "../../router";
 const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -79,6 +80,7 @@ export const actions = {
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateBvn", responseData)
+                router.push({name:'MakeRequestView'}).then()
             }else{
                 commit("UpdateLoading", false)
                 Toast.fire({text:responseData.responseMessage, icon:"error"}).then()

@@ -44,29 +44,25 @@
 
             <div v-show="kycVerificationType === 'Bank verification number'">
               <b-form-group  label="First Name">
-                <b-form-input @input="BnvValidationState" v-model="KycRequest_bank_verificationModal.firstName" trim :state="BankValidation.first_name"></b-form-input>
-                {{BankValidation.first_name}}
+                <b-form-input v-model="KycRequest_bank_verificationModal.firstName" trim></b-form-input>
               </b-form-group>
               <b-form-group  label="Last Name">
-                <b-form-input  @input="BnvValidationState" v-model="KycRequest_bank_verificationModal.lastName" :state="BankValidation.last_name" trim></b-form-input>
+                <b-form-input  v-model="KycRequest_bank_verificationModal.lastName"  trim></b-form-input>
               </b-form-group>
               <b-form-group label="Date Of Birth">
                   <b-form-input
                       v-model="KycRequest_bank_verificationModal.dob"
                       type="text"
                       placeholder="DD-MM-YYYY"
-                      :state="BankValidation.dob"
                       trim
                       maxLength="10"
-                      @input="BnvValidationState"
                   ></b-form-input>
                 </b-form-group>
               <b-form-group label="Bank verification number">
-                <b-form-input  @input="BnvValidationState" v-model="KycRequest_bank_verificationModal.bvn" :state="BankValidation.bvn"  maxLength="11" required></b-form-input>
+                <b-form-input v-model="KycRequest_bank_verificationModal.bvn"  maxLength="11" required></b-form-input>
                 <b-form-invalid-feedback id="input-live-feedback">
                   This Field in required
                 </b-form-invalid-feedback>
-                {{BankValidation.bvn}}
               </b-form-group>
             </div>
 
@@ -257,20 +253,20 @@ export default {
       loading: state => state.kycVerification.loading
     }),
 
-    BnvValidationState() {
-      if (JSON.stringify(this.KycRequest_bank_verificationModal.bvn)) {
-        return JSON.stringify(this.KycRequest_bank_verificationModal.bvn.length) == 11 ? this.BankValidation.bvn = true : this.BankValidation.bvn = false
-      }
-      if (JSON.stringify(this.KycRequest_bank_verificationModal.firstName)) {
-        return JSON.stringify(this.KycRequest_bank_verificationModal.firstName.length) > 2 ? this.BankValidation.first_name = true : this.BankValidation.first_name = false
-      }
-      if (this.KycRequest_bank_verificationModal.lastName !== null) {
-        return this.KycRequest_bank_verificationModal.lastName.length > 2 ? this.BankValidation.last_name = true : this.BankValidation.last_name = false
-      }
-      if (this.KycRequest_bank_verificationModal.dob !== null){
-        return this.KycRequest_bank_verificationModal.dob.length > 7 ? this.BankValidation.dob  = true : this.BankValidation.dob = false
-      }
-    }
+    // BnvValidationState() {
+    //   if (JSON.stringify(this.KycRequest_bank_verificationModal.bvn)) {
+    //     return JSON.stringify(this.KycRequest_bank_verificationModal.bvn.length) == 11 ? this.BankValidation.bvn = true : this.BankValidation.bvn = false
+    //   }
+    //   if (JSON.stringify(this.KycRequest_bank_verificationModal.firstName)) {
+    //     return JSON.stringify(this.KycRequest_bank_verificationModal.firstName.length) > 2 ? this.BankValidation.first_name = true : this.BankValidation.first_name = false
+    //   }
+    //   if (this.KycRequest_bank_verificationModal.lastName !== null) {
+    //     return this.KycRequest_bank_verificationModal.lastName.length > 2 ? this.BankValidation.last_name = true : this.BankValidation.last_name = false
+    //   }
+    //   if (this.KycRequest_bank_verificationModal.dob !== null){
+    //     return this.KycRequest_bank_verificationModal.dob.length > 7 ? this.BankValidation.dob  = true : this.BankValidation.dob = false
+    //   }
+    // }
   }
 }
 </script>

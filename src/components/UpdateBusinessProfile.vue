@@ -21,7 +21,7 @@
           <div class="row">
             <div class="col mb-3">
               <label for="floatingInput1">City</label>
-              <input type="text" class="form-control"  placeholder="Ikeja" v-model="organisationRes.organisationCity" required :readonly="organisation.organisationCity" />
+              <input type="text" class="form-control"  placeholder="Ikeja" v-model="organisationRes.organisationCity" required />
             </div>
             <div class="col mb-3">
               <label for="floatingInput2">Address</label>
@@ -185,7 +185,7 @@
           <div class="row">
             <div class="col mb-3">
               <label for="floatingInput2"> ID Card Type<span style="color: red">*</span></label>
-              <select class="form-select form-control" aria-label="Default select example" required id="organisationDirectorIdCardType" v-model="organisationRes.organisationDirectorIdCardType">
+              <select @change="showModalDirector1 = !showModalDirector1" class="form-select form-control" aria-label="Default select example" required id="organisationDirectorIdCardType" v-model="organisationRes.organisationDirectorIdCardType">
                 <option value="national_id_card">National ID Card</option>
                 <option value="international_passport">International Passport</option>
                 <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
@@ -194,8 +194,8 @@
             </div>
             <div class="col mb-3" style="padding-top:30px ">
               <div v-if="!organisationRes.organisationDirectorIdCard">
-                <label for="floatingInput">Upload ID Card <span style="color: red">*</span></label><br/>
-                <b-button @click="showModalDirector1 = !showModalDirector1">Upload file</b-button>
+                <label for="floatingInput">{{ !uploadState1 ? 'Upload ID Card' : organisationRes.organisationDirectorIdCardType + ' Uploaded' }}<span style="color: red">*</span></label><br/>
+                <b-button @click="showModalDirector1 = !showModalDirector1" disabled>{{!uploadState1 ? 'Upload file' : 'File Uploaded' }}</b-button>
               </div>
               <a v-else :href="organisationRes.organisationDirectorIdCard" target="_blank"><b-button>View Uploaded ID</b-button></a>
             </div>
@@ -210,7 +210,7 @@
           </div>
           <div class="row">
             <div class="col mb-3">
-              <label for="floatingInput2">First Name </label>
+              <label for="floatingInput2">Full Name </label>
               <input type="text" class="form-control"  placeholder="Director's Full name" v-model="organisationRes.organisationDirectorName2" />
             </div>
           </div>
@@ -227,7 +227,7 @@
           <div class="row">
             <div class="col mb-3">
               <label for="floatingInput2"> ID Card Type</label>
-              <select class="form-select form-control" aria-label="Default select example"  id="organisationDirectorIdCardType2" v-model="organisationRes.organisationDirectorIdCardType2">
+              <select @change="showModalDirector2 = !showModalDirector2" class="form-select form-control" aria-label="Default select example"  id="organisationDirectorIdCardType2" v-model="organisationRes.organisationDirectorIdCardType2">
                 <option value="national_id_card">National ID Card</option>
                 <option value="international_passport">International Passport</option>
                 <option value="permanent_voters_card">Permanent Voters Card(PVC)</option>
@@ -235,9 +235,9 @@
               </select>
             </div>
             <div class="col mb-3" style="padding-top:30px ">
-              <div v-if="!organisationRes.organisationDirectorIdCard2">
-                <label for="floatingInput">Upload ID Card <span style="color: red">*</span></label><br/>
-                <b-button @click="showModalDirector2 = !showModalDirector2">Upload file</b-button>
+              <div v-if="!organisationRes.organisationDirectorIdCardType2">
+                <label for="floatingInput">{{!uploadState2 ? 'Upload ID Card' : organisationRes.organisationDirectorIdCardType2 + ' Uploaded' }} <span style="color: red">*</span></label><br/>
+                <b-button @click="showModalDirector2 = !showModalDirector2" disabled>{{!uploadState2 ? 'Upload file' : 'File Uploaded' }}</b-button>
               </div>
               <a v-else :href="organisationRes.organisationDirectorIdCard2" target="_blank"><b-button>View Uploaded ID</b-button></a>
             </div>
@@ -254,7 +254,7 @@
         :is-loading="loadingDoc"
         upload-type="document/uploadDocument"
         :upload-data="this.files"
-        :file-name="organisation.organisationDirectorIdCardType"
+        :file-name="organisationRes.organisationDirectorIdCardType"
         :director-type="1"
     >
     </upload-image-modal>
@@ -263,7 +263,7 @@
         :is-loading="loadingDoc"
         upload-type="document/uploadDocument"
         :upload-data="this.files"
-        :file-name="organisation.organisationDirectorIdCardType2"
+        :file-name="organisationRes.organisationDirectorIdCardType2"
         :director-type="2"
     >
 
@@ -274,7 +274,6 @@
 <script>
 import StoreUtils from "../util/baseUtils/StoreUtils";
 import {mapState} from "vuex";
-import OrganisationRequest from "../model/request/OrganisationRequest";
 import UploadImageModal from "@/components/UploadImageModal";
 import BaseButton from "./button/BaseButton";
 
@@ -288,11 +287,12 @@ export default {
 
   data(){
     return{
-      organisation: OrganisationRequest.updateOrganisation,
       isEditState:false,
       files: [],
       showModalDirector1:false,
       showModalDirector2:false,
+      uploadState1:false,
+      uploadState2:false
 
     }
   },
@@ -319,24 +319,11 @@ export default {
 
     },
 
-    updateOrginasation() {
-      this.organisation.organisationDirectorIdCard = this.director1
-      this.organisation.organisationName = this.organisationRes.organisationName
-      this.organisation.organisationPhone = this.organisationRes.organisationPhone
-      this.organisation.organisationEmail = this.organisationRes.organisationEmail
-      StoreUtils.dispatch(
-          StoreUtils.actions.auth.updateOrganisation,
-          this.organisation
-      ).then(() => {
-        const userToken = localStorage.getItem('token')
-        StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
-        StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
-      });
-    },
 
     ReupdateOrginasation(){
       this.organisationRes.organisationDirectorIdCard = this.director1
       this.organisationRes.organisationDirectorIdCard2 = this.director2
+      this.organisationRes.organisationLogo = "companyLogo"
       this.organisationRes.organisationName = this.organisationRes.organisationName
       this.organisationRes.organisationPhone = this.organisationRes.organisationPhone
       this.organisationRes.organisationEmail = this.organisationRes.organisationEmail
@@ -353,7 +340,23 @@ export default {
     isEdit(){
       this.isEditState = !this.isEditState
     },
-
+    handleImages(e, index, doc, action) {
+      const vm = this;
+      const selectedImage = e.target.files[0];
+      this.createBase64Images(selectedImage, index, doc, action);
+      // console.log("Submit");
+    },
+    createBase64Images(fileObject, index, doc, action) {
+      const img_reader = new FileReader();
+      const vm = this;
+      img_reader.onload = (e) => {
+        vm.files[index] = e.target.result;
+        // console.log(this.files[index]);
+        vm.submitDocument(index, doc, action);
+        //vm.notifyVue("success","Click on Submit");
+      };
+      img_reader.readAsDataURL(fileObject);
+    },
 
     file() {
       this.edit = "second";
@@ -383,17 +386,31 @@ export default {
       organisationReactive:state => state.auth.readOrganisation,
       loadingOtp: (state) => state.auth.loading,
       loadingDoc: (state) => state.document.loading,
-
-
+      uploadStateDirectorIdCard1:state => state.document.upload1,
+      uploadStateDirectorIdCard2:state => state.document.upload2
     }),
     currentOrganisation() {
       return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
     },
   },
 
+  watch:{
+    uploadStateDirectorIdCard1(){
+      if(this.uploadStateDirectorIdCard1 === 'success'){
+        this.uploadState1 = true
+      }
+    },
+    uploadStateDirectorIdCard2(){
+      if(this.uploadStateDirectorIdCard2 === 'success'){
+        this.uploadState2 = true
+      }
+    }
+  },
+
   mounted() {
     this.disableAllFieldsIfNotEmpty()
   }
+
 }
 </script>
 
