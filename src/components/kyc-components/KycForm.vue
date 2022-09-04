@@ -25,16 +25,16 @@
           </div>
         <div class="">
           <b-form @submit.prevent="kycVerificationAction">
-            <div v-show="kycVerificationType == 'Corporate affairs commission'">
+            <div v-if="kycVerificationType == 'Corporate affairs commission'">
             <b-form-group label="Type">
-              <b-form-select v-model="KycRequest_corporate_affairsModal.type">
+              <b-form-select v-model="KycRequest_corporate_affairsModal.type" required>
                 <b-form-select-option value="business">Business</b-form-select-option>
                 <b-form-select-option value="limited_company">Limited Company</b-form-select-option>
                 <b-form-select-option value="incorprated_trustee">Incorporated Trustee</b-form-select-option>
               </b-form-select>
             </b-form-group>
             <b-form-group label="RcNumber">
-              <b-form-input v-model="KycRequest_corporate_affairsModal.rcNumber"></b-form-input>
+              <b-form-input v-model="KycRequest_corporate_affairsModal.rcNumber" required></b-form-input>
             </b-form-group>
             </div>
 
@@ -42,27 +42,24 @@
 
             <!-- Bank verification number -->
 
-            <div v-show="kycVerificationType === 'Bank verification number'">
+            <div v-else-if="kycVerificationType === 'Bank verification number'">
               <b-form-group  label="First Name">
-                <b-form-input v-model="KycRequest_bank_verificationModal.firstName" trim></b-form-input>
+                <b-form-input v-model="KycRequest_bank_verificationModal.firstName"  required></b-form-input>
               </b-form-group>
               <b-form-group  label="Last Name">
-                <b-form-input  v-model="KycRequest_bank_verificationModal.lastName"  trim></b-form-input>
+                <b-form-input  v-model="KycRequest_bank_verificationModal.lastName"   required></b-form-input>
               </b-form-group>
               <b-form-group label="Date Of Birth">
                   <b-form-input
                       v-model="KycRequest_bank_verificationModal.dob"
-                      type="text"
+                      type="date"
                       placeholder="DD-MM-YYYY"
-                      trim
                       maxLength="10"
+                      required
                   ></b-form-input>
                 </b-form-group>
               <b-form-group label="Bank verification number">
                 <b-form-input v-model="KycRequest_bank_verificationModal.bvn"  maxLength="11" required></b-form-input>
-                <b-form-invalid-feedback id="input-live-feedback">
-                  This Field in required
-                </b-form-invalid-feedback>
               </b-form-group>
             </div>
 
@@ -70,64 +67,67 @@
 
 
 
-            <div v-show="kycVerificationType === 'National identity'">
+            <div v-else-if="kycVerificationType === 'National identity'">
               <b-form-group  label="First Name">
-                <b-form-input v-model="KycRequest_national_identityModal.firstName"></b-form-input>
+                <b-form-input v-model="KycRequest_national_identityModal.firstName"required></b-form-input>
               </b-form-group>
               <b-form-group  label="Last Name">
-                <b-form-input v-model="KycRequest_national_identityModal.lastName"></b-form-input>
+                <b-form-input v-model="KycRequest_national_identityModal.lastName" required></b-form-input>
               </b-form-group>
               <b-form-group label="Date Of Birth">
                 <b-form-input
                     v-model="KycRequest_national_identityModal.dob"
-                    type="text"
+                    type="date"
                     placeholder="DD-MM-YYYY"
+                    required
                 ></b-form-input>
               </b-form-group>
               <b-form-group label="ID Number">
-                <b-form-input v-model="KycRequest_national_identityModal.idNumber"></b-form-input>
+                <b-form-input v-model="KycRequest_national_identityModal.idNumber" required></b-form-input>
               </b-form-group>
             </div>
-            <div v-show="kycVerificationType === 'Drivers license'">
+            <div v-else-if="kycVerificationType === 'Drivers license'">
               <b-form-group  label="First Name">
-                <b-form-input v-model="KycRequest_drivers_licenceModal.firstName"></b-form-input>
+                <b-form-input v-model="KycRequest_drivers_licenceModal.firstName" required></b-form-input>
               </b-form-group>
               <b-form-group  label="Last Name">
-                <b-form-input v-model="KycRequest_drivers_licenceModal.lastName"></b-form-input>
+                <b-form-input v-model="KycRequest_drivers_licenceModal.lastName" required></b-form-input>
               </b-form-group>
               <b-form-group label="Date Of Birth">
                 <b-form-input
                     v-model="KycRequest_drivers_licenceModal.dob"
-                    type="text"
+                    type="date"
                     placeholder="DD-MM-YYYY"
+                    required
                 ></b-form-input>
               </b-form-group>
 
               <b-form-group label="License Number">
-                <b-form-input v-model="KycRequest_drivers_licenceModal.licenseNumber"></b-form-input>
+                <b-form-input v-model="KycRequest_drivers_licenceModal.licenseNumber" required></b-form-input>
               </b-form-group>
             </div>
-            <div v-show="kycVerificationType === 'Tax identification number'">
+            <div v-else-if="kycVerificationType === 'Tax identification number'">
               <b-form-group label="Tax Identification Number">
-                <b-form-input v-model="KycRequest_tax_identification_numberModal.taxIdentificationNumber"></b-form-input>
+                <b-form-input v-model="KycRequest_tax_identification_numberModal.taxIdentificationNumber" required></b-form-input>
               </b-form-group>
             </div>
-            <div v-show="kycVerificationType === 'Voters card'">
+            <div v-else-if="kycVerificationType === 'Voters card'">
               <b-form-group  label="First Name">
-                <b-form-input v-model="KycRequest_voter_cardModal.firstName"></b-form-input>
+                <b-form-input v-model="KycRequest_voter_cardModal.firstName" required></b-form-input>
               </b-form-group>
               <b-form-group  label="Last Name">
-                <b-form-input v-model="KycRequest_voter_cardModal.lastName"></b-form-input>
+                <b-form-input v-model="KycRequest_voter_cardModal.lastName" required></b-form-input>
               </b-form-group>
               <b-form-group label="Date Of Birth">
                 <b-form-input
                     v-model="KycRequest_voter_cardModal.dob"
-                    type="text"
+                    type="date"
                     placeholder="DD-MM-YYYY"
+                    required
                 ></b-form-input>
               </b-form-group>
               <b-form-group label="ID Number">
-                <b-form-input v-model="KycRequest_voter_cardModal.idNumber"></b-form-input>
+                <b-form-input v-model="KycRequest_voter_cardModal.idNumber" required></b-form-input>
               </b-form-group>
             </div>
             <b-button type="submit" :style="{backgroundColor:primaryColor}" class="kycButton" :disabled="loading">{{loading ? 'Please Wait' : 'Proceed'}}</b-button>
@@ -144,6 +144,7 @@ import KycLists from "../../components/kyc-components/KycLists";
 import KycRequest from "../../model/request/KycRequest";
 import {mapState} from "vuex";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
+import router from "../../router";
 
 export default {
   name: "KycForm",
@@ -161,7 +162,7 @@ export default {
       formatted: null,
       primaryColor: window.__env.app.primaryColor,
       KycRequest_corporate_affairsModal: KycRequest.corporate_affairs,
-      KycRequest_bank_verificationModal: KycRequest.bank_verification,
+      KycRequest_bank_verificationModal: JSON.parse(JSON.stringify(KycRequest.bank_verification)),
       KycRequest_tax_identification_numberModal: KycRequest.tax_identification_number,
       KycRequest_voter_cardModal: KycRequest.voter_card,
       KycRequest_drivers_licenceModal: KycRequest.drivers_licence,
@@ -181,35 +182,58 @@ export default {
       if (this.kycVerificationType === 'Corporate affairs commission') {
         this.KycRequest_corporate_affairsModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateCorporateAffairs, this.KycRequest_corporate_affairsModal).then(() => {
-          this.KycRequest_corporate_affairsModal = ''
+          this.closeModal()
+          this.closeModal2()
         })
-      } else if (this.kycVerificationType === 'Bank verification number') {
+      }
+
+      else if (this.kycVerificationType === 'Bank verification number') {
+        let date = new Date(this.KycRequest_bank_verificationModal.dob).toLocaleDateString().replaceAll('/','-')
+        this.KycRequest_bank_verificationModal.dob = date
         this.KycRequest_bank_verificationModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateBvn, this.KycRequest_bank_verificationModal).then(() => {
-          this.KycRequest_bank_verificationModal = ''
+          this.closeModal()
+          this.closeModal2()
         })
-      } else if (this.kycVerificationType === 'National identity') {
+      }
+
+      else if (this.kycVerificationType === 'National identity') {
+        let date = new Date(this.KycRequest_national_identityModal.dob).toLocaleDateString().replaceAll('/','-')
+        this.KycRequest_national_identityModal.dob = date
         this.KycRequest_national_identityModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateNationalIdentity, this.KycRequest_national_identityModal).then(() => {
-          this.KycRequest_national_identityModal = ''
+          this.closeModal()
+          this.closeModal2()
         })
-      } else if (this.kycVerificationType === 'Drivers license') {
+      }
+
+      else if (this.kycVerificationType === 'Drivers license') {
+        let date = new Date(this.KycRequest_drivers_licenceModal.dob).toLocaleDateString().replaceAll('/','-')
+        this.KycRequest_drivers_licenceModal.dob = date
         this.KycRequest_drivers_licenceModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateDriversLicense, this.KycRequest_drivers_licenceModal).then(() => {
-          this.KycRequest_drivers_licenceModal = ''
+          this.closeModal()
+          this.closeModal2()
         })
-      } else if (this.kycVerificationType === 'Tax identification number') {
+      }
+
+      else if (this.kycVerificationType === 'Tax identification number') {
         this.KycRequest_tax_identification_numberModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateTax, this.KycRequest_tax_identification_numberModal).then(() => {
-          this.KycRequest_tax_identification_numberModal = ''
+          this.closeModal()
+          this.closeModal2()
         })
-      } else if (this.kycVerificationType === 'Voters card') {
+      }
+
+      else if (this.kycVerificationType === 'Voters card') {
         this.KycRequest_voter_cardModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateVoterCard, this.KycRequest_voter_cardModal).then(() => {
-          this.KycRequest_voter_cardModal = ''
+          this.closeModal()
+          this.closeModal2()
         })
       }
     },
+
     closeModal() {
       //close modal form
       this.showModal = false;
@@ -220,7 +244,6 @@ export default {
     closeModal2() {
       this.showModal = true;
       this.showModal2 = false;
-
     },
 
     showKycForm2(modelValue) {

@@ -14,7 +14,7 @@ import walletRoutes from "./routes/wallet-routes"
 import settingsRoutes from "./routes/settings-routes"
 import payBillsRoutes from "./routes/pay-bills"
 import notFound from "./routes/not-found-route"
-import kyc from "../router/routes/kyc-routes"
+import kycRoutes from "../router/routes/kyc-routes"
 
 
 Vue.use(VueRouter);
@@ -31,9 +31,10 @@ VueRouter.prototype.absUrl = function(url, newTab = true) {
     link.click()
 }
 
-const baseRoutes = [];
+export const baseRoutes = [];
 
-const routes = baseRoutes.concat(kyc,payBillsRoutes,settingsRoutes,walletRoutes,virtualAccountRoutes,reportRoutes,dashRoutes,authRoutes,notFound);
+// export  const me = "clark"
+export const routes = baseRoutes.concat(kycRoutes,payBillsRoutes,settingsRoutes,walletRoutes,virtualAccountRoutes,reportRoutes,dashRoutes,authRoutes,notFound);
 
 const router = new VueRouter({
     routes,

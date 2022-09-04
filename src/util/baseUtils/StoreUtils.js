@@ -83,7 +83,8 @@ class StoreUtils {
       UpdateVoterCard:"kycVerification/UpdateVoterCard",
       UpdateTax:"kycVerification/UpdateTax",
       UpdateDriversLicense:"kycVerification/UpdateDriversLicense",
-      UpdateBvn:"kycVerification/UpdateBvn"
+      UpdateBvn:"kycVerification/UpdateBvn",
+      updateKycReadAll:"kycVerification/updateKycReadAll"
     },
     document:{
       updateLoading: "document/updateLoading",
@@ -105,7 +106,8 @@ class StoreUtils {
       updatePasswordResetScreen: "auth/updatePasswordResetScreen",
       updateOrganisation:"auth/updateOrganisation",
       updateBalance:"auth/updateBalances",
-      updateRefferalStats:"auth/updateRefferalStats"
+      updateRefferalStats:"auth/updateRefferalStats",
+      updateTimedOut:"auth/updateTimedOut"
     },
     dispute: {
       updateLoading: "dispute/updateLoading",

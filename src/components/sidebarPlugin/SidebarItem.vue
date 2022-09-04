@@ -3,7 +3,7 @@
     :is="baseComponent"
     :to="link.path ? link.path : '/'"
     class="nav-item text-white"
-    :class="{ 'active-page': Active === link.path}"
+    :class="{ 'active-page': Active === link.path || Active.includes(link.path)}"
     tag="li">
     <a
       v-if="isMenu"
@@ -22,15 +22,14 @@
         <span class="nav-link-text">{{ link.name }} <b class="caret"></b></span>
       </template>
     </a>
-
     <collapse-transition>
       <div
         v-if="$slots.default || this.isMenu"
         v-show="!collapsed"
         class="collapse show">
-<!--        <ul class="nav nav-sm flex-column" :class="{'active':isActive}">-->
-<!--          <slot></slot>-->
-<!--        </ul>-->
+        <ul class="nav nav-sm flex-column" :class="{'active':isActive}">
+          <slot></slot>
+        </ul>
       </div>
     </collapse-transition>
 
@@ -124,7 +123,7 @@ export default {
       return this.$route.path
     },
     isActive() {
-      if (this.$route && this.$route.path) {
+      if (this.$route && this.$route.path || this.$route.path.includes(`${this.$route}`)) {
         let matchingRoute = this.children.find(c => this.$route.path.startsWith(c.link.path));
          if (matchingRoute !== undefined) {
           return true;

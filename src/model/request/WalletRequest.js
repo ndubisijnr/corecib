@@ -40,7 +40,7 @@ class WalletRequest {
         startDate: "",
         endDate: "",
         searchItem: "",
-        page: null
+        page: 1
     }
 
     static readBalance ={

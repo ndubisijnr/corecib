@@ -1,9 +1,10 @@
 <template>
       <div class="form-area">
         <div class="filter-search">
-         <h1 class="small" v-b-modal.modal-center><b-icon-funnel style="font-size: 23px"/> filter</h1>
+         <h1 class="small p-1 rounded-1" style="background-color:#3F88C5;color:white;" v-b-modal.modal-center><b-icon-funnel /> filter</h1>
         </div>
-        <input class="form-control" name="Report Name" v-model="searchValue" placeholder="Search Here"  v-if="module != 'payoutTransactions'" @keyup="fetchResult" />&nbsp;
+<!--        <input class="form-control" name="Report Name" v-model="searchValue" placeholder="Search Here"  v-if="module != 'payoutTransactions'" @keyup="fetchResult" />&nbsp;-->
+        <input class="form-control" name="Report Name" v-model="searchValue" placeholder="Search Here"  @keyup="fetchResult" />&nbsp;
         <form @submit.prevent="fetchResult">
          <b-modal id="modal-center" centered hide-backdrop  hide-footer :title="label">
           <div>

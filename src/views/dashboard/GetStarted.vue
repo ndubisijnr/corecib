@@ -28,7 +28,12 @@
 <!--                 <canvas id="myChart"></canvas>-->
 <!--              </div>-->
 <!--            </div>-->
-            <transaction withSearch="YES"></transaction>
+            <div style="max-height: 600px">
+              <div class="ml-4">
+                <h4>Recent Transactions</h4>
+              </div>
+              <transaction with-search="NO"></transaction>
+            </div>
           </div>
         </div>
       </div>
@@ -37,7 +42,7 @@
     <b-modal centered id="modal-scrollable" scrollable hide-backdrop content-class="shadow" hide-footer title="Fund your wallet">
 
       <h3 style="text-align:center">
-        Topup Balance
+        Top up Balance
       </h3>
       <div>
         <h3>To fund your wallet</h3>

@@ -1,5 +1,6 @@
 <template>
  <div>
+   <RouteNav />
     <div class="mt-4">
       <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
         <search-form :module="searchWALLET_TRANSACTION"/>
@@ -28,6 +29,7 @@ import { mapState } from "vuex";
 import BaseTable from "../../components/table/BaseTable";
 import SearchForm from "../../components/form/SearchForm";
 import SearchModuleutil from "../../util/constant/SearchModuleutil"
+import RouteNav from "../../components/RouteNav";
 
 
 
@@ -39,7 +41,8 @@ export default {
   name:"WalletTransaction",
   components: {
     BaseTable,
-    SearchForm
+    SearchForm,
+    RouteNav
   },
   data() {
     return {
@@ -89,7 +92,6 @@ export default {
   },
 
   mounted(){
-    console.log(this.wallettransactions)
   }
 };
 </script>

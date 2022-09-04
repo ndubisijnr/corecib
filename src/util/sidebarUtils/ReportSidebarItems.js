@@ -41,18 +41,18 @@ export default
         {
                 name:'Virtual Accounts',
                 icon:'fa fa-university',
-                path:'/user/account'
+                path:'/account'
         },
         {
                 name:'Wallets',
                 icon:'fa fa-wallet',
-                path:'/user/wallet'
+                path:'/wallet'
         },
-        // {
-        //         name:'KYC Verification (coming soon)',
-        //         icon:'fa fa-wallet',
-        //         path:'#'
-        // },
+        {
+                name:'KYC Verification',
+                icon:'fas fa-check-circle',
+                path:'/kyc-verifications'
+        },
        ]
 
 

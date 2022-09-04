@@ -23,12 +23,17 @@ export const state = {
     national_identity:KycResponse.national_identity,
     drivers_license:KycResponse.drivers_licence,
     voter_card:KycResponse.voter_card,
-    tax:KycResponse.tax_identification_number
+    tax:KycResponse.tax_identification_number,
+    readKyc:KycResponse.read_by_organisation_id,
+    kycReadAll:{}
 }
 
 export const mutations = {
     UpdateKycType: (state, payload) => {
         state.kycType = payload
+    },
+    updateKycReadAll: (state, payload) => {
+        state.kycReadAll = payload
     },
     UpdateCorporateAffairs: (state, payload) => {
         state.corporate_affairs = payload
@@ -50,12 +55,17 @@ export const mutations = {
     },
     UpdateLoading: (state, payload) => {
         state.loading = payload
+    },
+    UpdateReadKYC:(state, payload) => {
+        state.readKyc = payload
     }
 }
 
 export const getters = {}
 
 export const actions = {
+    readAllKyc:() => {},
+
     UpdateCorporateAffairs:({commit}, payload=KycRequest.corporate_affairs) => {
         commit("UpdateLoading", true)
         return KycVerificationService.callCorporateAffairsEndPoint(payload).then((response) => {
@@ -63,6 +73,13 @@ export const actions = {
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateCorporateAffairs", responseData)
+                if(router.currentRoute.name !== "MakeRequestView"){
+                    router.push({name:"MakeRequestView"}).then(()=>{
+                        Object.keys(KycRequest.corporate_affairs).forEach((key)=>{
+                            KycRequest.corporate_affairs[key] = null
+                        })
+                    })
+                }
             }else{
                 commit("UpdateLoading", false)
                 Toast.fire({text:responseData.responseMessage, icon:"error"}).then()
@@ -75,12 +92,19 @@ export const actions = {
     },
     UpdateBvn:({commit}, payload=KycRequest.bank_verification) => {
         commit("UpdateLoading", true)
+        commit("UpdateBvn", KycResponse.bank_verification)
         return KycVerificationService.callBvnVerificationEndPoint(payload).then((response) => {
             let responseData = response.data
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateBvn", responseData)
-                router.push({name:'MakeRequestView'}).then()
+                if(router.currentRoute.name !== "MakeRequestView"){
+                    router.push({name:"MakeRequestView"}).then(()=>{
+                        Object.keys(KycRequest.bank_verification).forEach((key)=>{
+                            KycRequest.bank_verification[key] = null
+                        })
+                    })
+                }
             }else{
                 commit("UpdateLoading", false)
                 Toast.fire({text:responseData.responseMessage, icon:"error"}).then()
@@ -92,11 +116,19 @@ export const actions = {
     },
     UpdateNationalIdentity:({commit}, payload=KycRequest.national_identity) => {
         commit("UpdateLoading", true)
+        commit("UpdateNationalIdentity", KycResponse.bank_verification)
         return KycVerificationService.callNationalIdentityEndPoint(payload).then((response) => {
             let responseData = response.data
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateNationalIdentity", responseData)
+                if(router.currentRoute.name !== "MakeRequestView"){
+                    router.push({name:"MakeRequestView"}).then(()=>{
+                        Object.keys(KycRequest.national_identity).forEach((key)=>{
+                            KycRequest.national_identity[key] = null
+                        })
+                    })
+                }
             }else{
                 commit("UpdateLoading", false)
                 Toast.fire({text:responseData.responseMessage, icon:"error"}).then()
@@ -108,11 +140,19 @@ export const actions = {
     },
     UpdateVoterCard:({commit}, payload=KycRequest.voter_card) => {
         commit("UpdateLoading", true)
+        commit("UpdateVoterCard", KycResponse.bank_verification)
         return KycVerificationService.callVoterCardVerificationEndPoint(payload).then((response) => {
             let responseData = response.data
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateVoterCard", responseData)
+                if(router.currentRoute.name !== "MakeRequestView"){
+                    router.push({name:"MakeRequestView"}).then(()=>{
+                        Object.keys(KycRequest.voter_card).forEach((key)=>{
+                            KycRequest.voter_card[key] = null
+                        })
+                    })
+                }
             }else{
                 commit("UpdateLoading", false)
                 Toast.fire({text:responseData.responseMessage, icon:"error"}).then()
@@ -125,11 +165,19 @@ export const actions = {
     },
     UpdateTax:({commit}, payload=KycRequest.tax_identification_number) => {
         commit("UpdateLoading", true)
+        commit("UpdateTax", KycResponse.bank_verification)
         return KycVerificationService.callTaxIdentificationEndPoint(payload).then((response) => {
             let responseData = response.data
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateTax", responseData)
+                if(router.currentRoute.name !== "MakeRequestView"){
+                    router.push({name:"MakeRequestView"}).then(()=>{
+                        Object.keys(KycRequest.tax_identification_number).forEach((key)=>{
+                            KycRequest.tax_identification_number[key] = null
+                        })
+                    })
+                }
             }else{
                 commit("UpdateLoading", false)
                 Toast.fire({text:responseData.responseMessage, icon:"error"}).then()
@@ -142,11 +190,19 @@ export const actions = {
     },
     UpdateDriversLicense:({commit}, payload=KycRequest.drivers_licence) => {
         commit("UpdateLoading", true)
+        commit("UpdateDriversLicense", KycResponse.bank_verification)
         return KycVerificationService.callDriverLicenceEndPoint(payload).then((response) => {
             let responseData = response.data
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateDriversLicense", responseData)
+                if(router.currentRoute.name !== "MakeRequestView"){
+                    router.push({name:"MakeRequestView"}).then(()=>{
+                        Object.keys(KycRequest.drivers_licence).forEach((key)=>{
+                            KycRequest.drivers_licence[key] = null
+                        })
+                    })
+                }
             }else{
                 commit("UpdateLoading", false)
                 Toast.fire({text:responseData.responseMessage, icon:"error"}).then()

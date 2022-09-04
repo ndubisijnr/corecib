@@ -6,7 +6,7 @@
   <div class="notice">
     <a href="https://bizgem.io"><h6>www.bizgem.io</h6></a>
     <h3>Hmm, Sorry</h3>
-    <span>We could not find that page on our route list</span>
+    <span>I could not find that page on our route list</span>
     <div class="mt-2">
       <button class="btn-login" @click="$router.back() ? $router.go(-1) : $router.push({name:'Logon'})">Go back</button>
     </div>

@@ -1,11 +1,11 @@
 <template>
-  
  <div>
-    <div class="mt-4">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-12 mb-3">
+   <RouteNav/>
+      <div class="export-btn-area">
         <search-form :module="searchVirtualAccountTransactions"/>
+        <b-button class="export-ex shadow-lg--hover small desktop">Download Transactions</b-button>
       </div>
-    </div>
+     <export-excel style="display: none" id="export" name="bizgemTransactions-excel" :data="virtualAccounttransactions"></export-excel>
 
     <div class="pl-4 text-dark ml-4" v-if="!loading && virtualAccounttransactions.length > 0" style="width:20%;box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);padding: 5px;background-color: white;">
       <h6>Account Number: {{virtualAccounttransactions[0].accountNumber}}</h6>
@@ -25,18 +25,15 @@ import { mapState } from "vuex";
 import BaseTable from "../../components/table/BaseTable";
 import SearchForm from "../../components/form/SearchForm";
 import SearchModuleutil from "../../util/constant/SearchModuleutil"
-
-
-
-
-
+import RouteNav from "../../components/RouteNav";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest"
 
 export default {
   name:"VirtualAccountTransaction",
   components: {
+    RouteNav,
     BaseTable,
-    SearchForm
+    SearchForm,
   },
   data() {
     return {
@@ -90,3 +87,15 @@ export default {
 
 };
 </script>
+
+<style scoped>
+.export-btn-area{
+  /*box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);*/
+  gap: 10px;
+  padding: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+</style>

@@ -88,7 +88,6 @@ export default {
         },
         requestPayout() {
             let amount = this.payoutModel.payoutAmount
-            console.log(Number(amount), Number(this.balances.walletBalance.accountBalance))
             this.payoutModel.payoutReference = `BIZGEM-${this.reference(30)}`
             if(Number(amount) >  Number(this.balances.walletBalance.accountBalance)){
                 Toast.fire({text:"Insufficent Funds", icon:"error"})

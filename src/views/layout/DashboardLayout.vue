@@ -60,7 +60,7 @@ export default {
   components: {
     DashboardNavbar,
     ContentFooter,
-    FadeTransition
+    FadeTransition,
   },
   methods: {
     initScrollbar() {
@@ -80,6 +80,6 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style>
 
 </style>

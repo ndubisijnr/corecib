@@ -1,4 +1,5 @@
 <template>
+  <div :style="$router.currentRoute.fullPath === '/reports/transactions' ? {maxHeight:'100vh'}: null">
   <b-container fluid>
     <create-virtual-account @closeAccountForm="updateAccountForm" :walletAccountNumber="walletAccNum" :showAccountForm="show"></create-virtual-account>
 
@@ -10,9 +11,9 @@
       small
       show-empty
       stacked="md"
-      style="font-size: 12px"
+      :style="$router.currentRoute.fullPath === '/reports/transactions' ? {fontSize: 12, height: '900px'} :{fontSize: 12}"
       striped
-      :busy="loading"
+      :busy="loading || loading3"
       :items="items"
       :fields="fields"
       :current-page="currentPage"
@@ -26,8 +27,8 @@
       @filtered="onFiltered"
     >
       <template v-slot:table-busy>
-        <div class="text-center text-danger my-2">
-          <span class="spinner-border"></span>
+        <div class="text-center text-danger my-2" style="display: flex; justify-content: center">
+          <lottie-player src="https://assets5.lottiefiles.com/private_files/lf30_4svt0lb2.json"  background="transparent"  speed="1"  style="width: 50px; height: 50px;"  loop  autoplay></lottie-player>
         </div>
       </template>
       <!-- cell coloring -->
@@ -183,7 +184,7 @@
         </b-card>
       </template>
     </b-table>
-    <b-row>
+    <b-row  v-show="$router.currentRoute.fullPath !== '/dashboard/get-started'">
       <b-col md="6" class="my-1 ml-0">
         <b-form-group
           :label="showTitle ? 'perPage' : 'Page'"
@@ -204,16 +205,23 @@
         </b-form-group>
       </b-col>
       <b-col sm="5" md="6" class="">
+        <div style="display: flex">
         <b-pagination
           v-model="currentPage"
           :total-rows="items == null ? 0 : items.length"
           :per-page="perPage"
           pills
           :style="{color:primaryColor}"
-        ></b-pagination>
+        >
+        </b-pagination>
+          <div>
+            <button :disabled="loading2" title="request more transactions" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"  v-if="$router.currentRoute.fullPath === '/reports/transactions'" @click="requestNewTransactions"> <img :class="{'loadMore':loading2}" src="../../assets/Refresh.svg"/> </button>
+          </div>
+        </div>
       </b-col>
     </b-row>
   </b-container>
+  </div>
 </template>
 
 <script>
@@ -256,14 +264,15 @@ export default {
       show: false,
       primaryColor:window.__env.app.primaryColor,
       loaderImage:BIZ,
+      allTransactionsModel: WalletRequest.readAllWalletTransaction,
       walletTransactionmodel: WalletRequest.readWalletTransaction,
       virtualAccountTransactionmodel:
         VirtualAccountRequest.readVirtualAccountTransactions,
       dateFormat: "D MMM",
       totalRows: 1,
       currentPage: 1,
-      perPage: 50,
-      pageOptions: [50, 100],
+      perPage: this.$router.currentRoute.path === '/dashboard/get-started' ? 10 : 50,
+      pageOptions: [5, 10, 50, 100, 500],
       sortBy: "",
       row: {},
       sortDesc: false,
@@ -275,17 +284,28 @@ export default {
         title: "",
         content: "",
       },
-      walletAccNum:""
+      walletAccNum:"",
+      count: 1
     };
   },
   computed: {
     ...mapGetters("account", ["accoptions", "accSelectOptionsWithDefault"]),
     ...mapState({
       loading: (state) => state.walletTransactions.loading,
+      loading2:(state) => state.walletTransactions.retrieveLoading,
+      loading3:(state) => state.virtualAccount.loading
     }),
   },
   mounted() {},
   methods: {
+    requestNewTransactions(){
+      this.count++
+      this.allTransactionsModel.page = this.count
+      StoreUtils.dispatch(
+          StoreUtils.actions.walletTransactions.updateAllWalletTransactions,
+          this.allWalletTransactions
+      )
+    },
     updateAccountForm(value) {
       this.show = value;
     },
@@ -300,7 +320,7 @@ export default {
     getValue(payload) {
       this.walletTransactionmodel.accountNumber = payload;
       this.$router
-        .replace(`/user/all-transactions?account-number=${payload}`)
+        .replace(`/wallet/all-transactions?account-number=${payload}`)
         .then(() => {
           StoreUtils.dispatch(
             StoreUtils.actions.walletTransactions.updateWalletTransactions,
@@ -310,7 +330,7 @@ export default {
     },
     getValueCallVAT(acct) {
       this.virtualAccountTransactionmodel.accountNumber = acct;
-      this.$router.replace(`/user/virtual-acccount/transactions`).then(() => {
+      this.$router.replace(`/account/virtual-acccount/transactions`).then(() => {
         StoreUtils.dispatch(
           StoreUtils.actions.virtualAccount.updateVirtualaccountTransactions,
           this.virtualAccountTransactionmodel
@@ -491,6 +511,14 @@ export default {
 };
 </script>
 <style scoped>
+@keyframes rotate {
+  100%{transform: rotate(360deg)}
+}
+
+.loadMore{
+  animation:rotate infinite linear .9s;
+  /*transition: .9s ease forward;*/
+}
 
 @keyframes spinner-border {
   to {

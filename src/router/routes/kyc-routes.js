@@ -6,7 +6,7 @@ export default [
     {
         path: '/kyc-verifications',
         component: KycView,
-        name: 'KycView',
+        name: 'KYC Verification',
         meta: {layout: 'dashboard',authRequired:true},
     },
     {
@@ -15,4 +15,5 @@ export default [
         name: 'MakeRequestView',
         meta: {layout: 'dashboard',authRequired:true},
     }
+
 ]

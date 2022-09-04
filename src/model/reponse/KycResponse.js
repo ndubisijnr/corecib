@@ -135,7 +135,15 @@ class KycResponse {
     }
 
     static read_by_organisation_id = {
-
+        kycId:null,
+        kycOrganisationId:null,
+        kycNumber:null,
+        kycType:null,
+        kycRequest:null,
+        kycResponse:null,
+        kycStatus:null,
+        kycCreatedAt:null,
+        kycUpdatedAt:null
     }
 
 }

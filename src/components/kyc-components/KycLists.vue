@@ -1,23 +1,29 @@
 <template>
       <div class="kyc-item">
         <div class="kyc-box" @click="showKycForm2(obj='Bank verification number')">
+          <img src="@/assets/bank.svg" width="40" />
           <h5>Bank verification number</h5>
         </div>
         <div class="kyc-box" @click="showKycForm2(obj='Corporate affairs commission')">
+          <img src="@/assets/identification-card.svg" width="40" />
           <h5>Corporate affairs commission</h5>
         </div>
         <div class="kyc-box"@click="showKycForm2(obj='National identity')">
+          <img src="@/assets/identification-card.svg" width="40" />
           <h5>National identity</h5>
         </div>
         <div class="kyc-box" @click="showKycForm2(obj='Drivers license')">
+          <img src="@/assets/identification-card.svg" width="40" />
           <h5>Drivers license</h5>
 
         </div>
         <div class="kyc-box" @click="showKycForm2(obj='Tax identification number')">
+          <img src="@/assets/identification-card.svg" width="40" />
           <h5>Tax identification number</h5>
 
         </div>
         <div class="kyc-box" @click="showKycForm2(obj='Voters card')">
+          <img src="@/assets/identification-card.svg" width="40" />
           <h5>Voters card</h5>
         </div>
       </div>
@@ -52,9 +58,17 @@ export default {
   margin-bottom: 30px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
+  /*-webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);*/
+  /*box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);*/
+}
+
+.kyc-box:hover{
   -webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
+  cursor: pointer;
+
 }
 
 
@@ -81,10 +95,9 @@ export default {
 /*}*/
 
 
-.kyc-box:hover{
-  box-shadow:none;
-  cursor: pointer;
-}
+/*.kyc-box:hover{*/
+/*  box-shadow:none;*/
+/*}*/
 
 
 .kyc-box > h5{

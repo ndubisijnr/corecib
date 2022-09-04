@@ -133,6 +133,9 @@
                 this.$refs['image-upload-modal'].show()
             }
         },
+      mounted() {
+          console.clear()
+      }
     }
 
 

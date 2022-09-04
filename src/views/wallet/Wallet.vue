@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div class="container export-btn-area">
+      <div class="export-btn-area">
         <search-form :module="searchWALLET"/>
         <b-button @click="show = true" class="export-ex shadow-lg--hover small desktop">Create Wallet</b-button>
         <b-icon-plus-circle class="mobile" @click="show = true"/>
@@ -111,27 +111,27 @@ export default {
 }
 
 .export-btn-area{
-  box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);
+  /*box-shadow: 0 0 2rem 0 rgb(136 152 170 / 15%);*/
   gap: 10px;
   padding: 1%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  /*background-color: #ffffff;*/
 
 }
 
 .export-ex{
   background-color:#3F88C5;
   color:white;
-  margin: 2px;
-  width:200px;
-  cursor: pointer;
-  height: 5vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
+  /*margin: 2px;*/
+  /*width:200px;*/
+  /*cursor: pointer;*/
+  /*height: 5vh;*/
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  /*border-radius: 5px;*/
 }
 
 

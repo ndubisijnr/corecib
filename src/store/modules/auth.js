@@ -33,7 +33,8 @@ export const state = {
   passwordResetScreen: "email",
   readOrganisation: OrganisationResponse.readOrganisationById,
   balances:WalletResponse.readBalanceWallet,
-  refferalstats:OrganisationResponse.refferalStatsResponse
+  refferalstats:OrganisationResponse.refferalStatsResponse,
+  isTimedOut:false
 }
 
 export const getters = {
@@ -57,6 +58,7 @@ export const getters = {
 
 export const mutations = {
   updateLoading: (state, payload) => { state.loading = payload },
+  updateTimedOut: (state, payload) => { state.isTimedOut = payload },
   updateToken: (state, payload) => { state.token = payload },
   updateUserInfo: (state, payload) => { state.userInfo = payload; },
   updateScreen: (state, payload) => { state.screen = payload; },
@@ -74,7 +76,8 @@ export const actions = {
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
         commit("updateScreen", 'otp')
-      } else {
+      }
+      else {
         Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
       }
     }).catch((error) => {
@@ -146,10 +149,11 @@ export const actions = {
     // commit("updateLoading", true)
     return AuthService.callRevalidateApi(payload).then(response => {
       let responseData = response.data
-      commit("updateLoading", false)
       if (responseData.responseCode === "00") {
         if (router.currentRoute.meta.layout === 'auth') router.push({ name: "GetStarted" }).then(() => { })
         commit("updateUserInfo", responseData)
+      }else if(responseData.responseCode === "115"){
+        commit("updateTimedOut",true)
       }
     }).catch(error => { commit("updateLoading", false); console.log(error) })
   },
@@ -224,11 +228,11 @@ export const actions = {
       let responseData = response.data
       if (responseData.responseCode === "00") {
         commit("updateStage", responseData.data[0].organisationStage)
+        window.location.reload()
+        commit("updateLoading", false)
+      } else if (responseData.responseCode === "115") {
+        commit("updateTimedOut", true)
       }
-    }).then(() => {
-      window.location.reload()
-    }).then(() => {
-      commit("updateLoading", false)
     })
       .catch((error) => {
         commit("updateLoading", false);
@@ -245,7 +249,10 @@ export const actions = {
         commit("updateLoading", false)
         commit("updateOrginasation", responseData)
         Toast.fire({ text: responseData.responseMessage, icon: 'success', }).then(()=>{})
-      } else {
+      }else if (responseData.responseCode === "115") {
+        commit("updateTimedOut", true)
+      }
+      else {
         commit("updateLoading", false)
         Toast.fire({ text: responseData.responseMessage, icon: 'error', })
       }
@@ -264,6 +271,8 @@ export const actions = {
       if(responseData.responseCode == "00"){
         commit("updateLoading", false)
         commit("updateRefferalStats", responseData)
+      }else if (responseData.responseCode === "115") {
+        commit("updateTimedOut", true)
       }
     })
   },
@@ -275,6 +284,8 @@ export const actions = {
       if (responseData2.responseCode == "00"){
         commit("updateLoading", false)
         commit("updateBalance",responseData2)
+      }else if (responseData2.responseCode === "115") {
+        commit("updateTimedOut", true)
       }
     })
   },
@@ -287,7 +298,10 @@ export const actions = {
         commit("updateLoading", false)
         commit("updateOrganisation", responseData)
         // console.log(responseData)
-      }else{
+      }else if (responseData.responseCode === "115") {
+        commit("updateTimedOut", true)
+      }
+      else{
          commit("updateLoading", false)
       }
     }).catch(() => {
