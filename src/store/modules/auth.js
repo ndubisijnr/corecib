@@ -11,6 +11,10 @@ import WalletService from "../../service/WalletService";
 import OrganisationResponse from "../../model/reponse/OrganisationResponse";
 import StoreUtils from "@/util/baseUtils/StoreUtils";
 import BillsPaymentRequest from "@/model/request/BillsPaymentRequest";
+import AccountPayoutService from "../../service/AccountPayoutService";
+import AccountPayoutResponse from "../../model/reponse/AccountPayoutResponse";
+import AccountPayoutRequest from "../../model/request/AccountPayoutRequest";
+
 
 const Toast = Swal.mixin({
   toast: true,
@@ -29,12 +33,14 @@ export const state = {
   token: null,
   loading: false,
   userInfo: AuthenticationResponse.login,
+  addedBanks:AccountPayoutResponse.readPayoutAccountByOrganisationId,
   screen: "register",
   passwordResetScreen: "email",
   readOrganisation: OrganisationResponse.readOrganisationById,
   balances:WalletResponse.readBalanceWallet,
   refferalstats:OrganisationResponse.refferalStatsResponse,
-  isTimedOut:false
+  isTimedOut:false,
+  readOnlyAddedBanks:{}
 }
 
 export const getters = {
@@ -65,7 +71,9 @@ export const mutations = {
   updatePasswordResetScreen: (state, payload) => { state.passwordResetScreen = payload; },
   updateOrganisation: (state, payload) => { state.readOrganisation = payload },
   updateBalance:(state, payload) => {state.balances = payload},
-  updateRefferalStats:(state, payload) => {state.refferalstats = payload}
+  updateRefferalStats:(state, payload) => {state.refferalstats = payload},
+  updateAddedBanks: (state, payload) => {state.addedBanks = payload},
+  updatereadAddedBanks: (state, payload) => {state.readOnlyAddedBanks = payload},
 }
 
 export const actions = {
@@ -120,11 +128,23 @@ export const actions = {
             router.push({name:"Settings"}).then(() => {
               let model = BillsPaymentRequest.readCategories
               StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories, model)
+              AccountPayoutRequest.readAccountPayoutById.accountOrganisationId = localStorage.organisationId
+              return AccountPayoutService.callreadAddedBanksApi(payload = AccountPayoutRequest.readAccountPayoutById).then(response => {
+                let responseData3 = response.data
+                commit("updateAddedBanks", responseData3)
+                commit("updatereadAddedBanks",responseData3)
+              })
             })
           }else{
             router.push({ name: "GetStarted" }).then(() => {
               let model = BillsPaymentRequest.readCategories
               StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories, model)
+              AccountPayoutRequest.readAccountPayoutById.accountOrganisationId = localStorage.organisationId
+              return AccountPayoutService.callreadAddedBanksApi(payload = AccountPayoutRequest.readAccountPayoutById).then(response => {
+                let responseData3 = response.data
+                commit("updateAddedBanks", responseData3)
+                commit("updatereadAddedBanks",responseData3)
+              })
             })
           }
         }

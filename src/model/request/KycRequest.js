@@ -44,7 +44,7 @@ class KycRequest{
     }
 
     static read_by_organisation_id = {
-        page:null,
+        page:1,
         startDate:null,
         endDate:null,
         searchItem:null

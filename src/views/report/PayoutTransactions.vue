@@ -62,7 +62,7 @@ export default {
       transactions: (state) => state.accountPayout.allpayouts,
       loading: (state) => state.accountPayout.accloading,
       balances: state => state.auth.balances,
-      payoutAccount: (state) => state.accountPayout.addedBanks,
+      payoutAccount: (state) => state.auth.addedBanks,
 
     }),
   },

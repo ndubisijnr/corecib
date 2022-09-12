@@ -13,6 +13,7 @@ const Toast = Swal.mixin({
         toast.addEventListener("mouseenter", Swal.stopTimer);
         toast.addEventListener("mouseleave", Swal.resumeTimer);
     },
+
 });
 
 export const state = {
@@ -63,8 +64,25 @@ export const mutations = {
 
 export const getters = {}
 
+
 export const actions = {
-    readAllKyc:() => {},
+    readAllKyc:({commit,state}, payload = KycRequest.read_by_organisation_id) => {
+        commit("UpdateLoading", true)
+        return KycVerificationService.callReadAllKyc(payload).then((response) => {
+            commit("UpdateLoading", false)
+            let responseData = response.data
+            if(responseData.responseCode === "00"){
+                commit("updateKycReadAll", responseData.data)
+                console.log(state.kycReadAll, '-----')
+            }else{
+                console.log(responseData.responseMessage)
+            }
+        }).catch((e) => {
+            commit("UpdateLoading", true)
+            console.log(e)
+        })
+    },
+
 
     UpdateCorporateAffairs:({commit}, payload=KycRequest.corporate_affairs) => {
         commit("UpdateLoading", true)

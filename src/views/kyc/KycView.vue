@@ -6,7 +6,7 @@
         <b-button class="export-ex shadow-lg--hover small desktop" @click="showKycForm = true">Make a Request</b-button>
       </div>
     <BaseTable
-          :items="[]"
+          :items="allKyc"
           :fields="fields"
           filter-mode="default"
           :is-busy="loading"/>
@@ -23,7 +23,9 @@ import BaseTable from "../../components/table/BaseTable";
 import SearchForm from "../../components/form/SearchForm";
 import SearchModuleutil from "../../util/constant/SearchModuleutil";
 import KycForm from "../../components/kyc-components/KycForm";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 import {mapState} from "vuex";
+import KycRequest from "../../model/request/KycRequest";
 
 
 
@@ -34,16 +36,15 @@ export default {
       searchALL_TRANSACTION: SearchModuleutil.ALL_TRANSACTION,
       showKycForm:false,
       showKycForm2:false,
+      readKycModel:KycRequest.read_by_organisation_id,
       fields: [
         { key: "kycId", label: "kycId" },
-        { key: "kycOrganisationId", label: "kycOrganisationId" },
-        { key: "kycNumber", label: "kycNumber" },
-        {
-          key: "kycRequest",
-          label: "kycRequest",
-        },
-        { key: "kycResponse", label: "kycResponse" },
+       { key: "kycOrganisationId", label: "kyc Organisation Id" },
+        { key: "kycNumber", label: "kyc Number" },
+        {key: "kycType", label: "kyc Type"},
         { key: "kycStatus", label: "kycStatus" },
+        { key: "kycResponse", label: "kycStatus"},
+        { key: "kycAction", label: "Action" },
 
       ],
 
@@ -60,9 +61,15 @@ export default {
     },
   },
 
+  mounted() {
+    StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc, this.readKycModel)
+    console.log(this.allKyc)
+  },
+
   computed: {
      ...mapState({
-       loading:state => state.kycVerification.loading
+       loading:state => state.kycVerification.loading,
+       allKyc: state => state.kycVerification.kycReadAll
      })
   }
 }

@@ -8,7 +8,9 @@ class StoreUtils {
       UpdateVoterCard:"kycVerification/UpdateVoterCard",
       UpdateTax:"kycVerification/UpdateTax",
       UpdateDriversLicense:"kycVerification/UpdateDriversLicense",
-      UpdateBvn:"kycVerification/UpdateBvn"
+      UpdateBvn:"kycVerification/UpdateBvn",
+      readAllKyc:"kycVerification/readAllKyc"
+
     },
 
     document:{
@@ -84,7 +86,7 @@ class StoreUtils {
       UpdateTax:"kycVerification/UpdateTax",
       UpdateDriversLicense:"kycVerification/UpdateDriversLicense",
       UpdateBvn:"kycVerification/UpdateBvn",
-      updateKycReadAll:"kycVerification/updateKycReadAll"
+      updateKycReadAll:"kycVerification/updateKycReadAll",
     },
     document:{
       updateLoading: "document/updateLoading",
@@ -107,7 +109,11 @@ class StoreUtils {
       updateOrganisation:"auth/updateOrganisation",
       updateBalance:"auth/updateBalances",
       updateRefferalStats:"auth/updateRefferalStats",
-      updateTimedOut:"auth/updateTimedOut"
+      updateTimedOut:"auth/updateTimedOut",
+      updateAddedBanks:"accountPayout/updateAddedBanks",
+      updatereadAddedBanks:"accountPayout/updatereadAddedBanks",
+
+
     },
     dispute: {
       updateLoading: "dispute/updateLoading",

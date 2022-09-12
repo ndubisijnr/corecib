@@ -1,13 +1,15 @@
 <template>
-  <footer class="footer  px-4 mx-2">
-    <div class="row align-items-center justify-content-lg-between">
-      <div class="col-lg-12">
-       <div class="copyright text-center text-lg-center text-muted">
-         © BizGem {{year}}
-       </div>
-      </div>
-    </div>
-  </footer>
+  <div>
+<!--  <footer class="footer  px-4 mx-2">-->
+<!--    <div class="row align-items-center justify-content-lg-between">-->
+<!--      <div class="col-lg-12">-->
+<!--       <div class="copyright text-center text-lg-center text-muted">-->
+<!--         © BizGem {{year}}-->
+<!--       </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </footer>-->
+  </div>
 </template>
 <script>
 export default {

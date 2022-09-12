@@ -23,4 +23,8 @@ export default {
     callDriverLicenceEndPoint(payload){
         return apiClient.appClient.post('/kyc/drivers-license', payload)
     },
+
+    callReadAllKyc(payload){
+        return apiClient.appClient.post('/kyc/read-by-organisation-id', payload)
+    }
 }

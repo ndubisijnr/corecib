@@ -13,7 +13,7 @@
       stacked="md"
       :style="$router.currentRoute.fullPath === '/reports/transactions' ? {fontSize: 12, height: '900px'} :{fontSize: 12}"
       striped
-      :busy="loading || loading3"
+      :busy="loading || loading3 || loading4"
       :items="items"
       :fields="fields"
       :current-page="currentPage"
@@ -24,8 +24,7 @@
       :sort-by.sync="sortBy"
       :sort-desc.sync="sortDesc"
       :sort-direction="sortDirection"
-      @filtered="onFiltered"
-    >
+      @filtered="onFiltered">
       <template v-slot:table-busy>
         <div class="text-center text-danger my-2" style="display: flex; justify-content: center">
           <lottie-player src="https://assets5.lottiefiles.com/private_files/lf30_4svt0lb2.json"  background="transparent"  speed="1"  style="width: 50px; height: 50px;"  loop  autoplay></lottie-player>
@@ -64,11 +63,9 @@
         {{ row.item.createdat | moment("DD-MMM-YYYY") }}
       </template>
       <!-- / -->
+
       <!-- TODO TEXT ELLIPSIS FORMATTING -->
-      <template
-        :title="row.item.contractDebitAccountName"
-        v-slot:cell(contractDebitAccountName)="row"
-      >
+      <template :title="row.item.contractDebitAccountName" v-slot:cell(contractDebitAccountName)="row">
         {{ row.item.contractDebitAccountName | formatTextWithEllipsis }}
       </template>
       <template v-slot:cell(disputeComment)="row">
@@ -149,6 +146,10 @@
           href="#"
           @click="row.toggleDetails"
         />
+      </template>
+
+      <template v-slot:cell(kycAction)="row">
+          <b-button @click="kycAction(obj=row_details)">Re-view</b-button>
       </template>
 
       <template #cell(walletAction)="row">
@@ -293,11 +294,15 @@ export default {
     ...mapState({
       loading: (state) => state.walletTransactions.loading,
       loading2:(state) => state.walletTransactions.retrieveLoading,
-      loading3:(state) => state.virtualAccount.loading
+      loading3:(state) => state.virtualAccount.loading,
+      loading4:(state) => state.kycVerification.loading
     }),
   },
   mounted() {},
   methods: {
+    kycAction(obj){
+      console.log(obj)
+    },
     requestNewTransactions(){
       this.count++
       this.allTransactionsModel.page = this.count
@@ -503,8 +508,8 @@ export default {
     rowClass(item, type) {
       if (!item || type !== "row") return "";
       if (item.drCr != null)
-        if (item.drCr === "DRr") return "table-danger";
-        else if (item.drCr === "CRr") return "table-success";
+        if (item.drCr === "DR") return "table-danger";
+        else if (item.drCr === "CR") return "table-success";
         else return "";
     },
   },
