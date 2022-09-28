@@ -53,6 +53,20 @@ class AuthenticationRequest {
         countryCode: null,
         idToken: null
     }
+    static createCustomerRequest = {
+        customerPhone:null,
+        customerFirstName:null,
+        customerLastName:null,
+        customerCountryCode:null,
+        customerCountry:null,
+        customerPassword:null,
+        customerConfirmPassword:null,
+        customerLink:null
+    }
+    static validateCustomerLinkRequest = {
+        customerLink:null
+    }
+
 
 }
 

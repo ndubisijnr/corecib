@@ -1,6 +1,7 @@
 import Logon from '../../views/auth/Login'
 import SignUp from '../../views/auth/SignUp'
 import ForgotPassword from '../../views/auth/ForgotPassword'
+import SignUpUser from '../../views/auth/SignUpUser'
 
 
 export default [    
@@ -28,4 +29,10 @@ export default [
         meta: {layout: 'auth',authRequired:false},
         component: ForgotPassword
     },
+    {
+        path: '/invite',
+        name: 'SignUpUser',
+        meta: {layout: 'auth',authRequired:false},
+        component: SignUpUser
+    }
 ];

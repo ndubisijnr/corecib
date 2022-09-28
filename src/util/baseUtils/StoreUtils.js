@@ -27,6 +27,8 @@ class StoreUtils {
     },
     auth: {
       initialEnrollment: "auth/initialEnrollment",
+      createCustomer: "auth/createCustomer",
+      validateLink: "auth/validateLink",
       completeEnrollment: "auth/completeEnrollment",
       logon: "auth/logon",
       resendOtp: "auth/resendOtp",

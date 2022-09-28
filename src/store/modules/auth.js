@@ -1,4 +1,5 @@
 import AuthService from "../../service/AuthService";
+import CustomerService from "../../service/CustomerService";
 import router from "../../router";
 import AuthenticationRequest from "../../model/request/AuthRequest";
 import Swal from "sweetalert2";
@@ -101,6 +102,42 @@ export const actions = {
       if (responseData.responseCode === "00") {
         Swal.fire({ text: responseData.responseMessage, icon: 'success', })
           .then(() => { router.push({ name: "Logon" }) })
+      } else {
+        Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
+      }
+    }).catch((error) => {
+      commit("updateLoading", false);
+    });
+  },
+createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerRequest) => {
+  console.log("Action")
+  console.log(payload)
+    commit("updateLoading", true)
+    return CustomerService.callCreateCustomerApi(payload).then(response => {
+      let responseData = response.data;
+      commit("updateLoading", false)
+      if (responseData.responseCode === "00") {
+        Swal.fire({ text: responseData.responseMessage, icon: 'success', })
+          .then(() => { router.push({ name: "Logon" }) })
+      } else {
+        Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
+      }
+    }).catch((error) => {
+      commit("updateLoading", false);
+    });
+  },
+  validateLink: ({ commit }, payload = AuthenticationRequest.validateCustomerLinkRequest) => {
+  console.log("Action")
+  console.log(payload)
+    commit("updateLoading", true)
+    return CustomerService.callValidateLinkApi(payload).then(response => {
+      let responseData = response.data;
+      commit("updateLoading", false)
+      if (responseData.responseCode === "00") {
+        Swal.fire({ text: responseData.responseMessage, icon: 'success', })
+          .then(() => { router.push({ name: "Logon" }) })
+      }else if (responseData.responseCode === "01") {
+         router.push({ name: "SignUpUser" });
       } else {
         Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
       }

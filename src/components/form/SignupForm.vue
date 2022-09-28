@@ -247,8 +247,7 @@ export default {
 
     onCompleteEnrollment() {
       if (
-        this.completeModel.customerPassword ===
-        this.completeModel.customerConfirmPassword
+        this.completeModel.customerPassword === this.completeModel.customerConfirmPassword
       ) {
         ;
         this.completeModel.customerEmail = this.initiateModel.customerEmail;
@@ -286,6 +285,71 @@ export default {
         label: `${item.name}`,
       };
     });
+    const products =  [
+      {
+        "availablePricingOptions": [
+          {
+            "monthsPaidFor": 1,
+            "price": 29300,
+            "invoicePeriod": 1
+          },
+          {
+            "monthsPaidFor": 2,
+            "price": 58600,
+            "invoicePeriod": 1
+          },
+          {
+            "monthsPaidFor": 3,
+            "price": 87900,
+            "invoicePeriod": 1
+          },
+          {
+            "monthsPaidFor": 4,
+            "price": 117200,
+            "invoicePeriod": 1
+          },
+          {
+            "monthsPaidFor": 5,
+            "price": 146500,
+            "invoicePeriod": 1
+          },
+          {
+            "monthsPaidFor": 6,
+            "price": 175800,
+            "invoicePeriod": 1
+          },
+          {
+            "monthsPaidFor": 7,
+            "price": 205100,
+            "invoicePeriod": 1
+          },
+          {
+            "monthsPaidFor": 8,
+            "price": 234400,
+            "invoicePeriod": 1
+          },
+          {
+            "monthsPaidFor": 9,
+            "price": 263700,
+            "invoicePeriod": 1
+          },
+          {
+            "monthsPaidFor": 10,
+            "price": 293000,
+            "invoicePeriod": 1
+          },
+          {
+            "monthsPaidFor": 12,
+            "price": 322300,
+            "invoicePeriod": 12
+          }
+        ],
+        "code": "PRWFRNSE36",
+        "name": "DStv Premium French",
+        "description": " "
+      }]
+    console.log(products[i].code);
+
   },
 };
 </script>
