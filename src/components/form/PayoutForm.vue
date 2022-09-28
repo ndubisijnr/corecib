@@ -1,13 +1,14 @@
 <template>
     <modal-1 :show="showCreatePayout && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
         <div>
-            <div class="card-head">
-                <div class="text-end">
-                    <button type="button" class="btn-close p-2 m-2" @click="closeModal()"></button>
-                </div>
-                <div class=""></div>
+          <div class="card-head">
+            <div class="d-flex justify-content-between">
+              <h4 style="color:#3F88C5;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Request Payout</h4>
+              <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Request Payout"></button>
             </div>
-            <div class="card-body">
+          </div>
+
+          <div class="card-body">
                 <div class="container">
                     <b-form class="" @submit.prevent="requestPayout()">
                         <h4 class="text-left">Wallet Balance: ₦{{ balances.walletBalance.accountBalance | formatAmount
@@ -19,13 +20,9 @@
                                 placeholder="Enter Amount" required @keypress="isNumber($event)"></b-form-input>
                         </b-input-group>
                         <h4 id="error" class="text-danger text-center"></h4>
-                        <b-button v-if="currentOrganisation.organisationStage == 'PROD'"
-                            class="w-100 text-white" type="submit" :style="{backgroundColor:primaryColor}">{{ accLoading
-                                    ? 'please wait..' : 'withdraw'
-                            }} <span :class="{ 'spinner-border': accLoading }"></span>
+                        <b-button v-if="currentOrganisation.organisationStage == 'PROD'" class="text-white" type="submit" :style="{backgroundColor:primaryColor,width:'100%'}">{{ accLoading ? 'please wait..' : 'withdraw' }} <span :class="{ 'spinner-border': accLoading }"></span>
                         </b-button>
-                        <b-button v-else disabled :style="{backgroundColor:primaryColor,color:'white'}">
-                            You are in Test Mode</b-button>
+                        <b-button v-else disabled :style="{backgroundColor:primaryColor,color:'white',width:'100%'}">You are in Test Mode</b-button>
                     </b-form>
                 </div>
             </div>
@@ -131,4 +128,8 @@ export default {
 </script>
 
 <style scoped>
+.card-head{
+  background-color: #D7E6F3;
+  color: white;
+}
 </style>

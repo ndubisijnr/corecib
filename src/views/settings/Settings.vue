@@ -36,7 +36,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="accordion" role="tablist" v-else>
                   <div no-body class="mb-1 add-bank-form">
                     <div header-tag="header" class="p-1" role="tab">
@@ -260,6 +259,53 @@
                 </div>
               </el-tab-pane>
 
+              <el-tab-pane id="tab-2" :key="2" label="User Management" v-if="currentOrganisation.customerOrganisationRole === 'ADMINISTRATOR'">
+                <div class="box-card">
+                  <div class="pl-4 pr-4 pt-2" style="display: flex;justify-content: space-between;margin-top: 2%">
+                  <div>
+                      <h3 class="text-light">Organisation Users</h3>
+                  </div>
+                  </div>
+                  <BaseTable
+                    :items="readCustomers.data"
+                    :fields="customerFields"
+                  />
+                  <b-modal id="modal-md" hide-backdrop size="sm" hide-footer title="Invite A User">
+                  <form @submit.prevent="processInvite" style="align-items:center;justify-content:center;display: flex;flex-direction: column">
+                    <b-form-group label="User Email">
+                      <!-- <div style="position:absolute;top:-10px;" class="bg-info small text-white p-1">Invite a user and assign roles to users</div>-->
+                      <b-form-input placeholder="useremail@anymail.com" required v-model="inviteUserModel.customerEmail" type="email" style="width: 100%"></b-form-input>
+                    </b-form-group>
+                    <b-form-group label="User Role">
+                        <base-input>
+                          <el-select class="select-danger" filterable placeholder="Select user role" required  v-model="inviteUserModel.customerRole">
+                            <el-option v-if="readOrganisationRoles.length > 1" v-for="(item, index) in readOrganisationRoles" :key="index" :value="item.roleName" :label="item.roleName" class="select-danger"></el-option>
+                          </el-select>
+                        </base-input>
+                    </b-form-group>
+                    <b-form-group>
+                      <b-button :disabled="loadingOtp"  :style="{backgroundColor:primaryColor,color:'#fff', width:'100%'}" type="submit">
+                        {{ loadingOtp ? "Please wait" : "Proceed" }}</b-button>
+                    </b-form-group>
+                  </form>
+                </b-modal>
+                  <edit-organisation-user  :show-organisation-user-form="showUserEditForm"  @closeUserForm="updateCloseEditFrom"/>
+                </div>
+                <div class="box-card">
+                  <div class="pl-4 pr-4 pt-2" style="display: flex;justify-content: space-between;margin-top: 2%">
+                    <div>
+                      <h3 class="text-light">Organisation Invites</h3>
+<!--                      <h6>nanuen hangseung ida, komasumida latto babarish rubish managebange mandatoryn djsusndddbf</h6>-->
+                    </div>
+                    <b-button :style="{backgroundColor:primaryColor,color:'#fff'}" v-b-modal.modal-md> Invite User</b-button>
+                  </div>
+                  <BaseTable
+                    :items="readAllInvites"
+                    :fields="inviteFields"
+                  />
+                </div>
+              </el-tab-pane>
+
               <el-tab-pane id="tab-8" :key="8" name="eight" label="Change Password">
                 <div class="settings-wrap">
                 <div>
@@ -449,6 +495,21 @@
   </div>
 </template>
 <script>
+const sort_by = (field, reverse, primer) => {
+  const key = primer ?
+      function(x) {
+        return primer(x[field])
+      } :
+      function(x) {
+        return x[field]
+      };
+
+  reverse = !reverse ? 1 : -1;
+
+  return function(a, b) {
+    return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+  }
+}
 import { mapState } from "vuex";
 import ApiKeyDisplayForm from "../../components/form/ApiKeyDisplayForm";
 import { DropdownMenu, DropdownItem, Dropdown } from "element-ui";
@@ -465,6 +526,9 @@ import BlockerLoader from "../../components/BlockerLoader";
 import ChangePasswordRequest from "@/model/request/ChangePasswordRequest";
 import Toast from "../../../toastNotification";
 import UpdateBusinessProfile from "../../components/UpdateBusinessProfile";
+import BaseTable from "../../components/table/BaseTable";
+import OrganisationRequest from "../../model/request/OrganisationRequest";
+import EditOrganisationUser from "../../components/form/EditOrganisationUser";
 export default {
   name: "Settings",
   components: {
@@ -476,7 +540,9 @@ export default {
     ProgressBar,
     AddBank,
     BlockerLoader,
-    UpdateBusinessProfile
+    UpdateBusinessProfile,
+    BaseTable,
+    EditOrganisationUser
   },
   data() {
     return {
@@ -485,19 +551,39 @@ export default {
       showModalDirector1:false,
       showModalDirector2:false,
       sendOtpModel: AuthenticationRequest.resendOtp,
+      inviteUserModel:OrganisationRequest.inviteCustomer,
       readbanklistModel: VirtualAccountRequest.getBankList,
       createPayoutAccountModel: AccountPayoutRequest.createAccountPayout,
       readPayoutAccountModel: AccountPayoutRequest.readAccountPayoutById,
       changePasswordModel:ChangePasswordRequest.changePassword,
       files: [],
       banks: [],
+      organisationRoles:[],
       progressBarArr: [],
       apikeyModel: ApikeyRequest.regenerateApiKey,
       documentModel: DocumentRequest.createDocument,
       readDoc: DocumentRequest.readDocument,
       timerCount: 0,
       edit: false,
-      isEditing:true
+      isEditing:true,
+      inviteFields:[
+        { key: "inviteCustomerEmail", label: "Email" },
+        { key: "inviteCustomerRole", label: "Role" },
+        { key: "inviteStatus", label: "Status" },
+        { key: "inviteCreatedAt", label: "Date Created"},
+        { key: "inviteUpdatedAt", label: "Updated" },
+        { key: "action", label: "Actions" },
+      ],
+      customerFields:[
+        { key: "organisationName", label: "Organisation" },
+        { key: "organisationEmail", label: "Email" },
+        { key: "organisationPhone", label: "Phone" },
+        { key: "organisationType", label: "Organisation Type" },
+        { key: "customerOrganisationRole", label: "User Role" },
+        { key: "organisationStatus", label: "Status" },
+        { key: "CustomerAction", label: "Actions" },
+
+      ]
     };
   },
 
@@ -522,10 +608,11 @@ export default {
       createloader: (state) => state.accountPayout.addbankloading,
       apikeyloading: (state) => state.apiKey.loading,
       // documents:(state) => state.document.document
+      readCustomers: (state) => state.auth.allCustomers,
+      readOrganisationRoles: (state) => state.auth.organisationRoles,
+      readAllInvites:state => JSON.parse(JSON.stringify(state.auth.allInvites)).sort(sort_by('inviteId', true, parseInt)),
+      showUserEditForm:state => state.auth.userEditForm
     }),
-    getStatus() {
-      return localStorage.taged
-    },
     documents: () => {
       // console.log("progressBarArr");
       let vm = this;
@@ -541,16 +628,11 @@ export default {
       return doc;
     },
 
-    checkInputfield: () => {
-      let organization = StoreUtils.rootGetters(
-        StoreUtils.getters.auth.getCurrentOrganization
-      );
-      return organization;
-    },
     currentOrganisation() {
       return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
     },
   },
+
   watch: {
     documents(newValue) {
       // console.log("progressBarArrNew", newValue.data.length);
@@ -574,12 +656,6 @@ export default {
       //immediate: true, // This ensures the watcher is triggered upon creation
     },
     bankList(newValue, oldValue) {
-      // console.log(
-      //   `Updating from Branch ${JSON.stringify(oldValue)} to ${JSON.stringify(
-      //     newValue
-      //   )}`
-      // );
-      // console.log("$$$$$$$%%%%%>>>>\n " + JSON.stringify(this.bankList));
       if (this.bankList.length !== 0) {
         //if(this.bankList.data.length!==0){
         let bank = [];
@@ -590,16 +666,32 @@ export default {
             label: `${item.name}`,
           };
         });
-        /* }
-            else{
-                this.option_bank=[{value:'',label:'No Record'}];
-             }*/
       }
     },
+    // readOrganisationRoles(newValue, oldValue) {
+    //   if (this.readOrganisationRoles.length !== 0) {
+    //     //if(this.bankList.data.length!==0){
+    //     let roles = [];
+    //     roles = this.readOrganisationRoles;
+    //     this.organisationRoles = roles.map((item) => {
+    //       return {
+    //         value: `${item.itemName}`,
+    //         label: `${item.itemName}`,
+    //       };
+    //     });
+    //   }
+    // },
   },
 
   mounted() {
 
+    //read invites
+    StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites)
+
+    //read Roles
+    StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles)
+
+    //revalidate Users
     const userToken = localStorage.getItem('token')
     StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
     StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
@@ -626,6 +718,8 @@ export default {
     );
 
     StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
+
+    StoreUtils.dispatch(StoreUtils.actions.auth.readCustomerByOrganisation)
   },
 
 
@@ -647,6 +741,15 @@ export default {
   // },
 
   methods: {
+
+    processInvite(){
+      StoreUtils.dispatch(StoreUtils.actions.auth.inviteCustomer, this.inviteUserModel).then(() => {
+        document.getElementById('modal-md').click()
+      })
+    },
+    updateCloseEditFrom(value) {
+      StoreUtils.commit(StoreUtils.mutations.auth.updateUserEditForm, value)
+    },
 
     preventNav(event) {
       if (!this.isEditing) return
@@ -922,7 +1025,9 @@ h2 span {
 /*  -webkit-appearance: none;*/
 /*  margin: 0;*/
 /*}*/
-
+.box-card{
+  background-color: white;
+}
 
 .bformedit {
   width: 100%;

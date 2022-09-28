@@ -10,6 +10,9 @@
     </div>
     <dashboard-layout v-if="layout === 'dashboard-layout'"></dashboard-layout>
     <auth-layout v-else></auth-layout>
+
+    <add-new-business @closeBusinessForm="updateAddBusiness" :show-business-form="addBizForm"></add-new-business>
+
   </div>
 </template>
 
@@ -20,10 +23,11 @@ import StoreUtils from "./util/baseUtils/StoreUtils";
 import AccountPayoutRequest from "./model/request/AccountPayoutRequest";
 import router from "@/router";
 import {mapState} from "vuex";
+import AddNewBusiness from "./components/form/AddNewBusiness";
 
 const default_layout = "default";
 export default {
-  components: {AuthLayout, DashboardLayout},
+  components: {AuthLayout, DashboardLayout, AddNewBusiness},
   data(){
     return{
       readPayoutAccountModel: AccountPayoutRequest.readAccountPayoutById,
@@ -31,7 +35,23 @@ export default {
 
     }
   },
+  computed:{
+    layout() {
+      return (this.$route.meta.layout || default_layout) + '-layout';
+    },
+    currentOrganisation(){
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
+    },
+
+    ...mapState({
+      isExpired:state => state.auth.isTimedOut,
+      addBizForm: (state) => state.auth.form
+    })
+
+
+  },
   mounted() {
+    console.log(this.showBusinessForm)
     setTimeout(()=>{
       if(router.currentRoute.meta.layout !== "auth"){
         const userToken = localStorage.getItem('token')
@@ -61,25 +81,15 @@ export default {
          if(params.referralCode != null) localStorage.referralCode = params.referralCode
         }
     },2000)
-    console.clear()
+    // console.clear()
 
   },
-  methods:{},
-
-  computed:{
-    layout() {
-      return (this.$route.meta.layout || default_layout) + '-layout';
+  methods:{
+    updateAddBusiness(value) {
+      StoreUtils.commit(StoreUtils.mutations.auth.updateForm, value)
     },
-    currentOrganisation(){
-      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
-    },
+  },
 
-    ...mapState({
-      isExpired:state => state.auth.isTimedOut
-    })
-
-    
-  }
 }
 </script>
 

@@ -2,11 +2,12 @@
   <modal-1 :show="showCreateDispute && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
     <div>
       <div class="card-head">
-        <div class="text-end">
-          <button type="button" class="btn-close p-2 m-2" @click="closeModal()"></button>
+        <div class="d-flex justify-content-between">
+          <h4 style="color:#3F88C5;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Log Dispute</h4>
+          <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Request Payout"></button>
         </div>
-        <div class=""></div>
       </div>
+
       <div class="card-body">
         <form role="form" @submit.prevent="transactionsQuery()" v-if="status == 'false'">
           <div class="form-floating mb-3">
@@ -194,6 +195,10 @@ export default {
 </script>
 
 <style scoped>
+.card-head{
+  background-color: #D7E6F3;
+  color: white;
+}
 .spinner-border {
   display: inline-block;
   vertical-align: text-bottom;

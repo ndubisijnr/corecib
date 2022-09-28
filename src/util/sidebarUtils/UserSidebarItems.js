@@ -6,12 +6,12 @@ export default
         {
             name:'Virtual Accounts',
             icon:'fa fa-university',
-            path:'/user/account'
+            path:'/userManagement/account'
         },
         {
             name:'Wallets',
             icon:'fa fa-wallet',
-            path:'/user/wallet'
+            path:'/userManagement/wallet'
         },
 
     ]

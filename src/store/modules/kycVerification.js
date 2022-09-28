@@ -73,7 +73,6 @@ export const actions = {
             let responseData = response.data
             if(responseData.responseCode === "00"){
                 commit("updateKycReadAll", responseData.data)
-                console.log(state.kycReadAll, '-----')
             }else{
                 console.log(responseData.responseMessage)
             }
@@ -91,12 +90,15 @@ export const actions = {
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateCorporateAffairs", responseData)
+
                 if(router.currentRoute.name !== "MakeRequestView"){
-                    router.push({name:"MakeRequestView"}).then(()=>{
+                    setTimeout(() => {
+                        router.push({name:"MakeRequestView"}).then(()=>{
                         Object.keys(KycRequest.corporate_affairs).forEach((key)=>{
                             KycRequest.corporate_affairs[key] = null
                         })
                     })
+                    },0)
                 }
             }else{
                 commit("UpdateLoading", false)
@@ -117,11 +119,13 @@ export const actions = {
                 commit("UpdateLoading", false)
                 commit("UpdateBvn", responseData)
                 if(router.currentRoute.name !== "MakeRequestView"){
-                    router.push({name:"MakeRequestView"}).then(()=>{
-                        Object.keys(KycRequest.bank_verification).forEach((key)=>{
-                            KycRequest.bank_verification[key] = null
+                    setTimeout(() => {
+                        router.push({name:"MakeRequestView"}).then(()=>{
+                            Object.keys(KycRequest.bank_verification).forEach((key)=>{
+                                KycRequest.bank_verification[key] = null
+                            })
                         })
-                    })
+                    },0)
                 }
             }else{
                 commit("UpdateLoading", false)
@@ -141,11 +145,13 @@ export const actions = {
                 commit("UpdateLoading", false)
                 commit("UpdateNationalIdentity", responseData)
                 if(router.currentRoute.name !== "MakeRequestView"){
-                    router.push({name:"MakeRequestView"}).then(()=>{
+                    setTimeout(() => {
+                        router.push({name:"MakeRequestView"}).then(()=>{
                         Object.keys(KycRequest.national_identity).forEach((key)=>{
                             KycRequest.national_identity[key] = null
                         })
                     })
+                    },0)
                 }
             }else{
                 commit("UpdateLoading", false)
@@ -165,11 +171,13 @@ export const actions = {
                 commit("UpdateLoading", false)
                 commit("UpdateVoterCard", responseData)
                 if(router.currentRoute.name !== "MakeRequestView"){
-                    router.push({name:"MakeRequestView"}).then(()=>{
+                    setTimeout(() => {
+                        router.push({name:"MakeRequestView"}).then(()=>{
                         Object.keys(KycRequest.voter_card).forEach((key)=>{
                             KycRequest.voter_card[key] = null
                         })
                     })
+                },0)
                 }
             }else{
                 commit("UpdateLoading", false)
@@ -190,11 +198,13 @@ export const actions = {
                 commit("UpdateLoading", false)
                 commit("UpdateTax", responseData)
                 if(router.currentRoute.name !== "MakeRequestView"){
-                    router.push({name:"MakeRequestView"}).then(()=>{
+                    setTimeout(() => {
+                        router.push({name:"MakeRequestView"}).then(()=>{
                         Object.keys(KycRequest.tax_identification_number).forEach((key)=>{
                             KycRequest.tax_identification_number[key] = null
                         })
                     })
+                    },0)
                 }
             }else{
                 commit("UpdateLoading", false)
@@ -215,12 +225,14 @@ export const actions = {
                 commit("UpdateLoading", false)
                 commit("UpdateDriversLicense", responseData)
                 if(router.currentRoute.name !== "MakeRequestView"){
-                    router.push({name:"MakeRequestView"}).then(()=>{
+                    setTimeout(() => {
+                        router.push({name:"MakeRequestView"}).then(()=>{
                         Object.keys(KycRequest.drivers_licence).forEach((key)=>{
                             KycRequest.drivers_licence[key] = null
                         })
                     })
-                }
+                },0)
+    }
             }else{
                 commit("UpdateLoading", false)
                 Toast.fire({text:responseData.responseMessage, icon:"error"}).then()

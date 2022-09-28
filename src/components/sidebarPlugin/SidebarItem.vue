@@ -13,13 +13,13 @@
       data-toggle="collapse"
       @click.prevent="collapseMenu">
       <template v-if="addLink">
-        <span class="nav-link-text">
+        <span :class="{'nav-link-text-dark' : Active === link.path || Active.includes(link.path)}" class="nav-link-text">
           {{ link.name }} <b class="caret"></b>
         </span>
       </template>
       <template v-else>
         <i :class="link.icon"></i>
-        <span class="nav-link-text">{{ link.name }} <b class="caret"></b></span>
+        <span :class="{'nav-link-text-dark' : Active === link.path || Active.includes(link.path)}" class="nav-link-text">{{ link.name }} <b class="caret"></b></span>
       </template>
     </a>
     <collapse-transition>
@@ -45,11 +45,11 @@
         target="_blank"
         :href="link.path">
         <template v-if="addLink">
-          <span class="nav-link-text" >{{ link.name }}</span>
+          <span :class="{'nav-link-text-dark' : Active === link.path || Active.includes(link.path)}" class="nav-link-text" >{{ link.name }}</span>
         </template>
         <template v-else>
           <i :class="link.icon"></i>
-          <span class="nav-link-text">{{ link.name }}</span>
+          <span :class="{'nav-link-text-dark' : Active === link.path || Active.includes(link.path)}" class="nav-link-text">{{ link.name }}</span>
         </template>
       </component>
     </slot>
@@ -192,15 +192,19 @@ export default {
 </script>
 <style scoped>
 
-.nav-link-text{
-  color: white;
-}
-
 .active-page{
   background-color: #236395;
+  /*background-color: rgba(35, 99, 149, 0.37);*/
+  /*background-color: white;*/
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
+}
 
+.nav-link-text-dark{
+  color:#236395;
+}
 
+.nav-link-text{
+  color: white;
 }
 
 .fas{

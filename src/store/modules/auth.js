@@ -30,29 +30,39 @@ const Toast = Swal.mixin({
 
 
 export const state = {
+  form:false,
+  userEditForm:false,
   token: null,
   loading: false,
   userInfo: AuthenticationResponse.login,
   addedBanks:AccountPayoutResponse.readPayoutAccountByOrganisationId,
   screen: "register",
+  allOrganisations:null,
   passwordResetScreen: "email",
   readOrganisation: OrganisationResponse.readOrganisationById,
   balances:WalletResponse.readBalanceWallet,
   refferalstats:OrganisationResponse.refferalStatsResponse,
   isTimedOut:false,
-  readOnlyAddedBanks:{}
+  readOnlyAddedBanks:{},
+  readOrganisationByUserId:{},
+  currentOrganisation:[],
+  allCustomers:null,
+  organisationRoles:null,
+  allInvites:null,
+  singleOrganisationUser:null
 }
 
 export const getters = {
   getUserInfo: state => { return state.userInfo },
+  getCustomerId: state => {return state.userInfo.customerId},
   getToken: state => { return state.token },
   getUserToken: state => { return localStorage.token },
   getOrganizationId: state => { return localStorage.organisationId },
   getCurrentOrganization: state => {
-    if (state.userInfo.organisations == null) return {}
-    return state.userInfo.organisations.filter(it => it.organisationId.toString() === localStorage.organisationId).length < 1
-      ? {}
-      : state.userInfo.organisations.filter(it => it.organisationId.toString() === localStorage.organisationId)[0]
+    if (state.allOrganisations == null) return {}
+    return state.allOrganisations.filter(it => it.organisationId.toString() === localStorage.organisationId).length < 1
+        ? {}
+        : state.allOrganisations.filter(it => it.organisationId.toString() === localStorage.organisationId)[0]
   },
   getOrginizationReferralLink: (state, getters) => {
     return getters.getCurrentOrganization.organisationReferralCode
@@ -63,6 +73,9 @@ export const getters = {
 }
 
 export const mutations = {
+  updateSingleOrganisationUser: (state, payload) => {state.singleOrganisationUser = payload},
+  updateForm: (state, payload) => {state.form = payload},
+  updateUserEditForm: (state, payload) => {state.userEditForm = payload},
   updateLoading: (state, payload) => { state.loading = payload },
   updateTimedOut: (state, payload) => { state.isTimedOut = payload },
   updateToken: (state, payload) => { state.token = payload },
@@ -74,6 +87,12 @@ export const mutations = {
   updateRefferalStats:(state, payload) => {state.refferalstats = payload},
   updateAddedBanks: (state, payload) => {state.addedBanks = payload},
   updatereadAddedBanks: (state, payload) => {state.readOnlyAddedBanks = payload},
+  updateAllOrganisation:(state, payload) => {state.readOrganisationByUserId = payload},
+  updateAllOrganisationList:(state, payload) => {state.allOrganisations = payload},
+  updateCurrentOrganisation:(state, payload) => {state.currentOrganisation = payload},
+  updateAllCustomer:(state, payload) => {state.allCustomers = payload},
+  updateOrganisationRoles:(state, payload) =>{state.organisationRoles = payload},
+  updateAllInvites:(state, payload) => {state.allInvites = payload}
 }
 
 export const actions = {
@@ -115,44 +134,19 @@ export const actions = {
       .then(response => {
         let responseData = response.data;
         if (responseData.responseCode === "00") {
-          commit("updateLoading", false)
+            commit("updateLoading", false)
             localStorage.token = responseData.token;
+            localStorage.customerId = responseData.customerId
             commit("updateToken", responseData.token);
-            if (!localStorage.organisationId) localStorage.organisationId = responseData.organisations[0].organisationId
-            else {
-              if (responseData.organisations.filter(it => it.organisationId === localStorage.organisationId).length < 1)
-                localStorage.organisationId = responseData.organisations[0].organisationId
-            }
             commit("updateUserInfo", responseData);
-          if(getters.getCurrentOrganization.organisationStatus == 'PENDING'){
-            router.push({name:"Settings"}).then(() => {
-              let model = BillsPaymentRequest.readCategories
-              StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories, model)
-              AccountPayoutRequest.readAccountPayoutById.accountOrganisationId = localStorage.organisationId
-              return AccountPayoutService.callreadAddedBanksApi(payload = AccountPayoutRequest.readAccountPayoutById).then(response => {
-                let responseData3 = response.data
-                commit("updateAddedBanks", responseData3)
-                commit("updatereadAddedBanks",responseData3)
-              })
-            })
-          }else{
-            router.push({ name: "GetStarted" }).then(() => {
-              let model = BillsPaymentRequest.readCategories
-              StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories, model)
-              AccountPayoutRequest.readAccountPayoutById.accountOrganisationId = localStorage.organisationId
-              return AccountPayoutService.callreadAddedBanksApi(payload = AccountPayoutRequest.readAccountPayoutById).then(response => {
-                let responseData3 = response.data
-                commit("updateAddedBanks", responseData3)
-                commit("updatereadAddedBanks",responseData3)
-              })
-            })
-          }
+            StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationByUserId)
         }
         else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {
           commit("updateLoading", false)
         })
       }).catch((error) => {
         commit("updateLoading", false);
+        Toast.fire({text:error, icon:"error"})
       });
   },
 
@@ -172,6 +166,7 @@ export const actions = {
       if (responseData.responseCode === "00") {
         if (router.currentRoute.meta.layout === 'auth') router.push({ name: "GetStarted" }).then(() => { })
         commit("updateUserInfo", responseData)
+        commit("updateAllOrganisationList",responseData.organisations)
       }else if(responseData.responseCode === "115"){
         commit("updateTimedOut",true)
       }
@@ -199,7 +194,7 @@ export const actions = {
       .then(() => {
         commit("updateLoading", false)
         localStorage.removeItem("token")
-        localStorage.removeItem("organisationId")
+        localStorage.clear()
         commit("updateAuthToken", null);
         commit("updateUserInfo", null);
         commit("updateLoading", false);
@@ -327,5 +322,156 @@ export const actions = {
     }).catch(() => {
        commit("updateLoading", false)
     })
+  },
+
+  addOrganisation: ({commit}, payload = OrganisationRequest.addOrganisation) => {
+    commit("updateLoading", true)
+    return OrganizationService.callAddOrganisationApi(payload).then(response => {
+      commit("updateLoading", false)
+      let responseData = response.data
+      if(responseData.responseCode === "00"){
+        Toast.fire({text:responseData.responseMessage, icon:'success'}).then()
+        location.reload()
+      }else{
+        Toast.fire({text:responseData.responseMessage, icon:'error'}).then()
+      }
+    }).catch(e => {
+      commit("updateLoading", false)
+      Toast.fire({title:e, icon:'error'}).then()
+
+    })
+  },
+
+  readOrganisationByUserId: ({commit,state}, payload = OrganisationRequest.readOrganisationByUserId)=> {
+    payload.customerId = localStorage.customerId
+    return OrganizationService.callReadOrganisationByUserIdApi(payload).then(response => {
+      let responseData = response.data
+      if(responseData.responseCode === "00") {
+        commit("updateAllOrganisationList", responseData.data)
+        commit("updateCurrentOrganisation", responseData.data[0])
+        if (!localStorage.organisationId) localStorage.organisationId = state.currentOrganisation.organisationId
+        else {
+          if (state.allOrganisations.filter(it => it.organisationId) === localStorage.organisationId){
+            localStorage.organisationId = localStorage.organisationId
+          }
+        }
+        if(state.currentOrganisation.organisationStatus === 'PENDING'){
+          router.push({name:"Settings"}).then(() => {
+            let model = BillsPaymentRequest.readCategories
+            StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories, model)
+            AccountPayoutRequest.readAccountPayoutById.accountOrganisationId = localStorage.organisationId
+            return AccountPayoutService.callreadAddedBanksApi(payload = AccountPayoutRequest.readAccountPayoutById).then(response => {
+              let responseData3 = response.data
+              commit("updateAddedBanks", responseData3)
+              commit("updatereadAddedBanks",responseData3)
+            })
+          })
+        }else{
+          router.push({ name: "GetStarted" }).then(() => {
+            let model = BillsPaymentRequest.readCategories
+            StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories, model)
+            AccountPayoutRequest.readAccountPayoutById.accountOrganisationId = localStorage.organisationId
+            return AccountPayoutService.callreadAddedBanksApi(payload = AccountPayoutRequest.readAccountPayoutById).then(response => {
+              let responseData3 = response.data
+              commit("updateAddedBanks", responseData3)
+              commit("updatereadAddedBanks",responseData3)
+            })
+          })
+        }
+
+      }
+      else{
+        Toast.fire({text:`${responseData.responseMessage}`, icon:'error'})
+      }
+    }).catch(e => {
+      Toast.fire({title:e, icon:'error'})
+    })
+  },
+
+  inviteCustomer: ({commit, dispatch}, payload = OrganisationRequest.inviteCustomer) => {
+    commit("updateLoading", true)
+    payload.customerOrganisationId = localStorage.organisationId
+    return OrganizationService.callInviteCustomerApi(payload).then(response => {
+      commit("updateLoading", false)
+      let responseData = response.data
+      if(responseData.responseCode === "00"){
+        Toast.fire({text:`You have invited ${payload.customerEmail}`, icon:"success"})
+        Object.keys(OrganisationRequest.inviteCustomer).forEach(key => {
+          OrganisationRequest.inviteCustomer[key] = null
+        })
+        StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites)
+      }else{
+        Swal.fire({text:responseData.responseMessage, icon:"error"})
+        Object.keys(OrganisationRequest.inviteCustomer).forEach(key => {
+          OrganisationRequest.inviteCustomer[key] = null
+        })
+      }
+    }).catch(e => {
+      commit("updateLoading", false)
+      Toast.fire({text:e, icon:"error"})
+    })
+  },
+
+  readCustomerByOrganisation:({commit}, payload=OrganisationRequest.readUsersByOrganisationId)=> {
+    payload.organisationId = localStorage.organisationId
+    commit("updateLoading", true)
+    return OrganizationService.callReadUsersByOrganisationIdApi(payload).then(response => {
+      commit("updateLoading", false)
+      let responseData = response.data
+      if(responseData.responseCode === "00"){
+        commit("updateAllCustomer", responseData)
+      }else{
+        Toast.fire({text:responseData.responseMessage, icon:'error'})
+      }
+    }).catch(e => {
+      commit("updateLoading", false)
+      Toast.fire({text:e, icon:"error"})
+    })
+  },
+
+  readOrganisationRoles:({commit,state}, payload = OrganisationRequest.readOrganisationRoles)=> {
+    return OrganizationService.callReadRolesApi(payload).then(response => {
+      let responseData = response.data
+      if(responseData.responseCode === "00"){
+        commit("updateOrganisationRoles",responseData.data)
+      }
+    })
+  },
+
+  readAllInvites:({commit}, payload=OrganisationRequest.readInvite) => {
+    payload.inviteOrganisationId = localStorage.organisationId
+    commit("updateLoading", true)
+    return OrganizationService.callReadInvite(payload).then(response => {
+      commit("updateLoading", false)
+      let responseData = response.data
+      commit("updateAllInvites", responseData.data)
+    })
+  },
+
+  updateUser:({commit}, payload = OrganisationRequest.updateOrganisationUser) => {
+    payload.customerOrganisationId = localStorage.organisationId
+    commit("updateLoading", true)
+    return OrganizationService.callUpdateOrganisationUserApi(payload).then(response => {
+      commit("updateLoading", false)
+      let responseData = response.data
+      if(responseData.responseCode === "00"){
+        StoreUtils.dispatch(StoreUtils.actions.auth.readCustomerByOrganisation)
+        commit("updateUserEditForm", false)
+        Object.keys(OrganisationRequest.updateOrganisationUser).forEach(key => {
+          OrganisationRequest.updateOrganisationUser[key] = null
+        })
+      }else{
+        Toast.fire({text:responseData.responseMessage, icon:"error"}).then()
+        Object.keys(OrganisationRequest.updateOrganisationUser).forEach(key => {
+          OrganisationRequest.updateOrganisationUser[key] = null
+        })
+      }
+    }).catch(e => {
+      commit("updateLoading", false)
+      Toast.fire({text:e, icon:"error"}).then()
+
+    })
+
   }
 }
+

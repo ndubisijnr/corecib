@@ -1,46 +1,27 @@
 <template>
-  <div>
-
-    <base-header class="pb-6" type="">
-    </base-header>
-    <div class="container-fluid mt--6">
-      <div class="cardd mt-2">
+  <div class="wrapper">
+      <div class="cardd container m-3">
           <div class="mb card-holder">
             <div class="card-area">
                 <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
                 <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'" :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'"></dashboard-card>
                 <dashboard-card :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfWalletDev : currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'"></dashboard-card>
                 <dashboard-card :showBtn="false" :showBtn1="false" :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfVirtualAccountDev : currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'"></dashboard-card>
-  <!--            <dashboard-card :showBtn="false" :showBtn1="false" :value="getStage === 'DEV' ? allTransactionsTotal : allTransactionsTotal" :title="'Number of Transactions'"></dashboard-card>-->
             </div>
           </div>
           <div class="mb-3 text-center">
             <b-button style="background-color:#3F88C5;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>
             <b-button @click="show = true"> Withdraw</b-button>
           </div>
-          <div>
-<!--            <div style="display: flex; width:100%;justify-content: space-evenly;align-items: center">-->
-<!--              <div class="transaction-chart">-->
-<!--                <canvas id="wallet"></canvas>-->
-<!--              </div>-->
-
-<!--              <div class="transaction-chart">-->
-<!--                 <canvas id="myChart"></canvas>-->
-<!--              </div>-->
-<!--            </div>-->
-            <div style="max-height: 600px">
+            <div>
               <div class="ml-4">
                 <h4>Recent Transactions</h4>
               </div>
               <transaction with-search="NO"></transaction>
             </div>
-          </div>
         </div>
-      </div>
-    <payout-form @closeCreatePayout="updateCreatePayout" :showCreatePayout="show"></payout-form>
-
-    <b-modal centered id="modal-scrollable" scrollable hide-backdrop content-class="shadow" hide-footer title="Fund your wallet">
-
+        <payout-form @closeCreatePayout="updateCreatePayout" :showCreatePayout="show"></payout-form>
+        <b-modal centered id="modal-scrollable" scrollable hide-backdrop content-class="shadow" hide-footer title="Fund your wallet">
       <h3 style="text-align:center">
         Top up Balance
       </h3>
@@ -49,21 +30,18 @@
         <span>Transfer desired amount to the account details below and have your balance funded</span>
         <div class="carddd" v-for="items in balances.walletBalance.virtualAccounts" :key="items">
           <h6 class="text-right rounded-3 p-1 text-white"
-            :style="{position:'absolute',right:'50px',cursor:'pointer',background:primaryColor}"
-            @click="copyToClipboard(id = items.accountNumber)">Copy</h6>
+              :style="{position:'absolute',right:'50px',cursor:'pointer',background:primaryColor}"
+              @click="copyToClipboard(id = items.accountNumber)">Copy</h6>
           <code>
-                   <span class="mb-3 text-dark">Bank Name: {{ items.accountOtherBankName }}</span><br>
-                    <span class="mb-3 text-dark">Account Name: {{ items.accountName }}</span><br>
-                    <span class="mb-3 text-dark" >Account Number: <span :id="items.accountNumber">{{ items.accountNumber }}</span></span>
-                </code>
+            <span class="mb-3 text-dark">Bank Name: {{ items.accountOtherBankName }}</span><br>
+            <span class="mb-3 text-dark">Account Name: {{ items.accountName }}</span><br>
+            <span class="mb-3 text-dark" >Account Number: <span :id="items.accountNumber">{{ items.accountNumber }}</span></span>
+          </code>
         </div>
       </div>
 
     </b-modal>
-
-
-
-  </div>
+    </div>
 </template>
 <script>
 import { mapState } from "vuex";
@@ -76,7 +54,6 @@ import PayoutForm from "../../components/form/PayoutForm";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest"
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
-import { getRelativePosition } from 'chart.js/helpers';
 
 const Toast = Swal.mixin({
   toast: true,
@@ -196,6 +173,11 @@ export default {
     updateCreatePayout(value) {
       this.show = value;
     },
+
+    updateAddBusiness(value) {
+      this.showBusinessForm = value;
+    },
+
     copyToClipboard(id) {
       let copyLink = document.getElementById(id).textContent;
       navigator.clipboard.writeText(copyLink).then(() => {
@@ -241,6 +223,14 @@ export default {
 };
 </script>
 <style scoped>
+.wrapper{
+  height: 100%;
+}
+
+.paymentBox{
+  position: absolute;
+  left: 6%;
+}
 .center-block {
   float: none;
 }
@@ -250,64 +240,6 @@ export default {
   width: 100%;
   justify-content: center;
 }
-
-.center-block {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.transaction-chart{
-  width: 50%;
-  cursor: pointer;
-  display: flex;
-  margin-top: 60px;
-  margin-bottom: 60px;
-  justify-content: flex-end;
-  overflow-x: scroll;
-
-
-
-}
-
-/*#myChart:hover > .transaction-chart{*/
-/*  width: 100%;*/
-
-/*}*/
-#myChart{
-  transition: ease-out .7s;
-}
-
-
-#myChart:hover{
-  transform: scale(1.4);
-  z-index: 999999999999999999999999999999999999999999;
-  transition: .7s ease-in;
-  background-color: black;
-  /*margin-left: 50%;*/
-
-}
-
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-
-
-svg:not(:root) {
-  overflow: hidden;
-}
-
-.badge {}
-
 
 .spinner-border {
   display: inline-block;
@@ -352,7 +284,7 @@ svg:not(:root) {
   justify-content: space-around;
    /*border: solid yellow;*/
   padding: 10px;
-  width: 90%;
+  width: 100%;
 }
 
 @media (max-width:999px){

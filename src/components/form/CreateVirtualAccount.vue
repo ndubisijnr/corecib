@@ -3,20 +3,27 @@
     <modal-1 :show="showAccountForm && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
       <div class="card-head">
         <div class="d-flex justify-content-between">
-          <div class="p-1" style="font-weight: lighter; font-size: 5px;">
-            <span style="font-weight: bolder; font-size: 14px;" v-if="!sortType" class="d-flex"><span style="font-size: 20px;">💡</span> <span>The virtual account can be used to receive funds via bank transfer from any financial institution. All funds sent via the created virtual account will be settled in the wallet address provided.</span></span>
-            <span style="font-weight: bolder; font-size: 14px;" v-if="sortType" class="d-flex"><span style="font-size: 20px;">💡</span>  Your intended virtual account will be tied to the wallet address of  the account number provided.</span>
-          </div>
+          <h4 style="color:#3F88C5;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Create Virtual Account</h4>
           <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Create Virtual Account"></button>
         </div>
       </div>
-
       <div class="card-body w-100" v-if="sortType">
+        <div class="p-1" style="background:#FEE1E1;font-weight: lighter; font-size: 5px;margin-bottom:15px">
+        <span style="font-weight: bolder; font-size: 14px;" v-if="!sortType" class="d-flex">
+          <span style="font-size: 20px;">💭</span>
+          <span class="small">The virtual account can be used to receive funds via bank transfer from any financial institution. All funds sent via the created virtual account will be settled in the wallet address provided.</span>
+        </span>
+          <span style="font-weight: bolder; font-size: 14px;" v-if="sortType" class="d-flex">
+          <span style="font-size: 20px;">💭</span>
+          <span class="small text-dark">Your intended virtual account will be tied to the wallet address of  the account number provided.</span>
+          <b-icon-x-circle-fill  style="color: rgba(255,0,0,0.54);cursor: pointer"/>
+        </span>
+        </div>
         <form @submit.prevent="readSingleWallet">
           <b-tooltip target="tooltip-target-1" triggers="hover">Your intended virtual account will be tied to the wallet address of the account number provided.</b-tooltip>
-          <label>Wallet Account Number</label>
-          <input type="number" placeholder="Wallet Account Number" class="form-control" required v-model="readWallet.accountNumber"/>
-          <div class="text-right p-2">
+<!--          <label>Wallet Account Number</label>-->
+          <input type="number" placeholder="Wallet account number" class="form-control mb-2" required v-model="readWallet.accountNumber"/>
+          <div class="text-right">
             <b-button type="submit" :disabled="loading" :style="{backgroundColor:primaryColor,border:'none',color:'white'}">{{loading ? 'Checking' : 'Next'}} <span :class="{'spinner-border':loading}"></span> </b-button>
           </div>
         </form>
@@ -30,12 +37,12 @@
       <div v-else>
         <div class="modal-body">
             <b-form class="" @submit.prevent="createAccount">
-              <div class="input-group mb-3">
-                <div class="w-50">
+              <div class="input-group mb-3 row">
+                <div class="col">
                   <label>Wallet Name</label>
                   <input type="text" class="form-control" placeholder="First Name"  :value="wallets.accountName" required disabled>
                 </div>
-                <div class="w-50">
+                <div class="col">
                   <label>Account Number</label>
                   <input type="text" class="form-control" placeholder="First Name"  :value="wallets.accountNumber" required disabled>
                 </div>
@@ -43,11 +50,11 @@
               <div v-if="next==false">
               <div class="input-group mb-3">
                 <div class="w-100 mb-3">
-                  <label>First Name<span style="font-size: 20px;cursor:pointer" @click="showinfo()">💡</span> </label>
+                  <label>First Name<span style="font-size: 20px;cursor:pointer" @click="showinfo()">💭</span> </label>
                   <input type="text" class="form-control w-100" placeholder="First Name" id="fname" v-model="CreateVirtualAccountModel.firstName" required>
                 </div>
                 <div class="w-100">
-                  <label>Last Name <span style="font-size: 20px;cursor:pointer" @click="showinfo()">💡</span></label>
+                  <label>Last Name <span style="font-size: 20px;cursor:pointer" @click="showinfo()">💭</span></label>
                   <input type="text" class="form-control w-100" placeholder="Last Name" id="lname"  v-model="CreateVirtualAccountModel.lastName" required>
                 </div>
               </div>
@@ -156,14 +163,26 @@ export default {
       let lname = document.getElementById('lname')
       let bvn = document.getElementById('bvn')
       if(fname.value.length == 0 || lname.value.length == 0)
-        return swal.fire({text:"please fill all required fields before proceeding", icon:"error"})
+        return swal.fire({
+          text:"❌ Please fill all required fields before proceeding",
+          // icon:"error",
+          showConfirmButton: false,
+          position: 'bottom-start',
+          timer: 2000
+        })
       return this.next = true
     },
     prev(){
       this.next = false
     },
     showinfo(){
-      swal.fire({text:"Please provide the first name and Last name of the intended virtual account bearer.", icon:"info"})
+      swal.fire(
+      {text:"ℹ️ Please provide the first name and Last name of the intended virtual account bearer.",
+              // icon:"info",
+              position: 'bottom-start',
+              showConfirmButton: false,
+              timer: 2000
+              })
     },
 
 

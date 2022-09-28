@@ -180,6 +180,10 @@ export const actions = {
                 Toast.fire({text:responseData.responseMessage, icon:"error"})
 
             }
+        }).catch((e) => {
+            commit("updatePaymentLoading", false)
+            Toast.fire({text:e, icon:"error"})
+
         })
     },
     updateCustomerEnq:({commit}, payload=BillsPaymentRequest.customerEnquiry) => {

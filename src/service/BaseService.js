@@ -29,8 +29,11 @@ appClient.interceptors.request.use(config => {
     config.headers.Authorization = StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken)
         ? StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken)
         : StoreUtils.rootGetters(StoreUtils.getters.auth.getToken);
-    // console.log(config.headers.Authorization)
-    config.headers.mid = localStorage.organisationId;
+        // console.log(config.headers.Authorization)
+    !localStorage.organisationId ?
+    config.headers.mid = localStorage.customerId
+    :
+    config.headers.mid = localStorage.organisationId
     return config
 })
 
@@ -38,18 +41,18 @@ appClient.interceptors.response.use(response => {
     if (response != null) {
       if (response.data != null) {
         if (response.data.responseCode === '115') {
-            localStorage.clear();
+            // localStorage.clear();
             // let timerInterval
           if (router.currentRoute.meta.layout !== "auth"){
               isTimedOut = true
-              console.log(isTimedOut)
+              localStorage.clear()
+              StoreUtils.dispatch(StoreUtils.actions.auth.logOut,{customerEmail: StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).customerEmail}).then()
               // Swal.fire({
               //   title: 'Session timed out',
               //   html: 'Please re-authenticate',
               //   icon:"info",
               // })
               //     .then((result) => {
-              //   StoreUtils.dispatch(StoreUtils.actions.auth.logOut,{customerEmail: StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).customerEmail})
               // })
         }
         }
