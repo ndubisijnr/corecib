@@ -38,7 +38,7 @@ class S3FileUpload {
     AWS.config.update({
       region: S3FileUpload.params.BUCKET_REGION,
       credentials: new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: StoreUtils.rootGetters("user/getIdentityPoolId")
+        IdentityPoolId: StoreUtils.rootGetters("userManagement/getIdentityPoolId")
       })
     });
 
@@ -99,8 +99,8 @@ class S3FileUpload {
       "dd-MMM-yyyy HH:mm:ss"
     )}_${Utils.generateNineRandomNumbers()}.${this.getFileExtension(file)}`;
 
-    const accessKeyId = StoreUtils.rootGetters("user/getS3Key").accessKey;
-    const secretAccessKey = StoreUtils.rootGetters("user/getS3Key").secretKey;
+    const accessKeyId = StoreUtils.rootGetters("userManagement/getS3Key").accessKey;
+    const secretAccessKey = StoreUtils.rootGetters("userManagement/getS3Key").secretKey;
 
     let s3 = new AWS.S3({
       accessKeyId,

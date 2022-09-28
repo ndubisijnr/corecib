@@ -31,7 +31,25 @@ export default {
 
     callRefferalStatsApi(payload){
         return apiClient.appClient.post('/organisation/referral-stats', payload)
-    }
+    },
+    callReadOrganisationByUserIdApi(payload){
+        return apiClient.appClient.post('/organisation/read-organisations-by-user-id', payload)
+    },
+    callAddOrganisationApi(payload){
+        return apiClient.appClient.post('/organisation/add', payload)
+    },
+    callInviteCustomerApi(payload) {
+        return apiClient.appClient.post("/customer/invite", payload);
+    },
+    callReadRolesApi(payload) {
+        return apiClient.appClient.post("/role/read", payload);
+    },
+    callReadInvite(payload) {
+        return apiClient.appClient.post("/customer/read-invite-by-organisation-id", payload);
+    },
+    callUpdateOrganisationUserApi(payload) {
+        return apiClient.appClient.post("/customer/update-status", payload);
+    },
 
 };
 

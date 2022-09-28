@@ -11,7 +11,7 @@
       small
       show-empty
       stacked="md"
-      :style="$router.currentRoute.fullPath === '/reports/transactions' ? {fontSize: 12, height: '900px'} :{fontSize: 12}"
+      :style="$router.currentRoute.fullPath === '/reports/transactions' ? {fontSize: 12, height: 'auto'} :{fontSize: 12}"
       striped
       :busy="loading || loading3 || loading4"
       :items="items"
@@ -84,6 +84,8 @@
       <template v-slot:cell(serial)="row">
         {{ row.index + 1 }}
       </template>
+
+      <!-- actions -->
       <template v-slot:cell(action)="row">
         <b-icon-eye-slash
           style="cursor: pointer; width: 25px; height: 15px"
@@ -147,6 +149,25 @@
           @click="row.toggleDetails"
         />
       </template>
+      <template v-slot:cell(CustomerAction)="row">
+        <b-icon-pencil-square
+          style="cursor: pointer; width: 25px; height: 15px"
+          @click="getUserInfo(row.item)"
+          title="Edit User"
+        />
+<!--        <b-icon-eye-slash-->
+<!--          style="cursor: pointer; width: 25px; height: 15px"-->
+<!--          v-if="row.detailsShowing"-->
+<!--          href="#"-->
+<!--          @click="row.toggleDetails"-->
+<!--        />-->
+<!--        <b-icon-eye-->
+<!--          style="cursor: pointer; width: 25px; height: 15px"-->
+<!--          v-else-->
+<!--          href="#"-->
+<!--          @click="row.toggleDetails"-->
+<!--        />-->
+      </template>
 
       <template v-slot:cell(kycAction)="row">
           <b-button @click="kycAction(obj=row_details)">Re-view</b-button>
@@ -201,7 +222,7 @@
             v-model="perPage"
             id="perPageSelect"
             size="sm"
-            :options="pageOptions"
+            :options="$router.currentRoute.fullPath === '/settings/settings' ? userManagementPageOptions : pageOptions"
           ></b-form-select>
         </b-form-group>
       </b-col>
@@ -272,8 +293,10 @@ export default {
       dateFormat: "D MMM",
       totalRows: 1,
       currentPage: 1,
-      perPage: this.$router.currentRoute.path === '/dashboard/get-started' ? 10 : 50,
+      perPage: this.$router.currentRoute.path === '/dashboard/get-started' ? 10 : this.$router.currentRoute.fullPath === '/settings/settings' ? 2 : 50,
+      userManagementPerPage:2,
       pageOptions: [5, 10, 50, 100, 500],
+      userManagementPageOptions:[2,5],
       sortBy: "",
       row: {},
       sortDesc: false,
@@ -300,6 +323,11 @@ export default {
   },
   mounted() {},
   methods: {
+    getUserInfo(obj){
+      StoreUtils.commit(StoreUtils.mutations.auth.updateUserEditForm, true)
+      StoreUtils.commit(StoreUtils.mutations.auth.updateSingleOrganisationUser, obj)
+      console.log(obj)
+    },
     kycAction(obj){
       console.log(obj)
     },
@@ -508,8 +536,8 @@ export default {
     rowClass(item, type) {
       if (!item || type !== "row") return "";
       if (item.drCr != null)
-        if (item.drCr === "DR") return "table-danger";
-        else if (item.drCr === "CR") return "table-success";
+        if (item.drCr === "dR") return "table-danger";
+        else if (item.drCr === "cR") return "table-success";
         else return "";
     },
   },

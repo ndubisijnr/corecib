@@ -21,8 +21,16 @@
             </div>
           </div>
         <div id="k" :style="{background:primaryColorGradient}">
-          <hr style="margin:5px;border: 1px solid;color: #91a0af">
-            <h4 v-for="(org, index) in organisationList" :key="index" class="link-drop" @click="getId(org)"> {{org.organisationName}}</h4>
+          <ul class="add-business-ul">
+            <li class="add-business-li" v-for="(item, index) in allOrganisation" :key="index" v-if="item.organisationName !== currentOrganisation.organisationName " @click="switchBusiness(item.organisationId)">
+              {{item.organisationName}} {{index === 0 ? '⭐': null}}
+            </li>
+          </ul>
+          <div class="pl-3 pb-2">
+            <b-button size="sm" @click="showBusinessForm(true)">Add New Business</b-button>
+          </div>
+<!--          <hr style="border:1px solid;color: #91a0af">-->
+<!--          <h4 v-for="(org, index) in organisationList" :key="index" class="link-drop" @click="getId(org)"> {{org.organisationName}}</h4>-->
         </div>
             </div>
       <slot></slot>
@@ -47,13 +55,18 @@
         <slot name="links-after"></slot>
       </div>
     </div>
+
   </div>
+
 </template>
 <script>
 
 
 import {mapState} from "vuex";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
+import OrganisationRequest from "../../model/request/OrganisationRequest";
+import WalletRequest from "../../model/request/WalletRequest";
+
 
 export default {
   name: 'sidebar',
@@ -61,6 +74,10 @@ export default {
     return {
       primaryColor:window.__env.app.primaryColor,
       primaryColorGradient: window.__env.app.primaryColorGradient,
+      // showBusinessForm:false,
+      organisationRequest:OrganisationRequest.readOrganisationById,
+      readOrganisation:OrganisationRequest.readOrganisationByUserId,
+      allTransactionsModel: WalletRequest.readAllWalletTransaction,
     }
   },
   props: {
@@ -98,6 +115,24 @@ export default {
     };
   },
   methods: {
+    showBusinessForm(value){
+      StoreUtils.commit(StoreUtils.mutations.auth.updateForm, value)
+    },
+
+    switchBusiness(value){
+      localStorage.organisationId = value
+      StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
+      const userToken = localStorage.getItem('token')
+      StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
+      StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
+      this.allTransactionsModel.page = 1;
+      StoreUtils.dispatch(
+          StoreUtils.actions.walletTransactions.updateAllWalletTransactions,
+          this.allWalletTransactions
+      );
+      location.reload()
+    },
+
     minimizeSidebar() {
       if (this.$sidebar) {
         this.$sidebar.toggleMinimize();
@@ -112,26 +147,29 @@ export default {
       console.log(JSON.stringify(payload.organisationId));
       this.$store.dispatch('switchOrganisation', payload, {root: false})
     },
-       toogleD(){
+    toogleD(){
       let x = document.getElementById("k");
       let y = document.getElementById("arrow")
       if (x.style.display === "none") {
         x.style.display = "block";
+        x.classList.add('transition')
         y.classList.remove("rotate0");
         y.classList.add("rotate-180");
       } else {
         x.style.display = "none";
+        x.classList.add('transition')
+        x.style.transition = '2s ease-out-in infinite'
         y.classList.add("rotate0");
         y.classList.remove("rotate-180");
       }
     }
 
-
   },
   computed: {
     ...mapState({
       userInfo: state => state.auth.userInfo,
-      loading: state => state.auth.loading
+      loading: state => state.auth.loading,
+      allOrganisation:state => state.auth.allOrganisations
     }),
     stage(){
       return StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
@@ -162,7 +200,7 @@ export default {
 
 <style scoped>
 .add-business{
-  padding-left: 18px;
+  padding-left: 30px;
   padding-top: 4px;
   width: 100%;
   background: linear-gradient(to bottom,#3F88Cd, #236395);
@@ -173,6 +211,27 @@ export default {
 
 }
 
+.transition{
+  transition: ease-in-out 2s;
+}
+.add-business-li{
+  list-style: circle !important;
+  padding-top: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: .5s ease-out;
+
+}
+
+.add-business-li:hover{
+  transform: scaleX(1.1);
+  /*background: red;*/
+  transition: .1s ease-in;
+}
+.add-business-ul{
+}
+
+
 .elispe{
   width: 105px;
   text-overflow: ellipsis;
@@ -181,17 +240,16 @@ export default {
 }
 
 #k{
-  text-align: justify;
   z-index: 1;
-  position: absolute;
-  top: 44px;
+  position: relative;
+  /*top: 44px;*/
   left: 0;
   /*background-color: #e7e7ef;*/
   color: #ffffff !important;
   /*background-color: #91a0af;*/
   width: 100%;
-  transition: 2s ease;
-  padding: 12px;
+  transition: 2s ease-out infinite;
+  /*padding: 12px;*/
 }
 
 .arrow{

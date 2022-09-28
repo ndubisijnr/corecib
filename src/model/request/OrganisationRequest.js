@@ -61,6 +61,41 @@ class OrganisationRequest{
         organisationStage: null
     }
 
+    static readOrganisationByUserId = {
+        customerId:null
+    }
+
+    static addOrganisation = {
+        customerId:null,
+        customerBusinessName:null,
+        customerCountry:null,
+        customerCountryCode:null,
+        customerEmail:null,
+        customerPhone:null,
+    }
+
+    static inviteCustomer = {
+        customerOrganisationId:null,
+        customerEmail:null,
+        customerRole:null,
+    }
+
+    static readOrganisationRoles = {
+        readAll:"YES"
+    }
+
+    static readInvite = {
+        inviteOrganisationId:null
+    }
+
+    static updateOrganisationUser = {
+
+        customerOrganisationId:null,
+        customerId:null,
+        customerRole:null,
+        customerStatus:null
+    }
+
 }
 
 export default OrganisationRequest

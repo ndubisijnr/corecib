@@ -1,25 +1,27 @@
 <template>
   <div>
-
-  <modal-1 :show="showKycForm && showModal">
+  <template>
+    <modal-1 :show="showKycForm && showModal">
+          <div class="card-head">
+            <div class="d-flex justify-content-between">
+              <h4 style="color:#3F88C5;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">KYC Verification Request</h4>
+              <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Create Wallet Account"></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <KycLists @openEachKycForm="showKycForm2"></KycLists>
+          </div>
+    </modal-1>
+  </template>
+  <template>
+    <modal-1 :show="showModal2">
       <div>
         <div class="card-head">
-          <div class="text-end">
-            <button type="button" class="btn-close p-2 m-2" @click="closeModal()"></button>
+          <div class="d-flex justify-content-between">
+            <h4 style="color:#3F88C5;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">{{kycVerificationType}}</h4>
+            <button type="button" class="btn-close p-2 m-2" @click="closeModal2()" title="Cancel Create Wallet Account"></button>
           </div>
-          <h4 class="text-center">KYC Verification Request</h4>
         </div>
-        <div class="card-body">
-          <KycLists @openEachKycForm="showKycForm2"></KycLists>
-        </div>
-      </div>
-  </modal-1>
-  <modal-1 :show="showModal2">
-      <div>
-          <div class="d-flex justify-content-between align-items-center">
-            <h4 class="text-center m-2">{{kycVerificationType}}</h4>
-            <button type="button" class="btn-close" @click="closeModal2()"></button>
-          </div>
           <div>
             <h4 class="text-center m-4">Tell us about who you want to verify</h4>
           </div>
@@ -135,8 +137,9 @@
         </div>
       </div>
   </modal-1>
-
+  </template>
   </div>
+
 </template>
 
 <script>
@@ -299,6 +302,11 @@ export default {
 .kycButton{
   color:white !important;
   width: 100% !important;
+}
+
+.card-head{
+  background-color: #D7E6F3;
+  color: white;
 }
 
 </style>

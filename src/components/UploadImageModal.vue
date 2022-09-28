@@ -134,7 +134,7 @@
             }
         },
       mounted() {
-          console.clear()
+          //console.clear()
       }
     }
 

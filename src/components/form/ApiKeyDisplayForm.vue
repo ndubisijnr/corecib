@@ -4,15 +4,11 @@
       <div class="">
         <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(saveChanges)">
 <!--          <span :class="{ 'spinner-border': loading }"></span>-->
-
           <div>
             <label class="form-label mt-2 pr-4">{{ testLive }} Secret Key </label>
             <div class="form-floating">
-
-              <input type="password" class="form-control" :value="api[`apikey${testLive}SK`]" id="content" disabled="true"
-                style="cursor:pointer" />
-              <i class="fas fa-copy" style="position: absolute; right: 20px; top: 8px; cursor: pointer;z-index:99999"
-                @click="copyToClipboard()"></i>
+              <input type="password" class="form-control" :value="api[`apikey${testLive}SK`]" id="content" disabled="true" style="cursor:pointer" />
+              <i class="fas fa-copy" style="position: absolute; right: 20px; top: 8px; cursor: pointer;z-index:99999" @click="copyToClipboard()"></i>
             </div>
 
 

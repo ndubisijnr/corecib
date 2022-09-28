@@ -10,7 +10,6 @@ class StoreUtils {
       UpdateDriversLicense:"kycVerification/UpdateDriversLicense",
       UpdateBvn:"kycVerification/UpdateBvn",
       readAllKyc:"kycVerification/readAllKyc"
-
     },
 
     document:{
@@ -19,12 +18,14 @@ class StoreUtils {
       createDocument:"document/createDocument",
       uploadDocument:"document/uploadDocument"
     },
+
     apiKey: {
       updateApikey: "apiKey/updateApikey",
       create: "apiKey/create",
       regenerateApiKey:"apiKey/regenerateApiKey",
       updateWebhookCallback:"apiKey/updateWebhookCallback"
     },
+
     auth: {
       initialEnrollment: "auth/initialEnrollment",
       createCustomer: "auth/createCustomer",
@@ -38,22 +39,32 @@ class StoreUtils {
       completePasswordReset: "auth/completePasswordReset",
       updateStage: "auth/updateStage",
       updateOrganisation:"auth/updateOrganisation",
-      readRefferalState:"auth/readRefferalState",
+      readRefferalState :"auth/readRefferalState",
       readDashboardStats:"auth/readDashboardStats",
       changePassword:"auth/changePassword",
-      readOrganisationById:"auth/readOrganisationById"
+      readOrganisationById:"auth/readOrganisationById",
+      addOrganisation:"auth/addOrganisation",
+      readOrganisationByUserId:"auth/readOrganisationByUserId",
+      inviteCustomer:"auth/inviteCustomer",
+      readCustomerByOrganisation:"auth/readCustomerByOrganisation",
+      readOrganisationRoles:"auth/readOrganisationRoles",
+      readAllInvites:"auth/readAllInvites",
+      updateUser:"auth/updateUser"
     },
+
     dispute: {
       updateDisputes: "dispute/updateDisputes",
       createDispute: "dispute/createDispute",
       updateTransactionQuery:"dispute/updateTransactionQuery"
     },
+
     virtualAccount: {
       updateVirtualAccount: "virtualAccount/updateVirtualAccount",
       updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions",
       updateReadBankList:"virtualAccount/updateReadBankList",
       updateVirtualAccountCreate:"virtualAccount/updateVirtualAccountCreate"
     },
+
     walletTransactions: {
       updateAllWalletTransactions: "walletTransactions/updateAllWalletTransactions",
       updateBalanceEnquiry: "walletTransactions/updateBalanceEnquiry",
@@ -62,6 +73,7 @@ class StoreUtils {
       updateWallet: "walletTransactions/updateWallet",
       updateCreatedWallet:"walletTransactions/updateCreatedWallet"
     },
+
     accountPayout:{
       readAddedBanks:"accountPayout/readAddedBanks",
       createAddedBanks:"accountPayout/createAddedBanks",
@@ -69,6 +81,7 @@ class StoreUtils {
       requestPayout:"accountPayout/requestPayout",
       readPayout:"accountPayout/readPayout"
     },
+
     billspayment:{
       updateCategories:"billspayment/updateCategories",
       updateBillers:"billspayment/updateBillers",
@@ -76,6 +89,7 @@ class StoreUtils {
       updatePayment:"billspayment/updatePayment",
       updateCustomerEnq:"billspayment/updateCustomerEnq",
     }
+
   };
 
   static mutations = {
@@ -114,8 +128,15 @@ class StoreUtils {
       updateTimedOut:"auth/updateTimedOut",
       updateAddedBanks:"accountPayout/updateAddedBanks",
       updatereadAddedBanks:"accountPayout/updatereadAddedBanks",
-
-
+      updateAllOrganisation:"auth/updateAllOrganisation",
+      updateAllOrganisationList:"auth/updateAllOrganisationList",
+      updateCurrentOrganisation:"auth/updateCurrentOrganisation",
+      updateForm:"auth/updateForm",
+      updateAllCustomer:"auth/updateAllCustomer",
+      updateOrganisationRoles:"auth/updateOrganisationRoles",
+      updateAllInvites:"auth/updateAllInvites",
+      updateSingleOrganisationUser:"auth/updateSingleOrganisationUser",
+      updateUserEditForm:"auth/updateUserEditForm"
     },
     dispute: {
       updateLoading: "dispute/updateLoading",
@@ -180,7 +201,8 @@ class StoreUtils {
       getorganisationRegistrationDate:"auth/getorganisationRegistrationDate",
       getorganisationPhone:"auth/getorganisationPhone",
       getorganisationEmail:"auth/getorganisationEmail",
-      getorganisationCountry:"auth/getorganisationCountry"
+      getorganisationCountry:"auth/getorganisationCountry",
+      getCustomerId:"auth/getCustomerId"
 
     },
     document:{

@@ -1,10 +1,11 @@
 <template>
   <div>
     <RouteNav />
-      <div style="display: flex;justify-content: end;padding: 1rem">
+    <div style="display: flex;justify-content: end;padding: 1rem">
         <b-button @click="showKycForm = true, showLoading()" :style="{backgroundColor:primaryColor,border:'none',color:'white'}">Make Another Request</b-button>
       </div>
-    <div class="business-profile">
+    <div>
+      <div class="business-profile">
         <div v-if="kycVerificationType">
           <div class="mb-4" style="color:black;">
             <h3>
@@ -12,353 +13,339 @@
             </h3>
           </div>
           <div>
-<!--            <div class="image-box">-->
-<!--              <div id="img" ></div>-->
-<!--            </div>-->
-<!--          <div class="row">-->
-<!--            <div class="col-4 mb-3" v-for="(value, key) in kycReadALL" v-bind:key="key">-->
-<!--&lt;!&ndash;              <span v-if="key.toLowerCase() !== 'fieldmatches' && key.toLowerCase() !== 'photo'">&ndash;&gt;-->
-<!--              <span>-->
-<!--                <label>{{ key }}</label>-->
-<!--                <input type="text" class="form-control"  :value="value" readonly />-->
-<!--              </span>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-          <div v-if="kycVerificationType == 'Bank verification number' && Object.values(kycBvnData).every(key => key !== null)">
-            <div class="image-box">
-              <div id="img"></div>
+            <div class="holder" v-if="kycVerificationType == 'Bank verification number' && Object.values(kycBvnData).every(key => key !== null)">
+              <div class="image-box">
+                <div id="img"></div>
+              </div>
+            <div class="row">
+              <div class="col mb-3">
+                <label for="floatingInput2">First Name</label>
+                <input type="text" class="form-control"  :value="kycBvnData.firstName" readonly />
+              </div>
+              <div class="col mb-3">
+                <label for="floatingInput2">Middle Name</label>
+                <input type="text" class="form-control"  :value="kycBvnData.middleName" readonly />
+              </div>
+              <div class="col mb-3">
+                <label for="floatingInput2">Last Name</label>
+                <input type="text" class="form-control"  :value="kycBvnData.lastName" readonly />
+              </div>
             </div>
-          <div class="row">
-            <div class="col mb-3">
-              <label for="floatingInput2">First Name</label>
-              <input type="text" class="form-control"  :value="kycBvnData.firstName" readonly />
+            <div class="row">
+              <div class="col mb-3">
+                <label for="floatingInput2">BVN</label>
+                <input type="text" class="form-control"  :value="kycBvnData.bvn" readonly />
+              </div>
+              <div class="col mb-3">
+                <label for="floatingInput2">Phone</label>
+                <input type="text" class="form-control"  :value="kycBvnData.phone" readonly />
+              </div>
+              <div class="col mb-3">
+                <label for="floatingInput2">Gender</label>
+                <input type="text" class="form-control"  :value="kycBvnData.gender" readonly />
+              </div>
             </div>
-            <div class="col mb-3">
-              <label for="floatingInput2">Middle Name</label>
-              <input type="text" class="form-control"  :value="kycBvnData.middleName" readonly />
-            </div>
-            <div class="col mb-3">
-              <label for="floatingInput2">Last Name</label>
-              <input type="text" class="form-control"  :value="kycBvnData.lastName" readonly />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col mb-3">
-              <label for="floatingInput2">BVN</label>
-              <input type="text" class="form-control"  :value="kycBvnData.bvn" readonly />
-            </div>
-            <div class="col mb-3">
-              <label for="floatingInput2">Phone</label>
-              <input type="text" class="form-control"  :value="kycBvnData.phone" readonly />
-            </div>
-            <div class="col mb-3">
-              <label for="floatingInput2">Gender</label>
-              <input type="text" class="form-control"  :value="kycBvnData.gender" readonly />
+            <div class="row">
+              <div class="col mb-3">
+                <label for="floatingInput2">DOB</label>
+                <input type="text" class="form-control"  :value="kycBvnData.birthdate" readonly />
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col mb-3">
-              <label for="floatingInput2">DOB</label>
-              <input type="text" class="form-control"  :value="kycBvnData.birthdate" readonly />
-            </div>
-          </div>
-        </div>
-          <div v-if="kycVerificationType == 'National identity' && Object.values(kycNinData).every(key => key !== null)">
-            <div>
-              <div class="image-box" id="ninImg"></div>
+            <div class="holder" v-if="kycVerificationType == 'National identity' && Object.values(kycNinData).every(key => key !== null)">
               <div>
-                <h5>Personal Information</h5>
-              </div>
-              <div class="row">
-                <div class="col mb-3">
-                  <label for="floatingInput2">Title</label>
-                  <input type="text" class="form-control"  :value="kycNinData.title" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">First Name</label>
-                  <input type="text" class="form-control"  :value="kycNinData.firstName" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">Middle Name</label>
-                  <input type="text" class="form-control"  :value="kycNinData.middleName" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">Last Name</label>
-                  <input type="text" class="form-control"  :value="kycNinData.lastName" readonly />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col mb-3">
-                  <label for="floatingInput2">Email</label>
-                  <input type="text" class="form-control"  :value="kycNinData.email" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">Phone</label>
-                  <input type="text" class="form-control"  :value="kycNinData.phone" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">Gender</label>
-                  <input type="text" class="form-control"  :value="kycNinData.gender" readonly />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col mb-3">
-                  <label for="floatingInput2">Height</label>
-                  <input type="text" class="form-control"  :value="kycNinData.height" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">LGA Of Origin</label>
-                  <input type="text" class="form-control"  :value="kycNinData.lgaOfOrigin" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">Marital Status</label>
-                  <input type="text" class="form-control"  :value="kycNinData.maritalStatus" readonly />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col mb-3">
-                  <label for="floatingInput2">DOB</label>
-                  <input type="text" class="form-control"  :value="kycNinData.birthdate" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">Employment Status</label>
-                  <input type="text" class="form-control"  :value="kycNinData.employmentStatus" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">Nationality</label>
-                  <input type="text" class="form-control"  :value="kycNinData.nationality" readonly />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col mb-3">
-                  <label for="floatingInput2">First Spoken Lang</label>
-                  <input type="text" class="form-control"  :value="kycNinData.nspokenlang" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">Second Spoken Lang</label>
-                  <input type="text" class="form-control"  :value="kycNinData.ospokenlang" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">Family Last name</label>
-                  <input type="text" class="form-control"  :value="kycNinData.parentLastname" readonly />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col mb-3">
-                  <label for="floatingInput2">Place of Origin</label>
-                  <input type="text" class="form-control"  :value="kycNinData.placeOfOrigin" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">State of Origin</label>
-                  <input type="text" class="form-control"  :value="kycNinData.stateOfOrigin" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">Profession</label>
-                  <input type="text" class="form-control"  :value="kycNinData.profession" readonly />
-                </div>
-                <div class="col mb-3">
-                  <label for="floatingInput2">Religion</label>
-                  <input type="text" class="form-control"  :value="kycNinData.religion" readonly />
-                </div>
-              </div>
-              <div>
+                <div class="image-box" id="ninImg"></div>
                 <div>
-                  <h5>Residence</h5>
+                  <h5>Personal Information</h5>
                 </div>
                 <div class="row">
                   <div class="col mb-3">
-                    <label for="floatingInput2">Address 1</label>
-                    <input type="text" class="form-control"  :value="kycNinData.residence.address1" readonly />
+                    <label for="floatingInput2">Title</label>
+                    <input type="text" class="form-control"  :value="kycNinData.title" readonly />
                   </div>
                   <div class="col mb-3">
-                    <label for="floatingInput2">Address 2</label>
-                    <input type="text" class="form-control"  :value="kycNinData.residence.address2" readonly />
+                    <label for="floatingInput2">First Name</label>
+                    <input type="text" class="form-control"  :value="kycNinData.firstName" readonly />
                   </div>
                   <div class="col mb-3">
-                    <label for="floatingInput2">LGA</label>
-                    <input type="text" class="form-control"  :value="kycNinData.residence.lga" readonly />
+                    <label for="floatingInput2">Middle Name</label>
+                    <input type="text" class="form-control"  :value="kycNinData.middleName" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Last Name</label>
+                    <input type="text" class="form-control"  :value="kycNinData.lastName" readonly />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Email</label>
+                    <input type="text" class="form-control"  :value="kycNinData.email" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Phone</label>
+                    <input type="text" class="form-control"  :value="kycNinData.phone" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Gender</label>
+                    <input type="text" class="form-control"  :value="kycNinData.gender" readonly />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Height</label>
+                    <input type="text" class="form-control"  :value="kycNinData.height" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">LGA Of Origin</label>
+                    <input type="text" class="form-control"  :value="kycNinData.lgaOfOrigin" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Marital Status</label>
+                    <input type="text" class="form-control"  :value="kycNinData.maritalStatus" readonly />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col mb-3">
+                    <label for="floatingInput2">DOB</label>
+                    <input type="text" class="form-control"  :value="kycNinData.birthdate" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Employment Status</label>
+                    <input type="text" class="form-control"  :value="kycNinData.employmentStatus" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Nationality</label>
+                    <input type="text" class="form-control"  :value="kycNinData.nationality" readonly />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col mb-3">
+                    <label for="floatingInput2">First Spoken Lang</label>
+                    <input type="text" class="form-control"  :value="kycNinData.nspokenlang" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Second Spoken Lang</label>
+                    <input type="text" class="form-control"  :value="kycNinData.ospokenlang" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Family Last name</label>
+                    <input type="text" class="form-control"  :value="kycNinData.parentLastname" readonly />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Place of Origin</label>
+                    <input type="text" class="form-control"  :value="kycNinData.placeOfOrigin" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">State of Origin</label>
+                    <input type="text" class="form-control"  :value="kycNinData.stateOfOrigin" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Profession</label>
+                    <input type="text" class="form-control"  :value="kycNinData.profession" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Religion</label>
+                    <input type="text" class="form-control"  :value="kycNinData.religion" readonly />
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <h5>Residence</h5>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-3">
+                      <label for="floatingInput2">Address 1</label>
+                      <input type="text" class="form-control"  :value="kycNinData.residence.address1" readonly />
+                    </div>
+                    <div class="col mb-3">
+                      <label for="floatingInput2">Address 2</label>
+                      <input type="text" class="form-control"  :value="kycNinData.residence.address2" readonly />
+                    </div>
+                    <div class="col mb-3">
+                      <label for="floatingInput2">LGA</label>
+                      <input type="text" class="form-control"  :value="kycNinData.residence.lga" readonly />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col mb-3">
+                      <label for="floatingInput2">State</label>
+                      <input type="text" class="form-control"  :value="kycNinData.residence.state" readonly />
+                    </div>
+                    <div class="col mb-3">
+                      <label for="floatingInput2">Town</label>
+                      <input type="text" class="form-control"  :value="kycNinData.residence.town" readonly />
+                    </div>
+                    <div class="col mb-3">
+                      <label for="floatingInput2">Status</label>
+                      <input type="text" class="form-control"  :value="kycNinData.residence.status" readonly />
+                    </div>
+                  </div>
+                </div>
+                <div class="image-box">
+                  <h5>Signature</h5>
+                  <div id="signatureImg"></div>
+                </div>
+              </div>
+              <div class="mt-5">
+                <div>
+                  <h5>Next Of Kin</h5>
+                </div>
+                <div class="row">
+                  <div class="col mb-3">
+                    <label for="floatingInput2">First Name</label>
+                    <input type="text" class="form-control"  :value="kycNinData.nextOfKin.firstName" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Middle Name</label>
+                    <input type="text" class="form-control"  :value="kycNinData.nextOfKin.middleName" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Last Name</label>
+                    <input type="text" class="form-control"  :value="kycNinData.nextOfKin.lastName" readonly />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col mb-3">
                     <label for="floatingInput2">State</label>
-                    <input type="text" class="form-control"  :value="kycNinData.residence.state" readonly />
+                    <input type="text" class="form-control"  :value="kycNinData.nextOfKin.state" readonly />
                   </div>
                   <div class="col mb-3">
                     <label for="floatingInput2">Town</label>
-                    <input type="text" class="form-control"  :value="kycNinData.residence.town" readonly />
+                    <input type="text" class="form-control"  :value="kycNinData.nextOfKin.town" readonly />
                   </div>
                   <div class="col mb-3">
-                    <label for="floatingInput2">Status</label>
-                    <input type="text" class="form-control"  :value="kycNinData.residence.status" readonly />
+                    <label for="floatingInput2">LGA</label>
+                    <input type="text" class="form-control"  :value="kycNinData.nextOfKin.lga" readonly />
                   </div>
                 </div>
               </div>
-              <div class="image-box">
-                <h5>Signature</h5>
-                <div id="signatureImg"></div>
-              </div>
             </div>
-            <div class="mt-5">
-              <div>
-                <h5>Next Of Kin</h5>
-              </div>
+            <div class="holder" v-if="kycVerificationType == 'Voters card' && Object.values(kycVcData).every(key => key !== null)">
               <div class="row">
                 <div class="col mb-3">
                   <label for="floatingInput2">First Name</label>
-                  <input type="text" class="form-control"  :value="kycNinData.nextOfKin.firstName" readonly />
+                  <input type="text" class="form-control"  :value="kycVcData.firstName" readonly />
                 </div>
                 <div class="col mb-3">
                   <label for="floatingInput2">Middle Name</label>
-                  <input type="text" class="form-control"  :value="kycNinData.nextOfKin.middleName" readonly />
+                  <input type="text" class="form-control"  :value="kycVcData.middleName" readonly />
                 </div>
                 <div class="col mb-3">
                   <label for="floatingInput2">Last Name</label>
-                  <input type="text" class="form-control"  :value="kycNinData.nextOfKin.lastName" readonly />
+                  <input type="text" class="form-control"  :value="kycVcData.lastName" readonly />
                 </div>
               </div>
               <div class="row">
                 <div class="col mb-3">
-                  <label for="floatingInput2">State</label>
-                  <input type="text" class="form-control"  :value="kycNinData.nextOfKin.state" readonly />
+                  <label for="floatingInput2">Occupation</label>
+                  <input type="text" class="form-control"  :value="kycVcData.occupation" readonly />
                 </div>
                 <div class="col mb-3">
-                  <label for="floatingInput2">Town</label>
-                  <input type="text" class="form-control"  :value="kycNinData.nextOfKin.town" readonly />
+                  <label for="floatingInput2">Polling Unit Code</label>
+                  <input type="text" class="form-control"  :value="kycVcData.pollingUnitCode" readonly />
                 </div>
                 <div class="col mb-3">
-                  <label for="floatingInput2">LGA</label>
-                  <input type="text" class="form-control"  :value="kycNinData.nextOfKin.lga" readonly />
+                  <label for="floatingInput2">Gender</label>
+                  <input type="text" class="form-control"  :value="kycVcData.gender" readonly />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="floatingInput2">VIN</label>
+                  <input type="text" class="form-control"  :value="kycVcData.vin" readonly />
                 </div>
               </div>
             </div>
-          </div>
-          <div v-if="kycVerificationType == 'Voters card' && Object.values(kycVcData).every(key => key !== null)">
+            <div class="holder" v-if="kycVerificationType == 'Drivers license' && Object.values(kycDlData).every(key => key !== null)">
+              <div class="image-box" id="driversImg">
+              </div>
             <div class="row">
               <div class="col mb-3">
                 <label for="floatingInput2">First Name</label>
-                <input type="text" class="form-control"  :value="kycVcData.firstName" readonly />
+                <input type="text" class="form-control"  :value="kycDlData.firstName" readonly />
               </div>
               <div class="col mb-3">
                 <label for="floatingInput2">Middle Name</label>
-                <input type="text" class="form-control"  :value="kycVcData.middleName" readonly />
+                <input type="text" class="form-control"  :value="kycDlData.middleName" readonly />
               </div>
               <div class="col mb-3">
                 <label for="floatingInput2">Last Name</label>
-                <input type="text" class="form-control"  :value="kycVcData.lastName" readonly />
+                <input type="text" class="form-control"  :value="kycDlData.lastName" readonly />
               </div>
             </div>
             <div class="row">
               <div class="col mb-3">
-                <label for="floatingInput2">Occupation</label>
-                <input type="text" class="form-control"  :value="kycVcData.occupation" readonly />
+                <label for="floatingInput2">Issued Date</label>
+                <input type="text" class="form-control"  :value="kycDlData.issuedDate" readonly />
               </div>
               <div class="col mb-3">
-                <label for="floatingInput2">Polling Unit Code</label>
-                <input type="text" class="form-control"  :value="kycVcData.pollingUnitCode" readonly />
+                <label for="floatingInput2">Expiry Date</label>
+                <input type="text" class="form-control"  :value="kycDlData.expiryDate" readonly />
+              </div>
+              <div class="col mb-3">
+                <label for="floatingInput2">License No</label>
+                <input type="text" class="form-control"  :value="kycDlData.licenseNo" readonly />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col mb-3">
+                <label for="floatingInput2">DOB</label>
+                <input type="text" class="form-control"  :value="kycDlData.birthdate" readonly />
               </div>
               <div class="col mb-3">
                 <label for="floatingInput2">Gender</label>
-                <input type="text" class="form-control"  :value="kycVcData.gender" readonly />
+                <input type="text" class="form-control"  :value="kycDlData.gender" readonly />
               </div>
-            </div>
-            <div class="row">
               <div class="col mb-3">
-                <label for="floatingInput2">VIN</label>
-                <input type="text" class="form-control"  :value="kycVcData.vin" readonly />
+                <label for="floatingInput2">State Of Issue</label>
+                <input type="text" class="form-control"  :value="kycDlData.stateOfIssue" readonly />
               </div>
             </div>
           </div>
-          <div v-if="kycVerificationType == 'Drivers license' && Object.values(kycDlData).every(key => key !== null)">
-            <div class="image-box" id="driversImg">
-            </div>
-          <div class="row">
-            <div class="col mb-3">
-              <label for="floatingInput2">First Name</label>
-              <input type="text" class="form-control"  :value="kycDlData.firstName" readonly />
-            </div>
-            <div class="col mb-3">
-              <label for="floatingInput2">Middle Name</label>
-              <input type="text" class="form-control"  :value="kycDlData.middleName" readonly />
-            </div>
-            <div class="col mb-3">
-              <label for="floatingInput2">Last Name</label>
-              <input type="text" class="form-control"  :value="kycDlData.lastName" readonly />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col mb-3">
-              <label for="floatingInput2">Issued Date</label>
-              <input type="text" class="form-control"  :value="kycDlData.issuedDate" readonly />
-            </div>
-            <div class="col mb-3">
-              <label for="floatingInput2">Expiry Date</label>
-              <input type="text" class="form-control"  :value="kycDlData.expiryDate" readonly />
-            </div>
-            <div class="col mb-3">
-              <label for="floatingInput2">License No</label>
-              <input type="text" class="form-control"  :value="kycDlData.licenseNo" readonly />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col mb-3">
-              <label for="floatingInput2">DOB</label>
-              <input type="text" class="form-control"  :value="kycDlData.birthdate" readonly />
-            </div>
-            <div class="col mb-3">
-              <label for="floatingInput2">Gender</label>
-              <input type="text" class="form-control"  :value="kycDlData.gender" readonly />
-            </div>
-            <div class="col mb-3">
-              <label for="floatingInput2">State Of Issue</label>
-              <input type="text" class="form-control"  :value="kycDlData.stateOfIssue" readonly />
-            </div>
-          </div>
-        </div>
-          <div v-if="kycVerificationType == 'Tax identification number' && Object.values(kycTaxData).every(key => key !== null)">
-            <div class="row">
-              <div class="col mb-3">
-                <label for="floatingInput2">Tax Payer Name</label>
-                <input type="text" class="form-control"  :value="kycTaxData.taxpayerName" readonly />
-              </div>
-              <div class="col mb-3">
-                <label for="floatingInput2">Email</label>
-                <input type="text" class="form-control"  :value="kycTaxData.email" readonly />
-              </div>
-              <div class="col mb-3">
-                <label for="floatingInput2">Phone</label>
-                <input type="text" class="form-control"  :value="kycTaxData.phone" readonly />
-              </div>
-            </div>
-            <div class="row">
+            <div class="holder" v-if="kycVerificationType == 'Tax identification number' && Object.values(kycTaxData).every(key => key !== null)">
+              <div class="row">
                 <div class="col mb-3">
-                  <label for="floatingInput2">CAC Reg No</label>
-                  <input type="text" class="form-control"  :value="kycTaxData.cacRegNo" readonly />
+                  <label for="floatingInput2">Tax Payer Name</label>
+                  <input type="text" class="form-control"  :value="kycTaxData.taxpayerName" readonly />
                 </div>
                 <div class="col mb-3">
-                  <label for="floatingInput2">JITTIN</label>
-                  <input type="text" class="form-control"  :value="kycTaxData.jittin" readonly />
+                  <label for="floatingInput2">Email</label>
+                  <input type="text" class="form-control"  :value="kycTaxData.email" readonly />
                 </div>
                 <div class="col mb-3">
-                  <label for="floatingInput2">Entity Type</label>
-                  <input type="text" class="form-control"  :value="kycTaxData.entityType" readonly />
+                  <label for="floatingInput2">Phone</label>
+                  <input type="text" class="form-control"  :value="kycTaxData.phone" readonly />
                 </div>
               </div>
-            <div class="row">
-              <div class="col mb-3">
-                <label for="floatingInput2">Tax Office</label>
-                <input type="text" class="form-control"  :value="kycTaxData.taxOffice" readonly />
-              </div>
+              <div class="row">
+                  <div class="col mb-3">
+                    <label for="floatingInput2">CAC Reg No</label>
+                    <input type="text" class="form-control"  :value="kycTaxData.cacRegNo" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">JITTIN</label>
+                    <input type="text" class="form-control"  :value="kycTaxData.jittin" readonly />
+                  </div>
+                  <div class="col mb-3">
+                    <label for="floatingInput2">Entity Type</label>
+                    <input type="text" class="form-control"  :value="kycTaxData.entityType" readonly />
+                  </div>
+                </div>
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="floatingInput2">Tax Office</label>
+                  <input type="text" class="form-control"  :value="kycTaxData.taxOffice" readonly />
+                </div>
 
-              <div class="col mb-3">
-                <label for="floatingInput2">TIN</label>
-                <input type="text" class="form-control"  :value="kycTaxData.tin" readonly />
+                <div class="col mb-3">
+                  <label for="floatingInput2">TIN</label>
+                  <input type="text" class="form-control"  :value="kycTaxData.tin" readonly />
+                </div>
               </div>
-            </div>
-        </div>
-          <div v-if="kycVerificationType == 'Corporate affairs commission' && Object.values(kycCacData).every(key => key !== null)">
+          </div>
+            <div class="holder" v-if="kycVerificationType == 'Corporate affairs commission' && Object.values(kycCacData).every(key => key !== null)">
             <div class="row">
               <div class="col mb-3">
                 <label for="floatingInput2">Affiliates</label>
@@ -430,18 +417,16 @@
             </div>
           </div>
           </div>
+          </div>
         </div>
-
-      <!---------------------------------------------  Second layer ------------------------------------------------------>
-    </div>
-
         <div v-else style="display: flex;flex-direction: column;justify-content: center;align-items: center">
-          <h5>Waiting for your new request</h5>
-          <lottie-player src="https://assets5.lottiefiles.com/private_files/lf30_4svt0lb2.json"  background="transparent"  speed="1"  style="width: 50px; height: 50px;"  loop  autoplay></lottie-player>
-        </div>
-
+        <!---------------------------------------------  Second layer ------------------------------------------------------>
+        <h5>Waiting for your new request</h5>
+        <lottie-player src="https://assets5.lottiefiles.com/private_files/lf30_4svt0lb2.json"  background="transparent"  speed="1"  style="width: 50px; height: 50px;"  loop  autoplay></lottie-player>
+      </div>
+      </div>
+    </div>
     <kyc-form :show-kyc-form="showKycForm" @closeKycForm="updateKycForm"></kyc-form>
-  </div>
   </div>
 </template>
 
@@ -537,7 +522,6 @@ export default {
 <style scoped>
 .business-profile{
   width: 850px;
-  overflow-y: scroll;
   height: auto;
   padding: 20px;
   margin: 30px auto;
@@ -546,13 +530,16 @@ export default {
 }
 
 .image-box{
-  border: solid green;
   height: 200px;
   border: 360px;
   width: 200px;
   margin-bottom: 10px;
 }
 
+.holder{
+  position: relative;
+  width: 100%;
+}
 
 
 </style>

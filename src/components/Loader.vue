@@ -24,7 +24,7 @@ mounted:function(){
 
 },
     computed: {
-    ...mapState(["user"]),
+    ...mapState(["userManagement"]),
     
   },
 }

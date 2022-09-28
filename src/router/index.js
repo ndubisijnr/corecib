@@ -15,6 +15,7 @@ import settingsRoutes from "./routes/settings-routes"
 import payBillsRoutes from "./routes/pay-bills"
 import notFound from "./routes/not-found-route"
 import kycRoutes from "../router/routes/kyc-routes"
+import userManagementRoute from "../router/routes/user-management"
 
 
 Vue.use(VueRouter);
@@ -34,7 +35,7 @@ VueRouter.prototype.absUrl = function(url, newTab = true) {
 export const baseRoutes = [];
 
 // export  const me = "clark"
-export const routes = baseRoutes.concat(kycRoutes,payBillsRoutes,settingsRoutes,walletRoutes,virtualAccountRoutes,reportRoutes,dashRoutes,authRoutes,notFound);
+export const routes = baseRoutes.concat(userManagementRoute,kycRoutes,payBillsRoutes,settingsRoutes,walletRoutes,virtualAccountRoutes,reportRoutes,dashRoutes,authRoutes,notFound);
 
 const router = new VueRouter({
     routes,
@@ -67,7 +68,7 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
 
     // If auth isn't required for the route, just continue.
     if (!authRequired) return next();
-    console.log("user getter info: "+StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo))
+    console.log("userManagement getter info: "+StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo))
     if (StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).responseCode === '00') {
         return next()
     }else if (StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken) != null){
@@ -95,7 +96,7 @@ router.beforeResolve(async (routeTo, routeFrom, next) => {
                 // the same arguments as the `beforeEnter` hook.
                 if (route.meta && route.meta.beforeResolve) {
                     route.meta.beforeResolve(routeTo, routeFrom, (...args) => {
-                        // If the user chose to redirect...
+                        // If the userManagement chose to redirect...
                         if (args.length) {
                             // If redirecting to the same route we're coming from...
                             // Complete the redirect.

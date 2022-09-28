@@ -18,7 +18,7 @@
     </side-bar>
     <div class="main-content animate__fadeIn animate__animated">
       <dashboard-navbar :type="$route.meta.navbarType"></dashboard-navbar>
-      <div @click="$sidebar.displaySidebar(false)">
+      <div @click="$sidebar.displaySidebar(false)" class="content">
         <fade-transition :duration="200" origin="center top" mode="out-in">
           <router-view></router-view>
         </fade-transition>
@@ -80,6 +80,16 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
+.wrapper{
+  /*background-color: #070606D8;*/
+}
 
+.content{
+  /*background-image: url("https://quikgem-repo.s3.amazonaws.com/15410+1.png");*/
+  /*background-position: center;*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: cover;*/
+  height: 100vh;
+}
 </style>

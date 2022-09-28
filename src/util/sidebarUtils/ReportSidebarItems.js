@@ -12,20 +12,20 @@ export default
             name:'Dispute',
             icon:'fas fa-sort',
             path:'/reports/dispute',
-            children:[
-                {
-                    header: 'Bills Payment',
-                    icon: '',
-                    items: [
-                        {
-                            name:'Pay Bills',
-                            icon:'fas fa-money-bill-wave-alt',
-                            path:'/'
-                        },
-
-                    ]
-                }
-            ]
+            // children:[
+            //     {
+            //         header: 'Bills Payment',
+            //         icon: '',
+            //         items: [
+            //             {
+            //                 name:'Pay Bills',
+            //                 icon:'fas fa-money-bill-wave-alt',
+            //                 path:'/'
+            //             },
+            //
+            //         ]
+            //     }
+            // ]
         },
         {
             name:'Transactions',

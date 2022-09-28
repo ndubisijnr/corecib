@@ -42,9 +42,9 @@ export default {
        { key: "kycOrganisationId", label: "kyc Organisation Id" },
         { key: "kycNumber", label: "kyc Number" },
         {key: "kycType", label: "kyc Type"},
-        { key: "kycStatus", label: "kycStatus" },
-        { key: "kycResponse", label: "kycStatus"},
-        { key: "kycAction", label: "Action" },
+        // { key: "kycStatus", label: "kycStatus" },
+        // { key: "kycResponse", label: "kycStatus"},
+        // { key: "kycAction", label: "Action" },
 
       ],
 
