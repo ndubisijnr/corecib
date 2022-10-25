@@ -15,6 +15,7 @@ import BillsPaymentRequest from "@/model/request/BillsPaymentRequest";
 import AccountPayoutService from "../../service/AccountPayoutService";
 import AccountPayoutResponse from "../../model/reponse/AccountPayoutResponse";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest";
+import GetStarted from "../../views/dashboard/GetStarted";
 
 
 const Toast = Swal.mixin({
@@ -32,6 +33,7 @@ const Toast = Swal.mixin({
 
 export const state = {
   form:false,
+  isSwitching:false,
   userEditForm:false,
   token: null,
   loading: false,
@@ -50,7 +52,7 @@ export const state = {
   allCustomers:null,
   organisationRoles:null,
   allInvites:null,
-  singleOrganisationUser:null
+  singleOrganisationUser:null,
 }
 
 export const getters = {
@@ -93,7 +95,8 @@ export const mutations = {
   updateCurrentOrganisation:(state, payload) => {state.currentOrganisation = payload},
   updateAllCustomer:(state, payload) => {state.allCustomers = payload},
   updateOrganisationRoles:(state, payload) =>{state.organisationRoles = payload},
-  updateAllInvites:(state, payload) => {state.allInvites = payload}
+  updateAllInvites:(state, payload) => {state.allInvites = payload},
+  updateIsSwitching:(state, payload) => {state.isSwitching = payload},
 }
 
 export const actions = {
@@ -128,15 +131,16 @@ export const actions = {
       commit("updateLoading", false);
     });
   },
-createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerRequest) => {
-  console.log("Action")
-  console.log(payload)
+
+  createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerRequest) => {
+    console.log("Action")
+    console.log(payload)
     commit("updateLoading", true)
     return CustomerService.callCreateCustomerApi(payload).then(response => {
       let responseData = response.data;
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        Swal.fire({ text: responseData.responseMessage, icon: 'success', })
+        Swal.fire({ text: "You have successfully accepted the invite from your organisation", icon: 'success', })
           .then(() => { router.push({ name: "Logon" }) })
       } else {
         Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
@@ -145,9 +149,10 @@ createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerReque
       commit("updateLoading", false);
     });
   },
+
   validateLink: ({ commit }, payload = AuthenticationRequest.validateCustomerLinkRequest) => {
-  console.log("Action")
-  console.log(payload)
+    console.log("Action")
+    console.log(payload)
     commit("updateLoading", true)
     return CustomerService.callValidateLinkApi(payload).then(response => {
       let responseData = response.data;
@@ -173,7 +178,6 @@ createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerReque
       .then(response => {
         let responseData = response.data;
         if (responseData.responseCode === "00") {
-            commit("updateLoading", false)
             localStorage.token = responseData.token;
             localStorage.customerId = responseData.customerId
             commit("updateToken", responseData.token);
@@ -204,17 +208,55 @@ createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerReque
       let responseData = response.data
       if (responseData.responseCode === "00") {
         if (router.currentRoute.meta.layout === 'auth') router.push({ name: "GetStarted" }).then(() => { })
-        commit("updateUserInfo", responseData)
-        commit("updateAllOrganisationList",responseData.organisations)
+            commit("updateUserInfo", responseData)
+            commit("updateAllOrganisationList",responseData.organisations)
+            StoreUtils.dispatch(StoreUtils.actions.preference.readPreferenceById).then()
+
+            StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
+
+            //read invites
+            StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
+
+            StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc)
+
+
+            //read Roles
+            StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
+
+            StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
+
+            StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats).then()
+
+            StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes).then();
+
+            StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets).then();
+
+
+            StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount);
+
+
+            //clear console
+            //Call in read documents actions
+            StoreUtils.dispatch(StoreUtils.actions.document.readDocument).then();
+
+            //Call in banks payout account//
+            StoreUtils.dispatch(StoreUtils.actions.accountPayout.readAddedBanks).then();
+
+            StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList).then();
+
+            StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById).then()
+
+            StoreUtils.dispatch(StoreUtils.actions.auth.readCustomerByOrganisation).then()
+
       }else if(responseData.responseCode === "115"){
         commit("updateTimedOut",true)
       }
     }).catch(error => { commit("updateLoading", false); console.log(error) })
   },
 
-  changePassword:({commit}, paylaod = AuthenticationRequest.changePassword) =>{
+  changePassword:({commit}, payload) =>{
     commit("updateLoading", true)
-    return AuthService.callChangePasswordApi(paylaod).then((response)=>{
+    return AuthService.callChangePasswordApi(payload).then((response)=>{
       let responseData = response.data
       if(responseData.responseCode == "00"){
         commit("updateLoading", false)
@@ -233,7 +275,8 @@ createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerReque
       .then(() => {
         commit("updateLoading", false)
         localStorage.removeItem("token")
-        localStorage.clear()
+        localStorage.removeItem('customerId')
+        // localStorage.clear()
         commit("updateAuthToken", null);
         commit("updateUserInfo", null);
         commit("updateLoading", false);
@@ -346,7 +389,9 @@ createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerReque
 
   readOrganisationById:({commit}, payload={organisationId:localStorage.organisationId}) => {
     commit("updateLoading", true)
+    commit("updateIsSwitching", false)
     return OrganizationService.callReadOrganisationByIdApi(payload).then((response) => {
+      commit("updateIsSwitching", false)
       let responseData = response.data
       if(responseData.responseCode === "00"){
         commit("updateLoading", false)
@@ -370,7 +415,14 @@ createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerReque
       let responseData = response.data
       if(responseData.responseCode === "00"){
         Toast.fire({text:responseData.responseMessage, icon:'success'}).then()
-        location.reload()
+        if(router.currentRoute.name !== "GetStarted"){
+          router.push({name:"GetStarted"}).then(() => {
+            location.reload()
+          })
+        }else{
+          location.reload()
+        }
+
       }else{
         Toast.fire({text:responseData.responseMessage, icon:'error'}).then()
       }
@@ -382,48 +434,112 @@ createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerReque
   },
 
   readOrganisationByUserId: ({commit,state}, payload = OrganisationRequest.readOrganisationByUserId)=> {
+    commit("updateLoading", true)
     payload.customerId = localStorage.customerId
-    return OrganizationService.callReadOrganisationByUserIdApi(payload).then(response => {
+    return OrganizationService.callReadOrganisationByUserIdApi(payload).then(async response => {
+      commit("updateLoading", true)
       let responseData = response.data
       if(responseData.responseCode === "00") {
         commit("updateAllOrganisationList", responseData.data)
         commit("updateCurrentOrganisation", responseData.data[0])
-        if (!localStorage.organisationId) localStorage.organisationId = state.currentOrganisation.organisationId
-        else {
-          if (state.allOrganisations.filter(it => it.organisationId) === localStorage.organisationId){
-            localStorage.organisationId = localStorage.organisationId
+        // if user have organisation
+        if(state.allOrganisations.length > 0){
+          if (!localStorage.organisationId) localStorage.organisationId = state.currentOrganisation.organisationId
+          else {
+            if (state.allOrganisations.filter(it => it.organisationId) === localStorage.organisationId){
+              localStorage.organisationId = localStorage.organisationId
+            }
           }
-        }
-        if(state.currentOrganisation.organisationStatus === 'PENDING'){
-          router.push({name:"Settings"}).then(() => {
-            let model = BillsPaymentRequest.readCategories
-            StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories, model)
-            AccountPayoutRequest.readAccountPayoutById.accountOrganisationId = localStorage.organisationId
-            return AccountPayoutService.callreadAddedBanksApi(payload = AccountPayoutRequest.readAccountPayoutById).then(response => {
-              let responseData3 = response.data
-              commit("updateAddedBanks", responseData3)
-              commit("updatereadAddedBanks",responseData3)
-            })
-          })
-        }else{
-          router.push({ name: "GetStarted" }).then(() => {
-            let model = BillsPaymentRequest.readCategories
-            StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories, model)
-            AccountPayoutRequest.readAccountPayoutById.accountOrganisationId = localStorage.organisationId
-            return AccountPayoutService.callreadAddedBanksApi(payload = AccountPayoutRequest.readAccountPayoutById).then(response => {
-              let responseData3 = response.data
-              commit("updateAddedBanks", responseData3)
-              commit("updatereadAddedBanks",responseData3)
-            })
-          })
-        }
+          await StoreUtils.dispatch(StoreUtils.actions.preference.readPreferenceById)
+          commit("updateLoading", true)
 
+          //read invites
+          await StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
+          commit("updateLoading", true)
+
+
+          await StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
+          commit("updateLoading", true)
+
+
+          //read Roles
+          await StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
+          commit("updateLoading", true)
+
+
+          //read transactions
+          await StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions);
+          commit("updateLoading", true)
+
+          await StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList);
+          commit("updateLoading", true)
+
+
+        //read dashboardStats
+          await StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
+          commit("updateLoading", true)
+
+
+          //read disputes
+          await StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes);
+          commit("updateLoading", true)
+
+          //read wallets
+          await StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets);
+          commit("updateLoading", true)
+
+          //read kyc
+          await StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc)
+          commit("updateLoading", true)
+
+          //read virtualAccount
+          await StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount);
+          commit("updateLoading", true)
+
+
+          //clear console
+        //Call in read documents actions
+          await StoreUtils.dispatch(StoreUtils.actions.document.readDocument).then();
+          commit("updateLoading", true)
+
+
+          //Call in banks payout account//
+          await StoreUtils.dispatch(StoreUtils.actions.accountPayout.readAddedBanks).then();
+          commit("updateLoading", true)
+
+          //Call in banks list//
+          await StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList).then();
+          commit("updateLoading", true)
+
+
+          await StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById).then()
+          commit("updateLoading", true)
+
+
+          await StoreUtils.dispatch(StoreUtils.actions.auth.readCustomerByOrganisation).then()
+          commit("updateLoading", true)
+
+
+          await StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout).then(() => {
+            commit("updateLoading", false)
+            router.push({name:"GetStarted"})
+          })
+
+
+      }
+      // if user does not have any organisation
+        else{
+          router.push({name:"AddNewBusiness"}).then(() => {
+            commit("updateForm", true)
+          })
+        }
       }
       else{
         Toast.fire({text:`${responseData.responseMessage}`, icon:'error'})
       }
     }).catch(e => {
-      Toast.fire({title:e, icon:'error'})
+      Toast.fire({text:e, icon:'error'})
+      console.log(e)
     })
   },
 
@@ -451,7 +567,7 @@ createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerReque
     })
   },
 
-  readCustomerByOrganisation:({commit}, payload=OrganisationRequest.readUsersByOrganisationId)=> {
+  readCustomerByOrganisation:({commit, state}, payload=OrganisationRequest.readUsersByOrganisationId)=> {
     payload.organisationId = localStorage.organisationId
     commit("updateLoading", true)
     return OrganizationService.callReadUsersByOrganisationIdApi(payload).then(response => {
@@ -473,6 +589,8 @@ createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerReque
       let responseData = response.data
       if(responseData.responseCode === "00"){
         commit("updateOrganisationRoles",responseData.data)
+      }else{
+        Toast.fire({text:`${responseData.responseMessage} in reading organisation roles`, icon:'error'})
       }
     })
   },
@@ -496,6 +614,7 @@ createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerReque
       if(responseData.responseCode === "00"){
         StoreUtils.dispatch(StoreUtils.actions.auth.readCustomerByOrganisation)
         commit("updateUserEditForm", false)
+        Toast.fire({text:responseData.responseMessage, icon:'success'})
         Object.keys(OrganisationRequest.updateOrganisationUser).forEach(key => {
           OrganisationRequest.updateOrganisationUser[key] = null
         })

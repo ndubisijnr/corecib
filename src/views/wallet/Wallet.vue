@@ -99,9 +99,7 @@ export default {
       return { height: "150px" };
     },
   },
-  mounted() {
-    StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets,this.allWalletModel);
-  },
+  mounted() {},
 
 };
 </script>

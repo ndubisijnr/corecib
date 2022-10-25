@@ -1,12 +1,12 @@
-import UserManagementView from "../../views/userManagement/UserManagementView";
+import UserManagementView from "../../views/userManagement/AddNewBusiness";
 
 export default [
 
     {
-        path: '/users',
+        path: '/add-business',
         component: UserManagementView,
-        name: 'UserManagementView',
-        meta: { layout: 'dashboard', auth: true },
+        name: 'AddNewBusiness',
+        meta: { layout: 'dashboard', authRequired: true },
     },
 
 ];

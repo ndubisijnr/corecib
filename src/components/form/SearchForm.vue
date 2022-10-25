@@ -91,9 +91,7 @@ export default {
     }
   },
   methods: {
-    logit(){
-      console.log("ha")
-    },
+
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
@@ -103,7 +101,6 @@ export default {
       d = new Date(d);
       let day = d.getDay(),
          diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
-      console.log(day)
       return new Date(d.setDate(diff));
     },
     formatDates(dateOne, dateTwo) {
@@ -166,11 +163,11 @@ export default {
       if (this.type === "today") {
         this.model.startDate = today.toJSON().slice(0, 10);
         this.model.endDate = today.toJSON().slice(0, 10);
-        console.log(
-          "today:: in a bit",
-          this.model.startDate,
-          this.model.endDate
-        );
+        // console.log(
+        //   "today:: in a bit",
+        //   this.model.startDate,
+        //   this.model.endDate
+        // );
       } else if (this.type === "thisweek") {
         let priorDate = this.getMonday(new Date());
         this.myStylesmodel.startDate = priorDate.toJSON().slice(0, 10);
@@ -189,7 +186,7 @@ export default {
         this.model.endDate = new Date(new Date().setDate(today.getDate() + 1))
           .toJSON()
           .slice(0, 10);
-        console.log("last30::", model.startDate, model.endDate);
+        // console.log("last30::", model.startDate, model.endDate);
       } else if (this.type === "last90") {
         let priorDate = new Date(new Date().setDate(today.getDate() - 90));
         this.model.startDate = priorDate.toJSON().slice(0, 10);
@@ -219,40 +216,40 @@ export default {
         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
-        console.log("hello ALL_TRANSACTION", this.searchModel)
+        // console.log("hello ALL_TRANSACTION", this.searchModel)
       } else if (this.module === SearchModuleUtil.WALLET) {
         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateReadAllWallets, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets, this.searchModel);
-        console.log("hello WALLET", this.searchModel)
+        // console.log("hello WALLET", this.searchModel)
 
       } else if (this.module === SearchModuleUtil.VIRTUAL_ACCOUNT) {
         this.lable = "Virtual Account Transaction Period"
         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.virtualAccount.updateVirtualAccount, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount, this.searchModel);
-        console.log("hello VIRTUAL_ACCOUNT", this.searchModel)
+        // console.log("hello VIRTUAL_ACCOUNT", this.searchModel)
       } else if (this.module === SearchModuleUtil.WALLET_TRANSACTION) {
         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
-        console.log("hello WALLET_TRANSACTION", this.searchModel)
+        // console.log("hello WALLET_TRANSACTION", this.searchModel)
       } else if (this.module === SearchModuleUtil.VIRTUAL_ACCOUNT_TRANSACTION) {
         this.virtualAccountsearchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.virtualAccount.updateVirtualaccountTransactions, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualaccountTransactions, this.virtualAccountsearchModel);
-        console.log("hello WALLET_TRANSACTION", this.virtualAccountsearchModel)
+        // console.log("hello WALLET_TRANSACTION", this.virtualAccountsearchModel)
       }
        else if (this.module === SearchModuleUtil.PAYOUT_TRANSACTION) {
         StoreUtils.commit(StoreUtils.mutations.accountPayout.updateAllPayouts, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutSearchModel);
-        console.log("hello PAYOUT_TRANSACTION", this.payoutSearchModel)
+        // console.log("hello PAYOUT_TRANSACTION", this.payoutSearchModel)
       }
       else {
         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.dispute.updateDisputes, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes, this.searchModel);
-        console.log("hello Something else")
+        // console.log("hello Something else")
       }
       document.getElementById("modal-center").click()
     }
@@ -272,7 +269,7 @@ export default {
     ...mapState({
       userInformation: (state) => state.auth.userInfo,
       loading: (state) => {
-        console.log(module)
+        // console.log(module)
         if (module === SearchModuleUtil.ALL_TRANSACTION || SearchModuleUtil.WALLET)
           return state.walletTransactions.loading
         else if (module === SearchModuleUtil.VIRTUAL_ACCOUNT)
@@ -315,7 +312,7 @@ export default {
     }else{
         this.label = "Transaction Period"
     }
-  console.log(this.maxDatetime)
+  // console.log(this.maxDatetime)
     this.getMonday()
   }
 

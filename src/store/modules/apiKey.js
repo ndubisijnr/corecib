@@ -33,6 +33,7 @@ export const mutations = {
 export const actions = {
 
   updateApikey:({commit,state}, payload = ApiKeyRequest.readApiKey) =>{
+    payload.apikeyOrganisationId = localStorage.organisationId
     if(state.apiKey.responseCode !== "00") commit("updateLoading", true)
     return ApikeyService.callReadApiKeyOrgansation(payload).then(response => {
       let responseData = response.data
@@ -46,6 +47,7 @@ export const actions = {
   },
 
   create:({commit, dispatch, state}, payload = ApiKeyRequest.generateApiKey) =>{
+    payload.organisationId = localStorage.organisationId
     commit("updateLoading", true)
     return ApikeyService.callGenerateApiKey(payload).then(response => {
       let responseData = response.data
@@ -60,7 +62,7 @@ export const actions = {
       })
   },
   regenerateApiKey:({commit, dispatch, state}, payload = ApiKeyRequest.regenerateApiKey) =>{
-    console.log("REGENERATE APIKEY")
+    payload.organisationId = localStorage.organisationId
     commit("updateLoading", true)
     return ApikeyService.callRegenerateApiKey(payload).then(response => {
       let responseData = response.data

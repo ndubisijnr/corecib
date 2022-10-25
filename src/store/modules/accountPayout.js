@@ -22,7 +22,7 @@ export const state = {
   addbankloading:false,
   addedBanks:AccountPayoutResponse.readPayoutAccountByOrganisationId,
   readOnlyAddedBanks:AccountPayoutResponse.readPayoutAccountByOrganisationId,
-  allpayouts:{}
+  allpayouts:[]
 }
 
 export const getters = {}
@@ -51,6 +51,7 @@ export const mutations = {
 export const actions = {
 
     readAddedBanks: ({ commit, state }, payload = AccountPayoutRequest.readAccountPayoutById) => {
+         payload.accountOrganisationId = localStorage.organisationId
           commit("updateAccLoading", true)
             return AccountPayoutService.callreadAddedBanksApi(payload).then(response => {
             let responseData = response.data
@@ -128,20 +129,22 @@ export const actions = {
     
    },
 
-   readPayout: ({commit}, payload = AccountPayoutRequest.readPayout) => {
-    commit("updateAccLoading", true)
+   readPayout: ({commit,state}, payload = AccountPayoutRequest.readPayout) => {
+       console.log(state.allpayouts)
+    if(state.allpayouts.length < 1) commit("updateAccLoading", true)
     return AccountPayoutService.callReadPayoutApi(payload).then(response => {
       let responseData = response.data
       if(responseData.responseCode == "00"){
        commit("updateAccLoading", false)
        commit("updateAllPayouts",responseData)
-      router.push({name:"PayoutTransaction"})
+      if(router.currentRoute.path !== "/") router.push({name:"PayoutTransaction"}).then()
       }else{
        commit("updateAccLoading", false)
        Toast.fire({ text: responseData.responseMessage, icon: 'error', })
       }
     }) .catch(error => {
-      console.log(error)
+        Toast.fire({ text: error, icon: 'error', })
+
     })
    
   }

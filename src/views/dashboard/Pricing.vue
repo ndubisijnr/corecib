@@ -320,7 +320,6 @@ export default {
   }
   .table-parent{
     display: grid;
-    grid-template-columns: repeat(1,2fr);
     gap: 10px;
     max-width:100%
   }

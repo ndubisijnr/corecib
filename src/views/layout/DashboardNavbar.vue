@@ -39,7 +39,7 @@
     </ul>
     <ul class="navbar-nav align-items-center ml-auto ml-md-0">
       <span :class="{ 'spinner-border': loading }"></span>&nbsp;
-       <div class="text-center">
+       <div class="text-center" v-if="organisation.length > 0">
                 <span style="font-size:12px">Switch to {{stage == 'Live' ? 'Test' : 'Live' }}</span>
                 <br>
                 <toggle-button
@@ -69,10 +69,10 @@
           <h3 class="text-dark text-center m-1 small">{{ user.customerFirstName }} {{ user.customerLastName }} </h3>
           <b-list-group class="m-3 text-left small">
             <b-list-group-item button disabled>{{user.customerEmail}}</b-list-group-item>
-            <router-link to="/kyc-verifications"><b-list-group-item button>KYC Verification </b-list-group-item></router-link>
-           <a href="https://bizgem.io/contact-us.html" target="_blank"> <b-list-group-item button>Support</b-list-group-item></a>
-           <a href="https://documenter.getpostman.com/view/20549781/Uz5GoGMo" target="blank"> <b-list-group-item button>Documentation</b-list-group-item></a>
-           <router-link to="/settings/settings"> <b-list-group-item button>Settings</b-list-group-item></router-link>
+            <router-link to="/kyc-verifications" v-if="organisation.length > 0"><b-list-group-item button>KYC Verification </b-list-group-item></router-link>
+            <a href="https://bizgem.io/contact-us.html" target="_blank"> <b-list-group-item button>Support</b-list-group-item></a>
+            <a href="https://documenter.getpostman.com/view/20549781/Uz5GoGMo" target="blank"> <b-list-group-item button>Documentation</b-list-group-item></a>
+            <router-link to="/settings/settings" v-if="organisation.length > 0"> <b-list-group-item button>Settings</b-list-group-item></router-link>
             <b-list-group-item button  @click="adminLogOut()">Log Out</b-list-group-item>
           </b-list-group>
         </div>
@@ -115,7 +115,7 @@ export default {
   computed: {
     ...mapState({
       user: (state) => state.auth.userInfo,
-      organisation: (state) => state.auth.userInfo.organisations,
+      organisation: (state) => state.auth.allOrganisations,
       loading: (state) => state.auth.loading,
 
     }),

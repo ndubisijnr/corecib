@@ -37,6 +37,7 @@ export const mutations = {
 export const actions = {
 
   updateDisputes: ({ commit, state}, payload = DisputeRequest.disputeRead) => {
+    payload.disputeId = localStorage.organisationId
     if(state.disputes.data.length < 1) commit("updateLoading", true)
     return DisputeService.callReadDisputeByOrgApi(payload).then(response => {
       let responseData = response.data

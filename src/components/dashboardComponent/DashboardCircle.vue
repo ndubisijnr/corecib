@@ -113,7 +113,7 @@ export default {
   border:solid 2px ;
   color: black !important;
   background-color: #FFFFFF;
-  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 1100%);
+  /*box-shadow: 0 1px 2px hsl(0deg 0% 0% / 1100%);*/
 
 }
 

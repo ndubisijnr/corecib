@@ -15,7 +15,6 @@
 <script>
 import BaseTable from "../../components/table/BaseTable";
 import { mapState } from "vuex";
-import StoreUtils from "../../util/baseUtils/StoreUtils";
 import SearchForm from "../../components/form/SearchForm";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest";
 import PayoutForm from "../../components/form/PayoutForm";
@@ -66,31 +65,6 @@ export default {
 
     }),
   },
-
-  beforeCreate() {
-    this.readPayoutAccountModel.accountOrganisationId = localStorage.organisationId;
-    StoreUtils.dispatch(
-        StoreUtils.actions.accountPayout.readAddedBanks,
-        this.readPayoutAccountModel
-    );
-    StoreUtils.dispatch(
-        StoreUtils.actions.accountPayout.readPayout,
-        this.payoutTransactionsModel
-    );
-
-  },
-
-  mounted() {
-
-    StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutTransactionsModel)
-    // this.readPayoutAccountModel.accountOrganisationId =
-    //     localStorage.organisationId;
-    // StoreUtils.dispatch(
-    //     StoreUtils.actions.accountPayout.readAddedBanks,
-    //     this.readPayoutAccountModel
-    // );
-  },
-
 };
 </script>
 <style scoped>

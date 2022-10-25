@@ -5,12 +5,7 @@
     <span :class="{'spinner-loader':categoryloading}"></span>
   </div>
   <div class="main">
-    <div class="inner-main">
-      <div class="section-3">
-        <div class="d-flex justify-content-center">
-          <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
-        </div>
-      </div>
+<!--    <div class="inner-main">-->
       <div class="section-1">
         <div class="cag-sec">
           <div v-for="i in categories" :key="i" class="biller-box-category" :class="{'active':activeC == i.categoryName}" @click="readBillers(obj = i.categoryCode, obj2 = i.categoryName), b(), billstate === 'product', activeC = i.categoryName,modal=true">
@@ -20,7 +15,7 @@
           </div>
         </div>
       </div>
-    </div>
+<!--    </div>-->
     <div class="section-2">
       <div v-if="billerloading || categoryloading " style="width:100%;display: flex;justify-content: center;align-items: center">
          <span class="spinner-border mt-4" ></span>
@@ -41,11 +36,17 @@
                     :product-code="products[0].productCode">
                 </paybills-form>
               </div>
-              <span style="color: rgba(255,0,0,0.54);cursor: pointer"> <b-icon-x-circle-fill />   </span>
+<!--              <span style="color: rgba(255,0,0,0.54);cursor: pointer"> <b-icon-x-circle-fill />   </span>-->
             </div>
           </div>
         </div>
         </div>
+    <div class="section-3">
+      <div class="d-flex justify-content-center">
+        <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
+      </div>
+    </div>
+
   </div>
   <div class="main-mb">
     <div class="section-1" v-if="mobileMode">
@@ -166,8 +167,6 @@ export default {
   },
 
   mounted() {
-    StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories,this.categoriesModel)
-    StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
     this.billstate = true
     Object.keys(this.billers).forEach(key => {
       this.billers[key] = null
@@ -193,7 +192,7 @@ export default {
   width: 100%;
   display: flex;
   /*border: solid red;*/
-  justify-content: space-around;
+  justify-content: space-evenly;
   height: auto;
 }
 .section-3{
@@ -209,7 +208,7 @@ export default {
 }
 
 .biller-box{
-  width: 30%;
+  width: 40%;
   height: 60px;
   margin: 10px;
   padding: 10px;
@@ -273,7 +272,7 @@ export default {
   /*border: solid green;*/
 }
 .section-1{
-  width: 100%;
+  width: 50%;
   /*background-color: #236395;*/
   color: black;
   height: auto;
@@ -293,7 +292,7 @@ export default {
 }
 
 .section-2{
-  width: 60%;
+  width: 100%;
   /*border: solid red;*/
   height: 100vh;
   overflow-y: scroll;
@@ -303,7 +302,7 @@ export default {
   display: none;
 }
 .section-3{
-  width: 100%;
+  width: 40%;
 }
 
 @keyframes spinner-border {

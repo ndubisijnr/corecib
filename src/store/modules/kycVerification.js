@@ -26,7 +26,8 @@ export const state = {
     voter_card:KycResponse.voter_card,
     tax:KycResponse.tax_identification_number,
     readKyc:KycResponse.read_by_organisation_id,
-    kycReadAll:{}
+    kycReadAll:{},
+    kycResponse: {}
 }
 
 export const mutations = {
@@ -59,6 +60,9 @@ export const mutations = {
     },
     UpdateReadKYC:(state, payload) => {
         state.readKyc = payload
+    },
+    UpdateKycResponse:(state, payload) => {
+        state.kycResponse = payload
     }
 }
 
@@ -89,7 +93,7 @@ export const actions = {
             let responseData = response.data
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
-                commit("UpdateCorporateAffairs", responseData)
+                commit("UpdateKycResponse", responseData)
 
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
@@ -117,7 +121,7 @@ export const actions = {
             let responseData = response.data
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
-                commit("UpdateBvn", responseData)
+                commit("UpdateKycResponse", responseData)
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -143,7 +147,7 @@ export const actions = {
             let responseData = response.data
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
-                commit("UpdateNationalIdentity", responseData)
+                commit("UpdateKycResponse", responseData)
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -169,7 +173,7 @@ export const actions = {
             let responseData = response.data
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
-                commit("UpdateVoterCard", responseData)
+                commit("UpdateKycResponse", responseData)
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -196,7 +200,7 @@ export const actions = {
             let responseData = response.data
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
-                commit("UpdateTax", responseData)
+                commit("UpdateKycResponse", responseData)
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -223,7 +227,7 @@ export const actions = {
             let responseData = response.data
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
-                commit("UpdateDriversLicense", responseData)
+                commit("UpdateKycResponse", responseData)
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{

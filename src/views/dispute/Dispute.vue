@@ -82,13 +82,7 @@ export default {
 
   },
 
-  mounted() {
-    this.disputeReadModel.disputeOrgId = localStorage.getItem("organisationId");
-    StoreUtils.dispatch(
-      StoreUtils.actions.dispute.updateDisputes,
-      this.disputeReadModel
-    );
-  },
+  mounted() {},
 
   computed: {
     ...mapState({

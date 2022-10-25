@@ -38,8 +38,7 @@
         <div class="row">
           <div class="col mb-3">
             <label for="floatingInput3">Organization Type</label>
-            <select class="form-select form-control" aria-label="Default select example"
-                     v-model="organisationRes.organisationType">
+            <select class="form-select form-control" aria-label="Default select example" v-model="organisationRes.organisationType">
               <option data-v-00a70ddc="" value="Agric produce">
                 Agric produce
               </option>
@@ -327,10 +326,7 @@ export default {
       this.organisationRes.organisationName = this.organisationRes.organisationName
       this.organisationRes.organisationPhone = this.organisationRes.organisationPhone
       this.organisationRes.organisationEmail = this.organisationRes.organisationEmail
-      StoreUtils.dispatch(
-          StoreUtils.actions.auth.updateOrganisation,
-          this.organisationRes
-      ).then(() => {
+      StoreUtils.dispatch(StoreUtils.actions.auth.updateOrganisation, this.organisationRes).then(() => {
         const userToken = localStorage.getItem('token')
         StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
         StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
@@ -383,7 +379,6 @@ export default {
       director1:state => state.document.directorIdCard1.url,
       director2:state => state.document.directorIdCard2.url,
       organisationRes:state => JSON.parse(JSON.stringify(state.auth.readOrganisation)),
-      organisationReactive:state => state.auth.readOrganisation,
       loadingOtp: (state) => state.auth.loading,
       loadingDoc: (state) => state.document.loading,
       uploadStateDirectorIdCard1:state => state.document.upload1,

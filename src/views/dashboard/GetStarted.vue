@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-      <div class="cardd container m-3">
+      <div class="cardd m-3">
           <div class="mb card-holder">
             <div class="card-area">
                 <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
@@ -52,8 +52,6 @@ import Swal from "sweetalert2";
 import Transaction from "../report/Transactions.vue"
 import PayoutForm from "../../components/form/PayoutForm";
 import AccountPayoutRequest from "../../model/request/AccountPayoutRequest"
-import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
 
 const Toast = Swal.mixin({
   toast: true,
@@ -84,84 +82,6 @@ export default {
   },
 
   methods: {
-    fxTransactions(){
-      const ctx = document.getElementById('myChart').getContext('2d');
-
-      const myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            label: '# of Votes',
-            data: [39, 0],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-      return myChart
-    },
-    fxWallet(){
-      const ctx = document.getElementById('wallet1').getContext('2d');
-
-      const myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['jan', 'feb', 'mar'],
-          datasets: [{
-            label: '# of Transactions',
-            data: [1000900, 8000, 3000],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(255, 206, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          // scales: {
-          //   y: {
-          //     beginAtZero: true
-          //   }
-          // }
-        }
-      });
-      return myChart
-    },
 
     regenerateApiKey() {
       StoreUtils.dispatch(StoreUtils.actions.apiKey.regenerateApiKey, this.apikeyModel).then(() => {
@@ -214,17 +134,12 @@ export default {
 
   },
 
-  mounted() {
-    StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
-    this.fxTransactions()
-    this.fxWallet()
-
-  },
+  mounted() {},
 };
 </script>
 <style scoped>
 .wrapper{
-  height: 100%;
+  /*height: 100%;*/
 }
 
 .paymentBox{

@@ -3,38 +3,35 @@
        @mouseenter="$sidebar.onMouseEnter()"
        @mouseleave="$sidebar.onMouseLeave()" :style="{backgroundColor:primaryColor}">
     <div class="scrollbar-inner" ref="sidebarScrollArea">
-            <div class="sidenav-header">
-
-           <div class="add-business" @click="toogleD()">
-            <div class="">
-              <span class="arrow ni ni-bold-down" id="arrow"></span>
-              <div class="mt-3">
-              <h4 class="elispe text-white" id="orgname">{{currentOrganisation.organisationName}}</h4>
-              <h4 class="small text-white" id="id" v-if="currentOrganisation.organisationId" >{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
-              <h4 class="small text-white " id="id"  v-else > regenerating ID... </h4>
+      <div class="sidenav-header">
+        <div class="add-business" @click="toogleD()">
+              <div class="">
+                <span class="arrow ni ni-bold-down" id="arrow"></span>
+                <div class="mt-3" v-if="allOrganisation.length > 0">
+                <h4 class="elispe text-white" id="orgname">{{currentOrganisation.organisationName}}</h4>
+                <h4 class="small text-white" id="id" v-if="currentOrganisation.organisationId" >{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
+                <h4 class="small text-white " id="id"  v-else > regenerating ID... </h4>
+                </div>
+                <div class="mt-3 only-mobile" v-if="allOrganisation.length > 0">
+                  <h4 class="elispe text-white">{{currentOrganisation.organisationName}}</h4>
+                  <h4 class="small text-white" v-if="currentOrganisation.organisationId" >{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
+                  <h4 class="small text-white" v-else >regenerating...</h4>
+                </div>
               </div>
-              <div class="mt-3 only-mobile">
-                <h4 class="elispe text-white">{{currentOrganisation.organisationName}}</h4>
-                <h4 class="small text-white" v-if="currentOrganisation.organisationId" >{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
-                <h4 class="small text-white" v-else >regenerating...</h4>
-              </div>
-            </div>
-          </div>
-        <div id="k" :style="{background:primaryColorGradient}">
-          <ul class="add-business-ul">
-            <li class="add-business-li" v-for="(item, index) in allOrganisation" :key="index" v-if="item.organisationName !== currentOrganisation.organisationName " @click="switchBusiness(item.organisationId)">
-              {{item.organisationName}} {{index === 0 ? '⭐': null}}
-            </li>
-          </ul>
-          <div class="pl-3 pb-2">
-            <b-button size="sm" @click="showBusinessForm(true)">Add New Business</b-button>
-          </div>
-<!--          <hr style="border:1px solid;color: #91a0af">-->
-<!--          <h4 v-for="(org, index) in organisationList" :key="index" class="link-drop" @click="getId(org)"> {{org.organisationName}}</h4>-->
         </div>
+        <div id="k" :style="{background:primaryColorGradient}">
+            <ul class="add-business-ul">
+              <li class="add-business-li" v-for="(item, index) in allOrganisation" :key="index" v-if="item.organisationName !== currentOrganisation.organisationName " @click="switchBusiness(item.organisationId)">
+                {{item.organisationName}} {{index === 0 ? '⭐' : null}}
+              </li>
+            </ul>
+            <div class="pl-3 pb-2">
+              <b-button size="sm" @click="showBusinessForm(true)">Add New Business</b-button>
             </div>
+          </div>
+      </div>
       <slot></slot>
-      <div class="navbar-inner mt-4 text-white">
+      <div class="navbar-inner mt-4 text-white" v-if="allOrganisation.length > 0">
         <ul class="navbar-nav one text-white">
           <slot name="links">
             <sidebar-item
@@ -122,15 +119,9 @@ export default {
     switchBusiness(value){
       localStorage.organisationId = value
       StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
+      // location.reload()
       const userToken = localStorage.getItem('token')
       StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
-      StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
-      this.allTransactionsModel.page = 1;
-      StoreUtils.dispatch(
-          StoreUtils.actions.walletTransactions.updateAllWalletTransactions,
-          this.allWalletTransactions
-      );
-      location.reload()
     },
 
     minimizeSidebar() {

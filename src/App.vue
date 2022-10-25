@@ -12,7 +12,6 @@
     <auth-layout v-else></auth-layout>
 
     <add-new-business @closeBusinessForm="updateAddBusiness" :show-business-form="addBizForm"></add-new-business>
-
   </div>
 </template>
 
@@ -24,10 +23,11 @@ import AccountPayoutRequest from "./model/request/AccountPayoutRequest";
 import router from "@/router";
 import {mapState} from "vuex";
 import AddNewBusiness from "./components/form/AddNewBusiness";
+import BlockerLoader from "./components/BlockerLoader";
 
 const default_layout = "default";
 export default {
-  components: {AuthLayout, DashboardLayout, AddNewBusiness},
+  components: {AuthLayout, DashboardLayout, AddNewBusiness,BlockerLoader},
   data(){
     return{
       readPayoutAccountModel: AccountPayoutRequest.readAccountPayoutById,
@@ -45,13 +45,13 @@ export default {
 
     ...mapState({
       isExpired:state => state.auth.isTimedOut,
-      addBizForm: (state) => state.auth.form
+      addBizForm: (state) => state.auth.form,
+
     })
 
 
   },
   mounted() {
-    console.log(this.showBusinessForm)
     setTimeout(()=>{
       if(router.currentRoute.meta.layout !== "auth"){
         const userToken = localStorage.getItem('token')
@@ -65,7 +65,7 @@ export default {
         );
         console.clear()
       }else{
-        localStorage.clear()
+        // localStorage.clear()
       }
     },1000)
 

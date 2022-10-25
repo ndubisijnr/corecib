@@ -21,10 +21,11 @@
           <h5 @click="forgotPassword()" style="cursor: pointer;text-decoration: underline">Forgot Your Password?</h5>
           <h5 class="text-dark mt-1" @click="signUp()" style="cursor: pointer;text-decoration: underline">New To BizGem? Create Account</h5>
         </div>
-        <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">
-          {{loading ? "Loging in" : 'Login'}} <span :class="{ 'spinner-border': loading }"></span>
-        </button>
+
+        <button v-if="timerCount === 0" id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">Login<span :class="{ 'spinner-border': loading }"></span></button>
+        <button v-else id="submitBtn2" class="btn-login" :disabled="loading">{{timerCount < 15 ? 'Almost there ' : 'Login in'}} <span :class="{ 'spinner-border': loading }"></span></button>
       </div>
+        <p class="text-center text-warning small" v-if="timerCount === 1 || timerCount  === 3 || timerCount  === 2">Seems your network is slow.. Please refresh and try again</p>
       </div>
     </form>
   </validation-observer>
@@ -40,6 +41,7 @@ export default {
   data(){
     return {
       model: AuthenticationRequest.login,
+      timerCount: 0,
       notifications: {
         topCenter: false,
       },
@@ -66,9 +68,38 @@ export default {
       this.$router.push({ name: "ForgotPassword" });
     },
     onSubmit() {
-      StoreUtils.dispatch(StoreUtils.actions.auth.logon, this.model)
+      StoreUtils.dispatch(StoreUtils.actions.auth.logon, this.model).then(() => {})
+      this.startTimer()
+      this.timerCount = 20
+    },
+    startTimer(duration) {
+      let timer = duration,
+          minutes,
+          seconds;
+      setInterval(function () {
+        minutes = parseInt((timer / 60).toString(), 10);
+        seconds = parseInt((timer % 60).toString(), 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        this.timer = minutes + ":" + seconds;
+        if (--timer < 0) {
+          timer = duration;
+        }
+      }, 1000);
     },
   },
+  watch: {
+    timerCount: {
+      handler(value) {
+        if (value > 0) {
+          setTimeout(() => {
+            this.timerCount--;
+          }, 1000);
+        }
+      },
+    },
+  },
+
   computed:{
     ...mapState({
         loading: (state) => state.auth.loading,

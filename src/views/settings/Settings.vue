@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <blocker-loader v-if="loading && loadingOtp && payoutloading && loadingDoc" :message="'Setting up Settings Environment'"></blocker-loader>
+    <blocker-loader v-if="loading && loadingOtp && payoutloading && loadingDoc" :message="'Setting up Settings Environment'" position="absolute" background="transparent" zindex="999"></blocker-loader>
     <div class="container mt-0" v-else>
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -122,31 +122,18 @@
                             <div class="">
                               <span :class="{ 'spinner-border': loadingDoc }"></span>
                               <div class="doc">
-                                <div v-if="'data' in documents">
+                                <div>
                                   <!-- Card body -->
-
                                   <div class="document">
                                     <div class="" v-for="(doc, index) in documents.data" :key="index">
-                                      <div v-if="
-                                        'documentStatus' in doc &&
-                                        'documentUrl' in doc
-                                      ">
-                                        <!--<span>{{progressBarArr[index].value}}</span>-->
+                                      <div v-if="'documentStatus' in doc && 'documentUrl' in doc">
+<!--                                        <span>{{progressBarArr[index].value}}</span>-->
                                         <div class="our-team">
-                                          <progress-bar v-show="progressBarArr[index].value"></progress-bar>
+<!--                                          <progress-bar v-show="progressBarArr[index].value"></progress-bar>-->
                                           <div class="picture">
-                                            <img v-if="
-                                              doc.documentStatus == 'PENDING'
-                                            " class="img-fluid img-size"
-                                              src="https://coregem-imgs.s3.amazonaws.com/document-amber.png" />
-                                            <img v-else-if="
-                                              doc.documentStatus == 'APPROVED'
-                                            " class="img-fluid img-size"
-                                              src="https://coregem-imgs.s3.amazonaws.com/document-green.png" />
-                                            <img v-else-if="
-                                              doc.documentStatus == 'REJECTED'
-                                            " class="img-fluid img-size"
-                                              src="https://coregem-imgs.s3.amazonaws.com/document-red.png" />
+                                            <img v-if="doc.documentStatus === 'PENDING'" class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-amber.png" />
+                                            <img v-else-if="doc.documentStatus === 'APPROVED'" class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-green.png" />
+                                            <img v-else-if="doc.documentStatus === 'REJECTED'" class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-red.png" />
                                           </div>
                                           <div class="team-content">
                                             <h6 class="name">
@@ -165,7 +152,7 @@
                                             }">●</span>
                                             <small>{{
                                                 doc.documentStatus
-                                            }}</small>
+                                              }}</small>
                                           </div>
                                           <ul class="social">
                                             <li>
@@ -174,17 +161,14 @@
                                                   fas
                                                   fa-cloud-download-alt
                                                 " data-toggle="tooltip" data-placement="top" title="Download"
-                                                aria-hidden="true"></a>
+                                                 aria-hidden="true"></a>
                                             </li>
-                                            <li v-show="
-                                              doc.documentStatus !==
-                                              'APPROVED'
-                                            ">
+                                            <li v-show="doc.documentStatus !=='APPROVED'">
                                               <label class="pointer" data-toggle="tooltip" data-placement="down"
-                                                title="Update" aria-hidden="true">
+                                                     title="Update" aria-hidden="true">
 
-                                              <input type="file" :ref="'file-input' + index"
-                                                accept="application/pdf, image/*" :id="'myfile' + index" style="
+                                                <input type="file" :ref="'file-input' + index"
+                                                       accept="application/pdf, image/*" :id="'myfile' + index" style="
                                                     display: none;
                                                     z-index: 1;
                                                   " @change="
@@ -195,7 +179,7 @@
                                                       'UPDATE'
                                                     )
                                                   " />
-                                              <i class="fas fa-edit"></i>
+                                                <i class="fas fa-edit"></i>
                                               </label>
                                             </li>
                                           </ul>
@@ -203,26 +187,12 @@
                                       </div>
                                       <div v-else>
                                         <form @submit.prevent="submitDocument(index, doc)" :id="'form' + index">
-                                          <!--<p v-show="progressBarArr[index]" class="form-error-message"> The File is required </p>-->
+<!--                                          <p v-show="progressBarArr[index]" class="form-error-message"> The File is required </p>-->
                                           <div class="our-team">
-                                            <progress-bar v-show="
-                                              progressBarArr[index].value
-                                            "></progress-bar>
+<!--                                            <progress-bar v-show="-->
+<!--                                              progressBarArr[index].value-->
+<!--                                            "></progress-bar>-->
                                             <div class="picture">
-                                              <!-- <label class="pointer">
-                                              <img class="img-fluid img-size"
-                                                  src="https://coregem-imgs.s3.amazonaws.com/document-grey.png"
-                                                  alt="" />
-                                              </label> -->
-                                              <!-- <input type="file" :ref="'file-input' + index" style="display: none"
-                                                accept="application/pdf, image/*" :id="'myfile' + index" @change="
-                                                  handleImages(
-                                                    $event,
-                                                    index,
-                                                    doc,
-                                                    'CREATE'
-                                                  )
-                                                " /> -->
                                               <label class="pointer">
                                                 <input type="file" :ref="'file-input' + index" style="display: none;"  accept="application/pdf, image/*" :id="'myfile' + index" @change="
                                                   handleImages(
@@ -232,8 +202,8 @@
                                                     'CREATE'
                                                   )
                                                 "/>
-                                              <img class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-grey.png" alt=""/>
-                                            </label>
+                                                <img class="img-fluid img-size" src="https://coregem-imgs.s3.amazonaws.com/document-grey.png" alt=""/>
+                                              </label>
                                             </div>
                                             <div class="team-content mt--2">
                                               <small class="name">Click &#x1F446; to upload
@@ -246,6 +216,7 @@
                                           </div>
                                         </form>
                                       </div>
+
                                     </div>
                                   </div>
                                 </div>
@@ -259,11 +230,11 @@
                 </div>
               </el-tab-pane>
 
-              <el-tab-pane id="tab-2" :key="2" label="User Management" v-if="currentOrganisation.customerOrganisationRole === 'ADMINISTRATOR'">
+              <el-tab-pane id="tab-2" :key="2" label="User Management">
                 <div class="box-card">
                   <div class="pl-4 pr-4 pt-2" style="display: flex;justify-content: space-between;margin-top: 2%">
                   <div>
-                      <h3 class="text-light">Organisation Users</h3>
+                      <h3 class="text-light">Users</h3>
                   </div>
                   </div>
                   <BaseTable
@@ -294,7 +265,7 @@
                 <div class="box-card">
                   <div class="pl-4 pr-4 pt-2" style="display: flex;justify-content: space-between;margin-top: 2%">
                     <div>
-                      <h3 class="text-light">Organisation Invites</h3>
+                      <h3 class="text-light">Pending Invites</h3>
 <!--                      <h6>nanuen hangseung ida, komasumida latto babarish rubish managebange mandatoryn djsusndddbf</h6>-->
                     </div>
                     <b-button :style="{backgroundColor:primaryColor,color:'#fff'}" v-b-modal.modal-md> Invite User</b-button>
@@ -486,6 +457,58 @@
                 </div>
               </el-tab-pane>
 
+<!--              <el-tab-pane id="tab-7" :key="7" name="seven" label="Preference">-->
+<!--                <div class="settings-wrap">-->
+<!--                  <div style="width: 100%">-->
+<!--                       <div>-->
+<!--                         <div class="preference-area">-->
+<!--                             <form  class="preference-form" @submit.prevent="createPreference">-->
+<!--                               <div class="preference-item">-->
+<!--                                 <div>-->
+<!--                                   <span>Allow Notification <b-icon-info-circle-fill/> </span>-->
+<!--                                 </div>-->
+<!--                                 <div>-->
+<!--                                   <toggle-button @change="switchPreferenceNotification()"  :value="true ? preferenceData.preferenceAllowNotification ==='YES' : false" :labels="{checked:'on',unchecked:'off'}"/>-->
+<!--                                 </div>-->
+<!--                               </div>-->
+<!--                               <div class="preference-item">-->
+<!--                                 <div>-->
+<!--                                   <span>Revenue Profit Wallet <b-icon-info-circle-fill/> </span>-->
+<!--                                 </div>-->
+<!--                                 <div>-->
+<!--                                   <base-input>-->
+<!--                                     <el-select class="select-danger w-100" filterable placeholder="Select Wallet" required-->
+<!--                                                v-model="preferenceData.preferenceRevenueProfitWallet">-->
+<!--                                       <el-option v-for="i in wallet.data" class="select-danger" :value="i.accountName"-->
+<!--                                                  :label="i.accountName" :key="i.accountId">-->
+<!--                                       </el-option>-->
+<!--                                     </el-select>-->
+<!--                                   </base-input>-->
+<!--                                 </div>-->
+<!--                               </div>-->
+<!--                               <div class="preference-item">-->
+<!--                                 <div>-->
+<!--                                   <span>Commission Margin <b-icon-info-circle-fill/> </span>-->
+<!--                                 </div>-->
+<!--                                 <b-input-group append="%" style="width: 27%">-->
+<!--                                   <b-form-input type="number"   v-model="preferenceData.preferenceCommissionMargin" min="0" max="1000"></b-form-input>-->
+<!--                                 </b-input-group>-->
+<!--                               </div>-->
+<!--                               <div class="preference-item">-->
+<!--                                 <div>-->
+<!--                                   <span>Fee Margin <b-icon-info-circle-fill/> </span>-->
+<!--                                 </div>-->
+<!--                                   <b-input-group append="%" style="width: 27%">-->
+<!--                                     <b-form-input type="number"   v-model="preferenceData.preferenceFeeMargin" min="0" max="1000"></b-form-input>-->
+<!--                                   </b-input-group>-->
+<!--                               </div>-->
+<!--                               <b-button :disabled="loadingPreference"  :style="{backgroundColor:primaryColor,color:'#fff', width:'100%'}" type="submit">{{ loadingPreference ? "Saving" : "Save Preference" }}</b-button>-->
+<!--                             </form>-->
+<!--                         </div>-->
+<!--                       </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </el-tab-pane>-->
             </el-tabs>
 
           </div>
@@ -529,6 +552,7 @@ import UpdateBusinessProfile from "../../components/UpdateBusinessProfile";
 import BaseTable from "../../components/table/BaseTable";
 import OrganisationRequest from "../../model/request/OrganisationRequest";
 import EditOrganisationUser from "../../components/form/EditOrganisationUser";
+import PreferenceRequest from "../../model/request/PreferenceRequest";
 export default {
   name: "Settings",
   components: {
@@ -547,6 +571,10 @@ export default {
   data() {
     return {
       show: false,
+      togglePreference:"INACTIVE",
+      preferenceModal:PreferenceRequest.preferenceCreate,
+      preferenceAllowNotification:"NO",
+      rangeValue:'0',
       primaryColor:window.__env.app.primaryColor,
       showModalDirector1:false,
       showModalDirector2:false,
@@ -558,6 +586,7 @@ export default {
       changePasswordModel:ChangePasswordRequest.changePassword,
       files: [],
       banks: [],
+      walletsData:[],
       organisationRoles:[],
       progressBarArr: [],
       apikeyModel: ApikeyRequest.regenerateApiKey,
@@ -566,6 +595,7 @@ export default {
       timerCount: 0,
       edit: false,
       isEditing:true,
+      updatePreferenceModel:PreferenceRequest.preferenceUpdateStatus,
       inviteFields:[
         { key: "inviteCustomerEmail", label: "Email" },
         { key: "inviteCustomerRole", label: "Role" },
@@ -575,12 +605,13 @@ export default {
         { key: "action", label: "Actions" },
       ],
       customerFields:[
-        { key: "organisationName", label: "Organisation" },
-        { key: "organisationEmail", label: "Email" },
-        { key: "organisationPhone", label: "Phone" },
-        { key: "organisationType", label: "Organisation Type" },
+        { key: "customerFirstName", label: "First Name" },
+        { key: "customerLastName", label: "Last Name" },
+        { key: "customerEmail", label: "Email" },
+        { key: "customerPhone", label: "Phone" },
+        // { key: "organisationType", label: "Organisation Type" },
         { key: "customerOrganisationRole", label: "User Role" },
-        { key: "organisationStatus", label: "Status" },
+        { key: "customerOrganisationStatus", label: "Status" },
         { key: "CustomerAction", label: "Actions" },
 
       ]
@@ -602,6 +633,7 @@ export default {
       loadingOtp: (state) => state.auth.loading,
       loadingDoc: (state) => state.document.loading,
       bankList: (state) => state.virtualAccount.bankList,
+      loadingPreference:(state) => state.preference.loading,
       payoutAccount: (state) => state.accountPayout.addedBanks,
       payoutloading: (state) => state.accountPayout.accloading,
       readonlybank: (state) => state.accountPayout.readOnlyAddedBanks,
@@ -611,14 +643,16 @@ export default {
       readCustomers: (state) => state.auth.allCustomers,
       readOrganisationRoles: (state) => state.auth.organisationRoles,
       readAllInvites:state => JSON.parse(JSON.stringify(state.auth.allInvites)).sort(sort_by('inviteId', true, parseInt)),
-      showUserEditForm:state => state.auth.userEditForm
+      showUserEditForm:state => state.auth.userEditForm,
+      preferenceData:state => state.preference.preference,
+      wallet: (state) => state.walletTransactions.wallets,
+      preferenceState:(state) => state.preference.preferenceState
+
     }),
     documents: () => {
       // console.log("progressBarArr");
       let vm = this;
-      let doc = StoreUtils.rootGetters(
-        StoreUtils.getters.document.getDocuments
-      );
+      let doc = StoreUtils.rootGetters(StoreUtils.getters.document.getDocuments);
       // console.log("progressBarArr", doc.data.length);
       //vm.progressBarArr = [...Array(doc.data.length)].fill(false)
       /*for(let i = 0; i < doc.data.length; i++){
@@ -668,79 +702,62 @@ export default {
         });
       }
     },
-    // readOrganisationRoles(newValue, oldValue) {
-    //   if (this.readOrganisationRoles.length !== 0) {
-    //     //if(this.bankList.data.length!==0){
-    //     let roles = [];
-    //     roles = this.readOrganisationRoles;
-    //     this.organisationRoles = roles.map((item) => {
-    //       return {
-    //         value: `${item.itemName}`,
-    //         label: `${item.itemName}`,
-    //       };
-    //     });
-    //   }
-    // },
   },
 
   mounted() {
-
-    //read invites
-    StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites)
-
-    //read Roles
-    StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles)
-
-    //revalidate Users
-    const userToken = localStorage.getItem('token')
-    StoreUtils.dispatch(StoreUtils.actions.auth.revalidateUser, userToken)
-    StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
-
-    //clear console
-    //Call in read documents actions
-    this.apikeyModel.organisationId = localStorage.organisationId;
-    this.readDoc.readAll = "YES";
-    StoreUtils.dispatch(StoreUtils.actions.document.readDocument, {
-      readAll: this.readDoc.readAll,
-    });
-
-    //Call in banks payout account//
-    this.readPayoutAccountModel.accountOrganisationId =
-      localStorage.organisationId;
-    StoreUtils.dispatch(
-      StoreUtils.actions.accountPayout.readAddedBanks,
-      this.readPayoutAccountModel
-    );
-
-    StoreUtils.dispatch(
-      StoreUtils.actions.virtualAccount.updateReadBankList,
-      this.readbanklistModel
-    );
-
-    StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById)
-
-    StoreUtils.dispatch(StoreUtils.actions.auth.readCustomerByOrganisation)
   },
 
 
-  // beforeMount() {
-  //   window.addEventListener("beforeunload", this.preventNav)
-  // },
-  //
-  // beforeUnmount() {
-  //   window.removeEventListener("beforeunload", this.preventNav);
-  // },
+  beforeMount() {
+    window.addEventListener("beforeunload", this.preventNav)
+  },
 
-  // beforeRouteLeave(to, from, next) {
-  //   if (this.isEditing == 'true') {
-  //     if (!window.confirm("")) {
-  //       return;
-  //     }
-  //   }
-  //   next();
-  // },
+  beforeUnmount() {
+    window.removeEventListener("beforeunload", this.preventNav);
+  },
+
+  beforeRouteLeave(to, from, next) {
+    if (this.isEditing == 'true') {
+      if (!window.confirm("")) {
+        return;
+      }
+    }
+    next();
+  },
 
   methods: {
+    switchPreferenceNotification(){
+      if(this.preferenceData.preferenceAllowNotification === "NO"){
+        this.preferenceAllowNotification = "YES"
+      }else{
+        this.preferenceAllowNotification = "NO"
+      }
+      this.preferenceData.preferenceAllowNotification = this.preferenceAllowNotification
+    },
+    togglePreferenceAction(){
+      if(this.preferenceState === "create") StoreUtils.commit(StoreUtils.mutations.preference.updatePreferenceState, 'edit')
+      StoreUtils.commit(StoreUtils.mutations.preference.updatePreferenceState, 'create')
+      // if(){
+      //   this.togglePreference = "ACTIVE"
+      // } else{
+      //   this.togglePreference = "INACTIVE"
+      // }
+      // this.updatePreferenceModel.preferenceStatus = this.togglePreference
+      // StoreUtils.dispatch(StoreUtils.actions.preference.updatePreferenceStatus, this.updatePreferenceModel)
+    },
+
+    createPreference(){
+      this.preferenceModal.preferenceFeeMargin = this.preferenceData.preferenceFeeMargin
+      this.preferenceModal.preferenceCommissionMargin = this.preferenceData.preferenceCommissionMargin
+      this.preferenceModal.preferenceRevenueProfitWallet = this.preferenceData.preferenceRevenueProfitWallet
+      this.preferenceModal.preferenceAllowNotification = this.preferenceAllowNotification
+
+      if(this.preferenceData.responseCode === "00"){
+        StoreUtils.dispatch(StoreUtils.actions.preference.updatePreference)
+      }else{
+        StoreUtils.dispatch(StoreUtils.actions.preference.createPreference).then()
+      }
+    },
 
     processInvite(){
       StoreUtils.dispatch(StoreUtils.actions.auth.inviteCustomer, this.inviteUserModel).then(() => {
@@ -942,25 +959,74 @@ export default {
 
       }
     },
-    // hide$show1() {
-    //   let b = document.getElementById("pwd1");
-    //   let eye = document.getElementById("eye1");
-    //   if (b.type === "password") {
-    //     b.type = "text";
-    //     eye.classList.remove("fa-eye");
-    //     eye.classList.add("fa-eye-slash");
-    //   } else {
-    //     b.type = "password";
-    //     eye.classList.add("fa-eye");
-    //     eye.classList.remove("fa-eye-slash");
-    //   }
-    // },
   },
 
   created: function () { },
 };
 </script>
 <style lang="css" scoped>
+
+.preference-form{
+  width:70%;
+  align-items:center;
+  justify-content:center;
+  display: flex;
+  flex-direction: column;
+  padding:1%;
+  margin: 1%;
+
+}
+
+/*.cover-overlay{*/
+/*  width: auto;*/
+/*  height: 100vh;*/
+/*  background-color: transparent;*/
+/*  position: absolute;*/
+/*  z-index: 9999999999;*/
+/*  border: solid red;*/
+/*}*/
+
+.preference-item{
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 1%;
+  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
+
+  /*background-color: whitesmoke;*/
+
+}
+.preference-area{
+  width: 100%;
+  display: flex;
+  /*margin: 5%;*/
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.org-info{
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
+  padding: 10px;
+  width: 90%;
+  margin:10px auto;
+}
+
+.org-info > div {
+  font-size: 16px;
+  font-family: 'sans-serif';
+}
+
+.box-card > h4{
+  font-size: 14px;
+  float: left;
+  width: 100%;
+  padding: 10px;
+
+}
 
 h2 {
   width: 100%;
@@ -982,9 +1048,9 @@ h2 span {
   background-color: rgb(255,255,255);
 }
 
-.body {
-  min-height: 80vh
-}
+/*.body {*/
+/*  min-height: 80vh*/
+/*}*/
 
 .skeletonLoader{}
 
@@ -1027,6 +1093,9 @@ h2 span {
 /*}*/
 .box-card{
   background-color: white;
+  width: 100%;
+  box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
+
 }
 
 .bformedit {

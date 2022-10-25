@@ -1,6 +1,5 @@
 <template>
   <div class="">
-
       <div class="export-btn-area" v-if="withSearch === 'YES'">
         <search-form :module="searchALL_TRANSACTION"></search-form>
         <b-button class="export-ex shadow-lg--hover small desktop" @click="download">Download Transactions</b-button>
@@ -122,14 +121,7 @@ export default {
     //     }
     // }
   },
-  mounted() {
-    this.allTransactionsModel.page = 1;
-    StoreUtils.dispatch(
-      StoreUtils.actions.walletTransactions.updateAllWalletTransactions,
-      this.allWalletTransactions
-    );
-
-  },
+  mounted() {},
 };
 </script>
 <style scoped>

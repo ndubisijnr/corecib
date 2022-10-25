@@ -69,7 +69,7 @@ export const mutations = {
 
 export const actions = {
   updateAllWalletTransactions: ({ commit, state }, payload = WalletRequest.readAllWalletTransaction) => {
-    commit("updateRetrieveLoading", true)
+    payload.page = 1
     if (state.allWalletTransactions.length < 1) commit("updateLoading", true)
     return WalletService.callReadAllWalletTransactionApi(payload).then(response => {
       let responseData = response.data

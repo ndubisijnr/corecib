@@ -51,17 +51,18 @@ export const actions = {
 
 
   readDocument:({commit,state}, payload = DocumentRequest.readDocument) =>{
+    payload.readAll = "YES"
     commit("updateLoading", true)
     return DocumentService.callReadDocumentApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
       if(responseData.responseCode === "00"){
         commit("updateLoading",false)
-        console.log("Documents ....")
         commit("updateDocument", responseData)
       }
     }).catch(error => {
-      console.log(error)
+      commit("updateLoading",false)
+      Toast.fire({text:error,icon:"error"})
     })
   },
 
@@ -90,7 +91,6 @@ export const actions = {
         Toast.fire({text:"failed to upload file", icon:"error"})
       }
     }).catch(error => {
-      console.log(error)
       commit("updateLoading", false)
       Toast.fire({text:error, icon:"error"})
     })
@@ -117,22 +117,25 @@ export const actions = {
                   Swal.fire({ text:responseData2.responseMessage, icon:'success'}).then(()=>{})
                 }
               }).catch(error => {
-                console.log(error)
+                commit("updateLoading",false)
+                Toast.fire({text:error,icon:"error"})
               })
 
           }else{
-            Swal.fire({ text:responseData1.responseMessage, icon:'error'}).then(()=>{
+            Toast.fire({ text:responseData1.responseMessage, icon:'error'}).then(()=>{
               commit("updateLoading",false)
             })
           }
         }).catch(error => {
-          console.log(error)
+          commit("updateLoading",false)
+          Toast.fire({text:error,icon:"error"})
         })
 
       }
       else commit("updateLoading",false)
     }).catch(error => {
-      console.log(error)
+      commit("updateLoading",false)
+      Toast.fire({text:error,icon:"error"})
     })
   },
 
@@ -156,7 +159,8 @@ export const actions = {
                   Swal.fire({ text:responseData1.responseMessage, icon:'success'}).then(()=>{})
                 }
               }).catch(error => {
-                console.log(error)
+                commit("updateLoading",false)
+                Toast.fire({text:error,icon:"error"})
               })
           }else{
             Swal.fire({ text:responseData1.responseMessage, icon:'error'}).then(()=>{
@@ -164,13 +168,15 @@ export const actions = {
             })
           }
         }).catch(error => {
-          console.log(error)
+          commit("updateLoading",false)
+          Toast.fire({text:error,icon:"error"})
         })
 
       }
       else commit("updateLoading",false)
     }).catch(error => {
-      console.log(error)
+      commit("updateLoading",false)
+      Toast.fire({text:error,icon:"error"})
     })
   }
 }

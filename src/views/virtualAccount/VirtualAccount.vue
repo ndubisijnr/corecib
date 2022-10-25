@@ -106,12 +106,7 @@ export default {
       return { height: "150px" };
     },
   },
-  mounted() {
-    StoreUtils.dispatch(
-      StoreUtils.actions.virtualAccount.updateVirtualAccount,
-      this.virtualAccountModel
-    );
-  },
+  mounted() {},
 };
 </script>
 <style scoped>

@@ -145,12 +145,7 @@ export default {
             }
         },
     },
-    mounted() {
-        StoreUtils.dispatch(
-            StoreUtils.actions.virtualAccount.updateReadBankList,
-            this.readbanklistModel
-        );
-    },
+    mounted() {},
     methods: {
        closeModal() {
             //close modal form

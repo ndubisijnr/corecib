@@ -25,6 +25,7 @@
       </div>
       <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
+
   </div>
 </template>
 <script>
@@ -54,6 +55,7 @@ import DashboardNavbar from './DashboardNavbar.vue';
 import ContentFooter from './ContentFooter.vue';
 import {FadeTransition} from 'vue2-transitions';
 import BillsSidebarItems from "../../util/sidebarUtils/BillsSidebarItems";
+import {mapState} from "vuex";
 
 export default {
   name: "DashboardLayout",
@@ -74,6 +76,9 @@ export default {
     sidebarItems(){
       return [DashboardSidebarItems,DocumentationSidebarItems,ReportSidebarItems,BillsSidebarItems,SettingsSidebarItems]
     },
+    ...mapState({
+
+    })
   },
   mounted() {
     // this.initScrollbar()

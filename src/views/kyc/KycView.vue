@@ -38,13 +38,12 @@ export default {
       showKycForm2:false,
       readKycModel:KycRequest.read_by_organisation_id,
       fields: [
-        { key: "kycId", label: "kycId" },
-       { key: "kycOrganisationId", label: "kyc Organisation Id" },
         { key: "kycNumber", label: "kyc Number" },
         {key: "kycType", label: "kyc Type"},
-        // { key: "kycStatus", label: "kycStatus" },
+        {key: "kycResponse", label: "Name"},
+        { key: "kycStatus", label: "kycStatus" },
         // { key: "kycResponse", label: "kycStatus"},
-        // { key: "kycAction", label: "Action" },
+        { key: "kycAction", label: "Action" },
 
       ],
 
@@ -61,10 +60,7 @@ export default {
     },
   },
 
-  mounted() {
-    StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc, this.readKycModel)
-    console.log(this.allKyc)
-  },
+  mounted() {},
 
   computed: {
      ...mapState({

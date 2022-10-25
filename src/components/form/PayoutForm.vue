@@ -120,9 +120,7 @@ export default {
 
 
     },
-    mounted(){
-        console.log(this.payoutModel.payoutAmount)
-    }
+    mounted(){}
 
 }
 </script>

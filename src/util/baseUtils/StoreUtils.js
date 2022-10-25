@@ -88,6 +88,14 @@ class StoreUtils {
       updateProducts:"billspayment/updateProducts",
       updatePayment:"billspayment/updatePayment",
       updateCustomerEnq:"billspayment/updateCustomerEnq",
+    },
+    preference:{
+      readAllPreference:"preference/readAllPreference",
+      readPreferenceById:"preference/readPreferenceById",
+      createPreference:"preference/createPreference",
+      updatePreference:"preference/updatePreference",
+      updatePreferenceStatus:"preference/updatePreferenceStatus"
+
     }
 
   };
@@ -103,6 +111,7 @@ class StoreUtils {
       UpdateDriversLicense:"kycVerification/UpdateDriversLicense",
       UpdateBvn:"kycVerification/UpdateBvn",
       updateKycReadAll:"kycVerification/updateKycReadAll",
+      UpdateKycResponse:"kycVerification/UpdateKycResponse"
     },
     document:{
       updateLoading: "document/updateLoading",
@@ -136,7 +145,8 @@ class StoreUtils {
       updateOrganisationRoles:"auth/updateOrganisationRoles",
       updateAllInvites:"auth/updateAllInvites",
       updateSingleOrganisationUser:"auth/updateSingleOrganisationUser",
-      updateUserEditForm:"auth/updateUserEditForm"
+      updateUserEditForm:"auth/updateUserEditForm",
+      updateIsSwitching:"auth/updateIsSwitching"
     },
     dispute: {
       updateLoading: "dispute/updateLoading",
@@ -184,7 +194,10 @@ class StoreUtils {
       updateCustomerEnqLoading:"billspayment/updateCustomerEnqLoading",
       updateSuccessMsg:"billspayment/updateSuccessMsg",
       updateErrorMsg:"billspayment/updateErrorMsg",
-
+    },
+    preference:{
+      UpdatePreference:"preference/UpdatePreference",
+      updatePreferenceState:"preference/updatePreferenceState"
     }
   };
 

@@ -34,7 +34,6 @@ VueRouter.prototype.absUrl = function(url, newTab = true) {
 
 export const baseRoutes = [];
 
-// export  const me = "clark"
 export const routes = baseRoutes.concat(userManagementRoute,kycRoutes,payBillsRoutes,settingsRoutes,walletRoutes,virtualAccountRoutes,reportRoutes,dashRoutes,authRoutes,notFound);
 
 const router = new VueRouter({
@@ -68,7 +67,7 @@ router.beforeEach(async (routeTo, routeFrom, next) => {
 
     // If auth isn't required for the route, just continue.
     if (!authRequired) return next();
-    console.log("userManagement getter info: "+StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo))
+    // console.log("userManagement getter info: "+StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo))
     if (StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).responseCode === '00') {
         return next()
     }else if (StoreUtils.rootGetters(StoreUtils.getters.auth.getUserToken) != null){

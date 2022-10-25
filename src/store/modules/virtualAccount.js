@@ -38,7 +38,7 @@ export const mutations = {
 export const actions = {
 
   updateVirtualAccount: ({ commit, state }, payload = VirtualAccountRequest.readVirtualAccount) => {
-    if (state.virtualAccount.data.length < 1) commit("updateLoading", true)
+    if (state.virtualAccount.length < 1) commit("updateLoading", true)
     return VirtualAccountService.callReadVirtualAccountApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
@@ -83,7 +83,7 @@ export const actions = {
     })
   },
 
-  updateReadBankList: ({commit, state}, payload= VirtualAccountRequest.readBankList) => {
+  updateReadBankList: ({commit, state}, payload) => {
     commit("updateLoading", true)
     return VirtualAccountService.callReadBankList(payload).then(response => {
       let responseData = response.data

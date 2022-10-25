@@ -169,8 +169,11 @@
 <!--        />-->
       </template>
 
+      <template v-slot:cell(kycResponse)="row">
+        <div>{{ JSON.parse(Object(row).item.kycResponse).firstName}} {{ JSON.parse(Object(row).item.kycResponse).middleName}} {{ JSON.parse(Object(row).item.kycResponse).lastName}}</div>
+      </template>
       <template v-slot:cell(kycAction)="row">
-          <b-button @click="kycAction(obj=row_details)">Re-view</b-button>
+          <b-icon-info-circle-fill style="font-size: 18px;cursor: pointer" @click="readKyc(obj=JSON.parse(Object(row).item.kycResponse), kycType=row.item.kycType)"/>
       </template>
 
       <template #cell(walletAction)="row">
@@ -255,6 +258,7 @@ import CreateVirtualAccount from "../../components/form/CreateVirtualAccount";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BIZ from "@/assets/BIZ.gif"
 import Toast from "../../../toastNotification";
+import router from "../../router";
 // const Toast = Swal.mixin({
 //   toast: true,
 //   position: 'top-end',
@@ -323,14 +327,17 @@ export default {
   },
   mounted() {},
   methods: {
+    readKyc(obj,kycType){
+        StoreUtils.commit(StoreUtils.mutations.kycVerification.UpdateKycResponse, obj)
+        StoreUtils.commit(StoreUtils.mutations.kycVerification.UpdateKycType, kycType)
+        router.push({name:"MakeRequestView"})
+    },
     getUserInfo(obj){
       StoreUtils.commit(StoreUtils.mutations.auth.updateUserEditForm, true)
       StoreUtils.commit(StoreUtils.mutations.auth.updateSingleOrganisationUser, obj)
       console.log(obj)
     },
-    kycAction(obj){
-      console.log(obj)
-    },
+
     requestNewTransactions(){
       this.count++
       this.allTransactionsModel.page = this.count

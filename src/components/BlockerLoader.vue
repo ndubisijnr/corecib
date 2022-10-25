@@ -1,5 +1,5 @@
 <template>
-    <div class="loader">
+    <div class="loader" :style="{background:Background, position:Position, zIndex:Zindex}">
         <div class="inner-loading">
             <div class="text-center">
               <span class="spinner-border"></span>
@@ -15,6 +15,15 @@ export default {
     props:{
         message:{
             type:String
+        },
+        Zindex:{
+          type:String
+        },
+        Position:{
+          type:String
+        },
+        Background:{
+          type:String
         }
   }
 
@@ -44,14 +53,14 @@ export default {
     /*align-items: center;*/
      align-items: center;
     width: 100%;
-    height: 100vh;
-    background-color: transparent;
-    position: absolute;
+    height: 100%;
+    /*background-color: transparent;*/
+    /*position: fixed;*/
     top:0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 999;
+    /*z-index: 99999999999999;*/
 }
 
 </style>
