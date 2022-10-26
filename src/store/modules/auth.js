@@ -37,10 +37,11 @@ export const state = {
   userEditForm:false,
   token: null,
   loading: false,
+  loginLoading:false,
   userInfo: AuthenticationResponse.login,
   addedBanks:AccountPayoutResponse.readPayoutAccountByOrganisationId,
   screen: "register",
-  allOrganisations:null,
+  allOrganisations:[],
   passwordResetScreen: "email",
   readOrganisation: OrganisationResponse.readOrganisationById,
   balances:WalletResponse.readBalanceWallet,
@@ -97,6 +98,7 @@ export const mutations = {
   updateOrganisationRoles:(state, payload) =>{state.organisationRoles = payload},
   updateAllInvites:(state, payload) => {state.allInvites = payload},
   updateIsSwitching:(state, payload) => {state.isSwitching = payload},
+  updateLoginLoading:(state,payload) => {state.loginLoading = payload}
 }
 
 export const actions = {
@@ -174,8 +176,8 @@ export const actions = {
 
   logon: ({ commit, state, dispatch,getters }, payload = AuthenticationRequest.login) => {
     commit("updateLoading", true)
-    return AuthService.callLogonApi(payload)
-      .then(response => {
+    return AuthService.callLogonApi(payload).then(response => {
+        commit("updateLoading", false)
         let responseData = response.data;
         if (responseData.responseCode === "00") {
             localStorage.token = responseData.token;
@@ -203,7 +205,7 @@ export const actions = {
   },
 
   revalidateUser: ({ commit, dispatch, rootState }, payload) => {
-    // commit("updateLoading", true)
+    commit("updateLoginLoading", true)
     return AuthService.callRevalidateApi(payload).then(response => {
       let responseData = response.data
       if (responseData.responseCode === "00") {
@@ -246,12 +248,17 @@ export const actions = {
 
             StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById).then()
 
-            StoreUtils.dispatch(StoreUtils.actions.auth.readCustomerByOrganisation).then()
+            StoreUtils.dispatch(StoreUtils.actions.auth.readCustomerByOrganisation).then(() => {
+              commit("updateLoginLoading", false)
+
+            })
 
       }else if(responseData.responseCode === "115"){
         commit("updateTimedOut",true)
+        commit("updateLoginLoading", false)
+
       }
-    }).catch(error => { commit("updateLoading", false); console.log(error) })
+    }).catch(error => {commit("updateLoginLoading", false); console.log(error) })
   },
 
   changePassword:({commit}, payload) =>{
@@ -434,10 +441,9 @@ export const actions = {
   },
 
   readOrganisationByUserId: ({commit,state}, payload = OrganisationRequest.readOrganisationByUserId)=> {
-    commit("updateLoading", true)
+    commit("updateLoginLoading", true)
     payload.customerId = localStorage.customerId
     return OrganizationService.callReadOrganisationByUserIdApi(payload).then(async response => {
-      commit("updateLoading", true)
       let responseData = response.data
       if(responseData.responseCode === "00") {
         commit("updateAllOrganisationList", responseData.data)
@@ -448,81 +454,65 @@ export const actions = {
           else {
             if (state.allOrganisations.filter(it => it.organisationId) === localStorage.organisationId){
               localStorage.organisationId = localStorage.organisationId
+            }else{
+              localStorage.organisationId = state.currentOrganisation.organisationId
             }
           }
+          await router.push({name:"GetStarted"})
+
           await StoreUtils.dispatch(StoreUtils.actions.preference.readPreferenceById)
-          commit("updateLoading", true)
 
           //read invites
           await StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
-          commit("updateLoading", true)
-
 
           await StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
-          commit("updateLoading", true)
-
 
           //read Roles
           await StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
-          commit("updateLoading", true)
-
 
           //read transactions
           await StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions);
-          commit("updateLoading", true)
 
           await StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList);
-          commit("updateLoading", true)
 
 
         //read dashboardStats
           await StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
-          commit("updateLoading", true)
 
 
           //read disputes
           await StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes);
-          commit("updateLoading", true)
 
           //read wallets
           await StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets);
-          commit("updateLoading", true)
 
           //read kyc
           await StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc)
-          commit("updateLoading", true)
 
           //read virtualAccount
           await StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount);
-          commit("updateLoading", true)
 
 
           //clear console
         //Call in read documents actions
           await StoreUtils.dispatch(StoreUtils.actions.document.readDocument).then();
-          commit("updateLoading", true)
 
 
           //Call in banks payout account//
           await StoreUtils.dispatch(StoreUtils.actions.accountPayout.readAddedBanks).then();
-          commit("updateLoading", true)
 
           //Call in banks list//
           await StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList).then();
-          commit("updateLoading", true)
 
 
           await StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById).then()
-          commit("updateLoading", true)
 
 
           await StoreUtils.dispatch(StoreUtils.actions.auth.readCustomerByOrganisation).then()
-          commit("updateLoading", true)
 
 
           await StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout).then(() => {
-            commit("updateLoading", false)
-            router.push({name:"GetStarted"})
+            commit("updateLoginLoading", false)
           })
 
 

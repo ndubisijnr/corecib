@@ -25,7 +25,6 @@
       </div>
       <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
-
   </div>
 </template>
 <script>
@@ -36,6 +35,12 @@ import ReportSidebarItems from "../../util/sidebarUtils/ReportSidebarItems";
 import SettingsSidebarItems from "../../util/sidebarUtils/SettingsSidebarItems";
 import UserSidebarItems from "../../util/sidebarUtils/UserSidebarItems";
 import DocumentationSidebarItems from "@/util/sidebarUtils/DocumentationSidebarItems";
+import SkeletonLoader1 from "../../components/loader/SkeletonLoader1";
+import DashboardNavbar from './DashboardNavbar.vue';
+import ContentFooter from './ContentFooter.vue';
+import {FadeTransition} from 'vue2-transitions';
+import BillsSidebarItems from "../../util/sidebarUtils/BillsSidebarItems";
+import {mapState} from "vuex";
 
 function hasElement(className) {
   return document.getElementsByClassName(className).length > 0;
@@ -50,19 +55,13 @@ function initScrollbar(className) {
     }, 100);
   }
 }
-
-import DashboardNavbar from './DashboardNavbar.vue';
-import ContentFooter from './ContentFooter.vue';
-import {FadeTransition} from 'vue2-transitions';
-import BillsSidebarItems from "../../util/sidebarUtils/BillsSidebarItems";
-import {mapState} from "vuex";
-
 export default {
   name: "DashboardLayout",
   components: {
     DashboardNavbar,
     ContentFooter,
     FadeTransition,
+     SkeletonLoader1
   },
   methods: {
     initScrollbar() {

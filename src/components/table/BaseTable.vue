@@ -5,8 +5,10 @@
 
     <b-row> </b-row>
     <br />
+    <div class="skeleton skeleton-text__body" v-if="isLoading"></div>
     <!-- Main table element -->
     <b-table
+      v-else
       responsive
       small
       show-empty
@@ -251,7 +253,6 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-// import Swal from "sweetalert2";
 import WalletRequest from "../../model/request/WalletRequest";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
 import CreateVirtualAccount from "../../components/form/CreateVirtualAccount";
@@ -259,17 +260,7 @@ import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BIZ from "@/assets/BIZ.gif"
 import Toast from "../../../toastNotification";
 import router from "../../router";
-// const Toast = Swal.mixin({
-//   toast: true,
-//   position: 'top-end',
-//   showConfirmButton: false,
-//   timer: 3000,
-//   timerProgressBar: true,
-//   didOpen: (toast) => {
-//     toast.addEventListener('mouseenter', Swal.stopTimer)
-//     toast.addEventListener('mouseleave', Swal.resumeTimer)
-//   }
-// })
+
 export default {
   props: [
     "items",
@@ -322,7 +313,8 @@ export default {
       loading: (state) => state.walletTransactions.loading,
       loading2:(state) => state.walletTransactions.retrieveLoading,
       loading3:(state) => state.virtualAccount.loading,
-      loading4:(state) => state.kycVerification.loading
+      loading4:(state) => state.kycVerification.loading,
+      isLoading:state => state.auth.loginLoading
     }),
   },
   mounted() {},
@@ -553,6 +545,26 @@ export default {
 <style scoped>
 @keyframes rotate {
   100%{transform: rotate(360deg)}
+}
+
+.skeleton-text__body {
+  width: 100%;
+  height: 20rem;
+  margin-bottom: 0.5rem;
+
+}
+
+.skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
 }
 
 .loadMore{

@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <blocker-loader v-if="loading && loadingOtp && payoutloading && loadingDoc" :message="'Setting up Settings Environment'" position="absolute" background="transparent" zindex="999"></blocker-loader>
+    <blocker-loader v-if="loading && loadingOtp && payoutloading && loadingDoc || isLoading" :message="'Setting up Settings Environment'" position="absolute" background="transparent" zindex="999"></blocker-loader>
     <div class="container mt-0" v-else>
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -646,7 +646,8 @@ export default {
       showUserEditForm:state => state.auth.userEditForm,
       preferenceData:state => state.preference.preference,
       wallet: (state) => state.walletTransactions.wallets,
-      preferenceState:(state) => state.preference.preferenceState
+      preferenceState:(state) => state.preference.preferenceState,
+      isLoading:state => state.auth.loginLoading
 
     }),
     documents: () => {

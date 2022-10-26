@@ -22,10 +22,8 @@
           <h5 class="text-dark mt-1" @click="signUp()" style="cursor: pointer;text-decoration: underline">New To BizGem? Create Account</h5>
         </div>
 
-        <button v-if="timerCount === 0" id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">Login<span :class="{ 'spinner-border': loading }"></span></button>
-        <button v-else id="submitBtn2" class="btn-login" :disabled="loading">{{timerCount < 15 ? 'Almost there ' : 'Login in'}} <span :class="{ 'spinner-border': loading }"></span></button>
+        <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">{{loading ? 'Loading..' : 'Login in'}} <span :class="{ 'spinner-border': loading }"></span></button>
       </div>
-        <p class="text-center text-warning small" v-if="timerCount === 1 || timerCount  === 3 || timerCount  === 2">Seems your network is slow.. Please refresh and try again</p>
       </div>
     </form>
   </validation-observer>
@@ -69,8 +67,6 @@ export default {
     },
     onSubmit() {
       StoreUtils.dispatch(StoreUtils.actions.auth.logon, this.model).then(() => {})
-      this.startTimer()
-      this.timerCount = 20
     },
     startTimer(duration) {
       let timer = duration,

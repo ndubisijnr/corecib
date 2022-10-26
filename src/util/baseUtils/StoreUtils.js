@@ -146,7 +146,8 @@ class StoreUtils {
       updateAllInvites:"auth/updateAllInvites",
       updateSingleOrganisationUser:"auth/updateSingleOrganisationUser",
       updateUserEditForm:"auth/updateUserEditForm",
-      updateIsSwitching:"auth/updateIsSwitching"
+      updateIsSwitching:"auth/updateIsSwitching",
+      updateLoginLoading:"auth/updateLoginLoading"
     },
     dispute: {
       updateLoading: "dispute/updateLoading",

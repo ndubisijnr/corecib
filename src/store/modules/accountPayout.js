@@ -130,14 +130,12 @@ export const actions = {
    },
 
    readPayout: ({commit,state}, payload = AccountPayoutRequest.readPayout) => {
-       console.log(state.allpayouts)
     if(state.allpayouts.length < 1) commit("updateAccLoading", true)
     return AccountPayoutService.callReadPayoutApi(payload).then(response => {
       let responseData = response.data
       if(responseData.responseCode == "00"){
        commit("updateAccLoading", false)
        commit("updateAllPayouts",responseData)
-      if(router.currentRoute.path !== "/") router.push({name:"PayoutTransaction"}).then()
       }else{
        commit("updateAccLoading", false)
        Toast.fire({ text: responseData.responseMessage, icon: 'error', })

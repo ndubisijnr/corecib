@@ -1,14 +1,14 @@
 <template>
   <div :class="dashboardCardStyle" class="card" :style="{borderColor:primaryColor}" id="dashboardCard">
-    <span class="currency">{{currency}}<span class="value"> {{value}}</span></span>
-    <p class="title">{{title}}</p>
-    <div class="display-btn">
-        <b-button v-if="showBtn == true" :id="id" class="mybtn">{{button_title}}</b-button>
-        <b-button v-if="showBtn1 == true" class="mybtn">{{button_title}}</b-button>
-    </div>
+    <p v-if="isLoading" class="skeleton-text"></p>
+    <p v-if="isLoading" class="skeleton-text"></p>
+    <span v-if="!isLoading" class="currency">{{currency}}<span class="value"> {{value}}</span></span>
+    <p v-if="!isLoading" class="title">{{title}}</p>
   </div>
 </template>
 <script>
+import {mapState} from "vuex";
+
 export default {
   name: "DashboardView",
   data(){
@@ -44,8 +44,12 @@ export default {
   computed:{
     dashboardCardStyle(){
       if(this.styleType === 2) return "total-referrals-style-2"
-      return "total-referrals-style-1"
-    }
+      return "skeleton-card"
+    },
+
+    ...mapState({
+      isLoading:state => state.auth.loginLoading
+    })
   },
 
   mounted() {
@@ -57,6 +61,42 @@ export default {
 .value{
     font-size: 25px;
 }
+
+.skeleton-text {
+  width: 60%;
+  height: 1.5rem;
+  margin: 1%;
+  border-radius: 0.25rem;
+  background: #FFFFFF;
+  animation: skeleton-loading 1s linear infinite alternate;
+
+}
+
+.skeleton-card{
+  width: 220px;
+  height: 120px;
+  border-radius: 15px !important;
+  margin: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*border:solid 2px ;*/
+  color: black !important;
+  /*background-color: #FFFFFF;*/
+  animation: skeleton-loading 1s linear infinite alternate;
+
+  /*box-shadow: 0 1px 2px hsl(0deg 0% 0% / 1100%);*/
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
 
 .title{
   font-size: 13px;
