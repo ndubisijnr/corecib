@@ -3,7 +3,7 @@
       <div class="cardd m-3">
           <div class="mb card-holder">
             <div class="card-area">
-                <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
+                <dashboard-card :refresh="true" :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
                 <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'" :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'"></dashboard-card>
                 <dashboard-card :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfWalletDev : currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'"></dashboard-card>
                 <dashboard-card :showBtn="false" :showBtn1="false" :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfVirtualAccountDev : currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'"></dashboard-card>

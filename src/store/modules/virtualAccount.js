@@ -3,6 +3,7 @@ import BaseResponse from "../../model/reponse/BaseResponse"
 import VirtualAccountResponse from "../../model/reponse/VirtualAccountResponse";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
 import swal from "sweetalert2";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 export const state = {
   loading: false,
@@ -59,6 +60,7 @@ export const actions = {
       if (responseData.responseCode === "00") {
         commit("updateLoading", false)
         commit("updateVirtualAccountCreate", responseData)
+        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
         swal.fire({text:responseData.responseMessage, icon:'success'})
       }else{
         commit("updateLoading", false)

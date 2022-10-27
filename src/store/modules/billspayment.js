@@ -173,6 +173,7 @@ export const actions = {
             if(responseData.responseCode == "00"){
                 commit("updatePaymentLoading", false)
                 commit("updatePayment", responseData)
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
                 swal.fire({text:responseData.responseMessage, icon:"success"})
             }
             else{

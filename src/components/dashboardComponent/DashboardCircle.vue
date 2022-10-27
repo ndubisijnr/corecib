@@ -2,19 +2,24 @@
   <div :class="dashboardCardStyle" class="card" :style="{borderColor:primaryColor}" id="dashboardCard">
     <p v-if="isLoading" class="skeleton-text"></p>
     <p v-if="isLoading" class="skeleton-text"></p>
-    <span v-if="!isLoading" class="currency">{{currency}}<span class="value"> {{value}}</span></span>
-    <p v-if="!isLoading" class="title">{{title}}</p>
+    <div v-else class="text-center">
+      <span class="currency">{{currency}}<span class="value"> {{value}}</span></span>
+      <p  class="title">{{title}}</p>
+      <button @click="refreshWallet" v-if="refresh" class="refresh" title="reload wallet balance" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"> <img :class="{'loadMore':isRefresh}" src="../../assets/Refresh.svg"/> </button>
+    </div>
   </div>
 </template>
 <script>
 import {mapState} from "vuex";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 export default {
   name: "DashboardView",
   data(){
     return{
       primaryColor:window.__env.app.primaryColor,
-      styleType:2
+      styleType:2,
+      isRefresh:false
     }
   },
   props:{
@@ -22,7 +27,11 @@ export default {
           type:[String,Number]
       },
       title:{
-          type:String
+          type:String,
+          default:false
+      },
+      refresh:{
+        type:Boolean
       },
       currency:{
           type:String,
@@ -41,6 +50,15 @@ export default {
       }
       },
 
+  methods:{
+    refreshWallet(){
+      this.isRefresh = !this.isRefresh
+      StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then(() => {
+        this.isRefresh = !this.isRefresh
+      })
+    }
+  },
+
   computed:{
     dashboardCardStyle(){
       if(this.styleType === 2) return "total-referrals-style-2"
@@ -48,18 +66,31 @@ export default {
     },
 
     ...mapState({
-      isLoading:state => state.auth.loginLoading
+      isLoading:state => state.auth.loginLoading,
     })
   },
 
-  mounted() {
-   console.log()
-  }
+  mounted() {}
 };
 </script>
 <style scoped>
 .value{
     font-size: 25px;
+}
+
+.refresh{
+  position: absolute;
+  bottom: 5px;
+  left: 2px;
+
+}
+
+.loadMore{
+  animation:rotate infinite linear .9s;
+  transition: .9s ease forward;
+}
+@keyframes rotate {
+  100%{transform: rotate(360deg)}
 }
 
 .skeleton-text {
@@ -100,6 +131,7 @@ export default {
 
 .title{
   font-size: 13px;
+  text-align: center;
 }
 
 @media (max-width: 500px) {
@@ -112,7 +144,7 @@ export default {
 }
 
 .currency{
-    font-size: 20px
+    font-size: 20px;
 }
 
 .display-btn{

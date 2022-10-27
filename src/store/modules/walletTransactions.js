@@ -5,6 +5,7 @@ import BaseResponse from "../../model/reponse/BaseResponse";
 import createWalletResponse from "@/model/reponse/createWalletResponse";
 import createWalletRequest from "@/model/request/CreateWallet";
 import Swal from "sweetalert2";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -102,6 +103,7 @@ updateCreatedWallet: ({ commit, state }, payload = createWalletRequest.createWal
         commit("updateLoading", false)
         commit("updateCreatedWallet", responseData)
         Swal.fire({text:responseData.responseMessage, icon:"success"}).then()
+        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
       }else{
         commit("updateLoading", false)
         Swal.fire({text:responseData.responseMessage, icon:"error"}).then()

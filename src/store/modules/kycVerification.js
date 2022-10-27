@@ -3,6 +3,7 @@ import KycResponse from "../../model/reponse/KycResponse";
 import KycVerificationService from "../../service/KycVerificationService";
 import Swal from "sweetalert2";
 import router from "../../router";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -85,8 +86,6 @@ export const actions = {
             console.log(e)
         })
     },
-
-
     UpdateCorporateAffairs:({commit}, payload=KycRequest.corporate_affairs) => {
         commit("UpdateLoading", true)
         return KycVerificationService.callCorporateAffairsEndPoint(payload).then((response) => {
@@ -94,7 +93,7 @@ export const actions = {
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
-
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -122,6 +121,7 @@ export const actions = {
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -148,6 +148,7 @@ export const actions = {
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -174,6 +175,7 @@ export const actions = {
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -201,6 +203,7 @@ export const actions = {
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -228,6 +231,7 @@ export const actions = {
             if(responseData.responseCode == "00"){
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{

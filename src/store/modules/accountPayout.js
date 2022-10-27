@@ -3,6 +3,7 @@ import AccountPayoutResponse from "../../model/reponse/AccountPayoutResponse"
 import AccountPayoutService from "../../service/AccountPayoutService"
 import Swal from "sweetalert2";
 import router from "../../router";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -119,6 +120,7 @@ export const actions = {
        if(responseData.responseCode == "00"){
         commit("updateAccLoading", false)
         Toast.fire({ text: responseData.responseMessage, icon: 'success', })
+        StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout).then()
        }else{
         commit("updateAccLoading", false)
         Toast.fire({ text: responseData.responseMessage, icon: 'error', })
