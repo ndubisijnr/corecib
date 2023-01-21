@@ -15,9 +15,9 @@
                         }}
                         </h4>
                         <b-input-group size="md" prepend="NGN" class="mb-3">
-                            <b-form-input id='withdrawInput' step="0.01" type="number" autofocus
+                            <b-form-input id='withdrawInput' step="100.00" type="number" autofocus
                                 v-model="payoutModel.payoutAmount" style="font-size:16px;letter-spacing:.2rem;"
-                                placeholder="Enter Amount" required @keypress="isNumber($event)"></b-form-input>
+                                placeholder="Enter Amount" required @input="isNumber()"></b-form-input>
                         </b-input-group>
                         <h4 id="error" class="text-danger text-center"></h4>
                         <b-button v-if="currentOrganisation.organisationStage == 'PROD'" class="text-white" type="submit" :style="{backgroundColor:primaryColor,width:'100%'}">{{ accLoading ? 'please wait..' : 'withdraw' }} <span :class="{ 'spinner-border': accLoading }"></span>
@@ -63,6 +63,45 @@ export default {
         }
     },
     methods: {
+      formatAmount(value){
+        if (value == null) return '0.00'
+        value = parseFloat(value).toFixed(2);
+        const parts = value.toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
+      },
+
+      // inputLimiter() {
+      //   let input = document.getElementById('withdrawInput')
+      //   let value = input.value
+      //   if(value) {
+      //     // value = parseFloat(value).toFixed(2)
+      //     const parts = parseFloat(value.toString()).toFixed(2).split(",")
+      //     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      //     this.payoutModel.payoutAmount = parts.join(".")
+      //     console.log(parts.join("."))
+      //
+      //   }
+      //   console.log(this.payoutModel.payoutAmount)
+      //
+      //   // let AllowableCharacters = '';
+      //   //
+      //   // if (allow == 'custom'){AllowableCharacters=' 1234567890.';}
+      //   //
+      //   //
+      //   // let k = document.all?parseInt(e.keyCode): parseInt(e.which);
+      //   // if (k!=13 && k!=8 && k!=0){
+      //   //   if ((e.ctrlKey==false) && (e.altKey==false)) {
+      //   //     return (AllowableCharacters.indexOf(String.fromCharCode(k))!=-1);
+      //   //   } else {
+      //   //     return true;
+      //   //   }
+      //   // } else {
+      //   //   return true;
+      //   // }
+      //
+      // },
+
       isNumber: function (evt) {
         evt = evt ? evt : window.event;
         const charCode = evt.which ? evt.which : evt.keyCode;

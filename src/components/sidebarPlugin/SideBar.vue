@@ -1,10 +1,10 @@
 <template>
   <div class="sidenav navbar-vertical fixed-left navbar-expand-xs"
        @mouseenter="$sidebar.onMouseEnter()"
-       @mouseleave="$sidebar.onMouseLeave()" :style="{backgroundColor:primaryColor}">
+       @mouseleave="$sidebar.onMouseLeave()" :style="isdarkMode === 'false' ? {backgroundColor:primaryColor}:{backgroundColor:'#181818'}">
     <div class="scrollbar-inner" ref="sidebarScrollArea">
       <div class="sidenav-header">
-        <div class="add-business" @click="toogleD()">
+        <div class="add-business" @click="toogleD()" :style="isdarkMode === 'false' ? {backgroundColor:'#236395'}:{backgroundColor:'#181818'}">
               <div class="">
                 <span class="arrow ni ni-bold-down" id="arrow"></span>
                 <div class="mt-3" v-if="allOrganisation.length > 0">
@@ -37,8 +37,7 @@
             <sidebar-item
                 v-for="(link, index) in sidebarLinks"
                 :key="link.name + index"
-                :link="link"
-            >
+                :link="link">
               <sidebar-item
                   v-for="(subLink, index) in link.children"
                   :key="subLink.name + index"
@@ -160,7 +159,8 @@ export default {
     ...mapState({
       userInfo: state => state.auth.userInfo,
       loading: state => state.auth.loading,
-      allOrganisation:state => state.auth.allOrganisations
+      allOrganisation:state => state.auth.allOrganisations,
+      isdarkMode:state => state.auth.darkMode
     }),
     stage(){
       return StoreUtils.rootGetters(StoreUtils.getters.auth.getStage)
@@ -177,6 +177,9 @@ export default {
     this.$sidebar.isMinimized = this.$sidebar.breakpoint < window.innerWidth
     this.minimizeSidebar()
     document.getElementById("k").style.display = 'none'
+    // if(this.isdarkMode) document.getElementById('wrapper').style.backgroundColor = '#181818'
+    // document.getElementById('wrapper').style.backgroundColor = '#f6f6f6'
+    // document.getElementById('cardd').style.backgroundColor = '#FFFFFF'
 
 
   },
@@ -194,7 +197,7 @@ export default {
   padding-left: 30px;
   padding-top: 4px;
   width: 100%;
-  background: linear-gradient(to bottom,#3F88Cd, #236395);
+  /*background: linear-gradient(to bottom,#3F88Cd, #236395);*/
   left: 0;
   height: 90px;
   cursor: pointer;

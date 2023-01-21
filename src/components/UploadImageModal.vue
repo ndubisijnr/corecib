@@ -120,9 +120,7 @@
                 return parts.join(".");
             },
         },
-        created() {
-            this.loadData()
-        },
+
         watch: {
             show: function () {
                 let self = this;

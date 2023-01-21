@@ -37,6 +37,7 @@ export const state = {
   userEditForm:false,
   token: null,
   loading: false,
+  showBalance:false,
   loginLoading:false,
   userInfo: AuthenticationResponse.login,
   addedBanks:AccountPayoutResponse.readPayoutAccountByOrganisationId,
@@ -54,6 +55,8 @@ export const state = {
   organisationRoles:null,
   allInvites:null,
   singleOrganisationUser:null,
+  reminderForm:false,
+  darkMode:'false',
 }
 
 export const getters = {
@@ -79,6 +82,9 @@ export const getters = {
 export const mutations = {
   updateSingleOrganisationUser: (state, payload) => {state.singleOrganisationUser = payload},
   updateForm: (state, payload) => {state.form = payload},
+  updateDarkMode: (state, payload) => {state.darkMode = payload},
+  updateReminderForm: (state, payload) => {state.reminderForm = payload},
+  updateShowBalance:(state,payload) => {state.showBalance = payload},
   updateUserEditForm: (state, payload) => {state.userEditForm = payload},
   updateLoading: (state, payload) => { state.loading = payload },
   updateTimedOut: (state, payload) => { state.isTimedOut = payload },
@@ -443,87 +449,98 @@ export const actions = {
   readOrganisationByUserId: ({commit,state}, payload = OrganisationRequest.readOrganisationByUserId)=> {
     commit("updateLoginLoading", true)
     payload.customerId = localStorage.customerId
-    return OrganizationService.callReadOrganisationByUserIdApi(payload).then(async response => {
+    return OrganizationService.callReadOrganisationByUserIdApi(payload).then(response => {
       let responseData = response.data
       if(responseData.responseCode === "00") {
         commit("updateAllOrganisationList", responseData.data)
         commit("updateCurrentOrganisation", responseData.data[0])
         // if user have organisation
         if(state.allOrganisations.length > 0){
-          if (!localStorage.organisationId) localStorage.organisationId = state.currentOrganisation.organisationId
-          else {
-            if (state.allOrganisations.filter(it => it.organisationId) === localStorage.organisationId){
-              localStorage.organisationId = localStorage.organisationId
-            }else{
+          if (!localStorage.organisationId){
               localStorage.organisationId = state.currentOrganisation.organisationId
-            }
           }
-          await router.push({name:"GetStarted"})
-
-          await StoreUtils.dispatch(StoreUtils.actions.preference.readPreferenceById)
-
-          //read invites
-          await StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
-
-          await StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
-
-          //read Roles
-          await StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
-
-          //read transactions
-          await StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions);
-
-          await StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList);
-
-
-        //read dashboardStats
-          await StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
-
-
-          //read disputes
-          await StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes);
-
-          //read wallets
-          await StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets);
-
-          //read kyc
-          await StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc)
-
-          //read virtualAccount
-          await StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount);
-
-
-          //clear console
-        //Call in read documents actions
-          await StoreUtils.dispatch(StoreUtils.actions.document.readDocument).then();
-
-
-          //Call in banks payout account//
-          await StoreUtils.dispatch(StoreUtils.actions.accountPayout.readAddedBanks).then();
-
-          //Call in banks list//
-          await StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList).then();
-
-
-          await StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById).then()
-
-
-          await StoreUtils.dispatch(StoreUtils.actions.auth.readCustomerByOrganisation).then()
-
-
-          await StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout).then(() => {
-            commit("updateLoginLoading", false)
-          })
-
-
-      }
-      // if user does not have any organisation
-        else{
+          else {
+            // console.log(state.allOrganisations.find(it => it.organisationId ) === localStorage.organisationId)
+            }
+            // if (state.allOrganisations.filter(it => it.organisationId) !== localStorage.organisationId){
+            //   console.log(localStorage.organisationId)
+            //   console.log(state.allOrganisations.filter(it => it.organisationId === localStorage.organisationId))
+            //   // localStorage.organisationId = state.currentOrganisation.organisationId
+            // }else{
+            //   localStorage.organisationId = state.allOrganisations.filter(it => it.organisationId)
+            //   console.log(state.allOrganisations.map(item => item.organisationId).filter(it => it.organisationId))
+            //   console.log('hello')
+            // }
+          } else{
           router.push({name:"AddNewBusiness"}).then(() => {
             commit("updateForm", true)
           })
         }
+
+          StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
+
+
+          //read transactions
+          StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions)
+
+          StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList);
+
+          //read virtualAccount
+          StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount);
+
+
+          //read wallets
+          StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets).then(() => {
+            commit("updateLoginLoading", false)
+          })
+
+          //read dashboardStats
+
+          StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout)
+
+
+          StoreUtils.dispatch(StoreUtils.actions.preference.readPreferenceById)
+
+          //read invites
+          StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
+
+          StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
+
+          //read Roles
+          StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
+
+          //read disputes
+          StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes);
+
+          //read kyc
+          StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc).then()
+
+
+        //Call in read documents actions
+          StoreUtils.dispatch(StoreUtils.actions.document.readDocument).then();
+
+
+          //Call in banks payout account//
+          StoreUtils.dispatch(StoreUtils.actions.accountPayout.readAddedBanks).then();
+
+          //Call in banks list//
+          StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList).then();
+
+
+          StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationById).then()
+
+
+          StoreUtils.dispatch(StoreUtils.actions.auth.readCustomerByOrganisation).then()
+
+
+        router.push({name:"GetStarted"}).then(() => {
+          if(state.currentOrganisation.organisationStatus == 'PENDING'){
+            commit("updateReminderForm", true)
+          }
+        })
       }
+      // if user does not have any organisation
+
       else{
         Toast.fire({text:`${responseData.responseMessage}`, icon:'error'})
       }

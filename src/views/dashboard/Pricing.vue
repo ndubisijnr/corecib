@@ -14,7 +14,6 @@
      </div>
 
      </div>
-
      <div class="container table-parent">
          <table class="table table-bordered">
            <thead>
@@ -136,148 +135,147 @@
            </tr>
            </tbody>
          </table>
-       <table class="table table-bordered">
-         <thead>
-         <th style="width:100px">Electricity</th>
-         <th >#</th>
-         </thead>
-         <tbody>
-         <tr>
-           <td>Ikeja Electric</td>
-           <td>0.84% Commission </td>
-         </tr>
-         <tr>
-           <td>Eko Electric</td>
-           <td>0.77% Commission </td>
-         </tr>
-         <tr>
-           <td>AEDC (Abuja Electric)</td>
-           <td>0.70% Commission </td>
-         </tr>
-         <tr>
-           <td>EEDC (Enugu Electric)</td>
-           <td>1.74% Commission <br /><span class="text-info">(coming soon) </span></td>
-         </tr>
-         <tr>
-           <td>PHEDC (Port Harcourt Electric)</td>
-           <td>0.84% Commission </td>
-         </tr>
-         <tr>
-           <td>IBEDC (Ibadan Electric)</td>
-           <td>0.42% Commission </td>
-         </tr>
-         <tr>
-           <td>KEDCO (Kano Electric)</td>
-           <td>0.84% Commission </td>
-         </tr>
-         <tr>
-           <td>KAEDCO (Kaduna Electric)</td>
-           <td>0.84% Commission </td>
-         </tr>
-         <tr>
-           <td>JEDC (Jos Electric)</td>
-           <td>0.70% Commission </td>
-         </tr>
-         </tbody>
-       </table>
-       <table class="table table-bordered">
+         <table class="table table-bordered">
            <thead>
-           <th style="width:100px;text-align: center">Betting</th>
-           <th style="width:100px;text-align: center">#</th>
+           <th style="width:100px">Electricity</th>
+           <th >#</th>
            </thead>
            <tbody>
            <tr>
-             <td>BET9JA</td>
-             <td>₦30 Fee</td>
+             <td>Ikeja Electric</td>
+             <td>0.84% Commission </td>
            </tr>
            <tr>
-             <td>ZOOMLIFESTYLE</td>
-             <td>₦20 Fee</td>
+             <td>Eko Electric</td>
+             <td>0.77% Commission </td>
            </tr>
            <tr>
-             <td>WINNER GOLDEN CHANCE</td>
-             <td>₦20 Fee</td>
+             <td>AEDC (Abuja Electric)</td>
+             <td>0.70% Commission </td>
            </tr>
            <tr>
-             <td>CASHTOKEN</td>
-             <td>₦20 Fee</td>
+             <td>EEDC (Enugu Electric)</td>
+             <td>1.74% Commission <br /><span class="text-info">(coming soon) </span></td>
            </tr>
            <tr>
-             <td>MLOTTO</td>
-             <td>₦20 Fee</td>
+             <td>PHEDC (Port Harcourt Electric)</td>
+             <td>0.84% Commission </td>
            </tr>
            <tr>
-             <td>WESTERN LOTTO</td>
-             <td>₦20 Fee</td>
+             <td>IBEDC (Ibadan Electric)</td>
+             <td>0.42% Commission </td>
            </tr>
            <tr>
-             <td>ALLCITYBET</td>
-             <td>₦20 Fee</td>
+             <td>KEDCO (Kano Electric)</td>
+             <td>0.84% Commission </td>
            </tr>
            <tr>
-             <td>BANGBET</td>
-             <td>₦20 Fee</td>
+             <td>KAEDCO (Kaduna Electric)</td>
+             <td>0.84% Commission </td>
            </tr>
            <tr>
-             <td>NAIRABET</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>SUPABET</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>BETKING</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>WINNERS GOLDEN BET</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>BETWAY</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>LIVESCOREBET</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>NAIJABET</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>1XBET</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>MERRYBET</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>BETLAND</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>CLOUDBET</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>B9</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>GREENLOTTO</td>
-             <td>₦20 Fee</td>
-           </tr>
-           <tr>
-             <td>ELIESTLOTTO</td>
-             <td>₦20 Fee</td>
+             <td>JEDC (Jos Electric)</td>
+             <td>0.70% Commission </td>
            </tr>
            </tbody>
          </table>
+         <table class="table table-bordered">
+             <thead>
+             <th style="width:100px;text-align: center">Betting</th>
+             <th style="width:100px;text-align: center">#</th>
+             </thead>
+             <tbody>
+             <tr>
+               <td>BET9JA</td>
+               <td>₦30 Fee</td>
+             </tr>
+             <tr>
+               <td>ZOOMLIFESTYLE</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>WINNER GOLDEN CHANCE</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>CASHTOKEN</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>MLOTTO</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>WESTERN LOTTO</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>ALLCITYBET</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>BANGBET</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>NAIRABET</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>SUPABET</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>BETKING</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>WINNERS GOLDEN BET</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>BETWAY</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>LIVESCOREBET</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>NAIJABET</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>1XBET</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>MERRYBET</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>BETLAND</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>CLOUDBET</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>B9</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>GREENLOTTO</td>
+               <td>₦20 Fee</td>
+             </tr>
+             <tr>
+               <td>ELIESTLOTTO</td>
+               <td>₦20 Fee</td>
+             </tr>
+             </tbody>
+           </table>
      </div>
-
     </div>
 </template>
 
@@ -300,6 +298,7 @@ export default {
 </script>
 
 <style scoped>
+.mb{}
 .table{
   box-shadow: 0 0 1rem 0 rgb(136 152 170 / 15%);
   background-color: white;

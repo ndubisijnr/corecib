@@ -1,6 +1,6 @@
 <template>
   <div :style="$router.currentRoute.fullPath === '/reports/transactions' ? {maxHeight:'100vh'}: null">
-  <b-container fluid>
+  <b-container fluid style="color: #FFFFFF">
     <create-virtual-account @closeAccountForm="updateAccountForm" :walletAccountNumber="walletAccNum" :showAccountForm="show"></create-virtual-account>
 
     <b-row> </b-row>
@@ -13,7 +13,8 @@
       small
       show-empty
       stacked="md"
-      :style="$router.currentRoute.fullPath === '/reports/transactions' ? {fontSize: 12, height: 'auto'} :{fontSize: 12}"
+      :style="$router.currentRoute.fullPath === '/reports/transactions' ?
+      {fontSize: 12, height: 'auto'}:{fontSize: 12}"
       striped
       :busy="loading || loading3 || loading4"
       :items="items"
@@ -241,8 +242,11 @@
           :style="{color:primaryColor}"
         >
         </b-pagination>
-          <div>
-            <button :disabled="loading2" title="request more transactions" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"  v-if="$router.currentRoute.fullPath === '/reports/transactions'" @click="requestNewTransactions"> <img :class="{'loadMore':loading2}" src="../../assets/Refresh.svg"/> </button>
+          <div v-if="$router.currentRoute.fullPath === '/reports/transactions'">
+            <button :disabled="loading2" title="request more transactions" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"  @click="requestNewTransactions"> <img :class="{'loadMore':loading2}" src="../../assets/Refresh.svg"/> </button>
+          </div>
+          <div v-if="$router.currentRoute.fullPath === '/wallet'">
+            <button :disabled="loading2" title="load more wallets" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"  @click="requestWallets"> <img :class="{'loadMore':loading2}" src="../../assets/Refresh.svg"/> </button>
           </div>
         </div>
       </b-col>
@@ -336,6 +340,14 @@ export default {
       StoreUtils.dispatch(
           StoreUtils.actions.walletTransactions.updateAllWalletTransactions,
           this.allWalletTransactions
+      )
+    },
+    requestWallets(){
+      this.count++
+      this.walletTransactionmodel.page = this.count
+      StoreUtils.dispatch(
+          StoreUtils.actions.walletTransactions.updateReadAllWallets,
+          this.walletTransactionmodel
       )
     },
     updateAccountForm(value) {
@@ -543,6 +555,7 @@ export default {
 };
 </script>
 <style scoped>
+
 @keyframes rotate {
   100%{transform: rotate(360deg)}
 }

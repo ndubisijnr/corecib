@@ -24,7 +24,7 @@
           </b-container>
           <b-container class="itemabc123">
             <dashboard-card :value="refferalstats.totalReferrals == null ? '0' : refferalstats.totalReferrals" :title="'Total Referrals'" :showBtn="false" :showBtn1="false"></dashboard-card>
-            <dashboard-card :currency="'₦'" :value="referalbalance.referralBalance.accountBalance | formatAmount" :title="'Total Revenue'" :showBtn="false" :showBtn1="false"></dashboard-card>
+            <dashboard-card :show="true" :refresh="true" :currency="'₦'" :value="referalbalance.referralBalance.accountBalance | formatAmount" :title="'Total Revenue'" :showBtn="false" :showBtn1="false"></dashboard-card>
           </b-container>
           
         </div>

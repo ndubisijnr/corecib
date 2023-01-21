@@ -39,7 +39,7 @@ export const mutations = {
 export const actions = {
 
   updateVirtualAccount: ({ commit, state }, payload = VirtualAccountRequest.readVirtualAccount) => {
-    if (state.virtualAccount.length < 1) commit("updateLoading", true)
+    commit("updateLoading", true)
     return VirtualAccountService.callReadVirtualAccountApi(payload).then(response => {
       let responseData = response.data
       commit("updateLoading", false)
@@ -48,6 +48,7 @@ export const actions = {
       }
     })
       .catch(error => {
+        commit("updateLoading", false)
         console.log(error)
       })
 
@@ -61,6 +62,7 @@ export const actions = {
         commit("updateLoading", false)
         commit("updateVirtualAccountCreate", responseData)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
+        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets).then()
         swal.fire({text:responseData.responseMessage, icon:'success'})
       }else{
         commit("updateLoading", false)
@@ -81,6 +83,7 @@ export const actions = {
         commit("updateVirtualaccountTransactions", responseData)
       }
     }) .catch(error => {
+      commit("updateLoading", false)
       console.log(error)
     })
   },
@@ -92,7 +95,12 @@ export const actions = {
       if(responseData.responseCode == "00"){
         commit("updateBankList", responseData.data)
         commit("updateLoading", false)
+      }else{
+        commit("updateLoading", false)
       }
+    }).catch(e => {
+      commit("updateLoading", false)
+      console.log(e)
     })
   }
 

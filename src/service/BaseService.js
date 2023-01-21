@@ -37,6 +37,8 @@ appClient.interceptors.request.use(config => {
     return config
 })
 
+
+
 appClient.interceptors.response.use(response => {
     if (response != null) {
       if (response.data != null) {

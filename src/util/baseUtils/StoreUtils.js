@@ -126,6 +126,8 @@ class StoreUtils {
     },
     auth: {
       updateLoading: "auth/updateLoading",
+      updateReminderForm:"auth/updateReminderForm",
+      updateDarkMode:"auth/updateDarkMode",
       updateStage: "auth/updateStage",
       updateToken: "auth/updateToken",
       updateUserInfo: "auth/updateUserInfo",
@@ -147,7 +149,8 @@ class StoreUtils {
       updateSingleOrganisationUser:"auth/updateSingleOrganisationUser",
       updateUserEditForm:"auth/updateUserEditForm",
       updateIsSwitching:"auth/updateIsSwitching",
-      updateLoginLoading:"auth/updateLoginLoading"
+      updateLoginLoading:"auth/updateLoginLoading",
+      updateShowBalance:"auth/updateShowBalance"
     },
     dispute: {
       updateLoading: "dispute/updateLoading",

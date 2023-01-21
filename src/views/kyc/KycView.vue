@@ -60,7 +60,10 @@ export default {
     },
   },
 
-  mounted() {},
+  mounted() {
+    StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc)
+
+  },
 
   computed: {
      ...mapState({

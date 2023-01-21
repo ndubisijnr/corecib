@@ -70,9 +70,10 @@ export const mutations = {
 
 export const actions = {
   updateAllWalletTransactions: ({ commit, state }, payload = WalletRequest.readAllWalletTransaction) => {
-    payload.page = 1
     if (state.allWalletTransactions.length < 1) commit("updateLoading", true)
     return WalletService.callReadAllWalletTransactionApi(payload).then(response => {
+      commit("updateLoading", false)
+      commit("updateRetrieveLoading", false)
       let responseData = response.data
       if (responseData.responseCode === "00") {
         if(payload.page >= 2){
@@ -81,11 +82,9 @@ export const actions = {
             }
             let newData = [...state.allWalletTransactions, ...responseData.data]
             commit("updateAllWalletTransactions", newData)
-          commit("updateRetrieveLoading", false)
         }else{
           commit("updateAllWalletTransactions", responseData.data)
           commit("updateWalletTransactions", responseData.data)
-          commit("updateRetrieveLoading", false)
         }
       }
     }).catch(error => {
@@ -104,6 +103,7 @@ updateCreatedWallet: ({ commit, state }, payload = createWalletRequest.createWal
         commit("updateCreatedWallet", responseData)
         Swal.fire({text:responseData.responseMessage, icon:"success"}).then()
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
+        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets).then()
       }else{
         commit("updateLoading", false)
         Swal.fire({text:responseData.responseMessage, icon:"error"}).then()
@@ -132,14 +132,24 @@ updateCreatedWallet: ({ commit, state }, payload = createWalletRequest.createWal
 
   updateReadAllWallets: ({ commit, state }, payload = WalletRequest.readWallet) => {
     if (state.wallets.data.length < 1) commit("updateLoading", true)
+    commit("updateRetrieveLoading", true)
     return WalletService.callReadWalletApi(payload).then(response => {
       let responseData = response.data
+      commit("updateRetrieveLoading", false)
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
+        if(payload.page >= 2){
+          if(responseData.data.length < 1){
+            Toast.fire({text:'All wallets has been retrieved', icon:'info'}).then()
+          }
+          let newData = [...[state.wallets], ...responseData.data]
+          commit("updateReadAllWallets", newData)
+        }
         commit("updateReadAllWallets", responseData)
       }
     }).catch(error => {
-     console.log(error)
+      commit("updateLoading", false)
+      console.log(error)
     })
   },
 

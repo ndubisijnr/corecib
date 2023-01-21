@@ -277,6 +277,7 @@ export default {
       //immediate: true, // This ensures the watcher is triggered upon creation
     },
   },
+
   mounted() {
     let countries = country;
     this.option_country = countries.map((item) => {

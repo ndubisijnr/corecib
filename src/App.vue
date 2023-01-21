@@ -12,6 +12,7 @@
     <auth-layout v-else></auth-layout>
 
     <add-new-business @closeBusinessForm="updateAddBusiness" :show-business-form="addBizForm"></add-new-business>
+    <reminder-modal @closeReminderForm="updateReminder" :show-reminder-form="isReminder"></reminder-modal>
   </div>
 </template>
 
@@ -24,10 +25,11 @@ import router from "@/router";
 import {mapState} from "vuex";
 import AddNewBusiness from "./components/form/AddNewBusiness";
 import BlockerLoader from "./components/BlockerLoader";
+import ReminderModal from "./components/form/ReminderModal";
 
 const default_layout = "default";
 export default {
-  components: {AuthLayout, DashboardLayout, AddNewBusiness,BlockerLoader},
+  components: {AuthLayout, DashboardLayout, AddNewBusiness,BlockerLoader,ReminderModal},
   data(){
     return{
       readPayoutAccountModel: AccountPayoutRequest.readAccountPayoutById,
@@ -46,6 +48,8 @@ export default {
     ...mapState({
       isExpired:state => state.auth.isTimedOut,
       addBizForm: (state) => state.auth.form,
+      isReminder:state => state.auth.reminderForm,
+      isdarkMode:state => state.auth.darkMode
 
     })
 
@@ -65,29 +69,26 @@ export default {
         );
         console.clear()
       }else{
-        // localStorage.clear()
+        localStorage.clear()
       }
     },1000)
 
-    // this.readPayoutAccountModel.accountOrganisationId = localStorage.organisationId;
-    // StoreUtils.dispatch(
-    //     StoreUtils.actions.accountPayout.readAddedBanks,
-    //     this.readPayoutAccountModel
-    // );
-
-    setTimeout(()=>{
-      let params = this.$route.params
-       if(params != null){
-         if(params.referralCode != null) localStorage.referralCode = params.referralCode
-        }
-    },2000)
+      setTimeout(()=>{
+        let params = this.$route.params
+         if(params != null){
+           if(params.referralCode != null) localStorage.referralCode = params.referralCode
+          }
+      },2000)
     // console.clear()
-
   },
+
   methods:{
     updateAddBusiness(value) {
       StoreUtils.commit(StoreUtils.mutations.auth.updateForm, value)
     },
+    updateReminder(value){
+      StoreUtils.commit(StoreUtils.mutations.auth.updateReminderForm, value)
+    }
   },
 
 }
@@ -99,6 +100,8 @@ export default {
   font-family: 'Montserrat';
   box-sizing: border-box;
 }
+
+body{background-color: #FFFFFF;}
 
 .myalert{
   background-color: #EE9BA9 !important;

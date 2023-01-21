@@ -72,7 +72,7 @@ export const getters = {}
 
 export const actions = {
     readAllKyc:({commit,state}, payload = KycRequest.read_by_organisation_id) => {
-        commit("UpdateLoading", true)
+        if(state.kycReadAll.length < 1)commit("UpdateLoading", true)
         return KycVerificationService.callReadAllKyc(payload).then((response) => {
             commit("UpdateLoading", false)
             let responseData = response.data
@@ -82,7 +82,7 @@ export const actions = {
                 console.log(responseData.responseMessage)
             }
         }).catch((e) => {
-            commit("UpdateLoading", true)
+            commit("UpdateLoading", false)
             console.log(e)
         })
     },
@@ -94,6 +94,8 @@ export const actions = {
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
                 StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
+                StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc).then()
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets).then()
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -122,6 +124,8 @@ export const actions = {
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
                 StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
+                StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc).then()
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets)
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -149,6 +153,8 @@ export const actions = {
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
                 StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
+                StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc).then()
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets)
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -176,6 +182,8 @@ export const actions = {
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
                 StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
+                StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc).then()
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets)
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -204,6 +212,8 @@ export const actions = {
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
                 StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
+                StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc).then()
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets)
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{
@@ -232,6 +242,8 @@ export const actions = {
                 commit("UpdateLoading", false)
                 commit("UpdateKycResponse", responseData)
                 StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
+                StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc).then()
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets)
                 if(router.currentRoute.name !== "MakeRequestView"){
                     setTimeout(() => {
                         router.push({name:"MakeRequestView"}).then(()=>{

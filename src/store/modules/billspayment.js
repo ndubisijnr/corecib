@@ -174,12 +174,12 @@ export const actions = {
                 commit("updatePaymentLoading", false)
                 commit("updatePayment", responseData)
                 StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
+                StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets)
                 swal.fire({text:responseData.responseMessage, icon:"success"})
             }
             else{
                 commit("updatePaymentLoading", false)
                 Toast.fire({text:responseData.responseMessage, icon:"error"})
-
             }
         }).catch((e) => {
             commit("updatePaymentLoading", false)

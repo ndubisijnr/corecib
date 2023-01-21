@@ -17,9 +17,13 @@
               <div class="image-box" v-if="kycReadALL.photo">
                 <div id="img"></div>
               </div>
-              <div class="image-box ml-2" v-if="kycReadALL.signature">
-             <img :src="kycReadALL.signature" class="image-box" :alt="kycReadALL.signature">
-            </div>
+              <!-- signature -->
+
+<!--              <div class="image-box ml-2" v-if="kycReadALL.signature">-->
+<!--             <img :src="kycReadALL.signature" class="image-box" alt="signature">-->
+<!--            </div>-->
+
+              <!-- end signature -->
             </div>
             <div class="row">
               <div class="col-4 mb-3" v-for="(item, index) in kycReadALL" :key="index"  v-if="index !== 'fieldMatches' && index !== 'residence' && index !== 'responseCode' && index !== 'responseMessage' && index !== 'photo' && index !== 'nextOfKin' && index !== 'signature' ">

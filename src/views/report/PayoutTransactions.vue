@@ -2,7 +2,7 @@
   <div>
     <div class="export-btn-area">
       <search-form :module="searchALL_TRANSACTION" />
-      <b-button class="export-ex desktop" v-if="!loading && Object.values(payoutAccount).every((o) => o === null)" @click="showPayout = true" >Payout Bank</b-button>
+<!--      <router-link to="/settings/settings"><b-button class="export-ex desktop">Payout Bank</b-button></router-link>-->
       <b-button class="export-ex" @click="show = true">Request Payout</b-button>
     </div>
     <payout-form @closeCreatePayout="updateCreatePayout" :showCreatePayout="show"></payout-form>
@@ -20,6 +20,7 @@ import AccountPayoutRequest from "../../model/request/AccountPayoutRequest";
 import PayoutForm from "../../components/form/PayoutForm";
 import SearchModuleutil from "../../util/constant/SearchModuleutil"
 import AddBankForm from "../../components/form/AddBankForm";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 
 export default {
@@ -65,6 +66,10 @@ export default {
 
     }),
   },
+  mounted() {
+    StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout)
+
+  }
 };
 </script>
 <style scoped>

@@ -54,25 +54,25 @@
                               <div class="form-floating mb-3">
                                 <input type="email" class="form-control"
                                   placeholder="name@example.com" :value="
-                                    null ? '' : userInfo.customerFirstName
+                                    null ? '' : userInfo?.customerFirstName
                                   " readonly />
                                 <label for="floatingInput1">First Name</label>
                               </div>
                               <div class="form-floating mb-3">
                                 <input type="email" class="form-control"
-                                  placeholder="name@example.com" :value="null ? '' : userInfo.customerLastName"
+                                  placeholder="name@example.com" :value="null ? '' : userInfo?.customerLastName"
                                   readonly />
                                 <label for="floatingInput2">Last Name</label>
                               </div>
                               <div class="form-floating mb-3">
                                 <input type="tel" class="form-control"
-                                  placeholder="name@example.com" :value="null ? '' : userInfo.customerPhone" readonly />
+                                  placeholder="name@example.com" :value="null ? '' : userInfo?.customerPhone" readonly />
                                 <label for="floatingInput3">Phone Number</label>
                               </div>
                               <div class="form-floating mb-3">
                                 <input type="email" class="form-control"
-                                  placeholder="name@example.com" :value="null ? '' : userInfo.customerEmail" readonly />
-                                <label for="floatingInput">Email</label>
+                                  placeholder="name@example.com" :value="null ? '' : userInfo?.customerEmail" readonly />
+                                <label>Email</label>
                               </div>
                               <base-button title="Update" disabled></base-button>
                             </b-form>
@@ -260,13 +260,12 @@
                     </b-form-group>
                   </form>
                 </b-modal>
-                  <edit-organisation-user  :show-organisation-user-form="showUserEditForm"  @closeUserForm="updateCloseEditFrom"/>
+                  <edit-organisation-user :show-organisation-user-form="showUserEditForm"  @closeUserForm="updateCloseEditFrom"/>
                 </div>
                 <div class="box-card">
                   <div class="pl-4 pr-4 pt-2" style="display: flex;justify-content: space-between;margin-top: 2%">
                     <div>
                       <h3 class="text-light">Pending Invites</h3>
-<!--                      <h6>nanuen hangseung ida, komasumida latto babarish rubish managebange mandatoryn djsusndddbf</h6>-->
                     </div>
                     <b-button :style="{backgroundColor:primaryColor,color:'#fff'}" v-b-modal.modal-md> Invite User</b-button>
                   </div>
@@ -279,13 +278,10 @@
 
               <el-tab-pane id="tab-8" :key="8" name="eight" label="Change Password">
                 <div class="settings-wrap">
-                <div>
-                  <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_msdmfngy.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop  autoplay></lottie-player>
-                </div>
                   <div class="settings-wrap-2nd">
                     <form @submit.prevent="changePassword()" class="password-form">
                       <div class="form-floating mb-3">
-                        <i class="fa fa-eye" style="position: absolute;right: 10px;top: 5px;cursor: pointer" @click="hide$show"id="eye"></i>
+                        <i class="fa fa-eye" style="position: absolute;right: 10px;top: 5px;cursor: pointer" @click="hide$show" id="eye"></i>
                         <input type="password" class="form-control"  id="pwd" v-model="changePasswordModel.customerOldPassword" required>
                         <label>Old password</label>
                       </div>
@@ -298,7 +294,7 @@
                         <label>Confirm new password</label>
                       </div>
                       <div class="">
-                      <base-button type="submit" title='Change':loading="loadingOtp"></base-button>
+                      <base-button type="submit" title='Change' :loading="loadingOtp"></base-button>
                           </div>
                     </form>
                     </div>
@@ -315,9 +311,6 @@
                   </b-button>
                 </div>
                 <div class="settings-wrap">
-                  <div>
-                  <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_z3pnisgt.json"  background="transparent"  speed="1"  style="width: 400px; height: 400px;"  loop  autoplay></lottie-player>
-                  </div>
                   <div class="settings-wrap-2nd">
                     <div>
                       <api-key-display-form> </api-key-display-form>
@@ -403,21 +396,21 @@
                             <label class="">Select Payout Bank</label>
                             <base-input >
                                 <el-select class="select-danger w-100" filterable placeholder="Bank Name" required
-                                  v-model="createPayoutAccountModel.accountBankCode">
+                                  v-model="createPayoutAccountModel.accountBankName">
                                   <el-option v-for="bank in banks" class="select-danger" :value="bank.value"
                                     :label="bank.label" :key="bank.value">
                                   </el-option>
                                 </el-select>
                               </base-input>
                             <label class="mt-3">Account Number</label>
-                              <b-form-input  id="input-4" type="text" placeholder="Account Number"
+                              <b-form-input  id="input-4" type="number" placeholder="Account Number"
                                 v-model="createPayoutAccountModel.accountNumber" class="mr-2 mb-3" required></b-form-input>
                               <label class="">Account Name</label>
-                              <b-form-input id="input-5" type="number" placeholder="Account Name"
+                              <b-form-input id="input-5" type="text" placeholder="Account Name"
                                 v-model="createPayoutAccountModel.accountName" class="mr-2 mb-3" required>
                               </b-form-input>
                               <div class="d-flex mb-3">
-                                <b-form-input id="input-5" type="text" placeholder="OTP" class="mr-2" required
+                                <b-form-input id="input-5" type="number" placeholder="OTP" class="mr-2" required
                                   v-model="createPayoutAccountModel.otp"></b-form-input>
                                 <span v-if="timerCount > 0" class="m-2 small text-dark" style="width: 30%">Resend OTP in {{ timerCount }}</span>
                                 <b-button @click="sendOtp()" v-else style="width: 30%">{{ loadingOtp ? "Sending" : "Send OTP" }}
@@ -561,7 +554,7 @@ export default {
     [DropdownMenu.name]: DropdownMenu,
     ApiKeyDisplayForm,
     BaseButton,
-    ProgressBar,
+    // ProgressBar,
     AddBank,
     BlockerLoader,
     UpdateBusinessProfile,
@@ -650,6 +643,7 @@ export default {
       isLoading:state => state.auth.loginLoading
 
     }),
+
     documents: () => {
       // console.log("progressBarArr");
       let vm = this;
@@ -680,6 +674,7 @@ export default {
         // console.log("progressBarArr", i);
       }
     },
+
     timerCount: {
       handler(value) {
         if (value > 0) {
@@ -690,6 +685,7 @@ export default {
       },
       //immediate: true, // This ensures the watcher is triggered upon creation
     },
+
     bankList(newValue, oldValue) {
       if (this.bankList.length !== 0) {
         //if(this.bankList.data.length!==0){
@@ -706,6 +702,7 @@ export default {
   },
 
   mounted() {
+    StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList).then();
   },
 
 
@@ -746,7 +743,6 @@ export default {
       // this.updatePreferenceModel.preferenceStatus = this.togglePreference
       // StoreUtils.dispatch(StoreUtils.actions.preference.updatePreferenceStatus, this.updatePreferenceModel)
     },
-
     createPreference(){
       this.preferenceModal.preferenceFeeMargin = this.preferenceData.preferenceFeeMargin
       this.preferenceModal.preferenceCommissionMargin = this.preferenceData.preferenceCommissionMargin
@@ -759,7 +755,6 @@ export default {
         StoreUtils.dispatch(StoreUtils.actions.preference.createPreference).then()
       }
     },
-
     processInvite(){
       StoreUtils.dispatch(StoreUtils.actions.auth.inviteCustomer, this.inviteUserModel).then(() => {
         document.getElementById('modal-md').click()
@@ -768,7 +763,6 @@ export default {
     updateCloseEditFrom(value) {
       StoreUtils.commit(StoreUtils.mutations.auth.updateUserEditForm, value)
     },
-
     preventNav(event) {
       if (!this.isEditing) return
       event.preventDefault()
@@ -780,14 +774,12 @@ export default {
     showedit() {
       this.edit = !this.edit;
     },
-
     changePassword() {
       this.changePasswordModel.customerEmail = this.userInfo.customerEmail
       StoreUtils.dispatch(StoreUtils.actions.auth.changePassword, this.changePasswordModel).then(() => {
         this.changePasswordModel = ""
       })
     },
-
     handleImages(e, index, doc, action) {
       const vm = this;
       const selectedImage = e.target.files[0];
@@ -807,22 +799,15 @@ export default {
     },
 
     editBank() {
-      let bankcode =
-        this.createPayoutAccountModel.accountBankCode.split(" ")[0];
-      let bankName =
-        this.createPayoutAccountModel.accountBankCode.split(" ")[1];
-      this.createPayoutAccountModel.accountCountry =
-        this.userInfo.customerCountry;
-      this.createPayoutAccountModel.accountOrganisationId =
-        this.organisation.customerOrganisationCustomerId;
-      this.createPayoutAccountModel.username =
-        this.organisation.organisationEmail;
-      this.createPayoutAccountModel.accountBankCode = bankcode;
+      let bankArray = this.createPayoutAccountModel.accountBankName.split(" ")
+      let bankCode =bankArray[bankArray.length-1];
+      let bankName = this.createPayoutAccountModel.accountBankName.replace(bankCode,"").trim();
+      this.createPayoutAccountModel.accountCountry = this.userInfo.customerCountry;
+      this.createPayoutAccountModel.accountOrganisationId = this.currentOrganisation.customerOrganisationCustomerId;
+      this.createPayoutAccountModel.username = this.currentOrganisation.organisationEmail;
+      this.createPayoutAccountModel.accountBankCode = bankCode;
       this.createPayoutAccountModel.accountBankName = bankName;
-      StoreUtils.dispatch(
-        StoreUtils.actions.accountPayout.editAddedBanks,
-        this.createPayoutAccountModel
-      ).then(() => {
+      StoreUtils.dispatch(StoreUtils.actions.accountPayout.editAddedBanks, this.createPayoutAccountModel).then(() => {
         this.createPayoutAccountModel.otp = null;
         this.createPayoutAccountModel.accountName = null;
         this.createPayoutAccountModel.accountBankName = null;
@@ -869,6 +854,7 @@ export default {
         }
       }, 1000);
     },
+
     submitDocument(index, doc, action) {
       // console.log("Testing" + index);
       this.documentModel.fileUpload.username = `${this.currentOrganisation.organisationName
@@ -929,6 +915,7 @@ export default {
         { root: false }
       );
     },
+
     showUploadModal(_director){
       if (_director === 1){
         this.showModal = !this.showModal
@@ -937,6 +924,7 @@ export default {
       }
 
     },
+
     hide$show() {
       let b = document.getElementById("pwd");
       let eye = document.getElementById("eye");

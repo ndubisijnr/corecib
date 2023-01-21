@@ -12,7 +12,7 @@
                     <b-form class="bform2 text-left" @submit.prevent="addBank()">
                         <b-form-group id="input-group-3" label="Bank Name" label-for="input-3">
                             <base-input>
-                                <el-select class="select-danger" filterable placeholder="Bank Name" required v-model="createPayoutAccountModel.accountBankCode">
+                                <el-select class="select-danger" filterable placeholder="Bank Name" required v-model="createPayoutAccountModel.accountBankName">
                                     <el-option v-for="bank in banks" class="select-danger" :value="bank.value" :label="bank.label" :key="bank.value"></el-option>
                                 </el-select>
                             </base-input>
@@ -62,6 +62,7 @@ const Toast = Swal.mixin({
         toast.addEventListener("mouseleave", Swal.resumeTimer);
     },
 });
+
 export default {
     name: "AddBank",
     props: {
@@ -145,7 +146,10 @@ export default {
             }
         },
     },
-    mounted() {},
+    mounted() {
+      StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList).then();
+
+    },
     methods: {
        closeModal() {
             //close modal form
@@ -156,13 +160,15 @@ export default {
         },
 
        addBank() {
-            let bankcode = this.createPayoutAccountModel.accountBankCode.split(" ")[1];
-            let bankName = this.createPayoutAccountModel.accountBankCode.split(" ")[0];
+            let bankArray = this.createPayoutAccountModel.accountBankName.split(" ")
+            let bankCode =bankArray[bankArray.length - 1];
+            let bankName = this.createPayoutAccountModel.accountBankName.replace(bankCode,"").trim();
             this.createPayoutAccountModel.accountCountry = this.userInfo.customerCountry;
             this.createPayoutAccountModel.accountOrganisationId = this.userInfo.customerId;
             this.createPayoutAccountModel.username = this.userInfo.customerEmail;
-            this.createPayoutAccountModel.accountBankCode = bankcode;
+            this.createPayoutAccountModel.accountBankCode = bankCode;
             this.createPayoutAccountModel.accountBankName = bankName;
+
             StoreUtils.dispatch(
                 StoreUtils.actions.accountPayout.createAddedBanks,
                 this.createPayoutAccountModel

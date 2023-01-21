@@ -1,6 +1,6 @@
 <template>
   <modal-1 :show="showOrganisationUserForm && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
-    <div>
+    <div v-if="singleUserPayload">
       <div class="card-head">
         <div class="d-flex justify-content-between">
           <h4 style="color:#3F88C5;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Edit User</h4>

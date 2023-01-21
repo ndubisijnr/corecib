@@ -1,30 +1,28 @@
 <template>
-  <div class="wrapper">
-      <div class="cardd m-3">
+  <div class="wrapper"  :style="isdarkMode === 'false' ? {backgroundColor:'#FFFFFF'}:{backgroundColor:'#181818'}">
+      <div class="cardd m-3" id="cardd" :style="isdarkMode === 'false' ? {backgroundColor:'#FFFFFF'}:{backgroundColor:'#181818'}">
           <div class="mb card-holder">
             <div class="card-area">
-                <dashboard-card :refresh="true" :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
-                <dashboard-card :showBtn="false" :showBtn1="false" :currency="'₦'" :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'"></dashboard-card>
-                <dashboard-card :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfWalletDev : currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'"></dashboard-card>
-                <dashboard-card :showBtn="false" :showBtn1="false" :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfVirtualAccountDev : currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'"></dashboard-card>
+                <dashboard-card  :show="true" :refresh="true" :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
+                <dashboard-card  :showBtn="false" :showBtn1="false" :currency="'₦'" :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'"></dashboard-card>
+                <dashboard-card  :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfWalletDev : currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'"></dashboard-card>
+                <dashboard-card  :showBtn="false" :showBtn1="false" :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfVirtualAccountDev : currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'"></dashboard-card>
             </div>
           </div>
           <div class="mb-3 text-center">
             <b-button style="background-color:#3F88C5;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>
             <b-button @click="show = true"> Withdraw</b-button>
           </div>
-            <div>
+          <div>
               <div class="ml-4">
                 <h4>Recent Transactions</h4>
               </div>
               <transaction with-search="NO"></transaction>
             </div>
-        </div>
-        <payout-form @closeCreatePayout="updateCreatePayout" :showCreatePayout="show"></payout-form>
-        <b-modal centered id="modal-scrollable" scrollable hide-backdrop content-class="shadow" hide-footer title="Fund your wallet">
-      <h3 style="text-align:center">
-        Top up Balance
-      </h3>
+      </div>
+      <payout-form @closeCreatePayout="updateCreatePayout" :showCreatePayout="show"></payout-form>
+      <b-modal centered id="modal-scrollable" scrollable hide-backdrop content-class="shadow" hide-footer title="Fund your wallet">
+      <h3 style="text-align:center">Top up Balance</h3>
       <div>
         <h3>To fund your wallet</h3>
         <span>Transfer desired amount to the account details below and have your balance funded</span>
@@ -110,6 +108,7 @@ export default {
   },
   computed: {
     ...mapState({
+      isdarkMode:state => state.auth.darkMode,
       user: (state) => state.auth.userInfo,
       loading: (state) => state.auth.loading,
       api: (state) => state.apiKey.apiKey,
@@ -134,12 +133,16 @@ export default {
 
   },
 
-  mounted() {},
+  mounted() {
+    StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
+    StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions)
+  },
 };
 </script>
 <style scoped>
 .wrapper{
   /*height: 100%;*/
+  background-color: #181818;
 }
 
 .paymentBox{
@@ -177,14 +180,15 @@ export default {
 
 .cardd {
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 10%);
-  background-color: white;
+  /*!*background-color: white;*!*/
+  /*background-color: #181818;*/
   width: 100%;
 }
 
 
 .carddd {
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);
-  background-color: white;
+  /*background-color: white;*/
   margin-top: 20px;
   padding: 10px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" :style="isdarkMode === 'false' ? {backgroundColor:'#FFFFFF'}:{backgroundColor:'#181818'}">
     <side-bar>
       <template slot="links">
         <span v-for="sidebar in sidebarItems" v-bind:key="sidebar.header">
@@ -23,7 +23,6 @@
           <router-view></router-view>
         </fade-transition>
       </div>
-      <content-footer v-if="!$route.meta.hideFooter"></content-footer>
     </div>
   </div>
 </template>
@@ -76,6 +75,7 @@ export default {
       return [DashboardSidebarItems,DocumentationSidebarItems,ReportSidebarItems,BillsSidebarItems,SettingsSidebarItems]
     },
     ...mapState({
+      isdarkMode:state => state.auth.darkMode,
 
     })
   },
@@ -86,7 +86,7 @@ export default {
 </script>
 <style scoped>
 .wrapper{
-  /*background-color: #070606D8;*/
+  height: auto;
 }
 
 .content{
@@ -94,6 +94,7 @@ export default {
   /*background-position: center;*/
   /*background-repeat: no-repeat;*/
   /*background-size: cover;*/
-  height: 100vh;
+  min-height: 100vh;
+
 }
 </style>

@@ -1,11 +1,12 @@
 <template>
   <div :class="dashboardCardStyle" class="card" :style="{borderColor:primaryColor}" id="dashboardCard">
+    <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 5px; cursor: pointer;" id="eye" @click="hide$show()" v-if="show"></i>
     <p v-if="isLoading" class="skeleton-text"></p>
     <p v-if="isLoading" class="skeleton-text"></p>
     <div v-else class="text-center">
-      <span class="currency">{{currency}}<span class="value"> {{value}}</span></span>
+      <span class="currency">{{showBalanceState ? currency: ''}}<span class="value"> {{showBalanceState ? value : '*******'}}</span></span>
       <p  class="title">{{title}}</p>
-      <button @click="refreshWallet" v-if="refresh" class="refresh" title="reload wallet balance" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"> <img :class="{'loadMore':isRefresh}" src="../../assets/Refresh.svg"/> </button>
+      <button @click="refreshWallet" v-if="refresh" class="refresh" title="refresh dashboard stats" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"> <img :class="{'loadMore':isRefresh}" src="../../assets/Refresh.svg"/> </button>
     </div>
   </div>
 </template>
@@ -19,7 +20,7 @@ export default {
     return{
       primaryColor:window.__env.app.primaryColor,
       styleType:2,
-      isRefresh:false
+      isRefresh:false,
     }
   },
   props:{
@@ -32,6 +33,10 @@ export default {
       },
       refresh:{
         type:Boolean
+      },
+    show:{
+        type:Boolean,
+        default: false
       },
       currency:{
           type:String,
@@ -53,10 +58,23 @@ export default {
   methods:{
     refreshWallet(){
       this.isRefresh = !this.isRefresh
-      StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then(() => {
-        this.isRefresh = !this.isRefresh
-      })
-    }
+      StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats).then(() => {this.isRefresh = !this.isRefresh})
+      StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions)
+      StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc)
+      StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualaccountTransactions)
+    },
+    hide$show() {
+      StoreUtils.commit(StoreUtils.mutations.auth.updateShowBalance, !this.showBalanceState)
+      let eye = document.getElementById("eye");
+      if (this.showBalanceState) {
+        eye.classList.remove("fa-eye");
+        eye.classList.add("fa-eye-slash");
+      } else {
+        eye.classList.add("fa-eye");
+        eye.classList.remove("fa-eye-slash");
+      }
+    },
+
   },
 
   computed:{
@@ -67,6 +85,7 @@ export default {
 
     ...mapState({
       isLoading:state => state.auth.loginLoading,
+      showBalanceState: state => state.auth.showBalance
     })
   },
 

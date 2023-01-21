@@ -5,10 +5,7 @@
         <b-button class="export-ex shadow-lg--hover small desktop" @click="download">Download Transactions</b-button>
         <b-icon-download  class="mobile" @click="download" />
       </div>
-      <export-excel style="display: none" id="export" name="bizgemTransactions-excel" :data="allTransactions"></export-excel>
-<!--    {{lll}}-->
-<!--    <hr/>-->
-<!--    {{jjj}}-->
+      <export-excel style="display: none" id="export" name="bizgemTransactions-excel" :data="[allTransactions]"></export-excel>
     <base-table
           :items="JSON.parse(JSON.stringify(allTransactions))"
           :fields="fields"
@@ -73,9 +70,6 @@ export default {
   },
 
   computed: {
-    appendAppostropytoExcelData(){
-
-    },
     sortOptions() {
       // Create an options list from our fields
       return this.fields
@@ -121,7 +115,9 @@ export default {
     //     }
     // }
   },
-  mounted() {},
+  mounted() {
+    StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions)
+  },
 };
 </script>
 <style scoped>

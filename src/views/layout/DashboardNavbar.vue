@@ -3,6 +3,7 @@
     container-classes="container-fluid"
     class="navbar-top border-bottom navbar-expand"
     :class="{ 'nav-bar-head': type === 'default' }"
+    :style="isdarkMode === 'false' ? {backgroundColor:'#FFFFFF'}:{backgroundColor:'#181818'}"
   >
     <div class="mr-5" >
       <div
@@ -38,9 +39,12 @@
       </li>
     </ul>
     <ul class="navbar-nav align-items-center ml-auto ml-md-0">
+      <div @click="switchTodarkMode" style="cursor:pointer;border:solid #ddd;margin-right:10px;display:flex;justify-content:center;align-items:center;width: 30px;height:30px;border-radius: 360px;background-color: #FFFFFF">
+        <img src="../../assets/swithmode.png" width="20" />
+      </div>
       <span :class="{ 'spinner-border': loading }"></span>&nbsp;
        <div class="text-center" v-if="organisation.length > 0">
-                <span style="font-size:12px">Switch to {{stage == 'Live' ? 'Test' : 'Live' }}</span>
+                <span style="font-size:12px">Switch to {{stage == 'Live' ? 'Test' : 'Live' }} </span>
                 <br>
                 <toggle-button
                   :value="toggleBtnValue"
@@ -62,15 +66,16 @@
       >
         <a href="#" class="nav-link pr-0" @click.prevent slot="title-container">
           <div class="media align-items-center">
-            <i class="fa fa-user-circle nav-profile" :style="{color:primaryColor}"></i>
+            <i class="fa fa-user-circle nav-profile" :style="isdarkMode === 'false' ?{color:primaryColor} :{color:'#FFFFFF'}"></i>
           </div>
         </a>
         <div>
           <h3 class="text-dark text-center m-1 small">{{ user.customerFirstName }} {{ user.customerLastName }} </h3>
           <b-list-group class="m-3 text-left small">
             <b-list-group-item button disabled>{{user.customerEmail}}</b-list-group-item>
+<!--            <b-list-group-item button disabled>{{user.customerEmail}}</b-list-group-item>-->
             <router-link to="/kyc-verifications" v-if="organisation.length > 0"><b-list-group-item button>KYC Verification </b-list-group-item></router-link>
-            <a href="https://bizgem.io/contact-us.html" target="_blank"> <b-list-group-item button>Support</b-list-group-item></a>
+            <a href="https://bizgem.io/contact.html" target="_blank"> <b-list-group-item button>Support</b-list-group-item></a>
             <a href="https://documenter.getpostman.com/view/20549781/Uz5GoGMo" target="blank"> <b-list-group-item button>Documentation</b-list-group-item></a>
             <router-link to="/settings/settings" v-if="organisation.length > 0"> <b-list-group-item button>Settings</b-list-group-item></router-link>
             <b-list-group-item button  @click="adminLogOut()">Log Out</b-list-group-item>
@@ -113,10 +118,15 @@ export default {
     };
   },
   computed: {
+    darkMode(){
+      return localStorage.darkMode
+    },
     ...mapState({
       user: (state) => state.auth.userInfo,
       organisation: (state) => state.auth.allOrganisations,
       loading: (state) => state.auth.loading,
+      isdarkMode:state => state.auth.darkMode,
+
 
     }),
     
@@ -129,10 +139,17 @@ export default {
       this.toggleBtnValue = testLive === "Live";
       return testLive;
     },
-    ...mapActions(["logOut"]),
-    ...mapGetters([""]),
   },
+
   methods: {
+    switchTodarkMode(){
+      if(localStorage?.darkMode == 'true') {
+        localStorage.darkMode = 'false'
+      }else{
+        localStorage.darkMode = 'true'
+      }
+      StoreUtils.commit(StoreUtils.mutations.auth.updateDarkMode, localStorage.darkMode)
+    },
     adminLogOut() {
       StoreUtils.dispatch(StoreUtils.actions.auth.logOut, {customerEmail: this.user.customerEmail})
     },
@@ -148,6 +165,7 @@ export default {
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
+
     toggleNotificationDropDown() {
       this.activeNotifications = !this.activeNotifications;
     },
@@ -170,6 +188,7 @@ export default {
       this.$store.dispatch("switchMode");
     },
   },
+
   mounted() {
     this.$sidebar.isMinimized = this.$sidebar.breakpoint < window.innerWidth;
     this.minimizeSidebar();

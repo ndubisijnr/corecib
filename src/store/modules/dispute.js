@@ -2,6 +2,7 @@ import DisputeService from "../../service/DisputeService";
 import DisputeRequest from "../../model/request/DisputeRequest";
 import DisputeResponse from "../../model/reponse/DisputeResponse";
 import Swal from "sweetalert2";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 export const state = {
   loading: false,
@@ -57,6 +58,7 @@ export const actions = {
       let responseData = response.data
       if (responseData.responseCode === "00") {
         commit("updateLoading2", false)
+        StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes).then()
         Swal.fire({title: responseData.responseMessage, icon: 'success'}).then(()=>{
           commit("updateStatus", 'read')
         })
