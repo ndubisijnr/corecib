@@ -13,12 +13,12 @@
       data-toggle="collapse"
       @click.prevent="collapseMenu">
       <template v-if="addLink">
-        <span :class="{'nav-link-text-dark' : Active === link.path || Active.includes(link.path)}" class="nav-link-text">
+        <span  :class="{'nav-link-text-dark' : Active === link.path || Active.includes(link.path)}" class="nav-link-text">
           {{ link.name }} <b class="caret"></b>
         </span>
       </template>
       <template v-else>
-        <i :class="link.icon"></i>
+        <i :class="link.icon" ></i>
         <span :class="{'nav-link-text-dark' : Active === link.path || Active.includes(link.path)}" class="nav-link-text">{{ link.name }} <b class="caret"></b></span>
       </template>
     </a>

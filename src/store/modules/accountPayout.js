@@ -63,6 +63,7 @@ export const actions = {
             }
             })
             .catch(error => {
+                commit("updateAccLoading", false)
                 console.log(error)
             })
 
@@ -108,7 +109,8 @@ export const actions = {
       }
     })
       .catch(error => {
-        console.log(error)
+          commit("updateAddBankLoading", false)
+          console.log(error)
       })
 
   },
@@ -134,15 +136,15 @@ export const actions = {
    readPayout: ({commit,state}, payload = AccountPayoutRequest.readPayout) => {
     if(state.allpayouts.length < 1) commit("updateAccLoading", true)
     return AccountPayoutService.callReadPayoutApi(payload).then(response => {
+      commit("updateAccLoading", false)
       let responseData = response.data
       if(responseData.responseCode == "00"){
-       commit("updateAccLoading", false)
-       commit("updateAllPayouts",responseData)
+       commit("updateAllPayouts",responseData.data)
       }else{
-       commit("updateAccLoading", false)
        Toast.fire({ text: responseData.responseMessage, icon: 'error', })
       }
     }) .catch(error => {
+        commit("updateAccLoading", false)
         Toast.fire({ text: error, icon: 'error', })
 
     })

@@ -15,9 +15,9 @@
                         }}
                         </h4>
                         <b-input-group size="md" prepend="NGN" class="mb-3">
-                            <b-form-input id='withdrawInput' step="100.00" type="number" autofocus
+                            <b-form-input id='withdrawInput' type="number" autofocus
                                 v-model="payoutModel.payoutAmount" style="font-size:16px;letter-spacing:.2rem;"
-                                placeholder="Enter Amount" required @input="isNumber()"></b-form-input>
+                                placeholder="Enter Amount" required></b-form-input>
                         </b-input-group>
                         <h4 id="error" class="text-danger text-center"></h4>
                         <b-button v-if="currentOrganisation.organisationStage == 'PROD'" class="text-white" type="submit" :style="{backgroundColor:primaryColor,width:'100%'}">{{ accLoading ? 'please wait..' : 'withdraw' }} <span :class="{ 'spinner-border': accLoading }"></span>
@@ -115,35 +115,38 @@ export default {
           return true;
         }
       },
-        closeModal() {
+
+      closeModal() {
             //close modal form
             this.showModal = false;
             this.$emit("closeCreatePayout", false);
             this.showModal = true;
             //   StoreUtils.commit(StoreUtils.mutations.accountPayout.updateStatus, 'false')
         },
-        requestPayout() {
-            let amount = this.payoutModel.payoutAmount
-            this.payoutModel.payoutReference = `BIZGEM-${this.reference(30)}`
-            if(Number(amount) >  Number(this.balances.walletBalance.accountBalance)){
-                Toast.fire({text:"Insufficent Funds", icon:"error"})
-            }else{
-            StoreUtils.dispatch(StoreUtils.actions.accountPayout.requestPayout, this.payoutModel).then(() => {
-                StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutTransactionsModel)
-                this.payoutModel.payoutAmount = null
-                this.closeModal()
-            })
-            }
-        },
-        reference(length) {
-            let result = ""
-            let characters = 'abcdefghijklmnopgrstuvwxyzABCDEFJHIJKLMNOPQRSTUVWXYZ0123456789';
-            let charactersLength = characters.length;
-            for (var i = 0; i < length; i++) {
-                result += characters.charAt(Math.floor(Math.random() * charactersLength));
-            }
-            return result;
-        },
+
+      requestPayout() {
+          let amount = this.payoutModel.payoutAmount
+          this.payoutModel.payoutReference = `BIZGEM-${this.reference(30)}`
+          if(Number(amount) >  Number(this.balances.walletBalance.accountBalance)){
+              Toast.fire({text:"Insufficent Funds", icon:"error"})
+          }else{
+          StoreUtils.dispatch(StoreUtils.actions.accountPayout.requestPayout, this.payoutModel).then(() => {
+              StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutTransactionsModel)
+              this.payoutModel.payoutAmount = null
+              this.closeModal()
+          })
+          }
+      },
+
+      reference(length) {
+          let result = ""
+          let characters = 'abcdefghijklmnopgrstuvwxyzABCDEFJHIJKLMNOPQRSTUVWXYZ0123456789';
+          let charactersLength = characters.length;
+          for (var i = 0; i < length; i++) {
+              result += characters.charAt(Math.floor(Math.random() * charactersLength));
+          }
+          return result;
+      },
     },
     computed: {
         ...mapState({

@@ -39,9 +39,9 @@
       </li>
     </ul>
     <ul class="navbar-nav align-items-center ml-auto ml-md-0">
-      <div @click="switchTodarkMode" style="cursor:pointer;border:solid #ddd;margin-right:10px;display:flex;justify-content:center;align-items:center;width: 30px;height:30px;border-radius: 360px;background-color: #FFFFFF">
-        <img src="../../assets/swithmode.png" width="20" />
-      </div>
+<!--      <div @click="switchTodarkMode" style="cursor:pointer;border:solid #ddd;margin-right:10px;display:flex;justify-content:center;align-items:center;width: 30px;height:30px;border-radius: 360px;background-color: #FFFFFF">-->
+<!--        <img src="../../assets/swithmode.png" width="20" />-->
+<!--      </div>-->
       <span :class="{ 'spinner-border': loading }"></span>&nbsp;
        <div class="text-center" v-if="organisation.length > 0">
                 <span style="font-size:12px">Switch to {{stage == 'Live' ? 'Test' : 'Live' }} </span>

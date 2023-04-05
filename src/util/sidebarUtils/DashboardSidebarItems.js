@@ -1,6 +1,6 @@
 export default
 {
-    header: '',
+    header: 'Dashboard',
     icon: '',
     items: [
         {

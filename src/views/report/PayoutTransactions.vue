@@ -9,7 +9,7 @@
     <add-bank-form @closeCreateBank="updateCreateBank" :showCreateBank="showPayout"></add-bank-form>
 
 
-    <base-table :items="transactions.data" filter-mode="default" :fields="fields" :is-busy="loading" />
+    <base-table :items="transactions" filter-mode="default" :fields="fields" :is-busy="loading" />
   </div>
 </template>
 <script>

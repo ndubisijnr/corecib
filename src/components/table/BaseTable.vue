@@ -38,6 +38,10 @@
        <h5 :style="row.item.drCr === 'DR' ? {color: 'red'} : {color: 'green'}"> {{row.item.drCr}}</h5>
       </template>
 
+      <template v-slot:cell(trnDrCr)="row">
+       <h5 :style="row.item.trnDrCr === 'DR' ? {color: 'red'} : {color: 'green'}"> {{row.item.trnDrCr}}</h5>
+      </template>
+
       <template v-slot:cell(payoutStatus)="row">
        <h5 :style="row.item.payoutStatus === 'FAILED' ? {color: 'red'} : {color: 'green'}"> {{row.item.payoutStatus}}</h5>
       </template>
@@ -46,6 +50,10 @@
       <!-- TODO AMOUNT FORMATTING -->
       <template v-slot:cell(amount)="row">
         {{ row.item.amount | formatAmount }}
+      </template>
+
+      <template v-slot:cell(trnAmount)="row">
+        {{ row.item.trnAmount | formatAmount }}
       </template>
       <template v-slot:cell(accountBalance)="row">
         {{ row.item.accountBalance | formatAmount }}
@@ -234,7 +242,7 @@
       </b-col>
       <b-col sm="5" md="6" class="">
         <div style="display: flex">
-        <b-pagination
+          <b-pagination
           v-model="currentPage"
           :total-rows="items == null ? 0 : items.length"
           :per-page="perPage"
@@ -546,9 +554,9 @@ export default {
     },
     rowClass(item, type) {
       if (!item || type !== "row") return "";
-      if (item.drCr != null)
+      if (item.drCr != null || item.trDrCr != null)
         if (item.drCr === "dR") return "table-danger";
-        else if (item.drCr === "cR") return "table-success";
+        else if (item.drCr === "cR" || item.trDrCr != null) return "table-success";
         else return "";
     },
   },

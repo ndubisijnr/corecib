@@ -7,9 +7,9 @@
       </div>
     </div>
 
-    <div class="pl-4 text-dark ml-4" v-if="!loading && wallettransactions.length > 0" style="width:20%;box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);padding: 5px;background-color: white;">
-      <h6>Account Number: {{wallettransactions[0].accountNumber}}</h6>
-      <h6>Wallet Account Name: {{wallettransactions[0].accountName}}</h6>
+    <div class="pl-4 text-dark" v-if="!loading && wallettransactions.length > 0" style="width:40%;background-color: white;">
+      <h5>Account Number: {{wallettransactions[0].accountNumber}}</h5>
+      <h5>Wallet Account Name: {{wallettransactions[0].accountName}}</h5>
     </div>
     <!-- <div class="pl-4 text-dark ml-4" v-else style="width:20%;box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);padding: 5px;background-color: white;">
       <h6>Nothing to show</h6>
@@ -66,12 +66,14 @@ export default {
       ],
       items: [],
       fields: [
-        { key: "id", label: "id" },
-        { key: "amount", label: "amount" },
+        // { key: "id", label: "id" },
         { key: "drCr", label: "DR/CR" },
+
+        { key: "amount", label: "amount", class: "text-right"},
         {
           key: "contractReference",
           label: "contractReference",
+          class: "text-right"
         },
         { key: "counterPartyAccountName", label: "counterPartyAccountName" },
         { key: "counterPartyAccountNumber", label: "counterPartyAccountNumber" },

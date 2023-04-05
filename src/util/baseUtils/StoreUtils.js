@@ -2,6 +2,11 @@ import store from "../../store/store";
 
 class StoreUtils {
   static actions = {
+
+    transactions:{
+      readTransactions:"transactions/readTransactions"
+    },
+
     kycVerification: {
       UpdateCorporateAffairs:"kycVerification/UpdateCorporateAffairs",
       UpdateNationalIdentity:"kycVerification/UpdateNationalIdentity",
@@ -101,6 +106,11 @@ class StoreUtils {
   };
 
   static mutations = {
+    transactions:{
+      updateTransactions:"transactions/updateTransactions",
+      updateLoading:"transactions/updateLoading"
+    },
+
     kycVerification:{
       UpdateKycType:"kycVerification/UpdateKycType",
       UpdateLoading:"kycVerification/UpdateLoading",

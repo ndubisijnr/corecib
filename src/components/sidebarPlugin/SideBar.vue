@@ -31,8 +31,8 @@
           </div>
       </div>
       <slot></slot>
-      <div class="navbar-inner mt-4 text-white" v-if="allOrganisation.length > 0">
-        <ul class="navbar-nav one text-white">
+      <div class="navbar-inner mt-5" v-if="allOrganisation.length > 0">
+        <ul class="navbar-nav">
           <slot name="links">
             <sidebar-item
                 v-for="(link, index) in sidebarLinks"
@@ -51,7 +51,6 @@
         <slot name="links-after"></slot>
       </div>
     </div>
-
   </div>
 
 </template>
