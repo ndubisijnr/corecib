@@ -3,10 +3,9 @@
     <side-bar>
       <template slot="links">
         <span class="header" v-for="sidebar in sidebarItems" v-bind:key="sidebar.header">
-<!--          <span @click="dropdown" v-for="item in sidebar.items" v-bind:key="item.name" v-if="sidebar.items.length > 2" class="arrow ni ni-bold-down" id="arrow"></span>-->
             <h6 class="sidebar-headers">{{ sidebar.header }} </h6>
 
-            <span v-for="item in sidebar.items" v-bind:key="item.name" v-if="sidebar.items.length > 2">
+            <span v-for="item in sidebar.items" v-bind:key="item.name">
               <div>
                 <sidebar-item :target="item.target" :link="{
                   name: item.name,
@@ -16,16 +15,16 @@
 
           </span>
 
-            <span  v-if="sidebar.items.length <= 2"  v-for="item in sidebar.items" v-bind:key="item.name">
-              <div >
-                <sidebar-item v-if="!item.path.includes('http')" :target="item.target" :link="{
-                  name: item.name,
-                  icon: item.icon,
-                  path: item.path }"/>
+<!--            <span  v-if="sidebar.items.length <= 2"  v-for="item in sidebar.items" v-bind:key="item.name">-->
+<!--              <div >-->
+<!--                <sidebar-item v-if="!item.path.includes('http')" :target="item.target" :link="{-->
+<!--                  name: item.name,-->
+<!--                  icon: item.icon,-->
+<!--                  path: item.path }"/>-->
 
-                <a v-else :href="item.path" target="_blank" class="nav-link pt-2 pb-0 text-white"><i :class="item.icon"></i> {{item.name}}</a>
-              </div>
-          </span>
+<!--                <a v-else :href="item.path" target="_blank" class="nav-link pt-2 pb-0 text-white"><i :class="item.icon"></i> {{item.name}}</a>-->
+<!--              </div>-->
+<!--          </span>-->
         </span>
       </template>
     </side-bar>
@@ -46,7 +45,7 @@ import DashboardSidebarItems from "../../util/sidebarUtils/DashboardSidebarItems
 import ReportSidebarItems from "../../util/sidebarUtils/ReportSidebarItems";
 import SettingsSidebarItems from "../../util/sidebarUtils/SettingsSidebarItems";
 // import UserSidebarItems from "../../util/sidebarUtils/UserSidebarItems";
-import WalletActivitiesItems from "../../util/sidebarUtils/WalletActivitiesItems";
+// import WalletActivitiesItems from "../../util/sidebarUtils/WalletActivitiesItems";
 import DocumentationSidebarItems from "@/util/sidebarUtils/DocumentationSidebarItems";
 import SkeletonLoader1 from "../../components/loader/SkeletonLoader1";
 import DashboardNavbar from './DashboardNavbar.vue';
@@ -89,23 +88,23 @@ export default {
       }
     },
 
-    // dropdown(){
-    //   const arrow = document.getElementById('arrow')
-    //   const drop = document.getElementById('dropdown-content')
-    //   this.toggle = !this.toggle
-    //   if(this.toggle){
-    //     drop.classList.remove('show')
-    //     drop.classList.add('hide')
-    //   }else{
-    //     drop.classList.remove('hide')
-    //     drop.classList.add('show')
-    //
-    //   }
-    // }
+    dropdown(){
+      const arrow = document.getElementById('arrow')
+      const drop = document.getElementById('dropdown-content')
+      this.toggle = !this.toggle
+      if(this.toggle){
+        drop.classList.remove('show')
+        drop.classList.add('hide')
+      }else{
+        drop.classList.remove('hide')
+        drop.classList.add('show')
+
+      }
+    }
   },
   computed:{
     sidebarItems(){
-      return [DashboardSidebarItems,DocumentationSidebarItems, WalletActivitiesItems, ReportSidebarItems,BillsSidebarItems,SettingsSidebarItems]
+      return [DashboardSidebarItems,DocumentationSidebarItems, ReportSidebarItems,BillsSidebarItems,SettingsSidebarItems]
     },
     ...mapState({
       isdarkMode:state => state.auth.darkMode,
@@ -125,7 +124,7 @@ export default {
   color: #Fefefe;
   font-size: 14px;
   margin: 0;
-  text-decoration: underline;
+  /*text-decoration: underline;*/
   /*border: solid #236395 1px;*/
   /*color: #236395;*/
   text-align: left;
