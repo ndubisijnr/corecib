@@ -13,6 +13,7 @@
             <b-button style="background-color:#3F88C5;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>
             <b-button @click="show = true"> Withdraw</b-button>
           </div>
+        <div id="end"></div>
           <div>
               <div class="ml-4">
                 <h4>Recent Transactions</h4>

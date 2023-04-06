@@ -155,18 +155,6 @@ export default {
 }
 
 
-
-.forgot-password {
-  color: var(--primary);
-  cursor: pointer;
-}
-
-
-.join-now-text {
-  color: var(--primary);
-  cursor: pointer;
-}
-
 .form-login {
   width: 450px;
   border-radius: 10px;
@@ -179,12 +167,10 @@ export default {
 
 @media (max-width: 500px) {
   .form-login {
-    width: 450px;
-    border-radius: 10px;
-    padding: 10%;
+    width: 100%;
     font-size: 12px;
-    /* background: white;
-    box-shadow: 0 1px 1px hsl(0deg 0% 0% / 5%); */
+   background: white;
+    /*box-shadow: 0 1px 1px hsl(0deg 0% 0% / 5%);*/
   }
 }
 </style>

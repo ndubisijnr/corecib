@@ -73,11 +73,29 @@
       <template v-slot:cell(createdat)="row">
         {{ row.item.createdat | moment("DD-MMM-YYYY") }}
       </template>
+      <template v-slot:cell(trnCreatedAt)="row">
+        {{ row.item.trnCreatedAt | moment("DD-MMM-YYYY") }}
+      </template>
+      <template v-slot:cell(eventDate)="row">
+        {{ row.item.eventDate | moment("DD-MMM-YYYY") }}
+      </template>
       <!-- / -->
 
       <!-- TODO TEXT ELLIPSIS FORMATTING -->
       <template :title="row.item.contractDebitAccountName" v-slot:cell(contractDebitAccountName)="row">
         {{ row.item.contractDebitAccountName | formatTextWithEllipsis }}
+      </template>
+      <template :title="row.item.accountName" v-slot:cell(accountName)="row">
+        {{ row.item.accountName | formatTextWithEllipsis }}
+      </template>
+      <template :title="row.item.trnService" v-slot:cell(trnService)="row">
+        {{ row.item.trnService | formatTextWithEllipsis }}
+      </template>
+      <template :title="row.item.trnDrAccountName" v-slot:cell(trnDrAccountName)="row">
+        {{ row.item.trnDrAccountName | formatTextWithEllipsis }}
+      </template>
+      <template :title="row.item.trnNarration" v-slot:cell(trnNarration)="row">
+        {{ row.item.trnNarration | formatTextWithEllipsis }}
       </template>
       <template v-slot:cell(disputeComment)="row">
         {{ row.item.disputeComment | formatTextWithEllipsis }}

@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="export-btn-area" v-if="withSearch === 'YES'">
-      <search-form :module="searchALL_TRANSACTION"></search-form>
+      <search-form :module="TRANSACTION"></search-form>
       <b-button class="export-ex shadow-lg--hover small desktop" @click="download">Download Transactions</b-button>
       <b-icon-download  class="mobile" @click="download" />
     </div>
@@ -37,16 +37,20 @@ export default {
   data() {
     return {
       allTransactionsModel: WalletRequest.readAllWalletTransaction,
-      searchALL_TRANSACTION: SearchModuleutil.ALL_TRANSACTION,
+      TRANSACTION: SearchModuleutil.TRANSACTIONS,
       light: "light",
       type: "",
       items: [],
       fields: [
         { key: "trnDrCr", label: "drCr" },
-        { key: "trnAmount", label: "amount",sortable: true },
+        { key: "trnCommission", label: "commission", class:'text-right'  },
+        { key: "trnFee", label: "fee", class:'text-right' },
+        { key: "trnRate", label: "rate", class:'text-right'  },
+        { key: "trnAmount", label: "amount",sortable: true, class:'text-right'  },
         { key: "trnService", label: "Service" },
-        { key: "trnDrAccountNumber", label: "trnDr AccountNumber"},
+        { key: "trnDrAccountNumber", label: "TRNDr.AccountNumber",class:'text-left' },
         { key: "trnDrAccountName", label: "trnDr. AccountName" },
+        { key: "trnNarration", label: "trnNarration",class:'text-left' },
         //{ key: "counterPartyBankCode", label: "counterPartyBankCode" },
         { key: "trnStatus", label: "Status" },
         { key: "trnCreatedAt", label: "CreatedAt" },

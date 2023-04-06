@@ -7,6 +7,13 @@ class TransactionsRequest {
         searchItem: "",
         page: 1
     }
+
+    static filterTransaction={
+        startDate: "",
+        endDate: "",
+        searchItem: "",
+        page: 1
+    }
 }
 
 export  default TransactionsRequest

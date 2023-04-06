@@ -143,6 +143,9 @@ export default {
 }
 .wrapper{
   height: auto;
+  /*border: solid;*/
+  /*overflow-y: scroll;*/
+  width: 100%;
 }
 
 .dropdown-content{}

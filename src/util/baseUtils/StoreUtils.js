@@ -4,7 +4,8 @@ class StoreUtils {
   static actions = {
 
     transactions:{
-      readTransactions:"transactions/readTransactions"
+      readTransactions:"transactions/readTransactions",
+      filterTransactions:"transactions/filterTransactions"
     },
 
     kycVerification: {

@@ -85,6 +85,7 @@ export const actions = {
         }else{
           commit("updateAllWalletTransactions", responseData.data)
           commit("updateWalletTransactions", responseData.data)
+          // StoreUtils.commit(StoreUtils.mutations.transactions.updateTransactions, responseData.data)
         }
       }
     }).catch(error => {

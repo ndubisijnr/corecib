@@ -35,22 +35,16 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* background-color: white; */
+   background-color: white;
 }
 
-.long-stroke-left{
-  height: 100%;
-  width: 20px;
-  position: fixed;
-  left: 0;
-  top: 0;
-}
-.long-stroke-right{
-  height: 100%;
-  width: 20px;
-  position: fixed;
-  right: 0;
-  top: 0;
+
+@media (max-width: 999px) {
+  .auth-wrap{
+    width: 90%;
+    margin: 10px auto;
+  }
+
 }
 
 </style>

@@ -101,6 +101,14 @@ export default {
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
+::-webkit-outer-spin-button{
+  display: none;
+}
+
 body{background-color: #FFFFFF;}
 
 .myalert{

@@ -28,7 +28,7 @@ class AccountPayoutRequest{
     static createPayout = {
         payoutReference:null,
         payoutAmount: null,
-        payoutMessage:"this is a message"
+        payoutMessage:"payout initiated"
     }
 
 

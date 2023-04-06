@@ -15,9 +15,9 @@
                         }}
                         </h4>
                         <b-input-group size="md" prepend="NGN" class="mb-3">
-                            <b-form-input id='withdrawInput' type="number" autofocus
+                            <b-form-input id='withdrawInput' type="text" autofocus
                                 v-model="payoutModel.payoutAmount" style="font-size:16px;letter-spacing:.2rem;"
-                                placeholder="Enter Amount" required></b-form-input>
+                                placeholder="Enter Amount" @input="formatInputValue"></b-form-input>
                         </b-input-group>
                         <h4 id="error" class="text-danger text-center"></h4>
                         <b-button v-if="currentOrganisation.organisationStage == 'PROD'" class="text-white" type="submit" :style="{backgroundColor:primaryColor,width:'100%'}">{{ accLoading ? 'please wait..' : 'withdraw' }} <span :class="{ 'spinner-border': accLoading }"></span>
@@ -52,6 +52,18 @@ export default {
     props: {
         showCreatePayout: Boolean,
     },
+    directives: {
+      formatNumber: {
+        bind(el) {
+          const formatter = new Intl.NumberFormat('en-US',{ maximumFractionDigits: 3, minimumFractionDigits: 2 });
+          const inputHandler = (event) => {
+            let value = event.target.value.replace(/,/g, '');
+            event.target.value = formatter.format(value);
+          };
+          el.addEventListener('input', inputHandler);
+        }
+      }
+    },
     data() {
         return {
             showModal: true,
@@ -63,6 +75,11 @@ export default {
         }
     },
     methods: {
+      formatInputValue() {
+        let value = this.payoutModel.payoutAmount
+        const parsedValue = parseFloat(value.replace(/[^\d.-]/g, ""));
+        if (!isNaN(parsedValue)) this.payoutModel.payoutAmount = parsedValue.toLocaleString();
+      },
       formatAmount(value){
         if (value == null) return '0.00'
         value = parseFloat(value).toFixed(2);
@@ -126,15 +143,22 @@ export default {
 
       requestPayout() {
           let amount = this.payoutModel.payoutAmount
+          this.payoutModel.payoutAmount = amount.replace(/[^\d.-]/g, "")
           this.payoutModel.payoutReference = `BIZGEM-${this.reference(30)}`
-          if(Number(amount) >  Number(this.balances.walletBalance.accountBalance)){
-              Toast.fire({text:"Insufficent Funds", icon:"error"})
-          }else{
-          StoreUtils.dispatch(StoreUtils.actions.accountPayout.requestPayout, this.payoutModel).then(() => {
-              StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutTransactionsModel)
+          if(Number(amount.replace(/[^\d.-]/g, "")) > Number(1000000)){
+            this.payoutModel.payoutAmount = null
+            Toast.fire({text:"maximum of 1,000,000", icon:"error"})
+          }
+          else if(Number(amount.replace(/[^\d.-]/g, "")) >  Number(this.balances.walletBalance.accountBalance)) {
+            this.payoutModel.payoutAmount = null
+            Toast.fire({text: "Insufficent Funds", icon: "error"})
+          }
+          else{
+            StoreUtils.dispatch(StoreUtils.actions.accountPayout.requestPayout, this.payoutModel).then(() => {
               this.payoutModel.payoutAmount = null
               this.closeModal()
-          })
+              StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutTransactionsModel)
+            })
           }
       },
 

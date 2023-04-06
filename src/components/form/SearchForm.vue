@@ -245,6 +245,10 @@ export default {
         StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutSearchModel);
         // console.log("hello PAYOUT_TRANSACTION", this.payoutSearchModel)
       }
+       else if(this.module === SearchModuleUtil.TRANSACTIONS){
+        // StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
+        StoreUtils.dispatch(StoreUtils.actions.transactions.filterTransactions, this.searchModel);
+      }
       else {
         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.dispute.updateDisputes, BaseResponse.list)
