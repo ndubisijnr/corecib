@@ -274,6 +274,21 @@
           <div v-if="$router.currentRoute.fullPath === '/wallet'">
             <button :disabled="loading2" title="load more wallets" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"  @click="requestWallets"> <img :class="{'loadMore':loading2}" src="../../assets/Refresh.svg"/> </button>
           </div>
+          <div v-if="$router.currentRoute.fullPath === '/organisation/transactions'">
+            <button :disabled="loading2" title="load more wallets" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"  @click="requestTransactions"> <img :class="{'loadMore':loading5}" src="../../assets/Refresh.svg"/> </button>
+          </div>
+          <div v-if="$router.currentRoute.fullPath === '/account'">
+            <button :disabled="loading2" title="load more wallets" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"  @click="requestWallets"> <img :class="{'loadMore':loading2}" src="../../assets/Refresh.svg"/> </button>
+          </div>
+          <div v-if="$router.currentRoute.fullPath === '/reports/dispute'">
+            <button :disabled="loading2" title="load more wallets" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"  @click="requestWallets"> <img :class="{'loadMore':loading2}" src="../../assets/Refresh.svg"/> </button>
+          </div>
+          <div v-if="$router.currentRoute.fullPath === '/kyc-verifications'">
+            <button :disabled="loading2" title="load more wallets" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"  @click="requestWallets"> <img :class="{'loadMore':loading2}" src="../../assets/Refresh.svg"/> </button>
+          </div>
+          <div v-if="$router.currentRoute.fullPath === '/reports/payout-transactions'">
+            <button :disabled="loading2" title="load more wallets" style="background-color:#FFFF;color:black;border: none;width:35px;height:35px"  @click="requestWallets"> <img :class="{'loadMore':loading2}" src="../../assets/Refresh.svg"/> </button>
+          </div>
         </div>
       </b-col>
     </b-row>
@@ -290,6 +305,7 @@ import StoreUtils from "../../util/baseUtils/StoreUtils";
 import BIZ from "@/assets/BIZ.gif"
 import Toast from "../../../toastNotification";
 import router from "../../router";
+import TransactionRequest from "../../model/request/TransactionRequest";
 
 export default {
   props: [
@@ -313,6 +329,7 @@ export default {
       loaderImage:BIZ,
       allTransactionsModel: WalletRequest.readAllWalletTransaction,
       walletTransactionmodel: WalletRequest.readWalletTransaction,
+      transaction:TransactionRequest.readWalletTransaction,
       virtualAccountTransactionmodel:
         VirtualAccountRequest.readVirtualAccountTransactions,
       dateFormat: "D MMM",
@@ -344,7 +361,8 @@ export default {
       loading2:(state) => state.walletTransactions.retrieveLoading,
       loading3:(state) => state.virtualAccount.loading,
       loading4:(state) => state.kycVerification.loading,
-      isLoading:state => state.auth.loginLoading
+      isLoading:state => state.auth.loginLoading,
+      loading5:state => state.transactions.refreshLoading
     }),
   },
   mounted() {},
@@ -365,7 +383,16 @@ export default {
       this.allTransactionsModel.page = this.count
       StoreUtils.dispatch(
           StoreUtils.actions.walletTransactions.updateAllWalletTransactions,
-          this.allWalletTransactions
+          this.allTransactionsModel
+      )
+    },
+
+    requestTransactions(){
+      this.count++
+      this.transaction.page = this.count
+      StoreUtils.dispatch(
+          StoreUtils.actions.transactions.readTransactions,
+          this.transaction
       )
     },
     requestWallets(){

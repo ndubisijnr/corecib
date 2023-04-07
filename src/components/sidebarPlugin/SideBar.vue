@@ -31,7 +31,7 @@
           </div>
       </div>
       <slot></slot>
-      <div class="navbar-inner" v-if="allOrganisation.length > 0" style="transform: scale(.9)">
+      <div class="mt-3 navbar-inner" v-if="allOrganisation.length > 0" style="transform: scale(.9)">
         <ul class="navbar-nav">
           <slot name="links">
             <sidebar-item

@@ -3,7 +3,7 @@
     <side-bar>
       <template slot="links">
         <span class="header" v-for="sidebar in sidebarItems" v-bind:key="sidebar.header">
-            <h6 class="sidebar-headers">{{ sidebar.header }} </h6>
+            <h6 class="navbar-collapse-header sidebar-headers">{{ sidebar.header }} </h6>
 
             <span v-for="item in sidebar.items" v-bind:key="item.name">
               <div>
@@ -15,16 +15,16 @@
 
           </span>
 
-<!--            <span  v-if="sidebar.items.length <= 2"  v-for="item in sidebar.items" v-bind:key="item.name">-->
-<!--              <div >-->
-<!--                <sidebar-item v-if="!item.path.includes('http')" :target="item.target" :link="{-->
-<!--                  name: item.name,-->
-<!--                  icon: item.icon,-->
-<!--                  path: item.path }"/>-->
+          <!--            <span  v-if="sidebar.items.length <= 2"  v-for="item in sidebar.items" v-bind:key="item.name">-->
+          <!--              <div >-->
+          <!--                <sidebar-item v-if="!item.path.includes('http')" :target="item.target" :link="{-->
+          <!--                  name: item.name,-->
+          <!--                  icon: item.icon,-->
+          <!--                  path: item.path }"/>-->
 
-<!--                <a v-else :href="item.path" target="_blank" class="nav-link pt-2 pb-0 text-white"><i :class="item.icon"></i> {{item.name}}</a>-->
-<!--              </div>-->
-<!--          </span>-->
+          <!--                <a v-else :href="item.path" target="_blank" class="nav-link pt-2 pb-0 text-white"><i :class="item.icon"></i> {{item.name}}</a>-->
+          <!--              </div>-->
+          <!--          </span>-->
         </span>
       </template>
     </side-bar>

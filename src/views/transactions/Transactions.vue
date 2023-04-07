@@ -43,10 +43,10 @@ export default {
       items: [],
       fields: [
         { key: "trnDrCr", label: "drCr" },
+        { key: "trnAmount", label: "amount",sortable: true, class:'text-right'  },
         { key: "trnCommission", label: "commission", class:'text-right'  },
         { key: "trnFee", label: "fee", class:'text-right' },
         { key: "trnRate", label: "rate", class:'text-right'  },
-        { key: "trnAmount", label: "amount",sortable: true, class:'text-right'  },
         { key: "trnService", label: "Service" },
         { key: "trnDrAccountNumber", label: "TRNDr.AccountNumber",class:'text-left' },
         { key: "trnDrAccountName", label: "trnDr. AccountName" },

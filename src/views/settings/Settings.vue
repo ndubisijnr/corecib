@@ -179,7 +179,7 @@
                                                       'UPDATE'
                                                     )
                                                   " />
-                                                <i class="fas fa-edit"></i>
+                                                <i class="fas fa-edit" title="Update" style="color: white"></i>
                                               </label>
                                             </li>
                                           </ul>
@@ -732,6 +732,7 @@ export default {
       }
       this.preferenceData.preferenceAllowNotification = this.preferenceAllowNotification
     },
+
     togglePreferenceAction(){
       if(this.preferenceState === "create") StoreUtils.commit(StoreUtils.mutations.preference.updatePreferenceState, 'edit')
       StoreUtils.commit(StoreUtils.mutations.preference.updatePreferenceState, 'create')
@@ -743,6 +744,7 @@ export default {
       // this.updatePreferenceModel.preferenceStatus = this.togglePreference
       // StoreUtils.dispatch(StoreUtils.actions.preference.updatePreferenceStatus, this.updatePreferenceModel)
     },
+
     createPreference(){
       this.preferenceModal.preferenceFeeMargin = this.preferenceData.preferenceFeeMargin
       this.preferenceModal.preferenceCommissionMargin = this.preferenceData.preferenceCommissionMargin
@@ -755,11 +757,13 @@ export default {
         StoreUtils.dispatch(StoreUtils.actions.preference.createPreference).then()
       }
     },
+
     processInvite(){
       StoreUtils.dispatch(StoreUtils.actions.auth.inviteCustomer, this.inviteUserModel).then(() => {
         document.getElementById('modal-md').click()
       })
     },
+
     updateCloseEditFrom(value) {
       StoreUtils.commit(StoreUtils.mutations.auth.updateUserEditForm, value)
     },
@@ -784,7 +788,7 @@ export default {
       const vm = this;
       const selectedImage = e.target.files[0];
       this.createBase64Images(selectedImage, index, doc, action);
-      // console.log("Submit");
+      // console.log(selectedImage);
     },
     createBase64Images(fileObject, index, doc, action) {
       const img_reader = new FileReader();
@@ -863,7 +867,7 @@ export default {
       this.documentModel.document.documentDocumentTypeId = doc.documentTypeId;
       this.documentModel.document.documentName = doc.documentTypeName
       if (action === "UPDATE") {
-        this.progressBarArr[index].value = true;
+        // this.progressBarArr[index].value = true;
         // console.log("Conditions>> ", this.progressBarArr[index].value);
         this.documentModel.document.documentId = doc.documentId;
         StoreUtils.dispatch(
@@ -871,7 +875,7 @@ export default {
           this.documentModel
         );
       } else {
-        this.progressBarArr[index].value = true;
+        // this.progressBarArr[index].value = true;
         StoreUtils.dispatch(
           StoreUtils.actions.document.createDocument,
           this.documentModel

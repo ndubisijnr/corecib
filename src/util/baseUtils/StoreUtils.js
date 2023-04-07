@@ -109,7 +109,8 @@ class StoreUtils {
   static mutations = {
     transactions:{
       updateTransactions:"transactions/updateTransactions",
-      updateLoading:"transactions/updateLoading"
+      updateLoading:"transactions/updateLoading",
+      updateRefreshLoading:"transactions/updateRefreshLoading"
     },
 
     kycVerification:{
