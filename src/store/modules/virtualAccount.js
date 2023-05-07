@@ -4,15 +4,29 @@ import VirtualAccountResponse from "../../model/reponse/VirtualAccountResponse";
 import VirtualAccountRequest from "../../model/request/VirtualAccountRequest";
 import swal from "sweetalert2";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
+import Swal from "sweetalert2";
 
 export const state = {
   loading: false,
   virtualAccount: BaseResponse.list,
   virtualaccounttransaction:{},
   bankList:{},
-  virtualAccountCreateResponse:VirtualAccountResponse.createVirtualAccount
+  virtualAccountCreateResponse:VirtualAccountResponse.createVirtualAccount,
+  virtualAccountEditPayload:null
 
 }
+
+export const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-right',
+  showConfirmButton: false,
+  timer: 2000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
 
 export const getters = {}
 
@@ -26,6 +40,9 @@ export const mutations = {
   },
   updateVirtualAccount: (state, payload) => {
     state.virtualAccount = payload
+  },
+  updateVirtualAccountEditPayload: (state, payload) => {
+    state.virtualAccountEditPayload = payload
   },
   updateBankList: (state, payload) => {
     state.bankList = payload
@@ -54,6 +71,25 @@ export const actions = {
 
   },
 
+
+  editVirtualAccount: ({ commit, state }, payload = VirtualAccountRequest.editVirtualAccount) => {
+    commit("updateLoading", true)
+    return VirtualAccountService.callUpdateVirtualAccount(payload).then(response => {
+      let responseData = response.data
+      commit("updateLoading", false)
+      if (responseData.responseCode === "00") {
+        Toast.fire({text: responseData.responseMessage, icon: 'success'}).then()
+        StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount).then()
+      }else{
+        Toast.fire({text:responseData.responseMessage, icon:'error'})
+      }
+    }).catch(error => {
+        commit("updateLoading", false)
+        console.log(error)
+      })
+
+  },
+
   updateVirtualAccountCreate:({commit}, payload = VirtualAccountRequest.createVirtualAccount) => {
     commit("updateLoading", true)
     return VirtualAccountService.callCreateVirtualAccountApi(payload).then(response => {
@@ -63,10 +99,10 @@ export const actions = {
         commit("updateVirtualAccountCreate", responseData)
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets).then()
-        swal.fire({text:responseData.responseMessage, icon:'success'})
+        Toast.fire({text:responseData.responseMessage, icon:'success'})
       }else{
         commit("updateLoading", false)
-        swal.fire({text:responseData.responseMessage, icon:'error'})
+        Toast.fire({text:responseData.responseMessage, icon:'error'})
       }
     }).catch(error => {
       swal.fire({text:error, icon:'error'})

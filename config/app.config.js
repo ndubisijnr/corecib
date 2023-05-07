@@ -11,7 +11,7 @@ Example for Docker:
     window.__env.app = {
         title: "FBNDirect Portal",
         description: "FBNDirect Portal",
-        primaryColor: "#3F88C5",
+        primaryColor: "#413d52",
         primaryColorGradient:"linear-gradient(to bottom,#3F88Cd, #236395)",
         publicPath: "/home/",
         url: "https://dashboard.bizgem.io",
@@ -19,7 +19,8 @@ Example for Docker:
     };
     window.__env.api = {
         // baseUrl: "https://sandbox.bizgem.io",
-        baseUrl: "https://api.bizgem.io",
+        baseUrl: "https://y3am4bpi88.execute-api.eu-west-2.amazonaws.com/dev",
+        // baseUrl: "https://testdev.coralpay.com:9090/digipos/dev",
             timeout: 80000,
         imageUpload: "https://m2nz1o078e.execute-api.us-east-1.amazonaws.com/prod"
     };

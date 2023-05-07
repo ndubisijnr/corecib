@@ -1,10 +1,10 @@
 <template>
   <div>
-    <router-link to="/settings/settings">
-      <div class="myalert" v-if="layout === 'dashboard-layout' && currentOrganisation.organisationStatus == 'PENDING'">
-        <h3 class="text-white" > <b-icon-bell-fill/> &nbsp; You are currently only allowed to use bills payment APIs, kindly update your business information to access all our services.  </h3>
-      </div>
-    </router-link>
+<!--    <router-link to="/settings/settings">-->
+<!--      <div class="myalert" v-if="layout === 'dashboard-layout' && currentOrganisation.organisationStatus == 'PENDING'">-->
+<!--        <h3 class="text-white" > <b-icon-bell-fill/> &nbsp; You are currently only allowed to use bills payment APIs, kindly update your business information to access all our services.  </h3>-->
+<!--      </div>-->
+<!--    </router-link>-->
     <div class="session" v-if="layout === 'dashboard-layout' && isExpired">
       <h3 class="text-white" > <b-icon-bell-fill/> Your session was timed out please refresh this page to <span> re-authenticate </span></h3>
     </div>
@@ -12,7 +12,7 @@
     <auth-layout v-else></auth-layout>
 
     <add-new-business @closeBusinessForm="updateAddBusiness" :show-business-form="addBizForm"></add-new-business>
-    <reminder-modal @closeReminderForm="updateReminder" :show-reminder-form="isReminder"></reminder-modal>
+<!--    <reminder-modal @closeReminderForm="updateReminder" :show-reminder-form="isReminder"></reminder-modal>-->
   </div>
 </template>
 
@@ -25,11 +25,10 @@ import router from "@/router";
 import {mapState} from "vuex";
 import AddNewBusiness from "./components/form/AddNewBusiness";
 import BlockerLoader from "./components/BlockerLoader";
-import ReminderModal from "./components/form/ReminderModal";
 
 const default_layout = "default";
 export default {
-  components: {AuthLayout, DashboardLayout, AddNewBusiness,BlockerLoader,ReminderModal},
+  components: {AuthLayout, DashboardLayout, AddNewBusiness,BlockerLoader},
   data(){
     return{
       readPayoutAccountModel: AccountPayoutRequest.readAccountPayoutById,

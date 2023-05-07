@@ -2,7 +2,6 @@ import BillsPaymentRequest from "../../model/request/BillsPaymentRequest";
 import BillsPaymentResponse from "../../model/reponse/BillsPaymentResponse";
 import BillsPaymentService from "../../service/BillsPaymentService";
 import Toast from "../../../toastNotification";
-import swal from "sweetalert2";
 import Swal from "sweetalert2";
 import StoreUtils from "@/util/baseUtils/StoreUtils";
 
@@ -74,7 +73,7 @@ export const actions = {
              commit("updateCategories", responseData)
          }else{
              commit("updateCategoriesLoading", false)
-             Swal.fire({
+             Toast.fire({
                  title: 'Session timed out',
                  html: 'Please re-authenticate',
                  icon:"info",
@@ -98,6 +97,7 @@ export const actions = {
          }
      })
     },
+
     updateBillers:({commit}, payload = BillsPaymentRequest.readBiller) => {
         commit("updateBillersLoading", true)
         return BillsPaymentService.callReadBillersApi(payload).then((response) => {
@@ -108,7 +108,7 @@ export const actions = {
             }
             else{
                 commit("updateBillersLoading", false)
-                Swal.fire({
+                Toast.fire({
                     title: 'Session timed out',
                     html: 'Please re-authenticate',
                     icon:"info",
@@ -142,7 +142,7 @@ export const actions = {
             }
             else{
                 commit("updateBillersLoading", false)
-                Swal.fire({
+                Toast.fire({
                     title: 'Session timed out',
                     html: 'Please re-authenticate',
                     icon:"info",

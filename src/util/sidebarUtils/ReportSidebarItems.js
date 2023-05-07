@@ -33,11 +33,11 @@ export default
             path:'/organisation/transactions'
         },
 
-        {
-            name:'Payout',
-            icon:'fas fa-chart-line',
-            path:'/reports/payout-transactions'
-        },
+        // {
+        //     name:'Payout',
+        //     icon:'fas fa-chart-line',
+        //     path:'/reports/payout-transactions'
+        // },
 
         {
             name:'Virtual Accounts',
@@ -49,10 +49,15 @@ export default
             icon:'fa fa-wallet',
             path:'/wallet'
         },
+        // {
+        //     name:'KYC Verification',
+        //     icon:'fas fa-check-circle',
+        //     path:'/kyc-verifications'
+        // },
         {
-            name:'KYC Verification',
+            name:'Fund Transfer',
             icon:'fas fa-check-circle',
-            path:'/kyc-verifications'
+            path:'/fund-transfer'
         },
 
 

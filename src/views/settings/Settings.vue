@@ -230,51 +230,51 @@
                 </div>
               </el-tab-pane>
 
-              <el-tab-pane id="tab-2" :key="2" label="User Management">
-                <div class="box-card">
-                  <div class="pl-4 pr-4 pt-2" style="display: flex;justify-content: space-between;margin-top: 2%">
-                  <div>
-                      <h3 class="text-light">Users</h3>
-                  </div>
-                  </div>
-                  <BaseTable
-                    :items="readCustomers.data"
-                    :fields="customerFields"
-                  />
-                  <b-modal id="modal-md" hide-backdrop size="sm" hide-footer title="Invite A User">
-                  <form @submit.prevent="processInvite" style="align-items:center;justify-content:center;display: flex;flex-direction: column">
-                    <b-form-group label="User Email">
-                      <!-- <div style="position:absolute;top:-10px;" class="bg-info small text-white p-1">Invite a user and assign roles to users</div>-->
-                      <b-form-input placeholder="useremail@anymail.com" required v-model="inviteUserModel.customerEmail" type="email" style="width: 100%"></b-form-input>
-                    </b-form-group>
-                    <b-form-group label="User Role">
-                        <base-input>
-                          <el-select class="select-danger" filterable placeholder="Select user role" required  v-model="inviteUserModel.customerRole">
-                            <el-option v-if="readOrganisationRoles.length > 1" v-for="(item, index) in readOrganisationRoles" :key="index" :value="item.roleName" :label="item.roleName" class="select-danger"></el-option>
-                          </el-select>
-                        </base-input>
-                    </b-form-group>
-                    <b-form-group>
-                      <b-button :disabled="loadingOtp"  :style="{backgroundColor:primaryColor,color:'#fff', width:'100%'}" type="submit">
-                        {{ loadingOtp ? "Please wait" : "Proceed" }}</b-button>
-                    </b-form-group>
-                  </form>
-                </b-modal>
-                  <edit-organisation-user :show-organisation-user-form="showUserEditForm"  @closeUserForm="updateCloseEditFrom"/>
-                </div>
-                <div class="box-card">
-                  <div class="pl-4 pr-4 pt-2" style="display: flex;justify-content: space-between;margin-top: 2%">
-                    <div>
-                      <h3 class="text-light">Pending Invites</h3>
-                    </div>
-                    <b-button :style="{backgroundColor:primaryColor,color:'#fff'}" v-b-modal.modal-md> Invite User</b-button>
-                  </div>
-                  <BaseTable
-                    :items="readAllInvites"
-                    :fields="inviteFields"
-                  />
-                </div>
-              </el-tab-pane>
+<!--              <el-tab-pane id="tab-2" :key="2" label="User Management">-->
+<!--                <div class="box-card">-->
+<!--                  <div class="pl-4 pr-4 pt-2" style="display: flex;justify-content: space-between;margin-top: 2%">-->
+<!--                  <div>-->
+<!--                      <h3 class="text-light">Users</h3>-->
+<!--                  </div>-->
+<!--                  </div>-->
+<!--                  <BaseTable-->
+<!--                    :items="readCustomers.data"-->
+<!--                    :fields="customerFields"-->
+<!--                  />-->
+<!--                  <b-modal id="modal-md" hide-backdrop size="sm" hide-footer title="Invite A User">-->
+<!--                  <form @submit.prevent="processInvite" style="align-items:center;justify-content:center;display: flex;flex-direction: column">-->
+<!--                    <b-form-group label="User Email">-->
+<!--                      &lt;!&ndash; <div style="position:absolute;top:-10px;" class="bg-info small text-white p-1">Invite a user and assign roles to users</div>&ndash;&gt;-->
+<!--                      <b-form-input placeholder="useremail@anymail.com" required v-model="inviteUserModel.customerEmail" type="email" style="width: 100%"></b-form-input>-->
+<!--                    </b-form-group>-->
+<!--                    <b-form-group label="User Role">-->
+<!--                        <base-input>-->
+<!--                          <el-select class="select-danger" filterable placeholder="Select user role" required  v-model="inviteUserModel.customerRole">-->
+<!--                            <el-option v-if="readOrganisationRoles.length > 1" v-for="(item, index) in readOrganisationRoles" :key="index" :value="item.roleName" :label="item.roleName" class="select-danger"></el-option>-->
+<!--                          </el-select>-->
+<!--                        </base-input>-->
+<!--                    </b-form-group>-->
+<!--                    <b-form-group>-->
+<!--                      <b-button :disabled="loadingOtp"  :style="{backgroundColor:primaryColor,color:'#fff', width:'100%'}" type="submit">-->
+<!--                        {{ loadingOtp ? "Please wait" : "Proceed" }}</b-button>-->
+<!--                    </b-form-group>-->
+<!--                  </form>-->
+<!--                </b-modal>-->
+<!--                  <edit-organisation-user :show-organisation-user-form="showUserEditForm"  @closeUserForm="updateCloseEditFrom"/>-->
+<!--                </div>-->
+<!--                <div class="box-card">-->
+<!--                  <div class="pl-4 pr-4 pt-2" style="display: flex;justify-content: space-between;margin-top: 2%">-->
+<!--                    <div>-->
+<!--                      <h3 class="text-light">Pending Invites</h3>-->
+<!--                    </div>-->
+<!--                    <b-button :style="{backgroundColor:primaryColor,color:'#fff'}" v-b-modal.modal-md> Invite User</b-button>-->
+<!--                  </div>-->
+<!--                  <BaseTable-->
+<!--                    :items="readAllInvites"-->
+<!--                    :fields="inviteFields"-->
+<!--                  />-->
+<!--                </div>-->
+<!--              </el-tab-pane>-->
 
               <el-tab-pane id="tab-8" :key="8" name="eight" label="Change Password">
                 <div class="settings-wrap">
@@ -322,11 +322,8 @@
                     request headers must be passed with your newly generated keys
                     <template #modal-footer="{ cancel }">
                       <!-- Emulate built in modal footer ok and cancel button actions -->
-                      <b-button size="sm" variant="success" @click="regenerateApiKey()" :disabled="apikeyloading">
+                      <b-button size="md"  @click="regenerateApiKey()" :disabled="apikeyloading">
                         {{ apikeyloading ? 'Regenerating..' : 'Proceed'}}
-                      </b-button>
-                      <b-button size="sm" variant="danger" @click="cancel()">
-                        Cancel
                       </b-button>
                       <!-- Button with custom close trigger value -->
                     </template>

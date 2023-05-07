@@ -63,16 +63,16 @@ export default {
       ],
       items: [],
       fields: [
-        { key: "accountId", label: "accountId" },
-        { key: "accountNumber", label: "accountNumber" },
-        { key: "accountName", label: "accountName" },
+        // { key: "accountId", label: "accountId" },
+        { key: "virtualAccountNumber", label: "virtualAccountNumber" },
+        { key: "virtualAccountName", label: "virtualAccountName" },
         {
-          key: "channelBankCode",
-          label: "channelBankCode",
+          key: "virtualAccountBankCode",
+          label: "virtualAccountBankCode",
         },
-        { key: "channelBankName", label: "channelBankName" },
-        { key: "accountParent", label: "accountParent" },
-        { key: "accountStatus", label: "accountStatus" },
+        { key: "virtualAccountBankName", label: "virtualAccountBankName" },
+        { key: "virtualAccountParent", label: "virtualAccountParent" },
+        // { key: "accountStatus", label: "accountStatus" },
         { key: "virtualAccountactions", label: "actions" },
       ],
     };
@@ -106,7 +106,9 @@ export default {
       return { height: "150px" };
     },
   },
-  mounted() {},
+  mounted() {
+    StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount)
+  },
 };
 </script>
 <style scoped>
@@ -140,7 +142,7 @@ export default {
 }
 
 .export-ex{
-  background-color:#3F88C5;
+  background-color:#413d52;
   color:white;
   /*margin: 2px;*/
   /*width:200px;*/

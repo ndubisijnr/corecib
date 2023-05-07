@@ -193,7 +193,7 @@ export default {
 <style scoped>
 
 .active-page{
-  background-color: #236395;
+  background-color: #faa831;
   /*background-color: rgba(35, 99, 149, 0.37);*/
   /*background-color: white;*/
   box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);

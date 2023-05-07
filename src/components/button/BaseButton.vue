@@ -15,7 +15,7 @@
 
 <style scoped>
 button{
-  background-color: #3F88C5;
+  background-color: #413d52;
   color: white;
   width: 100%;
 }

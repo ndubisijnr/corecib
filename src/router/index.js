@@ -17,6 +17,7 @@ import notFound from "./routes/not-found-route"
 import kycRoutes from "../router/routes/kyc-routes"
 import userManagementRoute from "../router/routes/user-management"
 import transactions from "./routes/transactions";
+import fundTransfer from "./routes/fund-transfer"
 
 
 Vue.use(VueRouter);
@@ -36,7 +37,7 @@ VueRouter.prototype.absUrl = function(url, newTab = true) {
 
 export const baseRoutes = [];
 
-export const routes = baseRoutes.concat(userManagementRoute,transactions,kycRoutes,payBillsRoutes,settingsRoutes,walletRoutes,virtualAccountRoutes,reportRoutes,dashRoutes,authRoutes,notFound);
+export const routes = baseRoutes.concat(userManagementRoute,transactions,kycRoutes,payBillsRoutes,settingsRoutes,fundTransfer,walletRoutes,virtualAccountRoutes,reportRoutes,dashRoutes,authRoutes,notFound);
 
 const router = new VueRouter({
     routes,

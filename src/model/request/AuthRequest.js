@@ -38,20 +38,20 @@ class AuthenticationRequest {
 
     }
     static login = {
-        deviceId: null,
-        deviceName: null,
-        pushId: null,
-        source: null,
-        devicePlatform: null,
-        ipAddress: null,
-        latitude: null,
-        longitude: null,
-        password: null,
-        username: null,
+        deviceId:null,
+        deviceName:null,
+        pushId:null,
+        source:null,
+        devicePlatform:null,
+        ipAddress:null,
+        latitude:null,
+        longitude:null,
+        password:null,
+        username:null,
         status:null,
-        profileStatus: null,
-        countryCode: null,
-        idToken: null
+        profileStatus:null,
+        countryCode:null,
+        idToken:null,
     }
     static createCustomerRequest = {
         customerPhone:null,

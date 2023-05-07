@@ -2,7 +2,6 @@ import AccountPayoutRequest from "../../model/request/AccountPayoutRequest"
 import AccountPayoutResponse from "../../model/reponse/AccountPayoutResponse"
 import AccountPayoutService from "../../service/AccountPayoutService"
 import Swal from "sweetalert2";
-import router from "../../router";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 const Toast = Swal.mixin({

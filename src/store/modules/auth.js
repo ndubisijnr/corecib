@@ -22,7 +22,7 @@ const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
   showConfirmButton: false,
-  timer: 3000,
+  timer: 5000,
   timerProgressBar: true,
   didOpen: (toast) => {
     toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -117,7 +117,7 @@ export const actions = {
         commit("updateScreen", 'otp')
       }
       else {
-        Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
+        Toast.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
       }
     }).catch((error) => {
       commit("updateLoading", false);
@@ -130,10 +130,10 @@ export const actions = {
       let responseData = response.data;
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        Swal.fire({ text: responseData.responseMessage, icon: 'success', })
+        Toast.fire({ text: responseData.responseMessage, icon: 'success', })
           .then(() => { router.push({ name: "Logon" }) })
       } else {
-        Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
+        Toast.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
       }
     }).catch((error) => {
       commit("updateLoading", false);
@@ -141,17 +141,17 @@ export const actions = {
   },
 
   createCustomer: ({ commit }, payload = AuthenticationRequest.createCustomerRequest) => {
-    console.log("Action")
-    console.log(payload)
+    // console.log("Action")
+    // console.log(payload)
     commit("updateLoading", true)
     return CustomerService.callCreateCustomerApi(payload).then(response => {
       let responseData = response.data;
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        Swal.fire({ text: "You have successfully accepted the invite from your organisation", icon: 'success', })
+        Toast.fire({ text: "You have successfully accepted the invite from your organisation", icon: 'success', })
           .then(() => { router.push({ name: "Logon" }) })
       } else {
-        Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
+        Toast.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
       }
     }).catch((error) => {
       commit("updateLoading", false);
@@ -159,19 +159,19 @@ export const actions = {
   },
 
   validateLink: ({ commit }, payload = AuthenticationRequest.validateCustomerLinkRequest) => {
-    console.log("Action")
-    console.log(payload)
+    // console.log("Action")
+    // console.log(payload)
     commit("updateLoading", true)
     return CustomerService.callValidateLinkApi(payload).then(response => {
       let responseData = response.data;
       commit("updateLoading", false)
       if (responseData.responseCode === "00") {
-        Swal.fire({ text: responseData.responseMessage, icon: 'success', })
+        Toast.fire({ text: responseData.responseMessage, icon: 'success', })
           .then(() => { router.push({ name: "Logon" }) })
       }else if (responseData.responseCode === "01") {
          router.push({ name: "SignUpUser" });
       } else {
-        Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {
+        Toast.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {
           router.push({ name: "Logon" })
         })
       }
@@ -192,7 +192,7 @@ export const actions = {
             commit("updateUserInfo", responseData);
             StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationByUserId)
         }
-        else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {
+        else Toast.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {
           commit("updateLoading", false)
         })
       }).catch((error) => {
@@ -218,18 +218,19 @@ export const actions = {
         if (router.currentRoute.meta.layout === 'auth') router.push({ name: "GetStarted" }).then(() => { })
             commit("updateUserInfo", responseData)
             commit("updateAllOrganisationList",responseData.organisations)
+
             StoreUtils.dispatch(StoreUtils.actions.preference.readPreferenceById).then()
 
-            StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
+            // StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
 
             //read invites
-            StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
+            // StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
 
-            StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc)
+            // StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc)
 
 
             //read Roles
-            StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
+            // StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
 
             StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
 
@@ -308,7 +309,7 @@ export const actions = {
       if (responseData.responseCode === "00") {
         commit("updatePasswordResetScreen", 'otp')
       }
-      else Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
+      else Toast.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
     }).catch((error) => {
       commit("updateLoading", false);
     });
@@ -324,7 +325,7 @@ export const actions = {
         router.push({ name: "Logon" }).then(() => { })
       }
       else {
-        Swal.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
+        Toast.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => { })
       }
     }).catch((error) => {
       commit("updateLoading", false);
@@ -502,18 +503,18 @@ export const actions = {
           StoreUtils.dispatch(StoreUtils.actions.preference.readPreferenceById)
 
           //read invites
-          StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
+          // StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
 
-          StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
+          // StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
 
           //read Roles
-          StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
+          // StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
 
           //read disputes
           StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes);
 
           //read kyc
-          StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc).then()
+          // StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc).then()
 
 
         //Call in read documents actions
@@ -563,7 +564,7 @@ export const actions = {
         })
         StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites)
       }else{
-        Swal.fire({text:responseData.responseMessage, icon:"error"})
+        Toast.fire({text:responseData.responseMessage, icon:"error"})
         Object.keys(OrganisationRequest.inviteCustomer).forEach(key => {
           OrganisationRequest.inviteCustomer[key] = null
         })

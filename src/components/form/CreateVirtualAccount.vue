@@ -3,30 +3,30 @@
     <modal-1 :show="showAccountForm && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
       <div class="card-head">
         <div class="d-flex justify-content-between">
-          <h4 style="color:#3F88C5;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Create Virtual Account</h4>
+          <h4 style="color:#FFFFFF;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Create Virtual Account</h4>
           <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Create Virtual Account"></button>
         </div>
       </div>
-      <div class="card-body w-100" v-if="sortType">
-        <div class="p-1" style="background:#FEE1E1;font-weight: lighter; font-size: 5px;margin-bottom:15px">
-        <span style="font-weight: bolder; font-size: 14px;" v-if="!sortType" class="d-flex">
-          <span style="font-size: 20px;">💭</span>
-          <span class="small">The virtual account can be used to receive funds via bank transfer from any financial institution. All funds sent via the created virtual account will be settled in the wallet address provided.</span>
-        </span>
-          <span style="font-weight: bolder; font-size: 14px;" v-if="sortType" class="d-flex">
-          <span style="font-size: 20px;">💭</span>
-          <span class="small text-dark">Your intended virtual account will be tied to the wallet address of  the account number provided.</span>
-          <b-icon-x-circle-fill  style="color: rgba(255,0,0,0.54);cursor: pointer"/>
-        </span>
-        </div>
-        <form @submit.prevent="readSingleWallet">
-          <b-tooltip target="tooltip-target-1" triggers="hover">Your intended virtual account will be tied to the wallet address of the account number provided.</b-tooltip>
-<!--          <label>Wallet Account Number</label>-->
-          <input type="number" placeholder="Wallet account number" class="form-control mb-2" required v-model="readWallet.accountNumber"/>
-          <div class="text-right">
-            <b-button type="submit" :disabled="loading" :style="{backgroundColor:primaryColor,border:'none',color:'white'}">{{loading ? 'Checking' : 'Next'}} <span :class="{'spinner-border':loading}"></span> </b-button>
-          </div>
-        </form>
+      <div class="card-body w-100" >
+<!--        <div class="p-1" style="background:#FEE1E1;font-weight: lighter; font-size: 5px;margin-bottom:15px">-->
+<!--&lt;!&ndash;        <span style="font-weight: bolder; font-size: 14px;" v-if="!sortType" class="d-flex">&ndash;&gt;-->
+<!--&lt;!&ndash;          <span style="font-size: 20px;">💭</span>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span class="small">The virtual account can be used to receive funds via bank transfer from any financial institution. All funds sent via the created virtual account will be settled in the wallet address provided.</span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </span>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span style="font-weight: bolder; font-size: 14px;" v-if="sortType" class="d-flex">&ndash;&gt;-->
+<!--&lt;!&ndash;          <span style="font-size: 20px;">💭</span>&ndash;&gt;-->
+<!--&lt;!&ndash;          <span class="small text-dark">Your intended virtual account will be tied to the wallet address of  the account number provided.</span>&ndash;&gt;-->
+<!--&lt;!&ndash;          <b-icon-x-circle-fill  style="color: rgba(255,0,0,0.54);cursor: pointer"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </span>&ndash;&gt;-->
+<!--        </div>-->
+<!--        <form @submit.prevent="readSingleWallet">-->
+<!--          <b-tooltip target="tooltip-target-1" triggers="hover">Your intended virtual account will be tied to the wallet address of the account number provided.</b-tooltip>-->
+<!--&lt;!&ndash;          <label>Wallet Account Number</label>&ndash;&gt;-->
+<!--          <input type="number" placeholder="Wallet account number" class="form-control mb-2" required v-model="readWallet.accountNumber"/>-->
+<!--          <div class="text-right">-->
+<!--            <b-button type="submit" :disabled="loading" :style="{backgroundColor:primaryColor,border:'none',color:'white'}">{{loading ? 'Checking' : 'Next'}} <span :class="{'spinner-border':loading}"></span> </b-button>-->
+<!--          </div>-->
+<!--        </form>-->
 <!--        <base-input label="Select Wallet">-->
 <!--          <el-select @change="sortBy()" id="selectOpt" name="sortBy" class="select-danger" filterable placeholder="Wallet Info" v-model="walletValue" required-->
 <!--                     style="width: 100%">-->
@@ -34,79 +34,75 @@
 <!--          </el-select>-->
 <!--        </base-input>-->
       </div>
-      <div v-else>
+      <div >
         <div class="modal-body">
             <b-form class="" @submit.prevent="createAccount">
               <div class="input-group mb-3 row">
                 <div class="col">
-                  <label>Wallet Name</label>
-                  <input type="text" class="form-control" placeholder="First Name"  :value="wallets.accountName" required disabled>
+                  <label class="small">VirtualAccountName</label>
+                  <input type="text" class="form-control" placeholder="VirtualAccountName"  v-model="CreateVirtualAccountModel.virtualAccountName" required >
                 </div>
                 <div class="col">
-                  <label>Account Number</label>
-                  <input type="text" class="form-control" placeholder="First Name"  :value="wallets.accountNumber" required disabled>
+                  <label class="small">VirtualAccountParent</label>
+                  <input type="text" @focusin="isFocusedVirtualAccountParent = true " @focusout="isFocusedVirtualAccountParent = false" class="form-control" placeholder="virtualAccountParent"  v-model="CreateVirtualAccountModel.virtualAccountParent">
+                  <span class="small text-warning">{{isFocusedVirtualAccountParent ? 'Optional(default is your business account)' : null}}</span>
                 </div>
               </div>
-              <div v-if="next==false">
-              <div class="input-group mb-3">
-                <div class="w-100 mb-3">
-                  <label>First Name<span style="font-size: 20px;cursor:pointer" @click="showinfo()">💭</span> </label>
-                  <input type="text" class="form-control w-100" placeholder="First Name" id="fname" v-model="CreateVirtualAccountModel.firstName" required>
+              <div class="input-group mb-3 row">
+                <div class="col">
+                  <label class="small">VirtualAccountBankCode</label>
+                  <input type="text" class="form-control" placeholder="virtualAccountBankCode" value="090365" readonly>
                 </div>
-                <div class="w-100">
-                  <label>Last Name <span style="font-size: 20px;cursor:pointer" @click="showinfo()">💭</span></label>
-                  <input type="text" class="form-control w-100" placeholder="Last Name" id="lname"  v-model="CreateVirtualAccountModel.lastName" required>
-                </div>
-              </div>
-              <div class="mb-3">
-                <div class="">
-                  <label>BVN</label>
-                  <input type="text" class="form-control" placeholder="BVN" id="bvn" v-model="CreateVirtualAccountModel.bvn">
+                <div class="col">
+                  <label class="small">VirtualAccountAmountControl</label>
+                  <input type="text" @focusin="isFocusedVirtualAccountAmountControl = true " @focusout="isFocusedVirtualAccountAmountControl = false" class="form-control" placeholder="virtualAccountAmountControl"  v-model="CreateVirtualAccountModel.virtualAccountAmountControl">
+                  <span class="small text-warning">{{isFocusedVirtualAccountAmountControl ? 'Optional(default is VARIABLE) values can be VARIABLE, GREATER, EXACT, LESSER' : null}}</span>
                 </div>
               </div>
-              </div>
+              <div class="input-group mb-3 row">
+                <div class="col">
+                  <label class="small">VirtualAccountExtraData</label>
+                  <input type="text" class="form-control" placeholder="virtualAccountExtraData"  v-model="CreateVirtualAccountModel.virtualAccountExtraData">
+                </div>
+                <div class="col">
+                  <label class="small">VirtualAccountValidTime</label>
+                  <input @focusin="isFocusedVirtualAccountValidTime = true " @focusout="isFocusedVirtualAccountValidTime = false" type="text" class="form-control" placeholder="virtualAccountValidTime"  v-model="CreateVirtualAccountModel.virtualAccountValidTime">
+                  <span class="small text-warning">{{isFocusedVirtualAccountValidTime ? 'Optional(default is 1443 minutes)' : null}}</span>
 
-              <div v-if="next==true">
-              <div>
-                <div class="input-group mb-3">
-                  <div class="w-100 mb-2">
-                    <label>Date Of Birth</label>
-                    <input type="date"  class="form-control" v-model="CreateVirtualAccountModel.dob" placeholder="Date Of Birth" aria-label="Server">
-                  </div>
-                  <div class="w-100">
-                    <label>Phone Number</label>
-                    <div class="d-flex">
-                      <vue-country-code  @onSelect="onSelect" :preferredCountries="['ng', 'us', 'gb']" style="height: 45px" class=""></vue-country-code>
-                      <input type="tel"  class="form-control" placeholder="Phone Number" aria-label="Server" required v-model="CreateVirtualAccountModel.phoneNumber">
-                    </div>
-                  </div>
                 </div>
               </div>
+              <div>
+<!--              <div>-->
+<!--                <div class="input-group mb-3">-->
+<!--                  <div class="w-100 mb-2">-->
+<!--                    <label>Date Of Birth</label>-->
+<!--                    <input type="date"  class="form-control" v-model="CreateVirtualAccountModel.dob" placeholder="Date Of Birth" aria-label="Server">-->
+<!--                  </div>-->
+<!--                  <div class="w-100">-->
+<!--                    <label>Phone Number</label>-->
+<!--                    <div class="d-flex">-->
+<!--                      <vue-country-code  @onSelect="onSelect" :preferredCountries="['ng', 'us', 'gb']" style="height: 45px" class=""></vue-country-code>-->
+<!--                      <input type="tel"  class="form-control" placeholder="Phone Number" aria-label="Server" required v-model="CreateVirtualAccountModel.phoneNumber">-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
               <div class="input-group mb-3">
-                <div class="w-100 mb-2">
-                  <label>Address</label>
-                  <input type="text" placeholder="Address" class="form-control"  v-model="CreateVirtualAccountModel.address"/>
-                </div>
                 <div class="w-100">
-                  <label>Gender</label>
-                  <select  class="form-select" v-model="CreateVirtualAccountModel.gender">
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                  <label class="small">Virtual AccountType</label>
+                  <select  class="form-select" v-model="CreateVirtualAccountModel.virtualAccountType">
+                    <option value="REUSABLE">REUSABLE</option>
+                    <option value="DISPOSABLE">DISPOSABLE</option>
                   </select>
                 </div>
               </div>
               </div>
               <div>
-                <div class="d-flex">
-                  <b-button :disabled="loadingACC" @click="prev()" v-if="next==true" :style="{backgroundColor:primaryColor,color: 'white',width: '100%'}">Previous</b-button>
-                  <b-button  v-if="next==true" type="submit"  :disabled="loadingACC" :style="{backgroundColor:primaryColor,color: 'white',width: '100%'}"><span :class="{'spinner-border':loadingACC}"></span> {{loadingACC ? 'Creating': 'Create'}}</b-button>
-                </div>
-                <b-button  @click="nex()" v-if="next==false"  :style="{backgroundColor:primaryColor,color: 'white', width: '100%'}">Next</b-button>
+                <b-button type="submit"  :disabled="loadingACC" :style="{backgroundColor:primaryColor,color: 'white',width: '100%'}"><span :class="{'spinner-border':loadingACC}"></span> {{loadingACC ? 'Creating': 'Create'}}</b-button>
               </div>
             </b-form>
           </div>
         </div>
-
     </modal-1>
   </div>
 </template>
@@ -135,6 +131,9 @@ export default {
       readWallet:WalletRequest.retrieveWallet,
       next: false,
       primaryColor:window.__env.app.primaryColor,
+      isFocusedVirtualAccountParent:false,
+      isFocusedVirtualAccountAmountControl:false,
+      isFocusedVirtualAccountValidTime:false,
 
 
     }
@@ -175,6 +174,7 @@ export default {
     prev(){
       this.next = false
     },
+
     showinfo(){
       swal.fire(
       {text:"ℹ️ Please provide the first name and Last name of the intended virtual account bearer.",
@@ -197,13 +197,14 @@ export default {
       console.log(this.selectedCurrency)
       document.getElementById('fhdfd').innerHTML
     },
+
     readSingleWallet(){
       StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateWallet,this.readWallet)
       this.next = false
     },
+
     createAccount(){
-      this.CreateVirtualAccountModel.channelBankCode= "090110"
-      this.CreateVirtualAccountModel.accountParent = this.readWallet.accountNumber
+      this.CreateVirtualAccountModel.channelBankCode= "090365"
       StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccountCreate,this.CreateVirtualAccountModel).then(() => {
         Object.keys(this.CreateVirtualAccountModel).forEach(key => {
           this.CreateVirtualAccountModel[key] = null
@@ -279,12 +280,16 @@ export default {
 }
 
 .card-head{
-  background-color: #D7E6F3;
   color: white;
+  background-color: #413d52;
 }
 
 .p-1{
   color: #3F88C5;
+}
+
+.btn-close{
+  background-color: #FFFFFF;
 }
 
 </style>

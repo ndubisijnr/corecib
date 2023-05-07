@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
 
       <!--------- initiate enrolment ------->
@@ -7,10 +7,11 @@
         <form class="form-login" role="form" @submit.prevent="handleSubmit(onInitiateEnrollment())"
         v-if="screen == 'register'">
         <div class="text-center">
-          <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
+          <a href="#">
+            <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>
         </div>
         <div class="">
-          <h4 class="complete-enrollment-h4">Create A Business Account</h4>
+          <h4 class="complete-enrollment-h4">Sign Up</h4>
           <div class="form-floating mb-3">
             <base-input label="Country">
               <el-select class="select-danger w-100" filterable placeholder="Country" v-model="initiateModel.customerCountry"
@@ -79,8 +80,8 @@
         <form class="form-login" role="form" v-if="screen == 'otp'"
         @submit.prevent="handleSubmit(onCompleteEnrollment())">
         <div class="text-center">
-          <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
-        </div>
+          <a href="#">
+            <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>        </div>
         <div>
           <h4 class="complete-enrollment-h4">Complete Registration.</h4>
           <div class="form-floating mb-3">
@@ -88,7 +89,7 @@
               style="font-size:30px; padding-left:10px;letter-spacing:7px;" name="email"
               placeholder="Enter Your OTP Number" v-model="completeModel.customerOtp" required />
             <label> Enter Your OTP </label>
-            <span v-if="timerCount > 0" class="m-2"> {{ timerCount }} secs left </span>
+            <span v-if="timerCount > 0" class="m-2"> resend otp in {{ timerCount }} secs </span>
             <h5 style="cursor: pointer" @click="resendOtp()" v-if="timerCount === 0" class="m-2" id="otp"><i
                 class="fas fa-redo"></i> Resend OTP </h5>
           </div>

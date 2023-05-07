@@ -1,11 +1,12 @@
 <template>
-  <base-nav
+  <div class="bottom">
+    <base-nav
     container-classes="container-fluid"
     class="navbar-top border-bottom navbar-expand"
     :class="{ 'nav-bar-head': type === 'default' }"
     :style="isdarkMode === 'false' ? {backgroundColor:'#FFFFFF'}:{backgroundColor:'#181818'}"
   >
-    <div class="mr-5" >
+    <div class="mr-5 nav-bottom">
       <div
         class="sidenav-toggler d-none d-xl-block"
         :class="{ active: !$sidebar.isMinimized }"
@@ -83,7 +84,9 @@
         </div>
       </base-dropdown>
     </ul>
+
   </base-nav>
+  </div>
 </template>
 <script>
 import { BaseNav } from "@/components";
@@ -211,6 +214,11 @@ export default {
   padding: 0;
   border-bottom: solid 2px;
 
+}
+
+.bottom{
+  border-bottom-color:#3F88C5;
+  background:red;
 }
 
 /*  */

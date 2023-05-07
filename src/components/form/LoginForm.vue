@@ -2,11 +2,11 @@
   <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
     <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(onSubmit)">
       <div class="text-center">
-        <a href="https://bizgem.io/"> 
-        <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>  
+        <a href="#">
+        <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>
       </div>
       <div class="">
-      <h4 class="login-h4">Sign in to continue to BizGem</h4>
+      <h4 class="login-h4">Sign in to continue</h4>
       <div class="form-floating mb-3">
         <input type="email" class="form-control" name="email" placeholder="businessname@gmail.com" v-model="model.username" required/>
         <label >Email address</label>
@@ -17,13 +17,12 @@
         <i class="fas fa-eye" style=" position: absolute; right: 30px; top: 25px; cursor: pointer;" id="eye" @click="hide$show()"></i>
       </div>
       <div class="login-footer">
-          <div class="text-center">
-          <h5 @click="forgotPassword()" style="cursor: pointer;text-decoration: underline">Forgot Your Password?</h5>
-          <h5 class="text-dark mt-1" @click="signUp()" style="cursor: pointer;text-decoration: underline">New To BizGem? Create Account</h5>
-        </div>
-
         <button id="submitBtn" class="btn-login" native-type="submit" :disabled="loading">{{loading ? 'Loading..' : 'Login in'}} <span :class="{ 'spinner-border': loading }"></span></button>
       </div>
+        <div class="text-center mt-3">
+          <h5 @click="forgotPassword()" style="cursor: pointer;text-decoration: underline">Forgot Your Password?</h5>
+          <h5 class="text-dark mt-1" @click="signUp()" style="cursor: pointer;text-decoration: underline">Create An Account</h5>
+        </div>
       </div>
     </form>
   </validation-observer>
@@ -124,8 +123,9 @@ export default {
 
 
 .btn-login {
-  width: 132px;
-  background-color:#3F88C5;
+  width: 100%;
+  /*background-color:#faa831;*/
+  background-color:#413d52;
   border-radius: 5px;
   border: none;
   color: white;

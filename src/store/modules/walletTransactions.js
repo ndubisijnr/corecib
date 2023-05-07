@@ -102,12 +102,12 @@ updateCreatedWallet: ({ commit, state }, payload = createWalletRequest.createWal
       if (responseData.responseCode === "00") {
         commit("updateLoading", false)
         commit("updateCreatedWallet", responseData)
-        Swal.fire({text:responseData.responseMessage, icon:"success"}).then()
+        Toast.fire({text:responseData.responseMessage, icon:"success"}).then()
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
         StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets).then()
       }else{
         commit("updateLoading", false)
-        Swal.fire({text:responseData.responseMessage, icon:"error"}).then()
+        Toast.fire({text:responseData.responseMessage, icon:"error"}).then()
       }
     }).catch(error => {
       commit("updateLoading", false)
@@ -181,11 +181,11 @@ updateCreatedWallet: ({ commit, state }, payload = createWalletRequest.createWal
         commit("updateWalletState", 'second')
       }else{
         commit("updateRetrieveLoading", false)
-        Swal.fire({text:responseData.responseMessage, icon:"error"})
+        Toast.fire({text:responseData.responseMessage, icon:"error"})
       }
     }).catch(error => {
       commit("updateRetrieveLoading", false)
-      Swal.fire({text:error, icon:"error"})
+      Toast.fire({text:error, icon:"error"})
 
     })
 

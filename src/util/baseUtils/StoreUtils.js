@@ -8,6 +8,13 @@ class StoreUtils {
       filterTransactions:"transactions/filterTransactions"
     },
 
+    fundTransfer:{
+      readTransactions:"fundTransfer/readTransactions",
+      callNameEnquiry:"fundTransfer/callNameEnquiry",
+      fundTransfer:"fundTransfer/fundTransfer"
+
+    },
+
     kycVerification: {
       UpdateCorporateAffairs:"kycVerification/UpdateCorporateAffairs",
       UpdateNationalIdentity:"kycVerification/UpdateNationalIdentity",
@@ -68,7 +75,8 @@ class StoreUtils {
       updateVirtualAccount: "virtualAccount/updateVirtualAccount",
       updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions",
       updateReadBankList:"virtualAccount/updateReadBankList",
-      updateVirtualAccountCreate:"virtualAccount/updateVirtualAccountCreate"
+      updateVirtualAccountCreate:"virtualAccount/updateVirtualAccountCreate",
+      editVirtualAccount:"virtualAccount/editVirtualAccount"
     },
 
     walletTransactions: {
@@ -113,6 +121,18 @@ class StoreUtils {
       updateRefreshLoading:"transactions/updateRefreshLoading"
     },
 
+    fundTransfer:{
+      updateTransactions:"fundTransfer/updateTransactions",
+      updateLoading:"fundTransfer/updateLoading",
+      updateNameEnquiry:"fundTransfer/updateNameEnquiry",
+      updateDebitAccountNameEnquiry:"fundTransfer/updateDebitAccountNameEnquiry",
+      updateLoading2:"fundTransfer/updateLoading2",
+      updateSendingTo:"fundTransfer/updateSendingTo",
+      updateCloseModal:"fundTransfer/updateCloseModal",
+      updateCoreStepCreditAccount:"fundTransfer/updateCoreStepCreditAccount",
+      updateStage:"fundTransfer/updateStage"
+    },
+
     kycVerification:{
       UpdateKycType:"kycVerification/UpdateKycType",
       UpdateLoading:"kycVerification/UpdateLoading",
@@ -125,6 +145,7 @@ class StoreUtils {
       updateKycReadAll:"kycVerification/updateKycReadAll",
       UpdateKycResponse:"kycVerification/UpdateKycResponse"
     },
+
     document:{
       updateLoading: "document/updateLoading",
       updateADocument: "document/updateADocument",
@@ -177,7 +198,8 @@ class StoreUtils {
       updateVirtualAccount: "virtualAccount/updateVirtualAccount",
       updateVirtualaccountTransactions:"virtualAccount/updateVirtualaccountTransactions",
       updateReadBankList:"virtualAccount/updateReadBankList",
-      updateVirtualAccountCreate:"virtualAccount/updateVirtualAccountCreate"
+      updateVirtualAccountCreate:"virtualAccount/updateVirtualAccountCreate",
+      updateVirtualAccountEditPayload:"virtualAccount/updateVirtualAccountEditPayload"
     },
     walletTransactions: {
       updateLoading: "walletTransactions/updateLoading",

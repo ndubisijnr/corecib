@@ -2,6 +2,7 @@
   <div :style="$router.currentRoute.fullPath === '/reports/transactions' ? {maxHeight:'100vh'}: null">
   <b-container fluid style="color: #FFFFFF">
     <create-virtual-account @closeAccountForm="updateAccountForm" :walletAccountNumber="walletAccNum" :showAccountForm="show"></create-virtual-account>
+    <edit-virtual-account-form @closeEditVirtualAccountForm="updateEditVirtualAccountForm" :show-create-edit-virtual-account="show2"></edit-virtual-account-form>
 
     <b-row> </b-row>
     <br />
@@ -12,10 +13,11 @@
       responsive
       small
       show-empty
+      size="sm"
+      pills
       stacked="md"
       :style="$router.currentRoute.fullPath === '/reports/transactions' ?
       {fontSize: 12, height: 'auto'}:{fontSize: 12}"
-      striped
       :busy="loading || loading3 || loading4"
       :items="items"
       :fields="fields"
@@ -129,6 +131,7 @@
           @click="row.toggleDetails"
         />
       </template>
+
       <template v-slot:cell(TransactionAction)="row">
         <b-icon-eye-slash
           style="cursor: pointer; width: 25px; height: 15px"
@@ -143,6 +146,7 @@
           @click="row.toggleDetails"
         />
       </template>
+
       <template v-slot:cell(disputeActions)="row">
         <b-icon-folder2-open v-if="row.disputeStatus == 'CLOSED'" />
         <b-icon-folder2 v-if="row.disputeStatus == 'OPEN'" />
@@ -159,7 +163,10 @@
           @click="row.toggleDetails"
         />
       </template>
+
       <template v-slot:cell(virtualAccountactions)="row">
+        <b-icon-pencil-square @click="show2=true, getValueForEditingVA(row.item)" style="cursor: pointer; width: 25px; height: 15px"></b-icon-pencil-square>
+
         <b-icon-file
           style="cursor: pointer; width: 25px; height: 15px"
           @click="getValueCallVAT(row.item.accountNumber)"
@@ -178,6 +185,7 @@
           @click="row.toggleDetails"
         />
       </template>
+
       <template v-slot:cell(CustomerAction)="row">
         <b-icon-pencil-square
           style="cursor: pointer; width: 25px; height: 15px"
@@ -201,13 +209,14 @@
       <template v-slot:cell(kycResponse)="row">
         <div>{{ JSON.parse(Object(row).item.kycResponse).firstName}} {{ JSON.parse(Object(row).item.kycResponse).middleName}} {{ JSON.parse(Object(row).item.kycResponse).lastName}}</div>
       </template>
+
       <template v-slot:cell(kycAction)="row">
           <b-icon-info-circle-fill style="font-size: 18px;cursor: pointer" @click="readKyc(obj=JSON.parse(Object(row).item.kycResponse), kycType=row.item.kycType)"/>
       </template>
 
       <template #cell(walletAction)="row">
         <h3 v-if="loading">Loading</h3>
-        <b-icon-plus-circle @click="show = true, getValueForVA(row.item.accountNumber)" title="Create Virtual Account"  style="cursor: pointer; width: 25px; height: 15px"></b-icon-plus-circle>
+<!--        <b-icon-plus-circle @click="show = true, getValueForVA(row.item.accountNumber)" title="Create Virtual Account"  style="cursor: pointer; width: 25px; height: 15px"></b-icon-plus-circle>-->
         <b-icon-file
           style="cursor: pointer; width: 25px; height: 15px"
           @click="getValue(row.item.accountNumber)"
@@ -238,7 +247,7 @@
         </b-card>
       </template>
     </b-table>
-    <b-row  v-show="$router.currentRoute.fullPath !== '/dashboard/get-started'">
+    <b-row  v-show="$router.currentRoute.fullPath !== '/dashboard/get-started' &&  $router.currentRoute.fullPath !== '/fund-transfer'">
       <b-col md="6" class="my-1 ml-0">
         <b-form-group
           :label="showTitle ? 'perPage' : 'Page'"
@@ -306,6 +315,7 @@ import BIZ from "@/assets/BIZ.gif"
 import Toast from "../../../toastNotification";
 import router from "../../router";
 import TransactionRequest from "../../model/request/TransactionRequest";
+import EditVirtualAccountForm from "../form/EditVirtualAccountForm";
 
 export default {
   props: [
@@ -320,11 +330,13 @@ export default {
     "accounts",
   ],
   components: {
-    CreateVirtualAccount
+    CreateVirtualAccount,
+    EditVirtualAccountForm
   },
   data() {
     return {
       show: false,
+      show2:false,
       primaryColor:window.__env.app.primaryColor,
       loaderImage:BIZ,
       allTransactionsModel: WalletRequest.readAllWalletTransaction,
@@ -351,7 +363,7 @@ export default {
         content: "",
       },
       walletAccNum:"",
-      count: 1
+      count: 1,
     };
   },
   computed: {
@@ -406,6 +418,10 @@ export default {
     updateAccountForm(value) {
       this.show = value;
     },
+
+    updateEditVirtualAccountForm(value) {
+      this.show2 = value;
+    },
     getValueForVA(payload) {
       this.walletAccNum = payload
       navigator.clipboard.writeText(payload).then(() => {
@@ -414,6 +430,11 @@ export default {
         );
       });
     },
+
+    getValueForEditingVA(payload) {
+      StoreUtils.commit(StoreUtils.mutations.virtualAccount.updateVirtualAccountEditPayload, payload)
+    },
+
     getValue(payload) {
       this.walletTransactionmodel.accountNumber = payload;
       this.$router

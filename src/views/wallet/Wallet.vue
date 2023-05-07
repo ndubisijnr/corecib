@@ -120,7 +120,7 @@ export default {
 }
 
 .export-ex{
-  background-color:#3F88C5;
+  background-color:#413d52;
   color:white;
   /*margin: 2px;*/
   /*width:200px;*/

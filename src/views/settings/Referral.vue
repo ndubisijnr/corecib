@@ -8,7 +8,7 @@
               <h4>Your Referral link</h4>
               <p class="text-dark">
                 Refer new merchants with your referral Link and earn 10% on the
-                revenue Bizgem makes from each transaction.
+                revenue Corestep makes from each transaction.
               </p>
               <div class="mb-3" @click="copyToClipboard()" title="click to copy to clipboard" >
                 <label>click on link to copy</label>

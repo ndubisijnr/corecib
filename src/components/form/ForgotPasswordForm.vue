@@ -6,7 +6,8 @@
       <form  class="form-login" role="form"
       @submit.prevent="initiatePassword" style="margin-top:0px">
       <div class="text-center">
-        <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
+        <a href="#">
+          <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>
       </div>
       <div class="">
         <h4 class="forgot-password-h4">Password Reset</h4>
@@ -29,7 +30,8 @@
     <form v-if="passwordResetScreen === 'otp'" class="container form-group form-login" role="form"
       @submit.prevent="completePassword">
       <div class="text-center">
-        <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
+        <a href="#">
+          <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>
       </div>
       <div class="p-3">
         <h4 class="forgot-password-h4">Almost Done!</h4>

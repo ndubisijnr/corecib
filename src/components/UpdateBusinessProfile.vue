@@ -194,7 +194,7 @@
             <div class="col mb-3" style="padding-top:30px ">
               <div v-if="!organisationRes.organisationDirectorIdCard">
                 <label for="floatingInput">{{ !uploadState1 ? 'Upload ID Card' : organisationRes.organisationDirectorIdCardType + ' Uploaded' }}<span style="color: red">*</span></label><br/>
-                <b-button @click="showModalDirector1 = !showModalDirector1" disabled>{{!uploadState1 ? 'Upload file' : 'File Uploaded' }}</b-button>
+                <b-button :style="{backgroundColor:primaryColor,color:'#FFF'}" @click="showModalDirector1 = !showModalDirector1" disabled>{{!uploadState1 ? 'Upload file' : 'File Uploaded' }}</b-button>
               </div>
               <a v-else :href="organisationRes.organisationDirectorIdCard" target="_blank"><b-button>View Uploaded ID</b-button></a>
             </div>
@@ -236,7 +236,7 @@
             <div class="col mb-3" style="padding-top:30px ">
               <div v-if="!organisationRes.organisationDirectorIdCardType2">
                 <label for="floatingInput">{{!uploadState2 ? 'Upload ID Card' : organisationRes.organisationDirectorIdCardType2 + ' Uploaded' }} <span style="color: red">*</span></label><br/>
-                <b-button @click="showModalDirector2 = !showModalDirector2" disabled>{{!uploadState2 ? 'Upload file' : 'File Uploaded' }}</b-button>
+                <b-button :style="{backgroundColor:primaryColor,color:'#FFF'}" @click="showModalDirector2 = !showModalDirector2" disabled>{{!uploadState2 ? 'Upload file' : 'File Uploaded' }}</b-button>
               </div>
               <a v-else :href="organisationRes.organisationDirectorIdCard2" target="_blank"><b-button>View Uploaded ID</b-button></a>
             </div>
@@ -244,8 +244,9 @@
         </div>
       </section>
 
+        {{loadingOtp}}
         <div class="mt-3">
-          <base-button title="Update" :loading="loadingOtp"></base-button>
+          <b-button :loading="loadingOtp" :style="{backgroundColor:primaryColor, color:'#FFF', width:'100%'}">Update</b-button>
         </div>
     </form>
     <upload-image-modal
@@ -291,7 +292,9 @@ export default {
       showModalDirector1:false,
       showModalDirector2:false,
       uploadState1:false,
-      uploadState2:false
+      uploadState2:false,
+      primaryColor:window.__env.app.primaryColor,
+
 
     }
   },

@@ -23,7 +23,7 @@ export default {
     },
 
     callTransactionStatusQuerApi(payload){
-        return apiClient.appClient.post("/virtual-account/transaction-status-query",payload)
+        return apiClient.appClient.post("/transaction/transaction-status-query",payload)
     }
 
 };

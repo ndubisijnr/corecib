@@ -3,7 +3,7 @@
     <div>
       <div class="card-head">
         <div class="d-flex justify-content-between">
-          <h4 style="color:#3F88C5;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Log Dispute</h4>
+          <h4 style="font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Log A Dispute</h4>
           <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Request Payout"></button>
         </div>
       </div>
@@ -196,8 +196,11 @@ export default {
 
 <style scoped>
 .card-head{
-  background-color: #D7E6F3;
-  color: white;
+  color: #413d52;
+}
+
+.btn-close{
+  background-color: #FFFFFF;
 }
 .spinner-border {
   display: inline-block;

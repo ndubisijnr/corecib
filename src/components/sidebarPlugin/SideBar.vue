@@ -1,16 +1,16 @@
 <template>
   <div class="sidenav navbar-vertical fixed-left navbar-expand-xs"
        @mouseenter="$sidebar.onMouseEnter()"
-       @mouseleave="$sidebar.onMouseLeave()" :style="isdarkMode === 'false' ? {backgroundColor:primaryColor}:{backgroundColor:'#181818'}">
+       @mouseleave="$sidebar.onMouseLeave()" :style="{backgroundColor:'#413d52'}">
     <div class="scrollbar-inner" ref="sidebarScrollArea">
       <div class="sidenav-header">
-        <div class="add-business" @click="toogleD()" :style="isdarkMode === 'false' ? {backgroundColor:'#236395'}:{backgroundColor:'#181818'}">
+        <div class="add-business" @click="toogleD()" :style="{backgroundColor:'#413d52'}">
               <div class="">
                 <span class="arrow ni ni-bold-down" id="arrow"></span>
                 <div class="mt-3" v-if="allOrganisation.length > 0">
                 <h4 class="elispe text-white" id="orgname">{{currentOrganisation.organisationName}}</h4>
                 <h4 class="small text-white" id="id" v-if="currentOrganisation.organisationId" >{{ `Customer ID : ${Math.floor(Math.random() * (10000,10000))}${(currentOrganisation.organisationId)}${Math.floor(Math.random() * (10000,10000))}`}}</h4>
-                <h4 class="small text-white " id="id"  v-else > regenerating ID... </h4>
+                <h4 class="small text-white "  v-else > regenerating ID... </h4>
                 </div>
                 <div class="mt-3 only-mobile" v-if="allOrganisation.length > 0">
                   <h4 class="elispe text-white">{{currentOrganisation.organisationName}}</h4>
@@ -19,13 +19,13 @@
                 </div>
               </div>
         </div>
-        <div id="k" :style="{background:primaryColorGradient}">
+        <div id="k" :style="{background:primaryColor}">
             <ul class="add-business-ul">
               <li class="add-business-li" v-for="(item, index) in allOrganisation" :key="index" v-if="item.organisationName !== currentOrganisation.organisationName " @click="switchBusiness(item.organisationId)">
                 {{item.organisationName}} {{index === 0 ? '⭐' : null}}
               </li>
             </ul>
-            <div class="pl-3 pb-2">
+            <div class="pl-3 pb-2 p-2 mt--2">
               <b-button size="sm" @click="showBusinessForm(true)">Add New Business</b-button>
             </div>
           </div>

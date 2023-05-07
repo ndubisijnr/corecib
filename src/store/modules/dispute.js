@@ -4,6 +4,18 @@ import DisputeResponse from "../../model/reponse/DisputeResponse";
 import Swal from "sweetalert2";
 import StoreUtils from "../../util/baseUtils/StoreUtils";
 
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 5000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
 export const state = {
   loading: false,
   loading2:false,
@@ -59,14 +71,14 @@ export const actions = {
       if (responseData.responseCode === "00") {
         commit("updateLoading2", false)
         StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes).then()
-        Swal.fire({title: responseData.responseMessage, icon: 'success'}).then(()=>{
+        Toast.fire({text: responseData.responseMessage, icon: 'success'}).then(()=>{
           commit("updateStatus", 'read')
         })
       }
       else {
         commit("updateLoading2", false)
         commit("updateStatus", 'true')
-        Swal.fire({title:responseData.responseMessage,icon:'error'}).then(()=>{})
+        Toast.fire({text:responseData.responseMessage,icon:'error'}).then(()=>{})
       }
     })
       .catch(error => {
@@ -88,7 +100,7 @@ export const actions = {
         commit("updateLoading2", false)
         commit("updateSuccess", responseData.responseCode)
         commit("updateStatus", 'false')
-        Swal.fire({title: responseData.responseMessage, icon: 'error'}).then(()=>{})
+        Toast.fire({text: responseData.responseMessage, icon: 'error'}).then(()=>{})
       }
     }).catch(error => {
       commit("updateLoading2", false)

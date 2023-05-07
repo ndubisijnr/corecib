@@ -10,7 +10,7 @@
             </div>
           </div>
           <div class="mb-3 text-center">
-            <b-button style="background-color:#3F88C5;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>
+            <b-button style="background-color:#413d52;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>
             <b-button @click="show = true"> Withdraw</b-button>
           </div>
         <div id="end"></div>
@@ -135,8 +135,8 @@ export default {
   },
 
   mounted() {
-    StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
-    StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions)
+    // StoreUtils.dispatch(StoreUtils.actions.auth.readDashboardStats)
+    // StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions)
   },
 };
 </script>

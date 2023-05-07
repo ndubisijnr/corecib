@@ -2,20 +2,22 @@
 class VirtualAccountRequest {
 
     static createVirtualAccount={
-        firstName: null,
-        lastName: null,
-        address: null,
-        gender: null,
-        phoneNumber: null,
-        accountParent: null,
-        bvn: null,
-        channelBankCode: "VFD MFB",
-        dob: null
+        virtualAccountName:null,
+        virtualAccountParent:null,//optional(default is your business account)
+        virtualAccountBankCode:null,
+        virtualAccountAmountControl:null, //optional(default is VARIABLE) values can be VARIABLE, GREATER, EXACT, LESSER
+        virtualAccountType:null, //REUSABLE or DISPOSABLE
+        virtualAccountExtraData:null, //optional
+        virtualAccountValidTime:null,//optional(default is 1443 minutes)
     }
 
     static retrieveVirtualAccount={
         accountNumber: null,
         channelBankCode: null
+    }
+
+    static readByAccountNumber = {
+        virtualAccountNumber: null
     }
 
     static readVirtualAccount={
@@ -39,6 +41,16 @@ class VirtualAccountRequest {
 
     static getBankList={
         readAll:"YES"
+    }
+
+    static virtualAccountUpdate={
+        virtualAccountName:null,
+        virtualAccountNumber:null,
+    }
+
+    static editVirtualAccount={
+        virtualAccountName:null,
+        virtualAccountNumber:null,
     }
 
 }
