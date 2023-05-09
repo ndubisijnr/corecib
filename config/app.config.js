@@ -14,7 +14,7 @@ Example for Docker:
         primaryColor: "#413d52",
         primaryColorGradient:"linear-gradient(to bottom,#3F88Cd, #236395)",
         publicPath: "/home/",
-        url: "https://dashboard.bizgem.io",
+        url: "https://dev-business.corestepbank.com",
         stage: "dev"
     };
     window.__env.api = {
