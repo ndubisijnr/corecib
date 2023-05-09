@@ -18,10 +18,10 @@ Example for Docker:
         stage: "dev"
     };
     window.__env.api = {
-        // baseUrl: "https://sandbox.bizgem.io",
-        baseUrl: "https://y3am4bpi88.execute-api.eu-west-2.amazonaws.com/dev",
-        // baseUrl: "https://testdev.coralpay.com:9090/digipos/dev",
-            timeout: 80000,
+        // baseUrl: "https://y3am4bpi88.execute-api.eu-west-2.amazonaws.com/dev",
+        // baseUrl: "https://biz.corestepbank.com/",
+        baseUrl: "https://dev-biz.corestepbank.com/",
+        timeout: 80000,
         imageUpload: "https://m2nz1o078e.execute-api.us-east-1.amazonaws.com/prod"
     };
     window.__env.captcha = {

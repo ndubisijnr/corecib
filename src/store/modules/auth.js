@@ -221,7 +221,7 @@ export const actions = {
 
             StoreUtils.dispatch(StoreUtils.actions.preference.readPreferenceById).then()
 
-            // StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
+            StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
 
             //read invites
             // StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
@@ -505,7 +505,7 @@ export const actions = {
           //read invites
           // StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
 
-          // StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
+          StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
 
           //read Roles
           // StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()

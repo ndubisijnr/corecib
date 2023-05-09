@@ -3,7 +3,7 @@
     <modal-1 :show="showAccountForm && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
       <div class="card-head">
         <div class="d-flex justify-content-between">
-          <h4 style="color:#FFFFFF;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Create Virtual Account</h4>
+          <h4 style="font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Create Virtual Account</h4>
           <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Create Virtual Account"></button>
         </div>
       </div>
@@ -280,8 +280,7 @@ export default {
 }
 
 .card-head{
-  color: white;
-  background-color: #413d52;
+  color: black;
 }
 
 .p-1{

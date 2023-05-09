@@ -244,9 +244,8 @@
         </div>
       </section>
 
-        {{loadingOtp}}
         <div class="mt-3">
-          <b-button :loading="loadingOtp" :style="{backgroundColor:primaryColor, color:'#FFF', width:'100%'}">Update</b-button>
+          <button type="submit" :loading="loadingOtp" :style="{backgroundColor:primaryColor, color:'#FFF', width:'100%',height:'40px'}">Update</button>
         </div>
     </form>
     <upload-image-modal
