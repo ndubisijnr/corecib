@@ -57,6 +57,8 @@ export const state = {
   singleOrganisationUser:null,
   reminderForm:false,
   darkMode:'false',
+  searchLoading:false
+
 }
 
 export const getters = {
@@ -104,7 +106,9 @@ export const mutations = {
   updateOrganisationRoles:(state, payload) =>{state.organisationRoles = payload},
   updateAllInvites:(state, payload) => {state.allInvites = payload},
   updateIsSwitching:(state, payload) => {state.isSwitching = payload},
-  updateLoginLoading:(state,payload) => {state.loginLoading = payload}
+  updateLoginLoading:(state,payload) => {state.loginLoading = payload},
+  updateSearchLoading:(state,payload) => {state.searchLoading = payload}
+
 }
 
 export const actions = {
@@ -216,6 +220,7 @@ export const actions = {
       let responseData = response.data
       if (responseData.responseCode === "00") {
         if (router.currentRoute.meta.layout === 'auth') router.push({ name: "GetStarted" }).then(() => { })
+
             commit("updateUserInfo", responseData)
             commit("updateAllOrganisationList",responseData.organisations)
 
@@ -263,6 +268,7 @@ export const actions = {
       }else if(responseData.responseCode === "115"){
         commit("updateTimedOut",true)
         commit("updateLoginLoading", false)
+        StoreUtils.dispatch(StoreUtils.actions.auth.logOut)
 
       }
     }).catch(error => {commit("updateLoginLoading", false); console.log(error) })

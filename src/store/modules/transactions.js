@@ -1,6 +1,7 @@
 import TransactionService from "../../service/TransactionService";
 import TransactionRequest from "../../model/request/TransactionRequest";
 import Swal from "sweetalert2";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
 
 const Toast = Swal.mixin({
     toast: true,
@@ -66,10 +67,12 @@ export const actions = {
 
    filterTransactions: ({ commit, state}, payload = TransactionRequest.filterTransaction) => {
        commit("updateLoading", true)
-        return TransactionService.callReadTransactionsApi(payload).then(response => {
+       StoreUtils.commit(StoreUtils.mutations.auth.updateSearchLoading, true)
+       return TransactionService.callReadTransactionsApi(payload).then(response => {
             let responseData = response.data
             commit("updateLoading", false)
-            if (responseData.responseCode === "00") {
+           StoreUtils.commit(StoreUtils.mutations.auth.updateSearchLoading, false)
+           if (responseData.responseCode === "00") {
                 commit("updateTransactions", responseData.data)
                 Toast.fire({text:'result updated', icon:'success'})
             }else if(responseData.data.length < 1){
@@ -77,7 +80,8 @@ export const actions = {
             }
         }).catch(error => {
             commit("updateLoading", false)
-            console.log(error);
+           StoreUtils.commit(StoreUtils.mutations.auth.updateSearchLoading, false)
+           console.log(error);
         })
 
     },

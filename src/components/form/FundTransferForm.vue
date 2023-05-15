@@ -20,7 +20,7 @@
               </b-form-group>
 
               <b-form-group id="input-group-4" label="Credit Account Number" label-for="input-group-4">
-                <b-form-input @input="doNameEnquiry" :disabled="loading" maxLength="10" :value="isSendingTo ? coreStepAccount?.accountNumber : nameEnquiryDetails?.accountNumber"  id="account-number" type="text" placeholder="Account Number"  class="mr-2" ></b-form-input>
+                <b-form-input @input="doNameEnquiry"  :disabled="loading" maxLength="10" :value="isSendingTo ? coreStepAccount?.accountNumber : nameEnquiryDetails?.accountNumber"  id="account-number" type="text" placeholder="Account Number"  class="mr-2" ></b-form-input>
                 <h6>{{errorMessage}}</h6>
               </b-form-group>
 
@@ -35,13 +35,13 @@
 
             <div v-else>
               <b-form-group  id="input-group-4" label="Debit Wallet Account Number" label-for="input-4">
-                <b-form-input :disabled="loading" @input="doNameEnquiryOnDebitAccount" id="debitAccountNumber" :value="debitAccountNameEnquiry?.accountNumber" maxLength="10" type="text" placeholder="Wallet Account Number"  class="mr-2"></b-form-input>
+                <b-form-input @change="doNameEnquiryOnDebitAccount" :disabled="loading" @input="doNameEnquiryOnDebitAccount" id="debitAccountNumber" :value="debitAccountNameEnquiry?.accountNumber ? debitAccountNameEnquiry?.accountNumber :this.currentOrganisation?.organisationStage === 'DEV' ? this.currentOrganisation?.organisationAccountNumber?.split(',')[1] : this.currentOrganisation?.organisationAccountNumber?.split(',')[0]" maxLength="10" type="text" placeholder="Wallet Account Number"  class="mr-2"></b-form-input>
                 <h6>{{errorMessage}}</h6>
               </b-form-group>
 
               <span v-show="loading" class="small text-success">Fetching account details</span> <span v-show="loading" class="small spinner-border"></span>
               <b-form-group id="input-group-9" label="Debit Wallet Account Name" label-for="input-4">
-                <b-form-input  :value="debitAccountNameEnquiry?.accountName" id="text" readonly type="text" placeholder="Wallet Account Name will appear here"  class="mr-2" required></b-form-input>
+                <b-form-input  :value="debitAccountNameEnquiry?.accountName " id="text" readonly type="text" placeholder="Wallet Account Name will appear here"  class="mr-2" required></b-form-input>
               </b-form-group>
 
               <b-form-group id="input-group-7" label="Amount" label-for="input-4">
@@ -86,12 +86,14 @@ export default {
         fundTransferModel:FundTransferRequest.fundTransfer,
         errorMessage:null,
         bankName:null,
+        parentName:null
       }
     },
   methods: {
 
     setStageForward(){
       StoreUtils.commit(StoreUtils.mutations.fundTransfer.updateStage,'transfer')
+      this.doNameEnquiryOnParentDebitAccount()
     },
 
     setStageBack(){
@@ -107,6 +109,7 @@ export default {
       this.fundTransferModel.bankName = this.isSendingTo ? "CORESTEP MICROFINANCE BANK" : this.nameEnquiryDetails?.bankName
       this.fundTransferModel.bankCode = this.isSendingTo ? "000000" : this.nameEnquiryDetails?.bankCode
       this.fundTransferModel.sessionId = this.isSendingTo ? this.coreStepAccount?.sessionId :this.nameEnquiryDetails?.sessionId
+      this.fundTransferModel.sourceType  =  "WEB"
       this.fundTransferModel.reference = `CORE-STEP-${this.reference(30)}`
       StoreUtils.dispatch(StoreUtils.actions.fundTransfer.fundTransfer).then(() => {
         this.closeModal()
@@ -126,6 +129,12 @@ export default {
       } else{
         this.errorMessage = null
       }
+    },
+
+    doNameEnquiryOnParentDebitAccount(){
+      this.nameEnquiryModel.accountBankCode = '000000'
+      this.nameEnquiryModel.accountNumber = this.currentOrganisation?.organisationStage === 'DEV' ? this.currentOrganisation?.organisationAccountNumber?.split(',')[1] : this.currentOrganisation?.organisationAccountNumber?.split(',')[0]
+      StoreUtils.dispatch(StoreUtils.actions.fundTransfer.callNameEnquiry)
     },
 
     doNameEnquiry(){
@@ -161,6 +170,7 @@ export default {
 
 
     },
+
     closeModal() {
       //close modal form
       this.showModal = false;
@@ -220,7 +230,10 @@ export default {
 
 
 
-    })
+    }),
+    currentOrganisation() {
+      return StoreUtils.rootGetters(StoreUtils.getters.auth.getCurrentOrganization)
+    },
   },
 
   mounted() {

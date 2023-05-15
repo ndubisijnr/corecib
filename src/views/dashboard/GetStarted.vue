@@ -27,14 +27,14 @@
       <div>
         <h3>To fund your wallet</h3>
         <span>Transfer desired amount to the account details below and have your balance funded</span>
-        <div class="carddd" v-for="items in balances.walletBalance.virtualAccounts" :key="items">
+        <div class="carddd">
           <h6 class="text-right rounded-3 p-1 text-white"
               :style="{position:'absolute',right:'50px',cursor:'pointer',background:primaryColor}"
-              @click="copyToClipboard(id = items.accountNumber)">Copy</h6>
+              @click="copyToClipboard(id = currentOrganisation.organisationStage === 'DEV' ? currentOrganisation?.organisationAccountNumber.split(',')[1] : currentOrganisation?.organisationAccountNumber.split(',')[0])">Copy</h6>
           <code>
-            <span class="mb-3 text-dark">Bank Name: {{ items.accountOtherBankName }}</span><br>
-            <span class="mb-3 text-dark">Account Name: {{ items.accountName }}</span><br>
-            <span class="mb-3 text-dark" >Account Number: <span :id="items.accountNumber">{{ items.accountNumber }}</span></span>
+            <span class="mb-3 text-dark">Bank Name: CoreStep MFB</span><br>
+            <span class="mb-3 text-dark">Account Name: {{currentOrganisation.organisationName}}</span><br>
+            <span class="mb-3 text-dark" >Account Number: <span :id="currentOrganisation.organisationStage === 'DEV' ? currentOrganisation?.organisationAccountNumber.split(',')[1] : currentOrganisation?.organisationAccountNumber.split(',')[0]">{{ currentOrganisation.organisationStage === 'DEV' ? currentOrganisation?.organisationAccountNumber.split(',')[1] : currentOrganisation?.organisationAccountNumber.split(',')[0]}}</span></span>
           </code>
         </div>
       </div>

@@ -18,9 +18,8 @@ Example for Docker:
         stage: "prod"
     };
     window.__env.api = {
-        // baseUrl: "https://y3am4bpi88.execute-api.eu-west-2.amazonaws.com/dev",
+        baseUrl: "https://dev-biz.corestepbank.com/",
         // baseUrl: "https://biz.corestepbank.com/",
-        baseUrl: "https://biz.corestepbank.com/",
         timeout: 80000,
         imageUpload: "https://m2nz1o078e.execute-api.us-east-1.amazonaws.com/prod"
     };

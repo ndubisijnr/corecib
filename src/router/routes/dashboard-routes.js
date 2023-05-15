@@ -1,6 +1,8 @@
 import GetStarted from '../../views/dashboard/GetStarted'
 import NewBusiness from '../../views/auth/NewBusiness'
 import Pricing from "@/views/dashboard/Pricing";
+import Documentation from "../../views/dashboard/Documentation";
+
 
 
 export default [
@@ -23,5 +25,11 @@ export default [
         name: 'Pricing',
         meta: {layout: 'dashboard',authRequired:true},
         component: Pricing,
+    },
+    {
+        path: '/dashboard/documentation',
+        name: 'Documentation',
+        meta: {layout: 'dashboard',authRequired:true},
+        component: Documentation,
     },
 ];

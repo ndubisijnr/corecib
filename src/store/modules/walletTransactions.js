@@ -71,9 +71,11 @@ export const mutations = {
 export const actions = {
   updateAllWalletTransactions: ({ commit, state }, payload = WalletRequest.readAllWalletTransaction) => {
     if (state.allWalletTransactions.length < 1) commit("updateLoading", true)
+    StoreUtils.commit(StoreUtils.mutations.auth.updateSearchLoading, true)
     return WalletService.callReadAllWalletTransactionApi(payload).then(response => {
       commit("updateLoading", false)
       commit("updateRetrieveLoading", false)
+      StoreUtils.commit(StoreUtils.mutations.auth.updateSearchLoading, false)
       let responseData = response.data
       if (responseData.responseCode === "00") {
         if(payload.page >= 2){
@@ -90,6 +92,7 @@ export const actions = {
       }
     }).catch(error => {
       commit("updateLoading", false)
+      StoreUtils.commit(StoreUtils.mutations.auth.updateSearchLoading, false)
       console.log(error)
     })
 

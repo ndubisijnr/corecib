@@ -14,7 +14,6 @@
       small
       show-empty
       size="sm"
-      pills
       stacked="md"
       :style="$router.currentRoute.fullPath === '/reports/transactions' ?
       {fontSize: 12, height: 'auto'}:{fontSize: 12}"

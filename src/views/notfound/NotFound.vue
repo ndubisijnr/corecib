@@ -1,15 +1,14 @@
 <template>
 <div class="notfound-page">
   <div>
-    <img src="@/assets/crying-emoji.gif" />
-  </div>
+    <lottie-player src="https://assets8.lottiefiles.com/temp/lf20_USCruP.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>  </div>
   <div class="notice">
-    <a href="https://bizgem.io"><h6>www.bizgem.io</h6></a>
+    <a href="https://bizgem.io"><h6>www.corestepbank.com</h6></a>
     <h3>Hmm, Sorry</h3>
     <span>I could not find that page on our route list</span>
-    <div class="mt-2">
-      <button class="btn-login" @click="$router.back() ? $router.go(-1) : $router.push({name:'Logon'})">Go back</button>
-    </div>
+<!--    <div class="mt-2">-->
+<!--      <button class="btn-login" @click="$router.back() ? $router.go(-1) : $router.push({name:'Logon'})">Go back</button>-->
+<!--    </div>-->
   </div>
 </div>
 </template>

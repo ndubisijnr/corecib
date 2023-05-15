@@ -7,6 +7,7 @@ class AuthenticationRequest {
         customerFirstName: null,
         customerLastName: null,
         customerPhone: null,
+        customerBusinessType:null,
         source: "WEB"
 
     }

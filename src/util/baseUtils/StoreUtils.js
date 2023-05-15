@@ -183,7 +183,9 @@ class StoreUtils {
       updateUserEditForm:"auth/updateUserEditForm",
       updateIsSwitching:"auth/updateIsSwitching",
       updateLoginLoading:"auth/updateLoginLoading",
-      updateShowBalance:"auth/updateShowBalance"
+      updateShowBalance:"auth/updateShowBalance",
+      updateSearchLoading:"auth/updateSearchLoading"
+
     },
     dispute: {
       updateLoading: "dispute/updateLoading",
