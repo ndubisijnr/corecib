@@ -23,26 +23,26 @@
            <tbody>
            <tr>
              <td>CREATE WALLET</td>
-             <td>₦10.00 Fee<br>
-               For each wallet created
+             <td class="text-info">To be determined</td><br>
+             <td>For each wallet created
              </td>
            </tr>
            <tr>
              <td>VIRTUAL ACCOUNT <br />CREATION</td>
-             <td>₦20.00 Fee<br>
-               For each virtual account created
+             <td class="text-info">To be determined </td><br>
+            <td> For each virtual account created
              </td>
            </tr>
            <tr>
              <td>FUNDS TRANSFER <br />(PAYOUT)</td>
-             <td>₦20.00 Fee<br>
-               For each successful FT outwards.
+             <td class="text-info">To be determined</td><br>
+               <td>For each successful FT outwards.
              </td>
            </tr>
            <tr>
              <td>RECEIVE FUNDS <br />(INWARDS)</td>
-             <td>₦0.00 Fee<br>
-               For each successful RF inwards.
+             <td class="text-info">To be determined</td><br>
+              <td> For each successful RF inwards.
              </td>
            </tr>
            </tbody>
@@ -55,31 +55,31 @@
            <tbody>
            <tr>
              <td>GLO</td>
-             <td>3.50% Commission </td>
+             <td class="text-info">To be determined</td>
            </tr>
            <tr>
              <td>AIRTEL</td>
-             <td>2.00% Commission </td>
+             <td class="text-info">To be determined </td>
            </tr>
            <tr>
              <td>MTN</td>
-             <td>2.00% Commission </td>
+             <td class="text-info">To be determined </td>
            </tr>
            <tr>
              <td>9MOBILE</td>
-             <td>3.92% Commission </td>
+             <td class="text-info">To be determined </td>
            </tr>
            <tr>
              <td>Smile Network</td>
-             <td>4.20% Commission </td>
+             <td class="text-info">To be determined </td>
            </tr>
            <tr>
              <td>Swift Networks</td>
-             <td>0.77% Commission </td>
+             <td class="text-info">To be determined </td>
            </tr>
            <tr>
              <td>Spectranet</td>
-             <td>3.15% Commission </td>
+             <td class="text-info">To be determined </td>
            </tr>
            </tbody>
          </table>

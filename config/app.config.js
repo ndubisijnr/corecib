@@ -15,12 +15,11 @@ Example for Docker:
         primaryColorGradient:"linear-gradient(to bottom,#3F88Cd, #236395)",
         publicPath: "/home/",
         url: "https://business.corestepbank.com",
-        stage: "dev"
+        stage: "prod"
     };
     window.__env.api = {
-        // baseUrl: "https://y3am4bpi88.execute-api.eu-west-2.amazonaws.com/dev",
-        // baseUrl: "https://biz.corestepbank.com/",
         baseUrl: "https://dev-biz.corestepbank.com/",
+        // baseUrl: "https://biz.corestepbank.com/",
         timeout: 80000,
         imageUpload: "https://m2nz1o078e.execute-api.us-east-1.amazonaws.com/prod"
     };

@@ -124,7 +124,7 @@
                               <div class="doc">
                                 <div>
                                   <!-- Card body -->
-                                  <div class="document">
+                                  <div class="document" v-if="documents.data.length > 1">
                                     <div class="" v-for="(doc, index) in documents.data" :key="index">
                                       <div v-if="'documentStatus' in doc && 'documentUrl' in doc">
 <!--                                        <span>{{progressBarArr[index].value}}</span>-->
@@ -216,8 +216,10 @@
                                           </div>
                                         </form>
                                       </div>
-
                                     </div>
+                                  </div>
+                                  <div v-else>
+                                    <h3>no document to show</h3>
                                   </div>
                                 </div>
                               </div>

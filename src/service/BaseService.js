@@ -1,5 +1,6 @@
 import axios from "axios";
 import StoreUtils from "../util/baseUtils/StoreUtils";
+import router from "../router";
 
 export let isTimedOut = false
 
@@ -17,7 +18,7 @@ export const appClient1 = axios.create({
     withCredentials: false,
     headers: {
          //Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
     }
 });
@@ -34,6 +35,30 @@ appClient.interceptors.request.use(config => {
     config.headers.mid = localStorage.organisationId
     return config
 })
+
+appClient.interceptors.response.use(response => {
+    if (response != null) {
+        if (response.data != null) {
+            if (response.data.responseCode === '115') {
+                // localStorage.clear();
+                // let timerInterval
+                if (router.currentRoute.meta.layout !== "auth"){
+                    isTimedOut = true
+                    localStorage.clear()
+                    StoreUtils.dispatch(StoreUtils.actions.auth.logOut,{customerEmail: StoreUtils.rootGetters(StoreUtils.getters.auth.getUserInfo).customerEmail}).then()
+                    // Swal.fire({
+                    //   title: 'Session timed out',
+                    //   html: 'Please re-authenticate',
+                    //   icon:"info",
+                    // })
+                    //     .then((result) => {
+                    // })
+                }
+            }
+        }
+    }
+    return response
+});
 
 
 export const apiClient = {

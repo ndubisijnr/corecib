@@ -4,8 +4,8 @@
        @mouseleave="$sidebar.onMouseLeave()" :style="{backgroundColor:'#413d52'}">
     <div class="scrollbar-inner" ref="sidebarScrollArea">
       <div class="sidenav-header">
-        <div class="add-business" @click="toogleD()" :style="{backgroundColor:'#413d52'}">
-              <div class="">
+        <div class="add-business" @click="toogleD" :style="{backgroundColor:'#413d52'}">
+            <div class="">
                 <span class="arrow ni ni-bold-down" id="arrow"></span>
                 <div class="mt-3" v-if="allOrganisation.length > 0">
                 <h4 class="elispe text-white" id="orgname">{{currentOrganisation.organisationName}}</h4>
@@ -19,7 +19,7 @@
                 </div>
               </div>
         </div>
-        <div id="k" :style="{background:primaryColor}">
+        <div id="k" class="business-dropdown" :style="{background:primaryColor}">
             <ul class="add-business-ul">
               <li class="add-business-li" v-for="(item, index) in allOrganisation" :key="index" v-if="item.organisationName !== currentOrganisation.organisationName " @click="switchBusiness(item.organisationId)">
                 {{item.organisationName}} {{index === 0 ? '⭐' : null}}
@@ -245,6 +245,10 @@ export default {
   /*padding: 12px;*/
 }
 
+.business-dropdown{
+  display: none;
+}
+
 .arrow{
   position: absolute;
   right: 20px;
@@ -253,6 +257,8 @@ export default {
   transform: rotate(0deg);
   color: #ffffff;
 }
+
+
 
 
 .sidenav{

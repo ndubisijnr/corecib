@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="wrapper">
     <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
 
       <!--------- initiate enrolment ------->
@@ -30,6 +30,19 @@
               title="Business name must contain two words (eg. Dangote Groups)" label="Business Name" class="mb-2"
               name="Business Name" :rules="{ required: true }" placeholder="eg. Amanda Limited"
               v-model="initiateModel.customerBusinessName" required>
+            </base-input>
+          </div>
+          <div class="form-floating mb-3">
+            <base-input label="Business type">
+              <el-select class="select-danger w-100" filterable placeholder="Business Type" v-model="initiateModel.customerBusinessType"
+                         required>
+                <el-option v-for="option in business_type" class="select-danger" :value="option"
+                           :label="option" :key="option">
+                </el-option>
+              </el-select>
+              <p v-show="countryCtrl" class="form-error-message">
+                The Country is required
+              </p>
             </base-input>
           </div>
           <div class="form-floating mt-3 mb-3">
@@ -139,6 +152,7 @@ export default {
   data() {
     return {
       option_country: [],
+      business_type:['Sole Proprietorship','Limited Liability Company','Public Liability Company','Corporation',],
       countryCtrl: false,
       initiateModel: AuthenticationRequest.initiateEnrollment,
       completeModel: AuthenticationRequest.completeEnrollment,
@@ -362,6 +376,11 @@ export default {
 
 .initiate-enrollment{
   margin: 30px auto;
+}
+
+.wrapper{
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 .complete-enrollment{

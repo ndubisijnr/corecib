@@ -5,6 +5,7 @@
         </div>
 <!--        <input class="form-control" name="Report Name" v-model="searchValue" placeholder="Search Here"  v-if="module != 'payoutTransactions'" @keyup="fetchResult" />&nbsp;-->
         <input class="form-control w-75" name="Report Name" v-model="searchValue" placeholder="Search Here" />&nbsp;
+
         <button @click="fetchResult" class="btn search-loading" v-if="loading" disabled><span class="spinner-border"></span></button>
         <button @click="fetchResult" class="btn search" v-else>search</button>
         <form @submit.prevent="fetchResult">
@@ -38,6 +39,7 @@
           </div>
         </b-modal>
         </form>
+<!--        {{loading}}{{module}}-->
       </div>
 </template>
 
@@ -217,47 +219,65 @@ export default {
       if (this.module === SearchModuleUtil.ALL_TRANSACTION) {
         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
+        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel).then(() => {
+          this.searchModel.searchItem = null
+        })
         // console.log("hello ALL_TRANSACTION", this.searchModel)
-      } else if (this.module === SearchModuleUtil.WALLET) {
+      }
+      else if (this.module === SearchModuleUtil.WALLET) {
         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateReadAllWallets, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets, this.searchModel);
+        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateReadAllWallets, this.searchModel).then(() => {
+          this.searchModel.searchItem = null
+        })
         // console.log("hello WALLET", this.searchModel)
 
-      } else if (this.module === SearchModuleUtil.VIRTUAL_ACCOUNT) {
+      }
+      else if (this.module === SearchModuleUtil.VIRTUAL_ACCOUNT) {
         this.lable = "Virtual Account Transaction Period"
         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.virtualAccount.updateVirtualAccount, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount, this.searchModel);
+        StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualAccount, this.searchModel).then(() => {
+          this.searchModel.searchItem = null
+        })
         // console.log("hello VIRTUAL_ACCOUNT", this.searchModel)
-      } else if (this.module === SearchModuleUtil.WALLET_TRANSACTION) {
+      }
+      else if (this.module === SearchModuleUtil.WALLET_TRANSACTION) {
         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel);
+        StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions, this.searchModel).then(() => {
+          this.searchModel.searchItem = null
+        })
         // console.log("hello WALLET_TRANSACTION", this.searchModel)
-      } else if (this.module === SearchModuleUtil.VIRTUAL_ACCOUNT_TRANSACTION) {
+      }
+      else if (this.module === SearchModuleUtil.VIRTUAL_ACCOUNT_TRANSACTION) {
         this.virtualAccountsearchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.virtualAccount.updateVirtualaccountTransactions, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualaccountTransactions, this.virtualAccountsearchModel);
+        StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateVirtualaccountTransactions, this.virtualAccountsearchModel).then(() => {
+          this.virtualAccountsearchModel.searchItem = null
+        })
         // console.log("hello WALLET_TRANSACTION", this.virtualAccountsearchModel)
       }
-       else if (this.module === SearchModuleUtil.PAYOUT_TRANSACTION) {
+      else if (this.module === SearchModuleUtil.PAYOUT_TRANSACTION) {
         StoreUtils.commit(StoreUtils.mutations.accountPayout.updateAllPayouts, BaseResponse.list)
         StoreUtils.dispatch(StoreUtils.actions.accountPayout.readPayout, this.payoutSearchModel);
         // console.log("hello PAYOUT_TRANSACTION", this.payoutSearchModel)
       }
-       else if(this.module === SearchModuleUtil.TRANSACTIONS){
+      else if(this.module === SearchModuleUtil.TRANSACTIONS){
+        this.searchModel.searchItem = this.searchValue
         // StoreUtils.commit(StoreUtils.mutations.walletTransactions.updateAllWalletTransactions, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.transactions.filterTransactions, this.searchModel);
+        StoreUtils.dispatch(StoreUtils.actions.transactions.filterTransactions, this.searchModel).then(() => {
+          this.searchModel.searchItem = null
+        })
       }
       else {
         this.searchModel.searchItem = this.searchValue
         StoreUtils.commit(StoreUtils.mutations.dispute.updateDisputes, BaseResponse.list)
-        StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes, this.searchModel);
+        StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes, this.searchModel).then(() => {
+          this.searchModel.searchItem = null
+        })
         // console.log("hello Something else")
       }
-      document.getElementById("modal-center").click()
     }
   },
   computed: {
@@ -277,10 +297,10 @@ export default {
       loading: (state) => {
         // console.log(module)
         if (module === SearchModuleUtil.ALL_TRANSACTION || SearchModuleUtil.WALLET)
-          return state.walletTransactions.loading
+          return state.auth.searchLoading
         else if (module === SearchModuleUtil.VIRTUAL_ACCOUNT)
           return state.virtualAccount.loading
-         else if (module === SearchModuleUtil.PAYOUT_TRANSACTION)
+        else if (module === SearchModuleUtil.PAYOUT_TRANSACTION)
           return state.accountPayout.accloading
         else
           return state.walletTransactions.loading
@@ -327,6 +347,18 @@ export default {
 </script>
 
 <style scoped>
+.spinner-border {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spinner-border 0.75s linear infinite;
+  animation: spinner-border 0.75s linear infinite;
+}
+
 @keyframes spinner-border {
   to {
     transform: rotate(360deg);
@@ -348,12 +380,33 @@ export default {
   gap: 10px;
 }
 
+.search{
+  background-color: #413d52;
+  color: white;
+  margin-left: -115px;
+  border: none;
+  height: 42px;
+  /*border-radius: 3px;*/
+}
+
+.search-loading{
+  background-color: #413d52;
+  color: white;
+  margin-left: -80px;
+  border: none;
+  height: 42px;
+}
+
+.search:hover{
+  color: white;
+}
+
 input{
   width:90%;
 }
 
 .export-ex{
-  background-color:#3F88C5;
+  background-color:#413d52;
   color:white;
   margin: 2px;
   width:200px;

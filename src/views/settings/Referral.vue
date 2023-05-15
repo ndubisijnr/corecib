@@ -5,6 +5,8 @@
         <div class="inner-card">
           <b-container class="itemabc1234">
             <div class="p-2">
+              <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_rkboxc5u.json"  background="transparent"
+                             speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
               <h4>Your Referral link</h4>
               <p class="text-dark">
                 Refer new merchants with your referral Link and earn 10% on the
