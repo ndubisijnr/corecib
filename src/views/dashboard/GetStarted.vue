@@ -9,9 +9,9 @@
                 <dashboard-card  :showBtn="false" :showBtn1="false" :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfVirtualAccountDev : currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'"></dashboard-card>
             </div>
           </div>
-          <div class="mb-3 text-center">
+          <div class="mt-2 mb-3 text-center">
             <b-button style="background-color:#413d52;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>
-            <b-button @click="show = true"> Withdraw</b-button>
+<!--            <b-button @click="show = true"> Withdraw</b-button>-->
           </div>
         <div id="end"></div>
           <div>
