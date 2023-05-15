@@ -102,11 +102,14 @@ export default {
     },
 
     doFundTransfer(){
+      let bankArray = this.bankName.split(" ")
+      let bankCode =bankArray[bankArray.length-1];
+      let SplitBankName = this.bankName.replace(bankCode,"").trim();
       this.fundTransferModel.creditAccountName = this.isSendingTo ? this.coreStepAccount?.accountName : this.nameEnquiryDetails?.accountName
       this.fundTransferModel.creditAccountNumber = this.isSendingTo ? this.coreStepAccount?.accountNumber : this.nameEnquiryDetails?.accountNumber
       this.fundTransferModel.debitAccountName = this.debitAccountNameEnquiry?.accountName
       this.fundTransferModel.debitAccountNumber = this.debitAccountNameEnquiry?.accountNumber
-      this.fundTransferModel.bankName = this.isSendingTo ? "CORESTEP MICROFINANCE BANK" : this.nameEnquiryDetails?.bankName
+      this.fundTransferModel.bankName = this.isSendingTo ? "CORESTEP MICROFINANCE BANK" : SplitBankName
       this.fundTransferModel.bankCode = this.isSendingTo ? "000000" : this.nameEnquiryDetails?.bankCode
       this.fundTransferModel.sessionId = this.isSendingTo ? this.coreStepAccount?.sessionId :this.nameEnquiryDetails?.sessionId
       this.fundTransferModel.sourceType  =  "WEB"

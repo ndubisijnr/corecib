@@ -152,7 +152,7 @@ export default {
   data() {
     return {
       option_country: [],
-      business_type:['Sole Proprietorship','Limited Liability Company','Public Liability Company','Corporation',],
+      business_type:['Sole Proprietorship','Partnership','Limited Liability Company','Public Liability Company','Corporation',],
       countryCtrl: false,
       initiateModel: AuthenticationRequest.initiateEnrollment,
       completeModel: AuthenticationRequest.completeEnrollment,
