@@ -75,10 +75,8 @@
           <b-list-group class="m-3 text-left small">
             <b-list-group-item button disabled>{{user.customerEmail}}</b-list-group-item>
 <!--            <b-list-group-item button disabled>{{user.customerEmail}}</b-list-group-item>-->
-            <router-link to="/kyc-verifications" v-if="organisation.length > 0"><b-list-group-item button>KYC Verification </b-list-group-item></router-link>
-            <a href="https://bizgem.io/contact.html" target="_blank"> <b-list-group-item button>Support</b-list-group-item></a>
-            <a href="https://documenter.getpostman.com/view/20549781/Uz5GoGMo" target="blank"> <b-list-group-item button>Documentation</b-list-group-item></a>
-            <router-link to="/settings/settings" v-if="organisation.length > 0"> <b-list-group-item button>Settings</b-list-group-item></router-link>
+<!--            <router-link to="/kyc-verifications" v-if="organisation.length > 0"><b-list-group-item button>KYC Verification </b-list-group-item></router-link>-->
+            <a href="https://www.corebanknigeria.com/contact" target="_blank"> <b-list-group-item button>Support</b-list-group-item></a>
             <b-list-group-item button  @click="adminLogOut()">Log Out</b-list-group-item>
           </b-list-group>
         </div>
