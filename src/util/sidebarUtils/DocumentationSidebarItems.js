@@ -1,4 +1,5 @@
-const url = '/dashboard/documentation'
+const url = 'https://documenter.getpostman.com/view/20549781/2s93kxdRwi'
+// const url = '/dashboard/documentation'
 export default
 {
     header: 'Documentation',

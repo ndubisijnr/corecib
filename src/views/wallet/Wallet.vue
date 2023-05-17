@@ -2,7 +2,7 @@
   <div>
       <div class="export-btn-area">
         <search-form :module="searchWALLET"/>
-        <b-button @click="show = true" class="export-ex shadow-lg--hover small desktop">Create Wallet</b-button>
+        <b-button @click="show = true" class="export-ex shadow-lg--hover small desktop">Create Account</b-button>
         <b-icon-plus-circle class="mobile" @click="show = true"/>
       </div>
     <base-table

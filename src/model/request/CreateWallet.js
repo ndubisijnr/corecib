@@ -6,7 +6,7 @@ class createWalletRequest{
         firstName:null,
         lastName:null,
         phoneNumber:null,
-        countryCode:null,
+        countryCode:'+234',
         currency:null,
         minimumBalance:null,
         maximumBalance:null,

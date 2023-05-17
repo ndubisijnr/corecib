@@ -3,8 +3,8 @@
     <div>
       <div class="card-head">
         <div class="d-flex justify-content-between">
-          <h4 style="color:#413d52;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Create Wallet</h4>
-          <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Create Wallet Account"></button>
+          <h4 style="color:#413d52;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Create Account</h4>
+          <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Create Account"></button>
         </div>
       </div>
       <div class="modal-body">

@@ -704,23 +704,23 @@ export default {
     StoreUtils.dispatch(StoreUtils.actions.virtualAccount.updateReadBankList).then();
   },
 
+  //
+  // beforeMount() {
+  //   window.addEventListener("beforeunload", this.preventNav)
+  // },
+  //
+  // beforeUnmount() {
+  //   window.removeEventListener("beforeunload", this.preventNav);
+  // },
 
-  beforeMount() {
-    window.addEventListener("beforeunload", this.preventNav)
-  },
-
-  beforeUnmount() {
-    window.removeEventListener("beforeunload", this.preventNav);
-  },
-
-  beforeRouteLeave(to, from, next) {
-    if (this.isEditing == 'true') {
-      if (!window.confirm("")) {
-        return;
-      }
-    }
-    next();
-  },
+  // beforeRouteLeave(to, from, next) {
+  //   if (this.isEditing == 'true') {
+  //     if (!window.confirm("")) {
+  //       return;
+  //     }
+  //   }
+  //   next();
+  // },
 
   methods: {
     switchPreferenceNotification(){

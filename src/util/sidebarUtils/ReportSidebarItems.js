@@ -23,7 +23,7 @@ export default
             // ]
         },
         {
-            name:'Wallets Activities',
+            name:'Account Activities',
             icon:'fa fa-money-bill',
             path:'/reports/transactions'
         },
@@ -45,7 +45,7 @@ export default
             path:'/account'
         },
         {
-            name:'Wallets',
+            name:'Open Account',
             icon:'fa fa-wallet',
             path:'/wallet'
         },
