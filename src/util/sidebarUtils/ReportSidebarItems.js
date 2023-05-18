@@ -1,3 +1,5 @@
+const url =  '/kyc/coming-soon'
+
 export default
 {
     header: 'Services',
@@ -49,11 +51,11 @@ export default
             icon:'fa fa-wallet',
             path:'/wallet'
         },
-        // {
-        //     name:'KYC Verification',
-        //     icon:'fas fa-check-circle',
-        //     path:'/kyc-verifications'
-        // },
+        {
+            name:'KYC Verification',
+            icon:'fas fa-check-circle',
+            path:url
+        },
         {
             name:'Fund Transfer',
             icon:'fas fa-check-circle',
