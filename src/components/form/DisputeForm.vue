@@ -26,7 +26,7 @@
         <form role="form" @submit.prevent="logDispute()" v-else>
           <div class="form-floating mb-3">
             <input type="tel" class="form-control" placeholder="Payment Refrenence" required
-              v-model="transactionquery.paymentReference" disabled />
+              v-model="transactionquery.trnReference" disabled />
             <label>Payment Refrenence</label>
           </div>
           <div class="form-floating mb-3">
@@ -54,12 +54,12 @@
             <div class="col">
               <label>Debit Account Name</label>
               <input type="text" class="form-control" placeholder="Debit Account Name"
-                :value="transactionquery.debitAccountName" required disabled />
+                :value="transactionquery.trnDrAccountName" required disabled />
             </div>
             <div class="col">
               <label>Debit Account Number</label>
               <input type="number" class="form-control" placeholder="Organasation ID"
-                :value="transactionquery.debitAccountNumber" required disabled />
+                :value="transactionquery.trnDrAccountNumber" required disabled />
             </div>
 
           </div>
@@ -67,12 +67,12 @@
           <div class="row mb-3">
             <div class="col">
               <label>Credit Account Number</label>
-              <input type="number" class="form-control" placeholder="Organasation ID"
-                :value="transactionquery.creditAccountNumber" required disabled />
+              <input type="text" class="form-control" placeholder="Organasation ID"
+                :value="transactionquery.trnCrAccountNumber" required disabled />
             </div>
             <div class="col">
               <label>narration</label>
-              <input type="text" class="form-control" placeholder="narration" :value="transactionquery.narration"
+              <input type="text" class="form-control" placeholder="narration" :value="transactionquery.trnNarration"
                 required disabled />
             </div>
 
@@ -81,12 +81,13 @@
             <div class="col mb-3">
               <label>Bank Name</label>
               <input type="text" class="form-control" placeholder="Bank Name" required disabled
-                v-model="transactionquery.bankName" />
+                v-model="transactionquery.trnCrInstitutionName
+" />
             </div>
             <div class="col mb-3">
               <label>Amount</label>
               <input type="text" class="form-control" placeholder="Bank Name" required disabled
-                v-model="transactionquery.amount" />
+                v-model="transactionquery.trnAmount" />
             </div>
           </div>
           <div class="form-floating mb-3">
