@@ -229,13 +229,13 @@ export const actions = {
             StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
 
             //read invites
-            // StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
+            StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
 
-            // StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc)
+            StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc)
 
 
             //read Roles
-            // StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
+            StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
 
             StoreUtils.dispatch(StoreUtils.actions.walletTransactions.updateAllWalletTransactions).then();
 
@@ -384,13 +384,15 @@ export const actions = {
   readRefferalState: ({commit}, paylaod={}) => {
     commit("updateLoading", true)
     return OrganizationService.callRefferalStatsApi(paylaod).then(response => {
+      commit("updateLoading", false)
       let responseData = response.data
       if(responseData.responseCode == "00"){
-        commit("updateLoading", false)
         commit("updateRefferalStats", responseData)
-      }else if (responseData.responseCode === "115") {
-        commit("updateTimedOut", true)
+      }else {
+        console.log(responseData.responseMessage)
       }
+    }).catch(e => {
+      console.log(e)
     })
   },
 
@@ -509,18 +511,18 @@ export const actions = {
           StoreUtils.dispatch(StoreUtils.actions.preference.readPreferenceById)
 
           //read invites
-          // StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
+          StoreUtils.dispatch(StoreUtils.actions.auth.readAllInvites).then()
 
           StoreUtils.dispatch(StoreUtils.actions.billspayment.updateCategories)
 
           //read Roles
-          // StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
+          StoreUtils.dispatch(StoreUtils.actions.auth.readOrganisationRoles).then()
 
           //read disputes
           StoreUtils.dispatch(StoreUtils.actions.dispute.updateDisputes);
 
           //read kyc
-          // StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc).then()
+          StoreUtils.dispatch(StoreUtils.actions.kycVerification.readAllKyc).then()
 
 
         //Call in read documents actions
@@ -541,7 +543,7 @@ export const actions = {
 
 
         router.push({name:"GetStarted"}).then(() => {
-          if(state.currentOrganisation.organisationStatus == 'PENDING'){
+          if(state.currentOrganisation.organisationStatus === 'PENDING'){
             commit("updateReminderForm", true)
           }
         })
@@ -615,7 +617,14 @@ export const actions = {
     return OrganizationService.callReadInvite(payload).then(response => {
       commit("updateLoading", false)
       let responseData = response.data
-      commit("updateAllInvites", responseData.data)
+      if(responseData.responseCode === "00"){
+        commit("updateAllInvites", responseData.data)
+      }else{
+        commit("updateAllInvites",[])
+      }
+    }).catch(e => {
+        commit("updateLoading", false)
+        console.log(e)
     })
   },
 

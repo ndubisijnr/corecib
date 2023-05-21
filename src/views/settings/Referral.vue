@@ -4,15 +4,15 @@
       <b-card-body>
         <div class="inner-card">
           <b-container class="itemabc1234">
-            <div class="p-2">
+            <div class="p-2" style="z-index: 9999999">
               <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_rkboxc5u.json"  background="transparent"
-                             speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
-              <h4>Your Referral link</h4>
+                             speed="1"  style="top:-20px;left:170px; width: 100px; height: 100px;"  loop  autoplay></lottie-player>
+              <h4 style="z-index: 9999999">Your Referral link</h4>
               <p class="text-dark">
                 Refer new merchants with your referral Link and earn 10% on the
                 revenue Corestep makes from each transaction.
               </p>
-              <div class="mb-3" @click="copyToClipboard()" title="click to copy to clipboard" >
+              <div style="z-index: 9999999" class="mb-3" @click="copyToClipboard()" title="click to copy to clipboard" >
                 <label>click on link to copy</label>
                 <input
                   class="form-control form-control-md"

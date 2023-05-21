@@ -9,8 +9,8 @@
       <div class="section-1">
         <div class="cag-sec">
           <div v-for="i in categories" :key="i" class="biller-box-category" :class="{'active':activeC == i.categoryName}" @click="readBillers(obj = i.categoryCode, obj2 = i.categoryName), b(), billstate === 'product', activeC = i.categoryName,modal=true">
-            <img :src="i.categoryImage" width="30"/>
-            <span >{{i.categoryName}}</span>
+            <img :src="i?.categoryImage" width="30"/>
+            <span >{{i?.categoryName}}</span>
             <b-icon-arrow-right />
           </div>
         </div>
@@ -23,8 +23,8 @@
         <div v-else>
           <div class="biller-area">
             <div v-if="billstate == true" v-for="i in billers" :key="i" class="biller-box" @click="readProduct(obj = i.billerCode),billstate = !billstate, billerImage = i.billerImage">
-              <img :src="i.billerImage" width="40">
-              <span>{{i.billerName | titleCase}}</span>
+              <img :src="i?.billerImage" width="40">
+              <span>{{i?.billerName | titleCase}}</span>
             </div>
             <div v-if="billstate == false" class="data_bundle">
               <div class="airtime-form airtime animate animate__animated animate__zoomIn"  v-if="category.includes('DATA') || category.includes('CABLE_TV') || category.includes('AIRTIME') || category.includes('ELECTRICITY') || category.includes('BET')">
@@ -41,19 +41,19 @@
           </div>
         </div>
         </div>
-    <div class="section-3">
-      <div class="d-flex justify-content-center">
-        <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
-      </div>
-    </div>
+<!--    <div class="section-3">-->
+<!--      <div class="d-flex justify-content-center">-->
+<!--        <dashboard-card :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>-->
+<!--      </div>-->
+<!--    </div>-->
 
   </div>
   <div class="main-mb">
     <div class="section-1" v-if="mobileMode">
       <div class="cag-sec">
         <div v-for="i in categories" :key="i" class="biller-box" :class="{'active':activeC == i.categoryName}" @click="readBillers(obj = i.categoryCode, obj2 = i.categoryName), b(), billstate === 'product',mobileMode=!mobileMode">
-          <img :src="i.categoryImage" width="30"/>
-           <span >{{i.categoryName}}</span>
+          <img :src="i?.categoryImage" width="30"/>
+           <span >{{i?.categoryName}}</span>
            <b-icon-arrow-right />
         </div>
       </div>
@@ -69,8 +69,8 @@
           </div>
           <div class="biller-area">
           <div v-if="billstate == true" v-for="i in billers" :key="i" class="biller-box" @click="readProduct(obj = i.billerCode),billstate = !billstate, billerImage = i.billerImage">
-            <img :src="i.billerImage" width="40">
-            <span>{{i.billerName | titleCase}}</span>
+            <img :src="i?.billerImage" width="40">
+            <span>{{i?.billerName | titleCase}}</span>
             </div>
           <div v-if="billstate == false" class="data_bundle">
               <div class="airtime-form airtime animate animate__animated animate__zoomIn"  v-if="category.includes('DATA') || category.includes('CABLE_TV') || category.includes('AIRTIME') || category.includes('ELECTRICITY')  || category.includes('BET')">
@@ -193,6 +193,7 @@ export default {
   display: flex;
   /*border: solid red;*/
   justify-content: space-evenly;
+  flex-direction: column;
   height: auto;
 }
 .section-3{
@@ -208,7 +209,7 @@ export default {
 }
 
 .biller-box{
-  width: 40%;
+  width: 20%;
   height: 60px;
   margin: 10px;
   padding: 10px;
@@ -220,6 +221,8 @@ export default {
   align-items: center;
   cursor: pointer;
   border-radius: 10px;
+  box-shadow: -1px 0 3px 1px rgb(77 77 77 / 102%);
+
 }
 
 .biller-box-category{
@@ -238,7 +241,7 @@ export default {
 }
 
 .biller-box:hover{
-  box-shadow: -1px 0 3px 1px rgb(77 77 77 / 102%);
+  box-shadow: none;
   transition: .3s ease-in;
 }
 
@@ -272,7 +275,7 @@ export default {
   /*border: solid green;*/
 }
 .section-1{
-  width: 50%;
+  width: 100%;
   /*background-color: #236395;*/
   color: black;
   height: auto;
@@ -335,14 +338,18 @@ export default {
   /*height: 100vh;*/
   cursor: pointer;
   width: 100%;
-  /*border-bottom: solid #3F88C5;*/
+  border-bottom: solid #413d52;
   /*background-color: #236395;*/
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
   font-size: 12px;
   color: black;
 }
 
 .active{
-  background-color:#3F88C5;
+  background-color:#faa831;
   color: white;
 }
 

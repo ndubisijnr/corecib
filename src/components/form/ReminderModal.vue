@@ -3,8 +3,8 @@
     <div>
       <div class="card-head">
         <div class="d-flex justify-content-between">
-          <h4 style="color:#3F88C5;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Reminder Notice ⚠️</h4>
-          <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Add Payout Bank"></button>
+          <h4 style="color:#413d52;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Reminder Notice ⚠️</h4>
+          <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel"></button>
         </div>
       </div>
       <div class="modal-body">
@@ -75,7 +75,7 @@ export default {
 
 <style scoped>
 .card-head{
-  background-color: #D7E6F3;
+  background-color: transparent;
   color: white;
 }
 .spinner-border {
@@ -92,7 +92,7 @@ export default {
 
 .link{
   margin-top:2%;
-  color: #3F88C5;
+  color: #413d52;
   cursor: pointer;
 }
 

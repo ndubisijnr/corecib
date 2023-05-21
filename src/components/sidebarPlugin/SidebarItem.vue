@@ -1,7 +1,7 @@
 <template>
   <component
     :is="baseComponent"
-    :to="link.path ? link.path : '/'"
+    :to="link.path"
     class="nav-item text-white"
     :class="{ 'active-page': Active === link.path || Active.includes(link.path)}"
     tag="li">
@@ -33,7 +33,7 @@
       </div>
     </collapse-transition>
 
-    <slot
+   <slot
       name="title"
       v-if="children.length === 0 && !$slots.default && link.path">
       <component

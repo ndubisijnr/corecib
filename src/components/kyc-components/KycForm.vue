@@ -4,7 +4,7 @@
     <modal-1 :show="showKycForm && showModal">
           <div class="card-head">
             <div class="d-flex justify-content-between">
-              <h4 style="color:#3F88C5;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">KYC Verification Request</h4>
+              <h4 style="color:#413d52;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">KYC Verification Request</h4>
               <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Create Wallet Account"></button>
             </div>
           </div>
@@ -18,12 +18,12 @@
       <div>
         <div class="card-head">
           <div class="d-flex justify-content-between">
-            <h4 style="color:#3F88C5;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">{{kycVerificationType}}</h4>
+            <h4 style="color:#413d52;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">{{kycVerificationType}}</h4>
             <button type="button" class="btn-close p-2 m-2" @click="closeModal2()" title="Cancel Create Wallet Account"></button>
           </div>
         </div>
           <div>
-            <h4 class="text-center m-4">Tell us about who you want to verify</h4>
+<!--            <h4 class="text-center m-4">Tell us about who you want to verify</h4>-->
           </div>
         <div class="">
           <b-form @submit.prevent="kycVerificationAction">
@@ -305,8 +305,8 @@ export default {
 }
 
 .card-head{
-  background-color: #D7E6F3;
-  color: white;
+  /*background-color: #D7E6F3;*/
+  color: #413d52;
 }
 
 </style>

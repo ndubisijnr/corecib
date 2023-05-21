@@ -74,8 +74,8 @@
             </div>
           </div>
             <div class="card-footer">
-              <b-button class="mt-2 w-100" v-if="!Object.values(customerEnquiryData).every((o) => o === null)" type="submit" @click="action = 'pay'" style="background-color:#3F88C5;color:white" :disabled="paymentLoading">{{paymentLoading ? 'Please Wait...' : 'Pay'}}</b-button>
-              <b-button class="mt-2 w-100" v-else type="submit" style="background-color:#3F88C5;color:white" :disabled="customerEnquiryLoading" @click="action = 'validate'">{{customerEnquiryLoading ? 'Please Wait...' : 'Validate'}}</b-button>
+              <b-button class="mt-2 w-100" v-if="!Object.values(customerEnquiryData).every((o) => o === null)" type="submit" @click="action = 'pay'" style="background-color:#413d52;color:white" :disabled="paymentLoading">{{paymentLoading ? 'Please Wait...' : 'Pay'}}</b-button>
+              <b-button class="mt-2 w-100" v-else type="submit" style="background-color:#413d52;color:white" :disabled="customerEnquiryLoading" @click="action = 'validate'">{{customerEnquiryLoading ? 'Please Wait...' : 'Validate'}}</b-button>
                 </div>
           </form>
         </div>
@@ -138,7 +138,7 @@
           </div>
 
           <div class="card-footer">
-            <b-button class="mt-2 w-100" type="submit" style="background-color:#3F88C5;color:white" :disabled="paymentLoading">{{paymentLoading ? 'Please Wait...' : 'Proceed'}}</b-button>
+            <b-button class="mt-2 w-100" type="submit" style="background-color:#413d52;color:white" :disabled="paymentLoading">{{paymentLoading ? 'Please Wait...' : 'Proceed'}}</b-button>
           </div>
         </form>
       <!-- End Area for DATA BUNDLE -->

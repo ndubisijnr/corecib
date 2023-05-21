@@ -121,7 +121,7 @@
               @click="hide$show()"></i>
           </div>
         </div>
-            <h5 class="text-center">By clicking the “Proceed” button, you agree to BizGem’s</h5>
+            <h5 class="text-center">By clicking the “Proceed” button, you agree to Corestep’s</h5>
              <h5 class="text-center"> Terms of acceptable use.</h5>
         <div class="login-footer">
           <button class="btn-login" native-type="submit" :disabled="loading" :style="{background:primaryColor}">

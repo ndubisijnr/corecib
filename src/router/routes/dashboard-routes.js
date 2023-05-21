@@ -32,4 +32,11 @@ export default [
         meta: {layout: 'dashboard',authRequired:true},
         component: Documentation,
     },
+
+    {
+        path: 'https://documenter.getpostman.com/view/20549781/2s93kxdRwi',
+        name: 'Documentation',
+        meta: {layout: 'dashboard',authRequired:true},
+        // component: Documentation,
+    },
 ];

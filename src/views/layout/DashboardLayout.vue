@@ -6,11 +6,15 @@
             <h6 class="navbar-collapse-header sidebar-headers">{{ sidebar.header }} </h6>
 
             <span v-for="item in sidebar.items" v-bind:key="item.name">
-              <div>
+              <div v-if="item.name !== 'API Documentation'">
                 <sidebar-item :target="item.target" :link="{
                   name: item.name,
                   icon: item.icon,
                   path: item.path }"/>
+              </div>
+              <div v-else style="margin: 20px">
+                <i :class="item.icon" ></i>
+                <a :href="item.path" target="_blank" class="nav-link-text">{{ item.name }} <b class="caret"></b></a>
               </div>
 
           </span>
@@ -104,7 +108,7 @@ export default {
   },
   computed:{
     sidebarItems(){
-      return [DashboardSidebarItems,DocumentationSidebarItems, ReportSidebarItems,BillsSidebarItems,SettingsSidebarItems]
+      return [DashboardSidebarItems, ReportSidebarItems,BillsSidebarItems,SettingsSidebarItems]
     },
     ...mapState({
       isdarkMode:state => state.auth.darkMode,
@@ -146,6 +150,14 @@ export default {
   /*border: solid;*/
   /*overflow-y: scroll;*/
   width: 100%;
+}
+
+.nav-link-text{
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 10px;
 }
 
 .dropdown-content{}

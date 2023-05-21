@@ -1,4 +1,4 @@
-const url =  '/kyc/coming-soon'
+// const url =  '/kyc/coming-soon'
 
 export default
 {
@@ -54,7 +54,8 @@ export default
         {
             name:'KYC Verification',
             icon:'fas fa-check-circle',
-            path:url
+            path:'/kyc-verifications'
+            // path:url
         },
         {
             name:'Fund Transfer',
