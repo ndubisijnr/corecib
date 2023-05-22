@@ -1,9 +1,9 @@
 <template>
   <div>
     <RouteNav />
-    <div style="display: flex;justify-content: end;padding: 1rem">
-        <b-button @click="showKycForm = true, showLoading()" :style="{backgroundColor:primaryColor,border:'none',color:'white'}">Make Another Request</b-button>
-      </div>
+<!--    <div style="display: flex;justify-content: end;padding: 1rem">-->
+<!--        <b-button @click="showKycForm = true, showLoading()" :style="{backgroundColor:primaryColor,border:'none',color:'white'}">Make Another Request</b-button>-->
+<!--      </div>-->
     <div>
       <div class="business-profile">
         <div v-if="kycVerificationType">

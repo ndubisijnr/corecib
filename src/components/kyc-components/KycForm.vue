@@ -1,25 +1,11 @@
 <template>
   <div>
-  <template>
-    <modal-1 :show="showKycForm && showModal">
-          <div class="card-head">
-            <div class="d-flex justify-content-between">
-              <h4 style="color:#413d52;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">KYC Verification Request</h4>
-              <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Create Wallet Account"></button>
-            </div>
-          </div>
-          <div class="card-body">
-            <KycLists @openEachKycForm="showKycForm2"></KycLists>
-          </div>
-    </modal-1>
-  </template>
-  <template>
-    <modal-1 :show="showModal2">
+    <modal-1 :show="showKycForm && showModal && !cancel">
       <div>
         <div class="card-head">
           <div class="d-flex justify-content-between">
             <h4 style="color:#413d52;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">{{kycVerificationType}}</h4>
-            <button type="button" class="btn-close p-2 m-2" @click="closeModal2()" title="Cancel Create Wallet Account"></button>
+            <button type="button" class="btn-close p-2 m-2" @click="closeModal2" title="Cancel Create Wallet Account"></button>
           </div>
         </div>
           <div>
@@ -137,9 +123,7 @@
         </div>
       </div>
   </modal-1>
-  </template>
   </div>
-
 </template>
 
 <script>
@@ -162,6 +146,7 @@ export default {
     return {
       showModal2: false,
       showModal: true,
+      cancel:false,
       formatted: null,
       primaryColor: window.__env.app.primaryColor,
       KycRequest_corporate_affairsModal: KycRequest.corporate_affairs,
@@ -185,7 +170,6 @@ export default {
       if (this.kycVerificationType === 'Corporate affairs commission') {
         this.KycRequest_corporate_affairsModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateCorporateAffairs, this.KycRequest_corporate_affairsModal).then(() => {
-          this.closeModal()
           this.closeModal2()
         })
       }
@@ -195,7 +179,6 @@ export default {
         this.KycRequest_bank_verificationModal.dob = date
         this.KycRequest_bank_verificationModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateBvn, this.KycRequest_bank_verificationModal).then(() => {
-          this.closeModal()
           this.closeModal2()
         })
       }
@@ -205,7 +188,6 @@ export default {
         this.KycRequest_national_identityModal.dob = date
         this.KycRequest_national_identityModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateNationalIdentity, this.KycRequest_national_identityModal).then(() => {
-          this.closeModal()
           this.closeModal2()
         })
       }
@@ -215,7 +197,6 @@ export default {
         this.KycRequest_drivers_licenceModal.dob = date
         this.KycRequest_drivers_licenceModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateDriversLicense, this.KycRequest_drivers_licenceModal).then(() => {
-          this.closeModal()
           this.closeModal2()
         })
       }
@@ -223,7 +204,6 @@ export default {
       else if (this.kycVerificationType === 'Tax identification number') {
         this.KycRequest_tax_identification_numberModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateTax, this.KycRequest_tax_identification_numberModal).then(() => {
-          this.closeModal()
           this.closeModal2()
         })
       }
@@ -231,27 +211,24 @@ export default {
       else if (this.kycVerificationType === 'Voters card') {
         this.KycRequest_voter_cardModal.reference = `BIZGEM-${this.reference(30)}`
         StoreUtils.dispatch(StoreUtils.actions.kycVerification.UpdateVoterCard, this.KycRequest_voter_cardModal).then(() => {
-          this.closeModal()
           this.closeModal2()
         })
       }
     },
 
-    closeModal() {
+    closeModal2() {
       //close modal form
-      this.showModal = false;
+      this.showModal= false;
       this.$emit("closeKycForm", false);
-      this.showModal = true;
+      this.showModal= true;
     },
 
-    closeModal2() {
-      this.showModal = true;
+    closeModal() {
       this.showModal2 = false;
     },
 
     showKycForm2(modelValue) {
       this.showModal2 = modelValue
-      this.showModal = false;
     },
     reference(length) {
       let result = ""

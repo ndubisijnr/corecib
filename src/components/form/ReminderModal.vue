@@ -1,37 +1,21 @@
 <template>
-  <modal-1 :show="showReminderForm && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
-    <div>
-      <div class="card-head">
-        <div class="d-flex justify-content-between">
-          <h4 style="color:#413d52;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Reminder Notice ⚠️</h4>
-          <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel"></button>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class="p-1" style="background:#FEE1E1;font-weight: lighter; font-size: 5px;margin-bottom:15px">
-          <span style="font-weight: bolder; font-size: 18px;"  class="d-flex">
-            <span class="small">You are currently only allowed to use bills payment APIs, kindly update your business information to access all our services</span>
-          </span>
-        </div>
-        <div>
-           <span style="font-weight: bolder; font-size: 18px;"  class="d-flex">
-             <span class="small">How to upload documents</span>
-           </span>
-          <span style="font-weight: bolder; font-size: 18px;"  class="d-flex gap-3">
-            <ul>
-             <li class="small link">Go to Settings </li>
-            <li class="small link"> Under Profiles </li>
-             <li class="small link">Then Upload Documents</li>
-            </ul>
-           </span>
-        </div>
-<!--        <div class="text-right">-->
-<!--          <b-button @click="closeModal()">Will do later.</b-button>-->
-<!--        </div>-->
-      </div>
+  <modal-1 :show="showReminderForm && showModal" body-classes="p-0" modal-classes="modal-dialog-centered modal-md">
 
-
+    <div class="card-head">
+      <div class="d-flex justify-content-between">
+        <h4 style="color:white;font-size:18px;font-weight:700;width: 100%;display: flex;justify-content: center;align-items: center">Reminder Notice</h4>
+        <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel"></button>
+      </div>
     </div>
+    <div class="modal-body">
+      <div style="font-size: 50px">⚠️</div>
+      <div class="p-1" style="font-weight: lighter; font-size: 5px;margin-bottom:15px">
+        <span style="font-weight: bolder; font-size: 18px;"  class="d-flex">
+          <span class="small text-dark">You are currently only allowed to use bills payment APIs, kindly update your business information to access all our services</span>
+        </span>
+      </div>
+    </div>
+
   </modal-1>
 </template>
 
@@ -74,9 +58,15 @@ export default {
 </script>
 
 <style scoped>
+.modal-body{
+  display: flex;
+  gap: 20px;
+}
 .card-head{
-  background-color: transparent;
+  background-color: #EE9BA9;
   color: white;
+  border: solid;
+  margin: 0 !important;
 }
 .spinner-border {
   display: inline-block;
