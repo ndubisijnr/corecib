@@ -38,7 +38,7 @@
               <input type="email" v-model="createAccountModel.customerEmail" class="form-control" placeholder="Email" required>
             </div>
             <div class="col w-100 mb-2">
-              <label class="small">Bank Verification Number</label>
+              <label class="small">BVN(optional)</label>
               <input type="text" v-model="createAccountModel.customerBvn" class="form-control" placeholder="BVN">
             </div>
           </div>
@@ -113,7 +113,8 @@ export default {
 
     createAccount(){
       this.createAccountModel.accountCurrency = 'NGN'
-      this.createAccountModel.customerCountry = "NGN"
+      this.createAccountModel.customerCountry = "Nigeria"
+      this.createAccountModel.countryCode = this.createAccountModel.countryCode ? this.createAccountModel.countryCode : "+234"
       this.createAccountModel.source = "WEB"
           StoreUtils.dispatch(StoreUtils.actions.account.createAccount).then(() => {
             Object.keys(this.createAccountModel).forEach(key => {
