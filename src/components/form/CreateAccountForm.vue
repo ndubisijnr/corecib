@@ -22,12 +22,12 @@
           <div class="row">
             <div class="col w-100 mb-2">
               <label class="small">Middle Name</label>
-              <input type="text" v-model="createAccountModel.customerMiddleName" class="form-control" placeholder="Middle Name" aria-label="Server" required>
+              <input type="text" v-model="createAccountModel.customerMiddleName" class="form-control" placeholder="Middle Name" aria-label="Server">
             </div>
             <div class="col w-100">
               <label class="small">Phone Number</label>
               <div class="d-flex">
-                <vue-country-code v-model="createAccountModel.countryCode" @onSelect="onSelect" :preferredCountries="['ng', 'us', 'gb']" style="height: 45px" class="" required></vue-country-code>
+                <vue-country-code v-model="createAccountModel.countryCode" @onSelect="onSelect" :preferredCountries="['ng', 'us', 'gb']" style="height: 45px" class=""></vue-country-code>
                 <input type="tel" v-model="createAccountModel.customerPhoneNumber" class="form-control" placeholder="Phone Number" aria-label="Server" required>
               </div>
             </div>
