@@ -35,7 +35,7 @@
           <div class="row">
             <div class="col w-100 mb-2">
               <label class="small">Email</label>
-              <input type="email" v-model="createAccountModel.customerEmail" class="form-control" placeholder="Email" required>
+              <input type="email" v-model="createAccountModel.customerEmail" class="form-control" placeholder="Email">
             </div>
             <div class="col w-100 mb-2">
               <label class="small">BVN(optional)</label>
