@@ -6,7 +6,7 @@
       <div class="initiate-enrollment">
         <form class="form-login" role="form" @submit.prevent="handleSubmit(addUser())">
         <div class="text-center">
-          <a href="https://www.bizgem.io/"> <img src="@/assets/biz.svg" alt="" class="mg-fluid p" width="80px" /></a>
+          <a href="https://www.bizgem.io/"> <img src="@/assets/img.png" alt="" class="mg-fluid p" width="80px" /></a>
         </div>
         <div class="">
           <h4 class="complete-enrollment-h4">New Customer</h4>

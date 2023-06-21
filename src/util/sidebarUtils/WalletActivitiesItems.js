@@ -49,6 +49,11 @@ export default
             path:'/wallet'
         },
         {
+            name:'Accounts',
+            icon:'fa fa-wallet',
+            path:'/account'
+        },
+        {
             name:'KYC Verification',
             icon:'fas fa-check-circle',
             path:'/kyc-verifications'

@@ -3,6 +3,11 @@ import store from "../../store/store";
 class StoreUtils {
   static actions = {
 
+    account:{
+      createAccount:"account/createAccount",
+      readAccount:"account/readAccount"
+    },
+
     transactions:{
       readTransactions:"transactions/readTransactions",
       filterTransactions:"transactions/filterTransactions"
@@ -115,6 +120,10 @@ class StoreUtils {
   };
 
   static mutations = {
+    account:{
+      updateLoading:"account/updateLoading",
+      updateAccount:"account/updateAccount"
+    },
     transactions:{
       updateTransactions:"transactions/updateTransactions",
       updateLoading:"transactions/updateLoading",

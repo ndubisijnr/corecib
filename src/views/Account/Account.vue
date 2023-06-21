@@ -1,36 +1,34 @@
 <template>
   <div>
-      <div class="export-btn-area">
-        <search-form :module="searchWALLET"/>
-        <b-button @click="show = true" class="export-ex shadow-lg--hover small desktop">Create Wallet</b-button>
-        <b-icon-plus-circle class="mobile" @click="show = true"/>
-      </div>
+    <div class="export-btn-area">
+      <search-form :module="searchAccount"/>
+      <b-button @click="show = true" class="export-ex shadow-lg--hover small desktop">Open Account</b-button>
+      <b-icon-plus-circle class="mobile" @click="show = true"/>
+    </div>
     <base-table
-        :items="this.wallet.data"
+        :items="account"
         :fields="fields"
         filter-mode="default"
         :is-busy="loading" />
-    <create-wallet-form @closeWalletForm="updateWalletForm"  :showWalletForm="show"></create-wallet-form>
+    <create-account-form @closeAccountForm="updateAccountForm"  :showAccountForm="show"></create-account-form>
   </div>
 </template>
+
 <script>
-
-import WalletRequest from "../../model/request/WalletRequest"
-import StoreUtils from "../../util/baseUtils/StoreUtils";
-import BaseTable from "../../components/table/BaseTable";
-import SearchModuleutil from "../../util/constant/SearchModuleutil"
-import CreateWalletForm from "@/components/form/CreateWalletForm";
-
-
-
-import { mapState } from "vuex";
 import SearchForm from "../../components/form/SearchForm";
+import BaseTable from "../../components/table/BaseTable";
+import WalletRequest from "../../model/request/WalletRequest";
+import SearchModuleutil from "../../util/constant/SearchModuleutil";
+import {mapState} from "vuex";
+import StoreUtils from "../../util/baseUtils/StoreUtils";
+import CreateAccountForm from "../../components/form/CreateAccountForm";
+
 export default {
-  name: "Wallet",
+  name: "Account",
   components: {
     SearchForm,
     BaseTable,
-    CreateWalletForm,
+    CreateAccountForm
   },
   data() {
     return {
@@ -43,7 +41,7 @@ export default {
       light: "light",
       allWalletModel: WalletRequest.readWallet,
       singleWalletTransactionmodel: WalletRequest.readWalletTransaction,
-      searchWALLET: SearchModuleutil.WALLET,
+      searchAccount: SearchModuleutil.ACCOUNTS,
       type: "",
       option_time: [
         { value: "last30", label: "Last 30 days" },
@@ -56,26 +54,26 @@ export default {
       ],
       items: [],
       fields: [
-        { key: "accountId", label: "accountId" },
+        // { key: "accountId", label: "accountId" },
         // { key: "accountCustomerId", label: "accountCustomerId" },
-        { key: "accountNumber", label: "accountNumber" },
-        { key: "accountName", label: "accountName" },
-        // {
-        //   key: "accountCurrency",
-        //   label: "accountCurrency",
-        // },
-        { key: "accountBalance", label: "accountBalance" },
-        { key: "accountStatus", label: "accountStatus" },
-        { key: "accountLedgerBalance", label: "accountLedgerBalance" },
-        // { key: "accountPhone", label: "accountPhone" },
-        // { key: "accountEmail", label: "accountEmail" },
+        { key: "customerFirstName", label: "customerFirstName" },
+        { key: "customerLastName", label: "customerLastName" },
+        {
+          key: "customerEmail",
+          label: "customerEmail",
+        },
+        { key: "customerPhone", label: "customerPhone" },
+        { key: "customerBvn", label: "customerBvn" },
+        { key: "customerStatus", label: "customerStatus" },
+        // { key: "customerCreatedAt", label: "customerCreatedAt" },
+        // { key: "customerLastLoginAt", label: "customerLastLoginAt" },
         // { key: "accountBvn", label: "accountBvn" },
-        { key: "walletAction", label: "Actions" },
+        { key: "action", label: "Actions" },
       ],
     }
   },
   methods: {
-    updateWalletForm(value) {
+    updateAccountForm(value) {
       this.show = value;
     },
 
@@ -84,25 +82,27 @@ export default {
     sortOptions() {
       // Create an options list from our fields
       return this.fields
-        .filter((f) => f.sortable)
-        .map((f) => {
-          return { text: f.label, value: f.key };
-        });
+          .filter((f) => f.sortable)
+          .map((f) => {
+            return { text: f.label, value: f.key };
+          });
     },
     ...mapState({
       userInformation: (state) => state.auth.userInfo,
-      loading: (state) => state.walletTransactions.loading,
-      wallet: (state) => state.walletTransactions.wallets,
+      loading: (state) => state.account.loading,
+      account: (state) => state.account.accounts,
     }),
 
     myStyles() {
       return { height: "150px" };
     },
   },
-  mounted() {},
-
-};
+  mounted() {
+    StoreUtils.dispatch(StoreUtils.actions.account.readAccount)
+  },
+}
 </script>
+
 <style scoped>
 .mobile{
   display: none;
@@ -172,4 +172,3 @@ export default {
 }
 
 </style>
-

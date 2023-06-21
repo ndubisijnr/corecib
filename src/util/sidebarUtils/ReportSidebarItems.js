@@ -47,9 +47,14 @@ export default
             path:'/account'
         },
         {
-            name:'Open Account',
+            name:'Wallet',
             icon:'fa fa-wallet',
             path:'/wallet'
+        },
+        {
+            name:'Open Account',
+            icon:'fa fa-wallet',
+            path:'/open-account'
         },
         {
             name:'KYC Verification',
