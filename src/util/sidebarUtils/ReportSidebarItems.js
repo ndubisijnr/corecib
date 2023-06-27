@@ -52,7 +52,7 @@ export default
             path:'/wallet'
         },
         {
-            name:'Open Account',
+            name:'Saving Account',
             icon:'fa fa-wallet',
             path:'/open-account'
         },
