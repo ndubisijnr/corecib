@@ -604,6 +604,7 @@ export default {
         // { key: "organisationType", label: "Organisation Type" },
         { key: "customerOrganisationRole", label: "User Role" },
         { key: "customerOrganisationStatus", label: "Status" },
+        { key: "customerOrganisationTerminalId", label: "Terminal ID" },
         { key: "CustomerAction", label: "Actions" },
 
       ]

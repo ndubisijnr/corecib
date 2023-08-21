@@ -186,6 +186,7 @@ export const actions = {
 
   logon: ({ commit, state, dispatch,getters }, payload = AuthenticationRequest.login) => {
     commit("updateLoading", true)
+    payload.source = "WEB"
     return AuthService.callLogonApi(payload).then(response => {
         commit("updateLoading", false)
         let responseData = response.data;
