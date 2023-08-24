@@ -168,9 +168,26 @@
 
         <b-icon-file
           style="cursor: pointer; width: 25px; height: 15px"
-          @click="getValueCallVAT(row.item.accountNumber)"
+          @click="getValueCallVAT(row.item.virtualAccountNumber)"
           title="view virtual account transactions"
         />
+
+        <b-icon-eye-slash
+          style="cursor: pointer; width: 25px; height: 15px"
+          v-if="row.detailsShowing"
+          href="#"
+          @click="row.toggleDetails"
+        />
+        <b-icon-eye
+          style="cursor: pointer; width: 25px; height: 15px"
+          v-else
+          href="#"
+          @click="row.toggleDetails"
+        />
+      </template>
+      <template v-slot:cell(actions)="row">
+
+
         <b-icon-eye-slash
           style="cursor: pointer; width: 25px; height: 15px"
           v-if="row.detailsShowing"
@@ -447,6 +464,7 @@ export default {
     },
     getValueCallVAT(acct) {
       this.virtualAccountTransactionmodel.accountNumber = acct;
+      console.log(this.virtualAccountTransactionmodel)
       this.$router.replace(`/account/virtual-acccount/transactions`).then(() => {
         StoreUtils.dispatch(
           StoreUtils.actions.virtualAccount.updateVirtualaccountTransactions,

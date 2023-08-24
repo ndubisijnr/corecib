@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 export const state = {
   loading: false,
   virtualAccount: BaseResponse.list,
-  virtualaccounttransaction:{},
+  virtualaccounttransaction:null,
   bankList:{},
   virtualAccountCreateResponse:VirtualAccountResponse.createVirtualAccount,
   virtualAccountEditPayload:null

@@ -7,12 +7,8 @@
       </div>
      <export-excel style="display: none" id="export" name="bizgemTransactions-excel" :data="virtualAccounttransactions"></export-excel>
 
-    <div class="pl-4 text-dark ml-4" v-if="!loading && virtualAccounttransactions.length > 0" style="width:20%;box-shadow: 0 1px 2px hsl(0deg 0% 0% / 20%);padding: 5px;background-color: white;">
-      <h6>Account Number: {{virtualAccounttransactions[0].accountNumber}}</h6>
-      <h6>Wallet Account Name: {{virtualAccounttransactions[0].accountName}}</h6>
-    </div>
    <base-table
-          :items="virtualAccounttransactions"
+          :items="virtualAccounttransactions.data"
           :fields="fields"
           filter-mode="default"
           :is-busy="loading" />
@@ -55,21 +51,17 @@ export default {
       ],
       items: [],
       fields: [
-        { key: "accountId", label: "accountId" },
-        { key: "accountCustomerId", label: "accountCustomerId" },
-        { key: "accountNumber", label: "accountNumber" },
-        { key: "accountName", label: "accountName" },
+        { key: "trnDrCr", label: "trnDrCr" },
+        { key: "trnActualAmount", label: "trnActualAmount" },
+        { key: "trnDrAccountName", label: "trnDrAccountName" },
+        { key: "trnCrAccountNumber", label: "trnCrAccountNumber" },
         {
-          key: "accountCurrency",
-          label: "accountCurrency",
+          key: "trnCrAccountName",
+          label: "trnCrAccountName",
         },
-        { key: "accountBalance", label: "accountBalance" },
-        { key: "accountStatus", label: "accountStatus" },
-        { key: "accountLedgerBalance", label: "accountLedgerBalance" },
-        { key: "accountPhone", label: "accountPhone" },
-        { key: "accountEmail", label: "accountEmail" },
-        { key: "accountBvn", label: "accountBvn" },
-        // { key: "actions", label: "actions" },
+        { key: "trnStatus", label: "trnStatus" },
+
+        { key: "actions", label: "actions" },
       ],
     };
   },
@@ -78,7 +70,7 @@ export default {
   computed: {
     ...mapState({
         loading: (state) => state.virtualAccount.loading,
-       virtualAccounttransactions: (state) => state.virtualAccount.virtualaccounttransaction,
+        virtualAccounttransactions: (state) => state.virtualAccount.virtualaccounttransaction,
     }),
   },
 
