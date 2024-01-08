@@ -26,6 +26,10 @@ class AuthenticationRequest {
         source: "WEB"
 
     }
+    static terminalRequest = {
+        customerEmail: null,
+
+    }
     static resendOtp = {
         customerEmail: null,
         source: "WEB"

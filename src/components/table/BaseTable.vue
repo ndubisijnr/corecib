@@ -187,7 +187,6 @@
       </template>
       <template v-slot:cell(actions)="row">
 
-
         <b-icon-eye-slash
           style="cursor: pointer; width: 25px; height: 15px"
           v-if="row.detailsShowing"
@@ -203,11 +202,27 @@
       </template>
 
       <template v-slot:cell(CustomerAction)="row">
+<!--        <div style="border: solid;background: white;position: absolute;right: 100px" v-if="row.item.customerId === singleUserPayload?.customerId">-->
+<!--          <p @click="getUserInfo(row.item)" style="cursor: pointer">Edit user</p>-->
+<!--          <p>Reset terminal pin</p>-->
+<!--          <p>Terminal logout</p>-->
+<!--        </div>-->
         <b-icon-pencil-square
           style="cursor: pointer; width: 25px; height: 15px"
-          @click="getUserInfo(row.item)"
-          title="Edit User"
+          title="Action"
+          @click="getUserInfo('edit',row.item)"
         />
+        <b-icon-lock
+          style="cursor: pointer; width: 25px; height: 15px"
+          title="Action"
+          @click="getUserInfo('reset',row.item)"
+        />
+        <b-icon-box-arrow-right
+          style="cursor: pointer; width: 25px; height: 15px"
+          title="Action"
+          @click="getUserInfo('logout',row.item)"
+        />
+
 <!--        <b-icon-eye-slash-->
 <!--          style="cursor: pointer; width: 25px; height: 15px"-->
 <!--          v-if="row.detailsShowing"-->
@@ -332,6 +347,7 @@ import Toast from "../../../toastNotification";
 import router from "../../router";
 import TransactionRequest from "../../model/request/TransactionRequest";
 import EditVirtualAccountForm from "../form/EditVirtualAccountForm";
+import AuthRequest from "../../model/request/AuthRequest";
 
 export default {
   props: [
@@ -352,6 +368,7 @@ export default {
   data() {
     return {
       show: false,
+      terminalModel:AuthRequest.terminalRequest,
       show2:false,
       primaryColor:window.__env.app.primaryColor,
       loaderImage:BIZ,
@@ -390,7 +407,9 @@ export default {
       loading3:(state) => state.virtualAccount.loading,
       loading4:(state) => state.kycVerification.loading,
       isLoading:state => state.auth.loginLoading,
-      loading5:state => state.transactions.refreshLoading
+      loading5:state => state.transactions.refreshLoading,
+      singleUserPayload:state => state.auth.singleOrganisationUser,
+
     }),
   },
   mounted() {},
@@ -400,10 +419,22 @@ export default {
         StoreUtils.commit(StoreUtils.mutations.kycVerification.UpdateKycType, kycType)
         router.push({name:"MakeRequestView"})
     },
-    getUserInfo(obj){
-      StoreUtils.commit(StoreUtils.mutations.auth.updateUserEditForm, true)
-      StoreUtils.commit(StoreUtils.mutations.auth.updateSingleOrganisationUser, obj)
-      console.log(obj)
+    getUserInfo(actionType, obj){
+      if(actionType === 'edit'){
+        StoreUtils.commit(StoreUtils.mutations.auth.updateUserEditForm, 'edit')
+        StoreUtils.commit(StoreUtils.mutations.auth.updateSingleOrganisationUser, obj)
+      }
+      if(actionType === 'reset'){
+        this.terminalModel.customerEmail = obj.customerEmail
+        StoreUtils.commit(StoreUtils.mutations.auth.updateUserEditForm, 'reset')
+      }
+      if(actionType === 'logout'){
+        this.terminalModel.customerEmail = obj.customerEmail
+
+        StoreUtils.commit(StoreUtils.mutations.auth.updateUserEditForm, 'logout')
+
+      }
+
     },
 
     requestNewTransactions(){

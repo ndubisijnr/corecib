@@ -1,5 +1,5 @@
 <template>
-  <modal-1 :show="showOrganisationUserForm && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
+  <modal-1 :show="showOrganisationUserForm === 'edit' && showModal" body-classes="p-1" modal-classes="modal-dialog-centered modal-md">
     <div v-if="singleUserPayload">
       <div class="card-head">
         <div class="d-flex justify-content-between">

@@ -263,6 +263,8 @@
                   </form>
                 </b-modal>
                   <edit-organisation-user :show-organisation-user-form="showUserEditForm"  @closeUserForm="updateCloseEditFrom"/>
+                  <reset-terminal-pin :show-organisation-user-form="showUserEditForm"@closeResetForm="updateCloseEditFrom"/>
+                  <termina-logout-modal :show-organisation-user-form="showUserEditForm"@closeLogoutForm="updateCloseEditFrom"/>
                 </div>
                 <div class="box-card">
                   <div class="pl-4 pr-4 pt-2" style="display: flex;justify-content: space-between;margin-top: 2%">
@@ -545,6 +547,8 @@ import BaseTable from "../../components/table/BaseTable";
 import OrganisationRequest from "../../model/request/OrganisationRequest";
 import EditOrganisationUser from "../../components/form/EditOrganisationUser";
 import PreferenceRequest from "../../model/request/PreferenceRequest";
+import ResetTerminalPin from "../../components/form/ResetTerminalPin";
+import TerminaLogoutModal from "../../components/form/TerminaLogoutModal";
 export default {
   name: "Settings",
   components: {
@@ -558,7 +562,9 @@ export default {
     BlockerLoader,
     UpdateBusinessProfile,
     BaseTable,
-    EditOrganisationUser
+    EditOrganisationUser,
+    ResetTerminalPin,
+    TerminaLogoutModal
   },
   data() {
     return {

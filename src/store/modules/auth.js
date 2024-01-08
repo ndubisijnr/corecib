@@ -206,6 +206,44 @@ export const actions = {
       });
   },
 
+  resetTerminalPin: ({ commit, state, dispatch,getters }, payload = AuthenticationRequest.login) => {
+    commit("updateLoading", true)
+    return AuthService.callResetTerminalPinApi(payload).then(response => {
+        commit("updateLoading", false)
+        let responseData = response.data;
+        if (responseData.responseCode === "00") {
+            console.log(responseData)
+            Toast.fire({ text: responseData.responseMessage, icon: 'sucess', })
+        }
+        else {
+          commit("updateLoading", false)
+          Toast.fire({ text: responseData.responseMessage, icon: 'error', })
+        }
+      }).catch((error) => {
+        commit("updateLoading", false);
+        Toast.fire({text:error, icon:"error"})
+      });
+  },
+
+  terminalLogout: ({ commit, state, dispatch,getters }, payload = AuthenticationRequest.login) => {
+    commit("updateLoading", true)
+    return AuthService.callTerminalLogOutApi(payload).then(response => {
+        commit("updateLoading", false)
+        let responseData = response.data;
+        if (responseData.responseCode === "00") {
+            console.log(responseData)
+            Toast.fire({ text: responseData.responseMessage, icon: 'sucess', })
+
+        }
+        else Toast.fire({ text: responseData.responseMessage, icon: 'error', }).then(() => {
+          commit("updateLoading", false)
+        })
+      }).catch((error) => {
+        commit("updateLoading", false);
+        Toast.fire({text:error, icon:"error"})
+      });
+  },
+
   resendOtp: ({ commit, dispatch, rootState, state }, payload) => {
     commit("updateLoading", true)
     return AuthService.callResendOtpApi(payload).then(response => {

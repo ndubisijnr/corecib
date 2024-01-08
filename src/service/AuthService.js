@@ -42,5 +42,15 @@ export default {
         return apiClient.appClient.post("logOut", payload);
     },
 
+    callTerminalLogOutApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        return apiClient.appClient.post("/authentication/terminal-logout", payload);
+    },
+
+    callResetTerminalPinApi(payload) {
+        // console.log("Service Payload ==>>", payload)
+        return apiClient.appClient.post("/authentication/reset-pin", payload);
+    },
+
 
 };

@@ -17,7 +17,6 @@ class StoreUtils {
       readTransactions:"fundTransfer/readTransactions",
       callNameEnquiry:"fundTransfer/callNameEnquiry",
       fundTransfer:"fundTransfer/fundTransfer"
-
     },
 
     kycVerification: {
@@ -50,6 +49,8 @@ class StoreUtils {
       validateLink: "auth/validateLink",
       completeEnrollment: "auth/completeEnrollment",
       logon: "auth/logon",
+      resetTerminalPin: "auth/resetTerminalPin",
+      terminalLogout: "auth/terminalLogout",
       resendOtp: "auth/resendOtp",
       revalidateUser: "auth/revalidateUser",
       logOut: "auth/logOut",
