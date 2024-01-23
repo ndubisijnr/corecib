@@ -263,8 +263,8 @@
                   </form>
                 </b-modal>
                   <edit-organisation-user :show-organisation-user-form="showUserEditForm"  @closeUserForm="updateCloseEditFrom"/>
-                  <reset-terminal-pin :show-organisation-user-form="showUserEditForm"@closeResetForm="updateCloseEditFrom"/>
-                  <termina-logout-modal :show-organisation-user-form="showUserEditForm"@closeLogoutForm="updateCloseEditFrom"/>
+                  <reset-terminal-pin :show-organisation-user-form="showUserEditForm" @closeResetForm="updateCloseEditFrom"/>
+                  <termina-logout-modal :show-organisation-user-form="showUserEditForm" @closeLogoutForm="updateCloseEditFrom"/>
                 </div>
                 <div class="box-card">
                   <div class="pl-4 pr-4 pt-2" style="display: flex;justify-content: space-between;margin-top: 2%">

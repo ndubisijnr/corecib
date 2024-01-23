@@ -56,7 +56,6 @@ export default {
     },
 
     terminalLogout(){
-      this.model.customerEmail = this.userInfo.customerEmail
       StoreUtils.dispatch(StoreUtils.actions.auth.terminalLogout, this.model)
     },
 

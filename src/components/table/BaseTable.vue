@@ -209,17 +209,17 @@
 <!--        </div>-->
         <b-icon-pencil-square
           style="cursor: pointer; width: 25px; height: 15px"
-          title="Action"
+          title="Edit user"
           @click="getUserInfo('edit',row.item)"
         />
         <b-icon-lock
           style="cursor: pointer; width: 25px; height: 15px"
-          title="Action"
+          title="Reset terminal pin"
           @click="getUserInfo('reset',row.item)"
         />
         <b-icon-box-arrow-right
           style="cursor: pointer; width: 25px; height: 15px"
-          title="Action"
+          title="Logout from terminal"
           @click="getUserInfo('logout',row.item)"
         />
 

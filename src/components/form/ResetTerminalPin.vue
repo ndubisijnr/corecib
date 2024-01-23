@@ -53,8 +53,6 @@ name: "ResetTerminalPin",
     },
 
     resetTerminalPin(){
-
-      this.model.customerEmail = this.userInfo.customerEmail
       StoreUtils.dispatch(StoreUtils.actions.auth.resetTerminalPin, this.model)
     },
 
