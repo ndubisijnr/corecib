@@ -4,8 +4,8 @@
           <div class="mb card-holder">
             <div class="card-area">
                 <dashboard-card  :show="true" :refresh="true" :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
-                <dashboard-card  :showBtn="false" :showBtn1="false"  :value="1123 | formatAmount" :title="'Total Task Collected'"></dashboard-card>
-                <dashboard-card  :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfWalletDev : currentOrganisation.organisationNumberOfWallet" :title="'Total Count Of Task Payers'"></dashboard-card>
+                <dashboard-card  :showBtn="false" :showBtn1="false"  :value="1123 | formatAmount" :title="'Total Tax Collected'"></dashboard-card>
+                <dashboard-card  :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfWalletDev : currentOrganisation.organisationNumberOfWallet" :title="'Total Count Of Tax Payers'"></dashboard-card>
                 <dashboard-card  :showBtn="false" :showBtn1="false" :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfVirtualAccountDev : currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'"></dashboard-card>
             </div>
           </div>
