@@ -2,11 +2,9 @@
   <validation-observer v-slot="{ handleSubmit }" ref="formValidator">
     <form class="container form-group form-login" role="form" @submit.prevent="handleSubmit(onSubmit)">
       <div class="text-center">
-        <a href="#">
-        <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>
       </div>
       <div class="">
-      <h4 class="login-h4">Sign in to continue</h4>
+        <h4 class="login-h4">Sign in to continue</h4>
       <div class="form-floating mb-3">
         <input type="email" class="form-control" name="email" placeholder="businessname@gmail.com" v-model="model.username" required/>
         <label >Email address</label>

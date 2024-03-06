@@ -7,8 +7,9 @@
         <form class="form-login" role="form" @submit.prevent="handleSubmit(onInitiateEnrollment())"
         v-if="screen == 'register'">
         <div class="text-center">
-          <a href="#">
-            <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>
+
+          <!--          <a href="#">-->
+<!--            <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>-->
         </div>
         <div class="">
           <h4 class="complete-enrollment-h4">Sign Up</h4>
@@ -27,8 +28,8 @@
           </div>
           <div class="form-floating mt-3 mb-3">
             <base-input prependIcon="fa fa-info-circle"
-              title="Business name must contain two words (eg. Dangote Groups)" label="Business Name" class="mb-2"
-              name="Business Name" :rules="{ required: true }" placeholder="eg. Amanda Limited"
+              title="Business name must contain two words" label="Microfinance bank" class="mb-2"
+              name="Business Name" :rules="{ required: true }"
               v-model="initiateModel.customerBusinessName" required>
             </base-input>
           </div>
@@ -93,8 +94,10 @@
         <form class="form-login" role="form" v-if="screen == 'otp'"
         @submit.prevent="handleSubmit(onCompleteEnrollment())">
         <div class="text-center">
-          <a href="#">
-            <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>        </div>
+
+          <!--          <a href="#">-->
+<!--            <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>      -->
+        </div>
         <div>
           <h4 class="complete-enrollment-h4">Complete Registration.</h4>
           <div class="form-floating mb-3">

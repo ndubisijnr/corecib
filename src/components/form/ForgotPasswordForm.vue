@@ -6,8 +6,8 @@
       <form  class="form-login" role="form"
       @submit.prevent="initiatePassword" style="margin-top:0px">
       <div class="text-center">
-        <a href="#">
-          <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>
+        <!--        <a href="#">-->
+<!--          <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>-->
       </div>
       <div class="">
         <h4 class="forgot-password-h4">Password Reset</h4>

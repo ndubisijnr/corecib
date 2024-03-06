@@ -1,6 +1,6 @@
 <template>
   <div class="auth-layout-wrapper">
-    <div class="auth-layout"></div>
+<!--    <div class="auth-layout"></div>-->
     <div class="router-view">
       <router-view></router-view>
     </div>
