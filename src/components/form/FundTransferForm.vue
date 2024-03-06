@@ -3,7 +3,7 @@
     <div>
       <div class="card-head">
         <div class="d-flex justify-content-between">
-          <h4  style="padding:10px;color:#413d52;font-size:14px;font-weight:700;width: 100%;text-align: center">Fund Transfer To {{isSendingTo ? "CORESTEP MFB" :  "Other Banks"}}</h4>
+          <h4  style="padding:10px;color:#413d52;font-size:14px;font-weight:700;width: 100%;text-align: center">Fund Transfer To {{isSendingTo ? "Tax Bank" :  "Other Banks"}}</h4>
           <button type="button" class="btn-close p-2 m-2" @click="closeModal()" title="Cancel Add Payout Bank"></button>
         </div>
       </div>

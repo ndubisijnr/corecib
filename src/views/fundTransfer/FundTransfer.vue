@@ -11,8 +11,8 @@
       </div>
       <div>
         <div class="mb-3 text-center">
-          <b-button style="background-color:#413d52;color:white" @click="showM">Transfer to other banks </b-button>
-          <b-button @click="setSendingToState"> Transfer to Core Step</b-button>
+          <b-button style="background-color:#413d52;color:white" @click="showM">Transfer to Other Banks </b-button>
+          <b-button @click="setSendingToState"> Transfer to Tax Bank</b-button>
         </div>
         <div>
           <div class="ml-4">
