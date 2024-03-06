@@ -47,7 +47,7 @@ export default
         //     path:'/account'
         // },
          {
-            name:'Wallet Tax Payer',
+            name:'Wallet',
             icon:'fa fa-wallet',
             path:'/wallet'
         },
@@ -57,7 +57,7 @@ export default
             path:'/open-account'
         },
         {
-            name:'Assesment',
+            name:'Tax Assessment',
             icon:'fas fa-check-circle',
             path:'/kyc-verifications'
             // path:url
