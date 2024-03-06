@@ -25,12 +25,12 @@ export default
             // ]
         },
         {
-            name:'Account Activities',
+            name:'Revenue Activities',
             icon:'fa fa-money-bill',
             path:'/reports/transactions'
         },
         {
-            name:'Transactions',
+            name:'Revenue Commission ',
             icon:'fa fa-money-bill',
             path:'/organisation/transactions'
         },
@@ -41,32 +41,32 @@ export default
         //     path:'/reports/payout-transactions'
         // },
 
-        {
-            name:'Virtual Accounts',
-            icon:'fa fa-university',
-            path:'/account'
-        },
-        {
-            name:'Wallet',
+        // {
+        //     name:'Onboarding Task Payers',
+        //     icon:'fa fa-university',
+        //     path:'/account'
+        // },
+         {
+            name:'Onboarding Task Payers',
             icon:'fa fa-wallet',
             path:'/wallet'
         },
         {
-            name:'Saving Account',
+            name:'Renumeration',
             icon:'fa fa-wallet',
             path:'/open-account'
         },
         {
-            name:'KYC Verification',
+            name:'Assesment',
             icon:'fas fa-check-circle',
             path:'/kyc-verifications'
             // path:url
         },
-        {
-            name:'Fund Transfer',
-            icon:'fas fa-check-circle',
-            path:'/fund-transfer'
-        },
+        // {
+        //     name:'Fund Transfer',
+        //     icon:'fas fa-check-circle',
+        //     path:'/fund-transfer'
+        // },
 
 
        ]

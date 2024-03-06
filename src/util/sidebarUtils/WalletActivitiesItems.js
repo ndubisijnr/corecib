@@ -53,10 +53,10 @@ export default
             icon:'fa fa-wallet',
             path:'/account'
         },
-        {
-            name:'KYC Verification',
-            icon:'fas fa-check-circle',
-            path:'/kyc-verifications'
-        },
+        // {
+        //     name:'KYC Verification',
+        //     icon:'fas fa-check-circle',
+        //     path:'/kyc-verifications'
+        // },
     ]
 };

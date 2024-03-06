@@ -4,7 +4,7 @@ export default
     icon: '',
     items: [
         {
-            name:'Overview',
+            name:'Dashboard',
             icon:'fas fa-project-diagram',
             path:'/dashboard/get-started'
         },

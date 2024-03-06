@@ -4,13 +4,13 @@
           <div class="mb card-holder">
             <div class="card-area">
                 <dashboard-card  :show="true" :refresh="true" :currency="'₦'" :showBtn="false" :showBtn1="false" :value="balances.walletBalance.accountBalance | formatAmount" :title="'Wallet Balance'"></dashboard-card>
-                <dashboard-card  :showBtn="false" :showBtn1="false" :currency="'₦'" :value="balances.referralBalance.accountBalance | formatAmount" :title="'Referral Balance'"></dashboard-card>
-                <dashboard-card  :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfWalletDev : currentOrganisation.organisationNumberOfWallet" :title="'Number of Wallet'"></dashboard-card>
+                <dashboard-card  :showBtn="false" :showBtn1="false"  :value="1123 | formatAmount" :title="'Total Task Collected'"></dashboard-card>
+                <dashboard-card  :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfWalletDev : currentOrganisation.organisationNumberOfWallet" :title="'Total Count Of Task Payers'"></dashboard-card>
                 <dashboard-card  :showBtn="false" :showBtn1="false" :value="getStage === 'DEV' ? currentOrganisation.organisationNumberOfVirtualAccountDev : currentOrganisation.organisationNumberOfVirtualAccount" :title="'Number of Virtual Account'"></dashboard-card>
             </div>
           </div>
           <div class="mt-2 mb-3 text-center">
-            <b-button style="background-color:#413d52;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>
+<!--            <b-button style="background-color:#413d52;color:white" v-b-modal.modal-scrollable>Fund Wallet </b-button>-->
 <!--            <b-button @click="show = true"> Withdraw</b-button>-->
           </div>
         <div id="end"></div>
