@@ -28,7 +28,7 @@
           </div>
           <div class="form-floating mt-3 mb-3">
             <base-input prependIcon="fa fa-info-circle"
-              title="Business name must contain two words" label="Microfinance bank" class="mb-2"
+              title="Microfinance bank must contain two words" label="Microfinance bank" class="mb-2"
               name="Business Name" :rules="{ required: true }"
               v-model="initiateModel.customerBusinessName" required>
             </base-input>
