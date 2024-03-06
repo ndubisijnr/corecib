@@ -47,13 +47,13 @@ export default
         //     path:'/account'
         // },
          {
-            name:'Onboarding Task Payers',
+            name:'Wallet Tax Payer',
             icon:'fa fa-wallet',
             path:'/wallet'
         },
         {
-            name:'Renumeration',
-            icon:'fa fa-wallet',
+            name:'Onboarding of tax payer',
+            icon:'fa fa-user',
             path:'/open-account'
         },
         {
@@ -62,11 +62,11 @@ export default
             path:'/kyc-verifications'
             // path:url
         },
-        // {
-        //     name:'Fund Transfer',
-        //     icon:'fas fa-check-circle',
-        //     path:'/fund-transfer'
-        // },
+        {
+            name:'Tax Payment',
+            icon:'fa fa-money-bill',
+            path:'/fund-transfer'
+        },
 
 
        ]

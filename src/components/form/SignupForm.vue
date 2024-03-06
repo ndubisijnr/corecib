@@ -11,6 +11,9 @@
           <!--          <a href="#">-->
 <!--            <img src="@/assets/img.png" alt="" class="mg-fluid p" width="180px" /></a>-->
         </div>
+          <div class="text-center">
+            <img src="../../assets/ProRev_logo.png" class="mg-fluid p" width="100px"/>
+          </div>
         <div class="">
           <h4 class="complete-enrollment-h4">Sign Up</h4>
           <div class="form-floating mb-3">

@@ -4,6 +4,9 @@
       <div class="text-center">
       </div>
       <div class="">
+        <div class="text-center">
+        <img src="../../assets/ProRev_logo.png" class="mg-fluid p" width="100px"/>
+        </div>
         <h4 class="login-h4">Sign in to continue</h4>
       <div class="form-floating mb-3">
         <input type="email" class="form-control" name="email" placeholder="businessname@gmail.com" v-model="model.username" required/>
